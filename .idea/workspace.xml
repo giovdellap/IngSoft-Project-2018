@@ -6,12 +6,26 @@
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_2_0.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_2_0.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_1_0.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LM54.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LM54.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java" beforeDir="false" />
+<<<<<<< HEAD
+=======
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LM54.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LM54.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java" afterDir="false" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,14 +39,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="SinglePlayer.java" pinned="false" current-in-tab="false">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SinglePlayer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-901">
               <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+<<<<<<< HEAD
+=======
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SinglePlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1368">
+              <caret line="74" selection-start-line="74" selection-end-line="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="SPViewInterface.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SPViewInterface.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -41,78 +75,206 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="DiceContainer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DiceContainer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="78">
               <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="DiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/DiceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="CheckingMethods.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/CheckingMethods.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="104">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="Multiplayer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Multiplayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="14" column="29" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="ConnectionServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-17">
               <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="PublicObjectiveMP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/PublicObjectiveMP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="DiceContainer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DiceContainer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="104">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="AppTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="Die.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Die.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="104">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="DraftPoolSP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DraftPoolSP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1121">
+              <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="DraftPool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DraftPool.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-121">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="DieSP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DieSP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="182">
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="RoundTrackSP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundTrackSP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <file leaf-file-name="Match.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
               <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+<<<<<<< HEAD
+=======
+=======
+      <file leaf-file-name="RoundDice.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundDice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
             </state>
           </provider>
         </entry>
@@ -133,6 +295,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SchemeCard.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SchemesDeck.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Socket.java" />
@@ -184,6 +350,62 @@
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Multiplayer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SinglePlayer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SPViewInterface.java" />
+<<<<<<< HEAD
+=======
+=======
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/MPViewObserverInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SchemeObserver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SchemeSelectorObserver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Socket.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ToolsDeckMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/DieSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/DiceContainer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/DraftPoolSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Model Components SP/DiceContainer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/ToolMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DieSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PrivateObjectiveSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PublicObjectiveSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/SchemeCardSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/ToolSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection/RMI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection/Socket.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewMP/GUIMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewMP/CLIMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/SchemeObserver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/ToolsCardObserver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/SchemeSelectorObserver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSP/GUISP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/Move.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/SchemeID.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/ToolCardUsed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/AbstractMPView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/CheckandUpdate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ConnectionClient.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/DraftPoolMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/PrivateObjectiveMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/PublicObjectiveMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/SchemesDeckMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/ToolsDeckMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/SchemeCardMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/DieMP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PrivateObjectivesDeck.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PublicObjectivesDeck.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/SchemesDeckSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/ToolsDeckSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSP/CLISP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SPViewInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DiceContainer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RounDice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundDice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundTrackSP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SinglePlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DraftPoolSP.java" />
+        <option value="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/DiceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Multiplayer.java" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       </list>
     </option>
   </component>
@@ -195,17 +417,36 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+<<<<<<< HEAD
+=======
+=======
+    <option name="x" value="-427" />
+    <option name="y" value="-12" />
+    <option name="width" value="1386" />
+    <option name="height" value="788" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <pane id="PackagesPane" />
+=======
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -358,13 +599,67 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ingsw" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IngSof-Project-2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IngSof-Project-2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ingsw" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelComponentsSP" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+<<<<<<< HEAD
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection" />
+=======
+<<<<<<< HEAD
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection" />
+=======
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -383,6 +678,10 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
   <component name="RunManager" selected="Android JUnit.DieTest">
     <configuration name="DieTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="LM54" />
@@ -407,10 +706,22 @@
       </option>
       <patterns />
     </configuration>
+<<<<<<< HEAD
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HEIGHT" value="0" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="WIDTH" value="0" />
+=======
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HEIGHT" value="0" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="WIDTH" value="0" />
+=======
+  <component name="RunManager" selected="JUnit.All in LM54">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     </configuration>
     <configuration name="Unnamed" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.App" />
@@ -436,6 +747,10 @@
         <value defaultName="singleModule" />
       </option>
       <patterns />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     </configuration>
     <configuration name="DieTest.checkColorTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="LM54" />
@@ -482,6 +797,11 @@
         <value defaultName="singleModule" />
       </option>
       <patterns />
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -499,6 +819,10 @@
       </option>
       <patterns />
     </configuration>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     <configuration name="it.polimi.ingsw in LM54" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="LM54" />
       <extension name="coverage">
@@ -522,6 +846,8 @@
       </option>
       <patterns />
     </configuration>
+=======
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -560,6 +886,10 @@
     <list>
       <item itemvalue="Application.Unnamed" />
       <item itemvalue="JUnit.All in LM54" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <item itemvalue="JUnit.SinglePlayerTest.punteggioInizialeZero" />
       <item itemvalue="JUnit.DieTest.checkColorTrue" />
       <item itemvalue="Android JUnit.DieTest" />
@@ -573,6 +903,12 @@
         <item itemvalue="JUnit.SinglePlayerTest.punteggioInizialeZero" />
       </list>
     </recent_temporary>
+<<<<<<< HEAD
+=======
+=======
+    </list>
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -593,7 +929,15 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+=======
+<<<<<<< HEAD
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -608,7 +952,16 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22395833" />
+=======
+<<<<<<< HEAD
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22395833" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18814056" />
+      <window_info id="Learn" order="2" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -617,15 +970,30 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32750398" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info id="Learn" order="2" />
+=======
+<<<<<<< HEAD
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32750398" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info id="Learn" order="2" />
+=======
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32873806" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
@@ -651,12 +1019,43 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="10" visible="true" weight="0.32750398" />
       <window_info anchor="right" id="Maven Projects" order="7" />
+<<<<<<< HEAD
+=======
+=======
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32979852" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info id="Learn" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.32873806" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
       <window_info id="Favorites" order="7" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+<<<<<<< HEAD
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="2" />
@@ -664,6 +1063,7 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/DieMP.java">
+<<<<<<< HEAD
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
@@ -1035,6 +1435,706 @@
         </state>
       </provider>
     </entry>
+=======
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/DraftPoolMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-147">
+          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/PrivateObjectiveMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="54" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/PublicObjectiveMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/SchemeCardMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/ToolMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/SchemesDeckMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsMP/ToolsDeckMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/DiceContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-147">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/DieSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/DraftPoolSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="43" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/PrivateObjectiveSP.java">
+=======
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/DiceContainer.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/DraftPoolSP.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Model Components SP/DieSP.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Model Components SP/DiceContainer.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection/RMI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1144">
+          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Connection/Socket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-927">
+          <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PrivateObjectiveSP.java">
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/PrivateObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/PublicObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="51" selection-start-line="5" selection-start-column="51" selection-end-line="5" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/PublicObjectiveSP.java">
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PublicObjectiveSP.java">
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/RoundDice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/RoundTrackSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/SchemeCardSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-364">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/SchemesDeckSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/ToolsDeckSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentsSP/ToolSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewMP/CLIMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewMP/GUIMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewObservers/SchemeObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewObservers/SchemeSelectorObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewObservers/ToolsCardObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewSP/CLISP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewSP/GUISP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewSubjects/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewSubjects/SchemeID.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ViewSubjects/ToolCardUsed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="49" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/CheckandUpdate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ConnectionClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-251">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Main.java">
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/ToolSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewMP/GUIMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewMP/CLIMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/SchemeObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/SchemeSelectorObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewObservers/ToolsCardObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSP/GUISP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2678">
+          <caret line="103" column="4" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/SchemeID.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSubjects/ToolCardUsed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/PrivateObjectiveMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/ToolsDeckMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/ToolMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/SchemesDeckMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/SchemeCardMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PrivateObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/PublicObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="61" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/SchemesDeckSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/DieMP.java">
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ModelComponentSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/MPViewObserverInterface.java">
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/DraftPoolMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ViewSP/CLISP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SPViewInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="988">
+          <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/MPViewSubjectInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/MPViewObserverInterface.java">
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/MPViewSubjectInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Multiplayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-433">
+          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ConnectionClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-251">
+          <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/CheckandUpdate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/AbstractMPView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-832">
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/SchemeCardSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/ToolsDeckSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SinglePlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-901">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/SPViewInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="36" column="35" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundTrackSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/SinglePlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/CheckingMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DiceContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Die.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DraftPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-121">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DraftPoolSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1121">
+          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DieSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/DiceContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/DiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsMP/PublicObjectiveMP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/Multiplayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/ModelComponentsSP/RoundDice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+>>>>>>> 1f8fc2a0a2025f18265c41e3637919d2f9db6ef6
+        </state>
+      </provider>
+    </entry>
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
   </component>
   <component name="masterDetails">
     <states>
@@ -1076,10 +2176,26 @@
       <state key="JdkListConfigurable.UI">
         <settings>
           <last-edited>1.8</last-edited>
+<<<<<<< HEAD
+=======
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>LM54</last-edited>
+>>>>>>> 34894b8fbe2ad7e1d7b255f04cbf0948673e7c04
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
