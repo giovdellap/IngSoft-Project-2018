@@ -1,9 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.ModelComponentsMP.PrivateObjectiveMP;
-import it.polimi.ingsw.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.ModelComponentsMP.ToolMP;
+import it.polimi.ingsw.ModelComponentsMP.*;
 
 import java.util.*;
 
@@ -15,6 +12,7 @@ public class Multiplayer {
     private SchemeCardMP otherScheme;
     private SchemeCardMP oppSchemes;
     private PrivateObjectiveMP privObj;
+    private PublicObjectiveMP[] publObj;
     private int favorTokens;
     private int oppFavTokens;
     private String oppNames;
