@@ -12748,7 +12748,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+returnDie(int pos): DIe",
+											"text": "+returnDie(int pos): Die",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -57537,6 +57537,7 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
+									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -57552,6 +57553,7 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
+									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -57600,7 +57602,6 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -57615,7 +57616,9 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "DIe",
+									"type": {
+										"$ref": "AAAAAAFjDHnPBtNB68w="
+									},
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
