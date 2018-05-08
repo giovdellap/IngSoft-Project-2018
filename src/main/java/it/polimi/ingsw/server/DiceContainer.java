@@ -8,6 +8,7 @@ public class DiceContainer
 
     public DiceContainer()
     {
+<<<<<<< HEAD
         dice = new Die[90];
         for(int i=0;i<18;i++)
         {
@@ -44,4 +45,14 @@ public class DiceContainer
 
 
 
+=======
+
+    }
+
+    public Die[] throwDice(int n) {
+        // tira n dadi dal sacchetto
+        return null;
+    }
+
+>>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
 }

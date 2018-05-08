@@ -8,20 +8,29 @@ import java.util.*;
 public class ToolSP {
 
     private int id;
+<<<<<<< HEAD
     private String name;
     private int favorTokenCost;
+=======
+>>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
 
 
     public ToolSP()
     {
 
+<<<<<<< HEAD
         this.id = id;
         this.name = name;
         this.favorTokenCost = favorTokenCost;
+=======
+        //costruttore
+
+>>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
     }
 
     public int getId()
     {
+<<<<<<< HEAD
         return id;
     }
 
@@ -43,6 +52,9 @@ public class ToolSP {
 
     public void setId(int id) {
         this.id = id;
+=======
+        return 0;
+>>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
     }
 
 

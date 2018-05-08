@@ -40,7 +40,11 @@ public class DraftPoolSP implements ModelComponentSP {
         for(int i=0;i<dice;i++)
         {
             if(i<dim) {
+<<<<<<< HEAD
                 temp.addDie(draft[i]);
+=======
+                temp[i]=draft[i];
+>>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
             }
             draft[i]=container.throwDice();
         }
