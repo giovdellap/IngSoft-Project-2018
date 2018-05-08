@@ -47,10 +47,8 @@ public class RMI implements ConnectionServer
 
     public int checkTool()
     {
-<<<<<<< HEAD
+
         return 0;
-=======
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
 
     }
 

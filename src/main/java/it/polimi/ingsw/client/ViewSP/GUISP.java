@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.ViewSP;
 
 
-<<<<<<< HEAD
 import it.polimi.ingsw.client.ModelComponentsSP.DraftPoolSP;
 import it.polimi.ingsw.client.ModelComponentsSP.SchemeCardSP;
-=======
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
+
 import it.polimi.ingsw.client.SPViewInterface;
 
 public class GUISP implements SPViewInterface {

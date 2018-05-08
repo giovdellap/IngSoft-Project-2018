@@ -9,16 +9,10 @@ public class DraftPoolMP implements ModelComponentMP {
     private DieMP[] draft;
 
 
-<<<<<<< HEAD
 
-    public DraftPoolMP()
-    {
-
-=======
     public DraftPoolMP()
     {
         //costruttore
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
     }
 
 
@@ -34,7 +28,6 @@ public class DraftPoolMP implements ModelComponentMP {
     }
 
 
-<<<<<<< HEAD
     public DieMP replaceDie(int index, DieMP toPlace) {
 
         // rimpiazza il dado
@@ -46,17 +39,7 @@ public class DraftPoolMP implements ModelComponentMP {
 
         // ritorna il dado
         return null;
-=======
-    public void replaceDie(int index, DieMP toPlace) {
 
-        // rimpiazza il dado (da mettere tipo ritorno DieMP)
-    }
-
-
-    public void returnDie(int pos) {
-
-        // ritorna il dado (da mettere tipo ritorno DieMP)
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
     }
 
 }

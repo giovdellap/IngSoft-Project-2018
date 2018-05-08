@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
+import java.util.*;
 
-<<<<<<< HEAD
+
 public class Tool
 {
     private int id;
@@ -39,17 +40,5 @@ public class Tool
     public void setId(int id) {
         this.id = id;
     }
-=======
-import java.util.*;
 
-public class Tool
-{
-    private int id;
 
-    public Tool()
-    {
-
-    }
-
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
-}

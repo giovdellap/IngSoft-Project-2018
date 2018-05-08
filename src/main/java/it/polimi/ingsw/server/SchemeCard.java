@@ -9,22 +9,16 @@ public class SchemeCard
     private String backName;
     private int frontDiff;
     private int backDiff;
-<<<<<<< HEAD
+
     private int back[][];
     private int front[][];
     private Die diceScheme[][];
-=======
-    private int back[4][5];
-    private int front[4][5];
-    private Die diceScheme[4][5];
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
-
     public SchemeCard()
     {
 
     }
 
-<<<<<<< HEAD
+
     public int[][] getFront()
     {
         // ritorna lo schema fronte
@@ -35,16 +29,7 @@ public class SchemeCard
     {
         // ritorna lo schema retro
         return null;
-=======
-    public int[4][5] getFront()
-    {
-        // ritorna lo schema fronte
-    }
 
-    public int[4][5] getBack()
-    {
-        // ritorna lo schema retro
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
     }
 
     public void setCell(int fb, int x, int y, int toInsert)

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-<<<<<<< HEAD
+
 public class PrivateObjective
 {
     private int id;
@@ -29,7 +29,7 @@ public class PrivateObjective
     public void setColor(int color) {
         this.color = color;
     }
-=======
+
 import java.util.*;
 
 public class PrivateObjective
@@ -47,5 +47,5 @@ public class PrivateObjective
         return 0;
     }
 
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
+
 }

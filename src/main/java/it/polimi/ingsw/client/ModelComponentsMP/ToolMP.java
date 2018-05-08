@@ -5,17 +5,12 @@ import java.util.*;
 public class ToolMP {
 
     private int id;
-<<<<<<< HEAD
     private String name;
     private int favorTokenCost;
-=======
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
-
 
     public ToolMP()
     {
 
-<<<<<<< HEAD
         this.id = id;
         this.name = name;
         this.favorTokenCost = favorTokenCost;
@@ -46,10 +41,5 @@ public class ToolMP {
         this.id = id;
     }
 
-=======
-        //costruttore
 
-    }
-
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
 }

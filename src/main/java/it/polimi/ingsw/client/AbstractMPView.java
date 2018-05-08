@@ -1,13 +1,8 @@
 package it.polimi.ingsw.client;
 
-<<<<<<< HEAD
+
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
-=======
-import it.polimi.ingsw.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.ModelComponentsMP.SchemeCardMP;
->>>>>>> 8450c4b95595264bc4cf0238cd708dfb324729ab
-
 import java.util.*;
 
 public abstract class AbstractMPView {
