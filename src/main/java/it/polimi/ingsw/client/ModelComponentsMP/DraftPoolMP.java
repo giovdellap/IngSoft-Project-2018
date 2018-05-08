@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.ModelComponentsMP;
 
+
 import it.polimi.ingsw.client.ModelComponentMP;
 
 import java.util.*;

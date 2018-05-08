@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.ModelComponentsMP;
 import it.polimi.ingsw.client.ModelComponentMP;
 
 public class PrivateObjectiveMP implements ModelComponentMP {
-<<<<<<< HEAD
+
 
     private int id;
     private int color;

@@ -2,15 +2,13 @@ package it.polimi.ingsw.server;
 import java.util.*;
 
 
-public class Tool
-{
+public class Tool {
     private int id;
     private String name;
     private int favorTokenCost;
 
 
-    public Tool(int id, String name, int favorTokenCost)
-    {
+    public Tool(int id, String name, int favorTokenCost) {
         this.id = id;
         this.name = name;
         this.favorTokenCost = favorTokenCost;
@@ -40,5 +38,7 @@ public class Tool
     public void setId(int id) {
         this.id = id;
     }
+
+}
 
 

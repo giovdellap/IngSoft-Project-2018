@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.ModelComponentsMP;
 
-
 import it.polimi.ingsw.client.ModelComponentMP;
 
 public class SchemesDeckMP implements ModelComponentMP {

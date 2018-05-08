@@ -1,5 +1,6 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Die;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,8 @@ public class DieTest
     @BeforeAll
     public void SetUp()
     {
-        die = new Die();
+        die = new Die((int)(Math.random())*5+1);
+        die.throwDie();
     }
 
     @Test

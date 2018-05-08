@@ -14,6 +14,7 @@ public class Die
 
     public void throwDie()
     {
+        value = (int)(Math.random()*6+1);
         // tira dado
     }
 

@@ -9,7 +9,7 @@ public class DraftPool
 
     public DraftPool()
     {
-
+        
     }
 
     public void pickUpDie(int index)
