@@ -1,9 +1,6 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.client;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
     public static void main( String[] args )
