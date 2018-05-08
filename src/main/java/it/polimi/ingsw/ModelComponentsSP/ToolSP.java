@@ -1,0 +1,26 @@
+package it.polimi.ingsw.ModelComponentsSP;
+
+
+import java.util.*;
+
+
+
+public class ToolSP {
+
+    private int id;
+
+
+    public ToolSP()
+    {
+
+        //costruttore
+
+    }
+
+    public int getId()
+    {
+        return 0;
+    }
+
+
+}
