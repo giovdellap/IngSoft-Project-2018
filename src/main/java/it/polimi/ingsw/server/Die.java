@@ -10,18 +10,20 @@ public class Die
     public Die(int n)
     {
         color=n;
+        value=1;
     }
+
 
     public void throwDie()
     {
-        value = (int)(Math.random()*6+1);
+        value = (int)(Math.random()*5+1);
         // tira dado
     }
 
     public void disableDie()
     {
         // usato per disabilitare i dadi nel sacchetto
-        color=0;
+        value=0;
     }
 
     public int getColor()

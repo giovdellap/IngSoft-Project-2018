@@ -21,7 +21,7 @@ public class Match
 
     public Match()
     {
-
+        track = new RoundTrack();
     }
 
     public void CalculateScores()
