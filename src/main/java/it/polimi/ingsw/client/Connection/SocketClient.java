@@ -5,10 +5,10 @@ import it.polimi.ingsw.client.ConnectionClient;
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
 
-public class Socket implements ConnectionClient {
+public class SocketClient implements ConnectionClient {
 
 
-    public Socket()
+    public SocketClient()
     {
 
         //costruttore

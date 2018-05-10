@@ -1,15 +1,17 @@
 package it.polimi.ingsw.server;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
 
     private Match thisMatch;
 
-    public Main()
+    public static void main(String[] args)
     {
-        System.out.println("UFFFFFFFF");
-        thisMatch = new Match();
+        Match thisMatch = new Match();
+        System.out.println("check 1");
+
     }
 
 

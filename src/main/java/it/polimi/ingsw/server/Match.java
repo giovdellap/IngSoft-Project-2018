@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Match
 {
-    private int playersNames;
+    private String[] playerNames;
+    private int numPlayers;
     private SchemeCard[] playersSchemes;
     private DraftPool draft;
     private int[] playersPrivObjs;
@@ -21,7 +22,13 @@ public class Match
 
     public Match()
     {
+        System.out.println("check 2");
         track = new RoundTrack();
+        System.out.println("check 3");
+        SocketServer server = new SocketServer();
+        System.out.println("check 4");
+
+
     }
 
     public void CalculateScores()
