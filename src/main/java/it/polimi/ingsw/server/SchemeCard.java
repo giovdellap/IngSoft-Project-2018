@@ -10,7 +10,7 @@ public class SchemeCard
     private int frontDiff;
     private int backDiff;
     private int fb;
-
+    private boolean isDisabled = false;
     private int front[][];
     private int back[][];
 
@@ -40,6 +40,29 @@ public class SchemeCard
             {
                 diceScheme[j][z]=null;
             }
+    }
+
+    public void setName(int fb, String name) {
+
+        if (fb==1)
+            this.frontName=name;
+
+        if (fb==2)
+            this.backName=name;
+
+    }
+
+    public String getName(int fb) {
+
+        if (fb==1)
+            return frontName;
+
+        if (fb == 2)
+            return backName;
+
+        else
+            return null;
+
     }
 
     public int[][] getFront()
@@ -119,6 +142,19 @@ public class SchemeCard
         return id;
     }
 
+    public void disableScheme() {
+
+        if (!isDisabled)
+            isDisabled=true;
+
+    }
+
+    public boolean checkDisabled() {
+
+        return isDisabled;
+
+    }
+
 
     public void setDiff(int fb, int diff)
     {
@@ -144,7 +180,6 @@ public class SchemeCard
 
 
     }
-
 
 
     public Die getDie(int x, int y)

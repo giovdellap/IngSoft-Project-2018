@@ -11,6 +11,10 @@ public class ContainerTest
     private Die[] testVector;
     private int testCase=9;
 
+    //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
+    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+
+
     @BeforeEach
     public void setUp()
     {
@@ -31,8 +35,6 @@ public class ContainerTest
         }
         Assertions.assertEquals(true, flag);
     }
-
-    //COLORI: 1 GIALLO/2 ROSSO/3 VERDE/4 BLU/ 5 VIOLA
 
     @Test
     public void testThatDice()

@@ -8,11 +8,17 @@ import org.junit.jupiter.api.Test;
 public class SchemeCardTest {
 
 
+    //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
+    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+
     private SchemeCard testScheme;
     private Die testDie;
     private int testFront[][];
     private int testBack[][];
-    int id = (int) (Math.random() * 23 + 1);
+    private String frontName;
+    private String backName;
+
+    int id = (int) (Math.random() * 11 + 1);
     int fb = (int) (Math.random() * 1 + 1);
     int toInsert = (int) (Math.random() * 10 + 1);
     int diff = (int) (Math.random() * 5 + 1);
@@ -26,6 +32,8 @@ public class SchemeCardTest {
         testDie = new Die((int) (Math.random() * 5 + 1));
         testDie.throwDie();
         testScheme.setfb(fb);
+        testScheme.setName(1,"Test Nome Front");
+        testScheme.setName(2,"Test Nome Back");
 
 
         for (int j = 0; j < 4; j++)
@@ -41,9 +49,39 @@ public class SchemeCardTest {
     @Test
     public void checkGetID() {
 
-       Assertions.assertEquals(true,testScheme.getID()==id);
+      Assertions.assertEquals(true,testScheme.getID()==id);
 
     }
+
+
+    @Test
+    public void checkDisabledScheme() {
+
+        testScheme.disableScheme();
+        Assertions.assertEquals(true,testScheme.checkDisabled());
+
+    }
+
+    @Test
+    public void checkSetGetName() {
+
+        boolean flag = false;
+
+        if (fb == 1) {
+            frontName = testScheme.getName(fb);
+            if (frontName.equals("Test Nome Front"))
+                flag = true;
+        }
+
+        if (fb == 2) {
+            backName = testScheme.getName(fb);
+            if (backName.equals("Test Nome Back"))
+                flag = true;
+        }
+
+        Assertions.assertEquals(true,flag);
+    }
+
     @Test
     public void checkSetGetDie() {
 
