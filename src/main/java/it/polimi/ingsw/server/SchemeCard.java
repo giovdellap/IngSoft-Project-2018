@@ -127,13 +127,14 @@ public class SchemeCard
     public int getDiff(int fb) {
         //fronte: fr=1 / retro: fr=2
 
-        if (fb == 1) {
+        if (fb == 1)
             return this.frontDiff;
-        }
 
-        if (fb == 2) {
-            return backDiff;
-        }
+       else if (fb == 2)
+            return this.backDiff;
+                else
+                    return 0;
+
 
     }
 
