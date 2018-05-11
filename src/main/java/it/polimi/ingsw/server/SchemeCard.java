@@ -26,6 +26,7 @@ public class SchemeCard
         backDiff=0;
         front = new int[4][5];
         back = new int[4][5];
+        diceScheme = new Die[4][5];
 
         for(int j=0;j<4;j++)
             for(int z=0;z<5;z++)
@@ -86,11 +87,15 @@ public class SchemeCard
     {
         //fronte: fr=1 / retro: fr=2
 
-        if(fb==1)
-            front[x][y]=toInsert;
-        if(fb==2)
-            back[x][y]=toInsert;
+        if (x > 0 && x < 4) {
+            if (y > 0 && y < 5) {
+                if (fb == 1)
+                    front[x][y] = toInsert;
+                if (fb == 2)
+                    back[x][y] = toInsert;
 
+            }
+        }
     }
 
     public int getCell(int fb, int x, int y)
@@ -114,6 +119,7 @@ public class SchemeCard
         return id;
     }
 
+
     public void setDiff(int fb, int diff)
     {
         //fronte: fr=1 / retro: fr=2
@@ -124,7 +130,8 @@ public class SchemeCard
             this.backDiff = diff;
     }
 
-    public int getDiff(int fb) {
+    public int getDiff(int fb)
+    {
         //fronte: fr=1 / retro: fr=2
 
         if (fb == 1)
@@ -158,7 +165,6 @@ public class SchemeCard
                 if (y > 0 && y < 5) {
                     if (diceScheme[x][y]==null)
                         diceScheme[x][y] = toPlace;
-
                 }
 
             }
