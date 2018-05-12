@@ -25,7 +25,7 @@ public class SchemesDeckTest {
 
 
     @Test
-    public void checkForDifferentID() {
+    public void checkForDifferentID() throws InvalidIntArgumentException {
 
             boolean flag=false;
             testTempDeck = testDeck.extractSchemes(random);
@@ -44,7 +44,26 @@ public class SchemesDeckTest {
     }
 
     @Test
-    public void checkExtractSchemesID() {
+    public void checkExtractSchemesException() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        try {
+            testTempDeck=testDeck.extractSchemes(10);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+        }
+
+        Assertions.assertEquals(true,flag);
+    }
+
+
+    @Test
+    public void checkExtractSchemesID() throws InvalidIntArgumentException {
 
             boolean flag = true;
             testTempDeck = testDeck.extractSchemes(random);
@@ -60,5 +79,24 @@ public class SchemesDeckTest {
     }
 
 
+    @Test
+    public void checkExtractSchemesIdException() throws InvalidIntArgumentException {
+
+            boolean flag = false;
+
+            try {
+               testDeck.extractSchemebyID(17);
+            }
+
+            catch (InvalidIntArgumentException e) {
+
+                if (e.getMessage().equals("The int argument is invalid"))
+                    flag = true;
+
+            }
+
+            Assertions.assertEquals(true,flag);
+
+    }
 
 }

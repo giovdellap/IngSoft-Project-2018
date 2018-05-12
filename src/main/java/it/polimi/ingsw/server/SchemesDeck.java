@@ -670,7 +670,10 @@ public class SchemesDeck
     }
 
 
-    public SchemeCard[] extractSchemes(int n) {
+    public SchemeCard[] extractSchemes(int n) throws InvalidIntArgumentException {
+
+        if (n<0 || n>8 || n%2!=0)
+            throw new InvalidIntArgumentException();
 
         SchemeCard[] tempVett = new SchemeCard[n];
 
@@ -694,17 +697,15 @@ public class SchemesDeck
     }
 
 
-    public SchemeCard extractSchemebyID (int id)
+    public SchemeCard extractSchemebyID (int id) throws InvalidIntArgumentException
     {
         SchemeCard scheme;
 
-        if(id>0 && id<13) {
+        if(id<0 || id>13)
+            throw new InvalidIntArgumentException();
+
             scheme = deck[id-1];
             return scheme;
-        }
-
-        else
-            return null;
 
     }
 
