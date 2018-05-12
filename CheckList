@@ -3,7 +3,7 @@
 ### public/private objectives missing
 
 Die:
-- [X] checkColor
+- [x] checkColor
 - [X] checkValue
 - [X] checkThrow
 - [X] checkDisabling
