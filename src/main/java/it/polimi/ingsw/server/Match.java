@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Match
@@ -20,13 +21,17 @@ public class Match
     private SchemesDeck scDeck;
     private PrivateObjective[] playersPrObjs;
 
-    public Match()
-    {
+    public Match() throws IOException {
         System.out.println("check 2");
         track = new RoundTrack();
         System.out.println("check 3");
         SocketServer server = new SocketServer();
+        numPlayers=server.initializeFPS();
+        System.out.println("check intermedio");
+        for(int i=1;i<numPlayers;i++)
+            server.initializeNPS();
         System.out.println("check 4");
+
 
 
     }

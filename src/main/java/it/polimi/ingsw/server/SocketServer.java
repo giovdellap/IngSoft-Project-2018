@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SocketServer implements ConnectionServer {
@@ -14,40 +15,46 @@ public class SocketServer implements ConnectionServer {
     private ArrayList<ServerPlayer> players;
     private int numPlayers=1;
     private String[] playersNames;
+    private boolean matchEnd = false;
+    private ServerSocket serverSocket;
+    private Socket generalSocket;
+    private ServerPlayer test;
 
     public SocketServer()
     {
         ServerSocket serverSocket = null;
-
-        try
-        {
-            serverSocket = new ServerSocket(PORT);
-            System.out.println("check 6");
-            Socket socket = serverSocket.accept();
-            System.out.println("Client "+Integer.toString(counter)+" connected");
-            players.add(new ServerPlayer(socket, counter));
-            counter++;
-
-            while(!firstPlayerHasDone)
-                firstPlayerHasDone=players.get(0).hasFPDone();
-            numPlayers=players.get(0).getNumPlayers();
-            playersNames = new String[numPlayers];
-            playersNames[0]=players.get(0).getUsername();
-
-            while(counter!=numPlayers)
-            {
-                serverSocket = new ServerSocket(PORT+counter-1);
-                socket = serverSocket.accept();
-                System.out.println("Client "+Integer.toString(counter)+" connected");
-                players.add(new ServerPlayer(socket, counter, playersNames));
-                counter++;
-            }
+        players=new ArrayList<ServerPlayer>();
 
 
-        } catch (Exception e)
-        {}
     }
 
+    public int initializeFPS() throws IOException {
+        serverSocket = new ServerSocket(PORT);
+        Socket generalSocket = serverSocket.accept();
+
+        System.out.println("Client "+Integer.toString(counter)+" connected");
+        players.add(new ServerPlayer(generalSocket, counter));
+        System.out.println(players.get(0).getUsername());
+        counter++;
+
+        players.get(0).initializeFirst();
+        numPlayers=players.get(0).getNumPlayers();
+
+        playersNames = new String[numPlayers];
+        playersNames[0]=players.get(0).getUsername();
+        for(int i=1;i<numPlayers;i++)
+            playersNames[i]="";
+        return numPlayers;
+    }
+
+    public void initializeNPS() throws IOException {
+        serverSocket = new ServerSocket(PORT+counter-1);
+        generalSocket = serverSocket.accept();
+        System.out.println("Client "+Integer.toString(counter)+" connected");
+        players.add(new ServerPlayer(generalSocket, counter, playersNames));
+        players.get(counter-1).initializeN();
+        counter++;
+    }
     public void sendPrivObj(int player, int id)
     {
 

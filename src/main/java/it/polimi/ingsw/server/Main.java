@@ -7,8 +7,7 @@ public class Main {
 
     private Match thisMatch;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         Match thisMatch = new Match();
         System.out.println("check 1");
 

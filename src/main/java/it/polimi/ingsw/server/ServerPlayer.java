@@ -23,11 +23,13 @@ public class ServerPlayer extends Thread
     {
         try {
             System.out.println("check del ServerPlayer");
-            this.socket = s;
-            this.id=n;
-            this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
-            this.start();
+            socket = s;
+            id=n;
+            inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            System.out.println("check fine costruttore serverplayer");
+            numPlayers=1;
+
 
         } catch(Exception ex)
         {
@@ -45,7 +47,6 @@ public class ServerPlayer extends Thread
             this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
             usernameVector=new String[usernames.length];
             usernameVector=usernames;
-            this.start();
 
         } catch(Exception ex)
         {
@@ -53,15 +54,9 @@ public class ServerPlayer extends Thread
         }
     }
 
-    public void run()
-    {
-        if(id==1)
-            initializeFirst();
-        else
-            initializeN();
-    }
 
-    private void initializeFirst() {
+
+    public void initializeFirst() {
         try {
             outSocket.println("<player>$1$");
             outSocket.flush();
@@ -98,13 +93,9 @@ public class ServerPlayer extends Thread
                     if(n>1&&n<5)
                         numPlayers=n;
                 }
-                firstPlayerHasDone=true;
+
             }
-
-
             outSocket.println("<wait>$players$");
-
-
         } catch(Exception e) {
             try {
                 System.out.println("Exception e");
@@ -163,15 +154,20 @@ public class ServerPlayer extends Thread
                 if (tempCmd.equals("username"))
                 {
                     System.out.println("check 11");
-
-                    username = tempArg;
-                    System.out.println("check 10");
-                    outSocket.println("<confirm>$username$");
-                    outSocket.flush();
+                    if(checkExistingName()) {
+                        System.out.println("check secondo if");
+                        username = tempArg;
+                        System.out.println("check username = tempArg");
+                        outSocket.println("<confirm>$username$");
+                        outSocket.flush();
+                    }
+                        System.out.println("check 10");
                 }
+                outSocket.println("<wait>$players$");
 
-                wait();
+
             }
+
         } catch(Exception e) {
             try {
                 System.out.println("Exception e");
@@ -181,6 +177,18 @@ public class ServerPlayer extends Thread
             {}
         }
     }
+
+
+    public void setPrivateObj(int id)
+    {
+        outSocket.println("<privateObj>$id$");
+        outSocket.flush();
+        outSocket.println("<id>$"+Integer.toString(id)+"$");
+        outSocket.flush();
+
+
+    }
+
 
     public int getNumPlayers()
     {
@@ -196,4 +204,23 @@ public class ServerPlayer extends Thread
     {
         return username;
     }
+
+    public boolean checkExistingName()
+    {
+        System.out.println("Check existing name 1");
+        //checks the username is not already in use
+        for(int i=0;i<numPlayers;i++)
+        {
+            System.out.println("for"+Integer.toString(i));
+            if (usernameVector[i]==tempArg)
+                return false;
+        }
+        return true;
+    }
+
+
+
+
+
 }
+
