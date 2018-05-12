@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +26,7 @@ public class SchemeCardTest {
     int diff = (int) (Math.random() * 5 + 1);
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InvalidIntArgumentException {
 
         testFront = new int[4][5];
         testBack = new int[4][5];
@@ -42,12 +44,11 @@ public class SchemeCardTest {
                 testBack[j][z] = 0;
             }
 
-
     }
 
 
     @Test
-    public void checkGetID() {
+    public void checkGetID()  {
 
       Assertions.assertEquals(true,testScheme.getID()==id);
 
@@ -63,7 +64,7 @@ public class SchemeCardTest {
     }
 
     @Test
-    public void checkSetGetName() {
+    public void checkSetGetName() throws InvalidIntArgumentException {
 
         boolean flag = false;
 
@@ -83,7 +84,51 @@ public class SchemeCardTest {
     }
 
     @Test
-    public void checkSetGetDie() {
+    public void checkSetNameException() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.setName(3,"Test Name Scheme");
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+
+    @Test
+    public void checkGetNameException() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.getName(3);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+
+    @Test
+    public void checkSetGetDie() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         testScheme.setDie(testDie, 2, 2);
         Assertions.assertEquals(true, testScheme.getDie(2, 2) == testDie);
@@ -91,7 +136,100 @@ public class SchemeCardTest {
     }
 
     @Test
-    public void checkSetGetCell() {
+    public void checkSetDieException1() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.setDie(testDie,8,5);
+
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+
+    }
+
+
+    @Test
+    public void checkSetDieException2() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+        testDie = null;
+
+        try {
+
+            testScheme.setDie(testDie,2,3);
+
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            if (e.getMessage().equals("Generic invalid argument"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+
+    }
+
+    @Test
+    public void checkSetDieException3() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.setDie(testDie,2,3);
+            testDie.throwDie();
+            testScheme.setDie(testDie,2,3);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            if (e.getMessage().equals("Generic invalid argument"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+    @Test
+    public void checkGetDieException() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.getDie(8,8);
+
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+            flag = true;
+
+        }
+
+        Assertions.assertEquals(true, flag);
+
+    }
+
+    @Test
+    public void checkSetGetCell() throws InvalidIntArgumentException{
 
         testScheme.setCell(fb, 3, 4, toInsert);
         Assertions.assertEquals(true, testScheme.getCell(fb, 3, 4) == toInsert);
@@ -99,26 +237,178 @@ public class SchemeCardTest {
     }
 
     @Test
-    public void checkSetGetDiff() {
+    public void checkSetCellException1() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.setCell(3,2,3,toInsert);
+
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+
+    }
+
+
+    @Test
+    public void checkSetCellException2() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+        testDie = null;
+
+        try {
+
+            testScheme.setCell(2,8,3,2);
+
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+
+    }
+
+    @Test
+    public void checkSetCellException3() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag = false;
+
+        try {
+
+            testScheme.setCell(1,3,4,14);
+
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+    @Test
+    public void checkSetGetDiff() throws InvalidIntArgumentException {
         testScheme.setDiff(fb, diff);
         Assertions.assertEquals(true, testScheme.getDiff(fb) == diff);
     }
 
+
     @Test
-    public void checkSetGetFb() {
+    public void checkSetDiffException1() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        try {
+            testScheme.setDiff(4,3);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true, flag);
+
+    }
+
+    @Test
+    public void checkSetDiffException2() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        try {
+            testScheme.setDiff(1,11);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true, flag);
+    }
+
+    @Test
+    public void checkGetDiffException() throws InvalidIntArgumentException {
+
+        boolean flag = false;
+        int tempDiff;
+
+        try {
+            tempDiff = testScheme.getDiff(3);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true, flag);
+    }
+
+    @Test
+    public void checkSetGetFb() throws InvalidIntArgumentException {
         testScheme.setfb(fb);
         Assertions.assertEquals(true, testScheme.getfb() == fb);
 
     }
 
+
     @Test
-    public void checkGetFront() {
+    public void checkSetFbException() throws InvalidIntArgumentException {
+
+        boolean flag=false;
+
+        try {
+            testScheme.setfb(4);
+        }
+
+        catch (InvalidIntArgumentException e) {
+
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true, flag);
+
+    }
+
+
+    @Test
+    public void checkGetFront() throws InvalidIntArgumentException {
 
         boolean flag = true;
 
         testScheme.setCell(1, 1, 4, 3);
-        testScheme.setCell(1, 4, 5, 2);
-        testScheme.setCell(1, 3, 1, 8);
+        testScheme.setCell(1, 3, 4, 2);
+        testScheme.setCell(1, 0, 1, 8);
         testScheme.setCell(1, 2, 2, 9);
 
         testFront = testScheme.getFront();
@@ -139,8 +429,9 @@ public class SchemeCardTest {
 
     }
 
+
     @Test
-    public void checkGetBack() {
+    public void checkGetBack() throws InvalidIntArgumentException {
 
         boolean flag = true;
 
@@ -162,6 +453,68 @@ public class SchemeCardTest {
                     flag = false;
                 }
             }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+
+    @Test
+    public void checkReplaceDie() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        Die testReplaceDie1 = new Die((int)Math.random()*5+1);
+        Die testReplaceDie2;
+
+        testDie.throwDie();
+        testScheme.setDie(testDie, 3, 4);
+
+        testReplaceDie1.throwDie();
+        testReplaceDie2 = testScheme.replaceDie(testReplaceDie1, 3, 4);
+
+        Assertions.assertEquals(true,testDie.equals(testReplaceDie2));
+
+
+    }
+
+    @Test
+    public void checkReplaceDieException1() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag= false;
+        testScheme.setDie(testDie,1,2);
+        testDie = null;
+
+        try {
+
+            testScheme.replaceDie(testDie,1,2);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            if (e.getMessage().equals("Generic invalid argument"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+    @Test
+    public void checkReplaceDieException2() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        boolean flag= false;
+
+        try {
+
+            testScheme.replaceDie(testDie,2,3);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            if (e.getMessage().equals("Generic invalid argument"))
+                flag = true;
+
+        }
 
         Assertions.assertEquals(true,flag);
 

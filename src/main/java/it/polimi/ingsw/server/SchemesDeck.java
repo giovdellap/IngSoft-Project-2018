@@ -1,12 +1,14 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
 import java.util.*;
 
 public class SchemesDeck
 {
     private SchemeCard[] deck;
 
-    public SchemesDeck()
+    public SchemesDeck() throws InvalidIntArgumentException
     {
 
         //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET

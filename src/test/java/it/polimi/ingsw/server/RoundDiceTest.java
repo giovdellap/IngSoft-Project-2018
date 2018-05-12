@@ -36,6 +36,8 @@ public class RoundDiceTest
     @Test
     public void checkAddException()
     {
+        boolean flag = false;
+
        try
        {
            testRD.addDie(testDie1);
@@ -43,31 +45,47 @@ public class RoundDiceTest
            try
            {
                testRD.addDie(testDie3);
-           } catch(FullDataStructureException e)
+           }
+
+           catch(FullDataStructureException e)
            {
-               Assertions.assertEquals(e.getMessage(),"Data Structure full: cannot add");
+               if(e.getMessage().equals("Data Structure full: cannot add"))
+                   flag = true;
            }
        } catch(FullDataStructureException ex)
        {}
-    }
+
+
+        Assertions.assertEquals(true,flag);
+
+}
 
     @Test
     public void checkGetException() throws FullDataStructureException
     {
+        boolean flag = false;
         try
         {
             testRD.addDie(testDie1);
             testRD.addDie(testDie2);
             testRD.getDie(10);
-        } catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+        catch (InvalidIntArgumentException e)
+        {
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
     }
 
     @Test
     public void checkDelete() throws FullDataStructureException, InvalidIntArgumentException
     {
+        boolean flag= false;
+
         testRD.addDie(testDie1);
         testRD.addDie(testDie2);
         testRD.deleteDie(1);
@@ -76,23 +94,35 @@ public class RoundDiceTest
             testRD.getDie(1);
         } catch(InvalidIntArgumentException e)
         {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
         }
+
+        Assertions.assertEquals(true,flag);
 
     }
 
     @Test
     public void checkDeleteException() throws FullDataStructureException
     {
+        boolean flag= false;
         try
         {
             testRD.addDie(testDie1);
             testRD.addDie(testDie2);
             testRD.deleteDie(-3);
-        } catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+
+        catch (InvalidIntArgumentException e)
+        {
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
     }
 
     @Test

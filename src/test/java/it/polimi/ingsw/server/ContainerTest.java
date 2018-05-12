@@ -30,18 +30,29 @@ public class ContainerTest
             if(testVector[i]==null)
                 flag=false;
         }
+
         Assertions.assertEquals(true, flag);
     }
 
     @Test
     public void checkInvalidThrow()
     {
+        boolean flag = false;
+
         try {
+
             testVector = container.throwDice(12);
-        } catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+
+        catch (InvalidIntArgumentException e)
+        {
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
     }
 
     //COLORI: 1 GIALLO/2 ROSSO/3 VERDE/4 BLU/ 5 VIOLA

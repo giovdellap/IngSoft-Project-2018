@@ -56,15 +56,23 @@ public class RoundTrackTest
     @Test
     public void checkReturnNException() throws InvalidIntArgumentException
     {
+        boolean flag = false;
+
         testRT.addRound(testRD1);
         testRT.addRound(testRD2);
         try
         {
             testRT.returnNTurnRoundDice(4);
-        } catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+        catch (InvalidIntArgumentException e)
+        {
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
     }
 
     @Test
@@ -79,15 +87,23 @@ public class RoundTrackTest
     @Test
     public void checkSpecificSetException() throws InvalidIntArgumentException
     {
+        boolean flag = false;
+
         testRT.addRound(testRD1);
         testRT.addRound(testRD2);
         try
         {
             testRT.setSpecificRoundDice(testRD2,5);
-        } catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+        catch (InvalidIntArgumentException e)
+        {
+            if (e.getMessage().equals("The int argument is invalid"))
+                flag = true;
+
+        }
+
+        Assertions.assertEquals(true,flag);
+
     }
 
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ public class SchemesDeckTest {
 
 
         @BeforeEach
-        public void setUp() {
+        public void setUp() throws InvalidIntArgumentException {
 
             testDeck = new SchemesDeck();
             random = (int)(Math.random()*11+1);
