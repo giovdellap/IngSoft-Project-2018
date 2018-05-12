@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/*
 public class DraftPoolTest
 {
     private DraftPool testDP;
@@ -17,28 +18,44 @@ public class DraftPoolTest
         players=3;
         dim=players*2+1;
         testDP = new DraftPool(players);
+
     }
 
     @Test
-    public void testInitialUpdate()
-    {
+    public void testUpdateNoDice() {
+
+        for(int i=0;i<dim;i++) {
+            testDP.pickUpDie(i);
+
+        }
         boolean flag = true;
-        System.out.println("Check 1");
-        Die tempDie = new Die(0);
-        System.out.println("Check 2");
+        testDP.updateDraftNoDice();
+        Die[] temp = new Die[dim];
         for(int i=0;i<dim;i++)
         {
-            System.out.println("Check 3");
-            tempDie=testDP.returnDie(i);
-            System.out.println("Check 4");
-
-            if(tempDie==null)
+            temp[i] = testDP.returnDie(i);
+            testDP.pickUpDie(i);
+        }
+        for(int i=0;i<dim;i++)
+        {
+            if(temp[i]==null)
                 flag=false;
-            if(tempDie.getColor()<1||tempDie.getColor()>5)
+            if(temp[i].getValue()<1||temp[i].getValue()>6)
                 flag=false;
-            if(tempDie.getValue()<1||tempDie.getValue()>6)
+            if(temp[i].getColor()<1||temp[i].getColor()>5)
+                flag=false;
+            if(testDP.returnDie(i)!=null)
                 flag=false;
         }
         Assertions.assertEquals(true, flag);
+
+    }
+
+    @Test
+    public void checkReturnDie()
+    {
+        Die tempDie = testDP.returnDie(0);
+        Assertions.assertEquals(null, tempDie);
     }
 }
+*/

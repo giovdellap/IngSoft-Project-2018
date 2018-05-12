@@ -36,4 +36,12 @@ public class Die
         return value;
     }
 
+    public boolean isDisabled()
+    {
+        if(getValue()==0)
+            return true;
+        else
+            return false;
+    }
+
 }

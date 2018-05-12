@@ -16,6 +16,8 @@ public class ServerPlayer extends Thread
     private String tempArg="";
     private String msg;
     private int numPlayers=1;
+    private boolean firstPlayerHasDone;
+    private String[] usernameVector;
 
     public ServerPlayer(Socket s, int n)
     {
@@ -25,6 +27,24 @@ public class ServerPlayer extends Thread
             this.id=n;
             this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
+            this.start();
+
+        } catch(Exception ex)
+        {
+            System.out.println("Exception ex");
+        }
+    }
+
+    public ServerPlayer(Socket s, int n, String[] usernames)
+    {
+        try {
+            System.out.println("ServerPlayer 2 check");
+            this.socket = s;
+            this.id=n;
+            this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
+            usernameVector=new String[usernames.length];
+            usernameVector=usernames;
             this.start();
 
         } catch(Exception ex)
@@ -61,19 +81,15 @@ public class ServerPlayer extends Thread
                     System.out.println("check 10");
                     outSocket.println("<confirm>$username$");
                     outSocket.flush();
-                    //TO INSERT: add username to playerlist
                 }
             }
 
             while(numPlayers==1)
             {
                 outSocket.println("<insert>$numplayers$");
-                System.out.println("Check a");
                 outSocket.flush();
                 msg = inSocket.readLine();
-                System.out.println("Check b");
                 simpleDecode(msg);
-                System.out.println("Check c");
                 if(tempCmd.equals("numplayers"))
                 {
                     System.out.println("Check d");
@@ -82,6 +98,7 @@ public class ServerPlayer extends Thread
                     if(n>1&&n<5)
                         numPlayers=n;
                 }
+                firstPlayerHasDone=true;
             }
 
 
@@ -132,11 +149,51 @@ public class ServerPlayer extends Thread
 
     public void initializeN()
     {
+        try {
+            outSocket.println("<player>$1$");
+            outSocket.flush();
 
+            while(username=="")
+            {
+                outSocket.println("<insert>$username$");
+                outSocket.flush();
+                msg = inSocket.readLine();
+                simpleDecode(msg);
+                System.out.println("check 13");
+                if (tempCmd.equals("username"))
+                {
+                    System.out.println("check 11");
+
+                    username = tempArg;
+                    System.out.println("check 10");
+                    outSocket.println("<confirm>$username$");
+                    outSocket.flush();
+                }
+
+                wait();
+            }
+        } catch(Exception e) {
+            try {
+                System.out.println("Exception e");
+                socket.close();
+                System.out.println("Socket closed");
+            } catch(Exception ex)
+            {}
+        }
     }
 
     public int getNumPlayers()
     {
         return numPlayers;
+    }
+
+    public boolean hasFPDone()
+    {
+        return firstPlayerHasDone;
+    }
+
+    public String getUsername()
+    {
+        return username;
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
 import java.util.*;
 
 public class DiceContainer {
@@ -18,8 +20,10 @@ public class DiceContainer {
         }
     }
 
-    public Die[] throwDice(int n) {
+    public Die[] throwDice(int n) throws InvalidIntArgumentException {
         // tira n dadi dal sacchetto
+        if(n<1||n>9)
+            throw new InvalidIntArgumentException();
         Die[] tempVector = new Die[n];
         boolean flag = false;
         Die tempDie;
@@ -27,7 +31,7 @@ public class DiceContainer {
         for (int i = 0; i < n; i++) {
             while (!flag) {
                 index = (int)(Math.random() * 90);
-                if (dice[index].getValue()!=0)
+                if (!dice[index].isDisabled())
                     flag = true;
             }
             tempDie = dice[index];

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
 public class RoundTrack
 {
     private RoundDice[] roundVector;
@@ -11,9 +14,10 @@ public class RoundTrack
         index=0;
     }
 
-    public void addRound(RoundDice temp, int dim)
+    public void addRound(RoundDice temp) throws InvalidIntArgumentException
     {
-        roundVector[index]= new RoundDice(dim);
+
+        roundVector[index]= new RoundDice(temp.returnDim());
         roundVector[index]=temp;
         index++;
     }
@@ -23,13 +27,17 @@ public class RoundTrack
         return index;
     }
 
-    public RoundDice returnNTurnRoundDice(int turn)
+    public RoundDice returnNTurnRoundDice(int turn) throws InvalidIntArgumentException
     {
+        if(turn<0||turn>=index)
+            throw new InvalidIntArgumentException();
         return roundVector[turn];
     }
 
-    public void setSpecificRoundDice(RoundDice toSet, int turn)
+    public void setSpecificRoundDice(RoundDice toSet, int turn) throws InvalidIntArgumentException
     {
+        if(turn<0||turn>=index)
+            throw new InvalidIntArgumentException();
         roundVector[turn] = toSet;
     }
 }
