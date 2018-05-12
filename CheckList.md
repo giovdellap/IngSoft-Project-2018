@@ -1,6 +1,6 @@
 ###TEST CHECKLIST 0.9
 
-### public/private objectives missing
+public/private objectives missing
 
 Die:
 - [x] checkColor
