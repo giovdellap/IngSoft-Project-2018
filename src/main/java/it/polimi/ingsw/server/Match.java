@@ -30,6 +30,7 @@ public class Match
         System.out.println("check intermedio");
         for(int i=1;i<numPlayers;i++)
             server.initializeNPS();
+        server.initialization1Phase2();;
         System.out.println("check 4");
 
 

@@ -36,7 +36,7 @@ public class DieTest
     public void checkDisabling()
     {
         die.disableDie();
-        Assertions.assertEquals(0, die.getColor());
+        Assertions.assertEquals(0, die.getValue());
     }
 
 }

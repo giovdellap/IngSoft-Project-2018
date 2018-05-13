@@ -27,14 +27,14 @@ public class SchemesDeckTest {
     @Test
     public void checkForDifferentID() throws InvalidIntArgumentException {
 
-            boolean flag=false;
-            testTempDeck = testDeck.extractSchemes(random);
+            boolean flag=true;
+            testTempDeck = testDeck.extractSchemes(6);
 
         for(int i=0; i<testTempDeck.length-1;i++) {
             for (int j = 0; j < testTempDeck.length; j++) {
-
-                if (testTempDeck[i].getID() != testTempDeck[j].getID())
-                    flag=true;
+                if(i!=j)
+                    if (testTempDeck[i].getID() == testTempDeck[j].getID())
+                        flag=false;
 
             }
         }
@@ -66,9 +66,9 @@ public class SchemesDeckTest {
     public void checkExtractSchemesID() throws InvalidIntArgumentException {
 
             boolean flag = true;
-            testTempDeck = testDeck.extractSchemes(random);
+            testTempDeck = testDeck.extractSchemes(6);
 
-            for(int i=0;i<random;i++) {
+            for(int i=0;i<6;i++) {
 
                 if(testTempDeck[i]!=testDeck.extractSchemebyID(testTempDeck[i].getID()))
                     flag = false;

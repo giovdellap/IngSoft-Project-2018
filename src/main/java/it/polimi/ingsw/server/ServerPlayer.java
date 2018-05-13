@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import java.io.*;
 import java.net.Socket;
 import java.lang.StringBuilder.*;
+import java.util.ArrayList;
 
 public class ServerPlayer extends Thread
 {
@@ -17,7 +18,7 @@ public class ServerPlayer extends Thread
     private String msg;
     private int numPlayers=1;
     private boolean firstPlayerHasDone;
-    private String[] usernameVector;
+    private ArrayList<String> tempNames;
 
     public ServerPlayer(Socket s, int n)
     {
@@ -37,7 +38,7 @@ public class ServerPlayer extends Thread
         }
     }
 
-    public ServerPlayer(Socket s, int n, String[] usernames)
+    public ServerPlayer(Socket s, int n, ArrayList<String> tempArr)
     {
         try {
             System.out.println("ServerPlayer 2 check");
@@ -45,8 +46,7 @@ public class ServerPlayer extends Thread
             this.id=n;
             this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
-            usernameVector=new String[usernames.length];
-            usernameVector=usernames;
+            tempNames = tempArr;
 
         } catch(Exception ex)
         {
@@ -153,20 +153,12 @@ public class ServerPlayer extends Thread
                 System.out.println("check 13");
                 if (tempCmd.equals("username"))
                 {
-                    System.out.println("check 11");
-                    if(checkExistingName()) {
-                        System.out.println("check secondo if");
-                        username = tempArg;
-                        System.out.println("check username = tempArg");
-                        outSocket.println("<confirm>$username$");
-                        outSocket.flush();
-                    }
-                        System.out.println("check 10");
+                    if(checkExistingName())
+                        username=tempArg;
                 }
-                outSocket.println("<wait>$players$");
-
-
             }
+            outSocket.println("<wait>$players$");
+
 
         } catch(Exception e) {
             try {
@@ -185,7 +177,6 @@ public class ServerPlayer extends Thread
         outSocket.flush();
         outSocket.println("<id>$"+Integer.toString(id)+"$");
         outSocket.flush();
-
 
     }
 
@@ -207,15 +198,32 @@ public class ServerPlayer extends Thread
 
     public boolean checkExistingName()
     {
+        int i=0;
+        boolean flag=true;
         System.out.println("Check existing name 1");
         //checks the username is not already in use
+        while(i<tempNames.size())
+        {
+            if(tempNames.get(i)==tempArg)
+                flag=false;
+            i++;
+        }
+        return flag;
+
+    }
+
+    public void sendPlayersUsernames(String[] temp)
+    {
+        numPlayers=temp.length;
         for(int i=0;i<numPlayers;i++)
         {
-            System.out.println("for"+Integer.toString(i));
-            if (usernameVector[i]==tempArg)
-                return false;
+            if(id!=i+1) {
+                outSocket.println("<player>$" + Integer.toString(i + 1) + "$");
+                outSocket.flush();
+                outSocket.println("<username>$"+temp[i]+"$");
+                outSocket.flush();
+            }
         }
-        return true;
     }
 
 

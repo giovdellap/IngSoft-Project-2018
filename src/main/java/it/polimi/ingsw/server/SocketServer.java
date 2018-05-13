@@ -35,7 +35,6 @@ public class SocketServer implements ConnectionServer {
         System.out.println("Client "+Integer.toString(counter)+" connected");
         players.add(new ServerPlayer(generalSocket, counter));
         System.out.println(players.get(0).getUsername());
-        counter++;
 
         players.get(0).initializeFirst();
         numPlayers=players.get(0).getNumPlayers();
@@ -47,14 +46,30 @@ public class SocketServer implements ConnectionServer {
         return numPlayers;
     }
 
-    public void initializeNPS() throws IOException {
-        serverSocket = new ServerSocket(PORT+counter-1);
+    public void initializeNPS() throws IOException
+    {
+        ArrayList<String> nameplayers = new ArrayList<String>();
+        for(int i=0;i<counter;i++)
+        {
+            nameplayers.add(players.get(i).getUsername());
+        }
+        serverSocket = new ServerSocket(PORT+counter);
         generalSocket = serverSocket.accept();
         System.out.println("Client "+Integer.toString(counter)+" connected");
-        players.add(new ServerPlayer(generalSocket, counter, playersNames));
-        players.get(counter-1).initializeN();
+        players.add(new ServerPlayer(generalSocket, counter, nameplayers));
+        players.get(counter).initializeN();
         counter++;
     }
+
+    public void initialization1Phase2()
+    {
+        playersNames = new String[numPlayers];
+        for(int i=0;i<numPlayers;i++)
+        {
+            players.get(i).sendPlayersUsernames(playersNames);
+        }
+    }
+
     public void sendPrivObj(int player, int id)
     {
 
