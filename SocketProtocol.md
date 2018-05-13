@@ -23,80 +23,79 @@ Private Objective with ID 3 is assigned to the player<br />
 
 ------------------------------------------
 
-Glossary
+Glossary<br />
 
-CMD:
-wait: server waiting for something to be done
-insert: server waiting for something to be send from the client
-        expects a response with is Arg as Cmd
-confirm: Server confirmation
-player: preceeds everything about other players
-ARG:
-
-
-------------------------------------------
-
-Protocol Rules:
-
-The client confirms only in case of many messages in the round phase
-Every info about other players has to be preceded by <player>$n$
-Everything send to be confirmed by server needs a confirm ack
+CMD:<br />
+wait: server waiting for something to be done<br />
+insert: server waiting for something to be send from the client<br />
+        expects a response with is Arg as Cmd<br />
+confirm: Server confirmation<br />
+player: preceeds everything about other players<br />
+ARG:<br />
 
 ------------------------------------------
 
-INITIALIZATION 1
+Protocol Rules:<br />
 
-From the beginning to when all client are initilized and ready to receive datas
+The client confirms only in case of many messages in the round phase<br />
+Every info about other players has to be preceded by <player>$n$<br />
+Everything send to be confirmed by server needs a confirm ack<br />
 
-PLAYER 1:
+------------------------------------------
 
-S: <player>$1$
-S: <insert>$username$
-C: <username>$bob$
-S: <confirm>$username$
-S: <insert>$numplayers$
-C: <numplayers>$n$
-S: <confirm>$numplayers$
-S: <wait>$players$
+INITIALIZATION 1<br />
+
+From the beginning to when all client are initilized and ready to receive datas<br />
+
+PLAYER 1:<br />
+
+S: <player>$1$<br />
+S: <insert>$username$<br />
+C: <username>$bob$<br />
+S: <confirm>$username$<br />
+S: <insert>$numplayers$<br />
+C: <numplayers>$n$<br />
+S: <confirm>$numplayers$<br />
+S: <wait>$players$<br />
 
 
-PLAYER N:
+PLAYER N:<br />
 
-S: <player>$n$
-S: <insert>$username$
-C: <username>$bob$
-S: <insert>$username$
-C: <username>$alan$
-S: <confirm>$username$
-S: <wait>$players$
+S: <player>$n$<br />
+S: <insert>$username$<br />
+C: <username>$bob$<br />
+S: <insert>$username$<br />
+C: <username>$alan$<br />
+S: <confirm>$username$<br />
+S: <wait>$players$<br />
 
 ---------------------------------------
 
-INITIALIZATION 2
+INITIALIZATION 2<br />
 
-S: <privobj>$id$
-S: <scheme>$id1$
-S: <scheme>$id2$
+S: <privobj>$id$<br />
+S: <scheme>$id1$<br />
+S: <scheme>$id2$<br />
 
-n times:
-S: <scoremarker>$index$
-S: <index>$id$
+n times:<br />
+S: <scoremarker>$index$<br />
+S: <index>$id$<br />
 
-3 times:
-S: <pubobj>$id$
-//here you don't need 2 phases communication because order is not relevant
+3 times:<br />
+S: <pubobj>$id$<br />
+//here you don't need 2 phases communication because order is not relevant<br />
 
-C: <scheme>$id$
-C: <fb>$1||2$
-S: <favtokens>$num$
+C: <scheme>$id$<br />
+C: <fb>$1||2$<br />
+S: <favtokens>$num$<br />
 
-S: <wait>$players$
+S: <wait>$players$<br />
 
 --------------------------------------
 
-INITIALIZATION 2: PHASE 2
-Everyone has chosen his schemecard
+INITIALIZATION 2: PHASE 2<br />
+Everyone has chosen his schemecard<br />
 
-S: <player>$id$
-S: <scheme>$id$
-S: <fb>$1||2$
+S: <player>$id$<br />
+S: <scheme>$id$<br />
+S: <fb>$1||2$<br />
