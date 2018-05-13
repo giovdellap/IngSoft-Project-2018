@@ -18,7 +18,8 @@ public class ServerPlayer extends Thread
     private String msg;
     private int numPlayers=1;
     private boolean firstPlayerHasDone;
-    private ArrayList<String> tempNames;
+    private String[] tempNames;
+    private String[] playerNames;
 
     public ServerPlayer(Socket s, int n)
     {
@@ -38,7 +39,7 @@ public class ServerPlayer extends Thread
         }
     }
 
-    public ServerPlayer(Socket s, int n, ArrayList<String> tempArr)
+    public ServerPlayer(Socket s, int n, String[] tempArr)
     {
         try {
             System.out.println("ServerPlayer 2 check");
@@ -46,7 +47,10 @@ public class ServerPlayer extends Thread
             this.id=n;
             this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
+            System.out.println("check pd1");
+            tempNames = new String[tempArr.length];
             tempNames = tempArr;
+            System.out.println("check pd2");
 
         } catch(Exception ex)
         {
@@ -141,7 +145,7 @@ public class ServerPlayer extends Thread
     public void initializeN()
     {
         try {
-            outSocket.println("<player>$1$");
+            outSocket.println("<player>$"+Integer.toString(id+1)+"$");
             outSocket.flush();
 
             while(username=="")
@@ -153,8 +157,12 @@ public class ServerPlayer extends Thread
                 System.out.println("check 13");
                 if (tempCmd.equals("username"))
                 {
-                    if(checkExistingName())
-                        username=tempArg;
+                    System.out.println("check first if");
+                    if(checkExistingName()) {
+                        System.out.println("check secondo if");
+                        username = tempArg;
+                        System.out.println("check username: "+username);
+                    }
                 }
             }
             outSocket.println("<wait>$players$");
@@ -171,7 +179,7 @@ public class ServerPlayer extends Thread
     }
 
 
-    public void setPrivateObj(int id)
+    public void sendPrivateObj(int id)
     {
         outSocket.println("<privateObj>$id$");
         outSocket.flush();
@@ -198,16 +206,21 @@ public class ServerPlayer extends Thread
 
     public boolean checkExistingName()
     {
-        int i=0;
         boolean flag=true;
         System.out.println("Check existing name 1");
         //checks the username is not already in use
-        while(i<tempNames.size())
+        for(int i=0;i<tempNames.length;i++)
         {
-            if(tempNames.get(i)==tempArg)
-                flag=false;
-            i++;
+            System.out.println("Check exname 2 i: "+Integer.toString(i));
+            System.out.println("tempNames["+Integer.toString(i)+"] = "+tempNames[i]);
+            System.out.println("tempArg = "+tempArg);
+            if(tempNames[i].equals(tempArg)) {
+                flag = false;
+                System.out.println("tempNames["+Integer.toString(i)+"] = "+tempNames[i]);
+                System.out.println("tempArg = "+tempArg);
+            }
         }
+        System.out.println("check exname before flag "+Boolean.toString(flag));
         return flag;
 
     }
@@ -215,16 +228,25 @@ public class ServerPlayer extends Thread
     public void sendPlayersUsernames(String[] temp)
     {
         numPlayers=temp.length;
+        playerNames=new String[numPlayers];
+        playerNames=temp;
         for(int i=0;i<numPlayers;i++)
         {
             if(id!=i+1) {
                 outSocket.println("<player>$" + Integer.toString(i + 1) + "$");
                 outSocket.flush();
-                outSocket.println("<username>$"+temp[i]+"$");
+                outSocket.println("<username>$"+playerNames[i]+"$");
                 outSocket.flush();
             }
         }
     }
+
+    public void sendScheme(int id)
+    {
+        outSocket.println("<scheme>$"+Integer.toString(id)+"$");
+        outSocket.flush();
+    }
+
 
 
 

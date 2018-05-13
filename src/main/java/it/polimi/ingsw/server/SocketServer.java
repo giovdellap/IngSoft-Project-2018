@@ -10,7 +10,7 @@ import java.util.List;
 public class SocketServer implements ConnectionServer {
 
     public static int PORT = 7777;
-    private int counter=1;
+    private int counter=0;
     private boolean firstPlayerHasDone=false;
     private ArrayList<ServerPlayer> players;
     private int numPlayers=1;
@@ -22,7 +22,7 @@ public class SocketServer implements ConnectionServer {
 
     public SocketServer()
     {
-        ServerSocket serverSocket = null;
+        //ServerSocket serverSocket = null;
         players=new ArrayList<ServerPlayer>();
 
 
@@ -43,21 +43,23 @@ public class SocketServer implements ConnectionServer {
         playersNames[0]=players.get(0).getUsername();
         for(int i=1;i<numPlayers;i++)
             playersNames[i]="";
+        counter++;
         return numPlayers;
     }
 
     public void initializeNPS() throws IOException
     {
-        ArrayList<String> nameplayers = new ArrayList<String>();
+        String[] temp = new String[counter];
         for(int i=0;i<counter;i++)
         {
-            nameplayers.add(players.get(i).getUsername());
+            temp[i]=playersNames[i];
         }
         serverSocket = new ServerSocket(PORT+counter);
         generalSocket = serverSocket.accept();
         System.out.println("Client "+Integer.toString(counter)+" connected");
-        players.add(new ServerPlayer(generalSocket, counter, nameplayers));
+        players.add(new ServerPlayer(generalSocket, counter, temp));
         players.get(counter).initializeN();
+        playersNames[counter]=players.get(counter).getUsername();
         counter++;
     }
 
@@ -72,11 +74,13 @@ public class SocketServer implements ConnectionServer {
 
     public void sendPrivObj(int player, int id)
     {
-
+        players.get(player).sendPrivateObj(id);
     }
 
-    public void sendSchemes(SchemeCard tempScheme, int player)
+    public void sendScheme(int player, int id1, int id2)
     {
+        players.get(player).sendScheme(id1);
+        players.get(player).sendScheme(id2);
 
     }
 
@@ -138,4 +142,8 @@ public class SocketServer implements ConnectionServer {
 
     }
 
+    public void sendSchemes(SchemeCard sc, int id)
+    {
+
+    }
 }

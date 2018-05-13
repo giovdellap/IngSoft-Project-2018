@@ -12,7 +12,11 @@ import org.junit.jupiter.api.TestFactory;
 public class PublicObjectiveTest {
 
     private PublicObjective publicObjectiveTest;
+    private PublicObjective toTest;
     private int bonusTest;
+    private SchemeCard sc1;
+    private SchemeCard sc2;
+    private SchemesDeck testSD;
 
     int idTest = (int)(Math.random()*9+1);
 
@@ -22,6 +26,11 @@ public class PublicObjectiveTest {
 
         publicObjectiveTest = new PublicObjective(idTest);
         bonusTest = publicObjectiveTest.getBonus();
+        testSD = new SchemesDeck();
+
+        sc1=testSD.extractSchemebyID(1);
+        sc1.setfb(1);
+
 
     }
 
@@ -55,7 +64,7 @@ public class PublicObjectiveTest {
 
         Assertions.assertEquals(true,publicObjectiveTest.getBonus()==bonusTest);
     }
-
+/*
     @Test
     public void checkSetBonus() {
 
@@ -63,7 +72,7 @@ public class PublicObjectiveTest {
         Assertions.assertEquals(true,bonusTest==bonusTest2);
 
     }
-
+*/
     @Test
     public void checkDisabledPublicObjective() {
 
@@ -84,6 +93,8 @@ public class PublicObjectiveTest {
 
 
     }
+
+
 
 
 }

@@ -24,7 +24,6 @@ public class DiceContainer {
         // tira n dadi dal sacchetto
         if(n<1||n>9)
             throw new InvalidIntArgumentException();
-
         Die[] tempVector = new Die[n];
         boolean flag = false;
         Die tempDie;

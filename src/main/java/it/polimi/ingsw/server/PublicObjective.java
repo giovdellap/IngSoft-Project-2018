@@ -17,7 +17,7 @@ public class PublicObjective
             throw new InvalidIntArgumentException();
 
         this.id=id;
-        this.bonus=setBonus();
+        this.bonus=0;
 
     }
 
@@ -46,10 +46,10 @@ public class PublicObjective
     }
 
 
-    public int setBonus() {
+    public int setBonus(SchemeCard scheme) throws InvalidIntArgumentException {
 
         if (id==1) {
-            this.bonus = 6;
+            bonus = calculateOne(scheme);
         }
 
         if (id==2) {
@@ -102,5 +102,96 @@ public class PublicObjective
 
         return list;
 
+        }
+
+
+    private int calculateOne(SchemeCard scheme) throws InvalidIntArgumentException {
+
+        SchemeCard tempScheme = scheme;
+        int bonus = 0;
+        int[] temp = new int[5];
+
+        for(int i=0;i<4;i++)
+        {
+            for(int j=0;j<5;j++)
+            {
+                temp[j]=1;
+            }
+
+            boolean flag=true;
+
+            for(int k=0;k<5;k++)
+            {
+                if(temp[scheme.getDie(i,k).getColor()-1]==0)
+                    flag = false;
+
+                temp[scheme.getDie(i,k).getColor()-1]=0;
+            }
+
+            if(flag)
+                bonus=bonus+6;
+
+        }
+
+        return bonus;
+    }
+
+    private int calculateTwo(SchemeCard scheme) throws InvalidIntArgumentException {
+        int bonus=0;
+        int[] temp = new int[5];
+        for(int i=0;i<5;i++)
+        {
+            for(int j=0;j<4;j++)
+                temp[j]=1;
+            for(int z=0;z<4;z++)
+                temp[scheme.getDie(i,z).getColor()-1]=0;
+            int check=2;
+            for(int j=0;j<4;j++)
+                if(temp[j]==1)
+                    check--;
+            if(check==1)
+                bonus=bonus+5;
+        }
+        return bonus;
+    }
+
+    private int calculateThree(SchemeCard scheme) throws InvalidIntArgumentException {
+        int bonus=0;
+        int[] temp = new int[6];
+        for(int i=0;i<4;i++)
+        {
+            for(int j=0;j<6;j++)
+                temp[j]=1;
+            for(int j=0;j<5;j++)
+                temp[scheme.getDie(i,j).getValue()-1]=0;
+            int test=2;
+            for(int j=0;j<6;j++)
+                if(temp[j]==1)
+                    test--;
+            if(test==1)
+                bonus=bonus+5;
+        }
+        return bonus;
+    }
+
+    private int calculateFour(SchemeCard scheme) throws InvalidIntArgumentException {
+        int bonus=0;
+        int[] temp = new int[6];
+        for(int i=0;i<5;i++)
+        {
+            for(int j=0;j<6;j++)
+                temp[j]=1;
+            for(int j=0;j<4;j++)
+                temp[scheme.getDie(j,i).getValue()-1]=0;
+            int test=3;
+            for(int j=0;j<6;j++)
+                if(temp[j]==1)
+                    test--;
+            if(test==1)
+                bonus=bonus+4;
+        }
+        return bonus;
     }
 }
+
+

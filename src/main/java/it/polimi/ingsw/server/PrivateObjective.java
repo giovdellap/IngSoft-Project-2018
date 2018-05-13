@@ -3,30 +3,20 @@ import java.util.*;
 
 
 public class PrivateObjective {
-    private int id;
     private int color;
 
-    public PrivateObjective(int id, int color) {
+    public PrivateObjective(int num) {
 
-        this.id = id;
-        this.color = color;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        color = num;
     }
 
     public int getColor() {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public int calculateBonus(SchemeCard toCalc)
+    {
+        return 0;
     }
 
 
