@@ -1,61 +1,93 @@
 package it.polimi.ingsw.server;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import org.junit.jupiter.api.*;
 
-/*
+
 public class DraftPoolTest
 {
     private DraftPool testDP;
-    private RoundDice testRD;
     int players;
     int dim;
+    Die tempDie;
+    Die tempDie2;
+    RoundDice testRoudDice;
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() throws InvalidIntArgumentException {
         players=3;
-        dim=players*2+1;
+        dim=(players*2)+1;
         testDP = new DraftPool(players);
+        tempDie=new Die(0);
+        tempDie2=new Die(1);
+        testRoudDice= new RoundDice(1);
+
 
     }
 
     @Test
-    public void testUpdateNoDice() {
+    public void checkReturnDie() throws InvalidIntArgumentException {
+        tempDie = testDP.returnDie(1);
+        Assertions.assertEquals(false, tempDie.isDisabled());
+    }
 
-        for(int i=0;i<dim;i++) {
-            testDP.pickUpDie(i);
+    @Test
+    public void checkReturnException1(){
+        try {
+            tempDie=testDP.returnDie(-2);
+        }
+        catch (InvalidIntArgumentException e)
+        {
+            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
+        }
+    }
 
+    @Test
+    public void checkPickUpDie() {
+        try {
+            testDP.pickUpDie(3);
+            testDP.returnDie(3);
         }
-        boolean flag = true;
-        testDP.updateDraftNoDice();
-        Die[] temp = new Die[dim];
-        for(int i=0;i<dim;i++)
+        catch (InvalidIntArgumentException e)
         {
-            temp[i] = testDP.returnDie(i);
-            testDP.pickUpDie(i);
+            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
-        for(int i=0;i<dim;i++)
+    }
+    @Test
+    public void checkPickUpException(){
+        try {
+            testDP.pickUpDie(12);
+        }
+        catch (InvalidIntArgumentException e)
         {
-            if(temp[i]==null)
-                flag=false;
-            if(temp[i].getValue()<1||temp[i].getValue()>6)
-                flag=false;
-            if(temp[i].getColor()<1||temp[i].getColor()>5)
-                flag=false;
-            if(testDP.returnDie(i)!=null)
-                flag=false;
+            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+    }
+    @Test
+    public void checkupdateDraftDice() throws InvalidIntArgumentException, FullDataStructureException {
+
+        boolean flag=true;
+
+        testDP.pickUpDie(1);
+        testDP.pickUpDie(2);
+        testDP.pickUpDie(3);
+        testDP.pickUpDie(4);
+        testDP.pickUpDie(5);
+
+        tempDie=testDP.returnDie(0);
+        tempDie2=testDP.returnDie(6);
+
+        testDP.updateDraftDice();
+
+
+        if (!tempDie2.equals(testRoudDice.getDie(0))) flag=false;
+        if (!tempDie.equals(testRoudDice.getDie(1))) flag=false;
+
         Assertions.assertEquals(true, flag);
 
+
+
     }
 
-    @Test
-    public void checkReturnDie()
-    {
-        Die tempDie = testDP.returnDie(0);
-        Assertions.assertEquals(null, tempDie);
-    }
 }
-*/
