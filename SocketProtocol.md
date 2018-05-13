@@ -3,23 +3,23 @@
 
 ------------------------------------------
 
-4 SEPARATED MACRO-PHASES:
+4 SEPARATED MACRO-PHASES:<br />
 
-1) INITIALIZATION 1
-2) INITIALIZATION 2
-3) ROUND
-4) END OF THE GAME
+1) INITIALIZATION 1<br />
+2) INITIALIZATION 2<br />
+3) ROUND<br />
+4) END OF THE GAME<br />
 
 ------------------------------------------
 
 Communication String's structure:
 
-<Cmd>$Arg$
-Cmd = what is passed
-Arg = data
+<Cmd>$Arg$<br />
+Cmd = what is passed<br />
+Arg = data<br />
 Ex.:
-<privobj>$3$
-Private Objective with ID 3 is assigned to the player
+<privobj>$3$<br />
+Private Objective with ID 3 is assigned to the player<br />
 
 ------------------------------------------
 
