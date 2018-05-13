@@ -24,8 +24,8 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  CMD:
   wait: server waiting for something to be done
-  insert: server waiting for something to be send from the client
-          expects a response with is Arg as Cmd
+  insert: server waiting for something to be sent from the client
+          server expects a response with Server's Arg as Client's Cmd
   confirm: Server confirmation
   player: preceeds everything about other players
  ARG:
@@ -37,13 +37,13 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  The client confirms only in case of many messages in the round phase
  Every info about other players has to be preceded by <player>$n$
- Everything send to be confirmed by server needs a confirm ack
+ Everything sent to be confirmed by server needs a confirm ack
 
 ------------------------------------------
 
  INITIALIZATION 1
 
- From the beginning to when all client are initilized and ready to receive datas
+ From the beginning to when all client are initilized and ready to receive data
 
  PLAYER 1:
 
@@ -89,7 +89,7 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  3 times:
  S: <pubobj>$id$
- //here you don't need 2 phases communication because order is not relevant
+ //here you don't need 2 communication phases because order is not relevant
 
  C: <scheme>$id$
  C: <fb>$1||2$
