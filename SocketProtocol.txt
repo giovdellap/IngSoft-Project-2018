@@ -66,6 +66,14 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  C: <username>$alan$
  S: <confirm>$username$
  S: <wait>$players$
+ 
+ ---------------------------------------
+ 
+ INITIALIZATION 1: PHASE 2
+ 
+ n times:
+ S: <player>$$
+ S: <username>$jon doe$
 
  ---------------------------------------
 
