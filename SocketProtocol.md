@@ -49,7 +49,7 @@ From the beginning to when all client are initilized and ready to receive datas<
 
 PLAYER 1:<br />
 
-S: <player>$1$<br />
+<p>S: <player>$1$</p><br />
 S: <insert>$username$<br />
 C: <username>$bob$<br />
 S: <confirm>$username$<br />
