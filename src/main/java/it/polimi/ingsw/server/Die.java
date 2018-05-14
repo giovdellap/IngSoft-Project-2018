@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
 import java.util.*;
 
 public class Die
@@ -42,6 +44,11 @@ public class Die
             return true;
         else
             return false;
+    }
+
+    public void setValueTest(int n) throws InvalidIntArgumentException {
+        if (n<0||n>6)throw new InvalidIntArgumentException();
+        value=n;
     }
 
 }
