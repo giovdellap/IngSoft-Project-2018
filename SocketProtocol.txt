@@ -94,7 +94,6 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: <insert>$scheme$
  C: <scheme>$id$
  C: <fb>$1||2$
- S: <favtokens>$num$
 
  S: <wait>$players$
 
@@ -106,3 +105,4 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: <player>$id$
  S: <scheme>$id$
  S: <fb>$1||2$
+ S: <favtokens>$tokens$
