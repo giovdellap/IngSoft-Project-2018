@@ -74,5 +74,18 @@ SchemesDeck
 - [X] checkExtractSchemesID
 - [X] checkExtractSchemesIDException
 
+DraftPool
+- [X] checkReturnDie
+- [X] checkReturnException
+- [X] checkPickUpDie
+- [X] checkPickUpException
+- [X] checkupdateDraftDice
+- [X] checkReplaceDie
+- [X] checkReplaceDieException1
+- [X] checkReplaceDieException2
+- [X] checkReplaceDieException3
+- [X] checkReplaceDieException4
+
+
 Planning to extend branch coverage by new extended parameters(checks should be right, aren't them?)
 Private and public objectives will come very soon
