@@ -1,12 +1,13 @@
-###TEST CHECKLIST 0.9
+###TEST CHECKLIST 1.0
 
-public/private objectives missing
 
 Die:
 - [x] checkColor
 - [X] checkValue
 - [X] checkThrow
 - [X] checkDisabling
+- [X] checkSetValueTest
+- [X] checkSetValueTestException
 
 DiceContainer:
 - [X] checkNotNull
@@ -90,5 +91,28 @@ PrivateObjective
 - [X] checkGetColor
 - [X] checkCalculateBonus
 
+PrivateObjectivesdeck
+- [X] checkExtract
+- [X] checkExtractException
+
+PublicObjectives
+- [X] checkGetID
+- [X] checkInvalidIntArgumentException
+- [X] checkGetBonus
+- [X] checkDisablePublicObjective
+- [X] checkToString
+
+PublicObjectiveCalculationTest
+- [X] checkCalculateOne
+- [X] checkCalculateTwo
+- [X] checkCalculateThree
+- [X] checkCalculateFour
+- [X] checkCalculateFive
+- [X] checkCalculateSix
+- [X] checkCalculateSeven
+- [X] checkCalculateEight
+- [X] checkCalculateNine
+- [X] checkCalculateTen
+
 Planning to extend branch coverage by new extended parameters(checks should be right, aren't them?)
-Private and public objectives will come very soon
+
