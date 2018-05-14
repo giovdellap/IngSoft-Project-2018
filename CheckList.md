@@ -86,6 +86,9 @@ DraftPool
 - [X] checkReplaceDieException3
 - [X] checkReplaceDieException4
 
+PrivateObjective
+- [X] checkGetColor
+- [X] checkCalculateBonus
 
 Planning to extend branch coverage by new extended parameters(checks should be right, aren't them?)
 Private and public objectives will come very soon
