@@ -443,6 +443,45 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+    @Test
+    public void checkCalculateNine() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        publicObjectiveTest = new PublicObjective(9);
+
+        DieTest1 = new Die(1);
+        DieTest2 = new Die(1);
+        DieTest3 = new Die(1);
+        DieTest4 = new Die(1);
+
+        schemeTest.setDie(DieTest1,1,2);
+        schemeTest.setDie(DieTest2,1,4);
+        schemeTest.setDie(DieTest3,2,1);
+        schemeTest.setDie(DieTest4,2,3);
+
+
+        bonusTest = publicObjectiveTest.setBonus(schemeTest);
+
+        Assertions.assertEquals(4,bonusTest);
+
+    }
+
+    @Test
+    public void checkCalculateNineException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(9);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
 
     @Test
     public void checkCalculateTen() throws InvalidIntArgumentException, GenericInvalidArgumentException {

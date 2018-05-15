@@ -381,33 +381,42 @@ public class PublicObjective {
 
 
     private int calculateNine(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+        int bonus=0;
 
         if (scheme==null)
             throw new GenericInvalidArgumentException();
 
-        int bonus = 0;
+        SchemeCard temp = scheme;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        for(int x=0;x<4;x++)
+            for(int y=0;y<5;y++)
+            {
+                boolean flag=false;
+                if(!temp.getDie(x, y).isDisabled()) {
+                    int color=temp.getDie(x,y).getColor();
+                    if((x+1>-1&&x+1<5&&y-1>-1&&y-1<4&&(temp.getDie(x+1, y-1)!=null)&&(flag==false)&&color==temp.getDie(x+1,y-1).getColor())) {
+                        bonus++;
+                        flag=true;
+                    }
+                    if(x+1>-1&&x+1<5&&y+1>-1&&y+1<4&&(temp.getDie(x+1, y+1)!=null)&&flag==false&&color==temp.getDie(x+1,y+1).getColor())
+                    {
+                        flag=true;
+                        bonus++;
+                    }
+                    if(x-1>-1&&x-1<5&&y+1>-1&&y+1<4&&(temp.getDie(x-1, y+1)!=null)&&flag==false&&color==temp.getDie(x-1,y+1).getColor())
+                    {
+                        flag=true;
+                        bonus++;
+                    }
+                    if(x-1>-1&&x-1<5&&y-1>-1&&y-1<4&&(temp.getDie(x-1,y-1)!=null)&&flag==false&&color==temp.getDie(x-1,y-1).getColor())
+                    {
+                        flag=true;
+                        bonus++;
+                    }
+                    temp.getDie(x,y).disableDie();
+                }
+            }
         return bonus;
-
-
     }
 
 
