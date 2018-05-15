@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
+
 import java.io.*;
 import java.net.Socket;
 import java.lang.StringBuilder.*;
@@ -47,10 +50,8 @@ public class ServerPlayer extends Thread
             this.id=n;
             this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
-            System.out.println("check pd1");
             tempNames = new String[tempArr.length];
             tempNames = tempArr;
-            System.out.println("check pd2");
 
         } catch(Exception ex)
         {
@@ -58,7 +59,7 @@ public class ServerPlayer extends Thread
         }
     }
 
-
+    //INITIALIZATION 1
 
     public void initializeFirst() {
         try {
@@ -71,13 +72,9 @@ public class ServerPlayer extends Thread
                 outSocket.flush();
                 msg = inSocket.readLine();
                 simpleDecode(msg);
-                System.out.println("check 13");
                 if (tempCmd.equals("username"))
                 {
-                    System.out.println("check 11");
-
                     username = tempArg;
-                    System.out.println("check 10");
                     outSocket.println("<confirm>$username$");
                     outSocket.flush();
                 }
@@ -91,14 +88,14 @@ public class ServerPlayer extends Thread
                 simpleDecode(msg);
                 if(tempCmd.equals("numplayers"))
                 {
-                    System.out.println("Check d");
                     int n = Integer.parseInt(tempArg);
-                    System.out.println("Check e");
                     if(n>1&&n<5)
                         numPlayers=n;
                 }
 
             }
+            outSocket.println("<confirm>$numplayers$");
+            outSocket.flush();
             outSocket.println("<wait>$players$");
         } catch(Exception e) {
             try {
@@ -122,10 +119,8 @@ public class ServerPlayer extends Thread
             while (tempStr.charAt(index) != '>')
             {
                 tempCmd+=Character.toString(tempStr.charAt(index));
-                System.out.println(tempCmd);
                 index++;
             }
-            System.out.println(tempCmd);
             index++;
             if(tempStr.charAt(index)=='$');
             {
@@ -134,11 +129,8 @@ public class ServerPlayer extends Thread
                 {
                     tempArg+=Character.toString(tempStr.charAt(index));
                     index++;
-                    System.out.println(tempArg);
                 }
             }
-            System.out.println(tempArg);
-
         }
     }
 
@@ -154,14 +146,10 @@ public class ServerPlayer extends Thread
                 outSocket.flush();
                 msg = inSocket.readLine();
                 simpleDecode(msg);
-                System.out.println("check 13");
                 if (tempCmd.equals("username"))
                 {
-                    System.out.println("check first if");
                     if(checkExistingName()) {
-                        System.out.println("check secondo if");
                         username = tempArg;
-                        System.out.println("check username: "+username);
                     }
                 }
             }
@@ -177,17 +165,6 @@ public class ServerPlayer extends Thread
             {}
         }
     }
-
-
-    public void sendPrivateObj(int id)
-    {
-        outSocket.println("<privateObj>$id$");
-        outSocket.flush();
-        outSocket.println("<id>$"+Integer.toString(id)+"$");
-        outSocket.flush();
-
-    }
-
 
     public int getNumPlayers()
     {
@@ -207,22 +184,12 @@ public class ServerPlayer extends Thread
     public boolean checkExistingName()
     {
         boolean flag=true;
-        System.out.println("Check existing name 1");
         //checks the username is not already in use
         for(int i=0;i<tempNames.length;i++)
-        {
-            System.out.println("Check exname 2 i: "+Integer.toString(i));
-            System.out.println("tempNames["+Integer.toString(i)+"] = "+tempNames[i]);
-            System.out.println("tempArg = "+tempArg);
-            if(tempNames[i].equals(tempArg)) {
+            if(tempNames[i].equals(tempArg))
                 flag = false;
-                System.out.println("tempNames["+Integer.toString(i)+"] = "+tempNames[i]);
-                System.out.println("tempArg = "+tempArg);
-            }
-        }
-        System.out.println("check exname before flag "+Boolean.toString(flag));
-        return flag;
 
+        return flag;
     }
 
     public void sendPlayersUsernames(String[] temp)
@@ -232,13 +199,23 @@ public class ServerPlayer extends Thread
         playerNames=temp;
         for(int i=0;i<numPlayers;i++)
         {
-            if(id!=i+1) {
-                outSocket.println("<player>$" + Integer.toString(i + 1) + "$");
-                outSocket.flush();
-                outSocket.println("<username>$"+playerNames[i]+"$");
-                outSocket.flush();
-            }
+            outSocket.println("<player>$" + Integer.toString(i + 1) + "$");
+            outSocket.flush();
+            outSocket.println("<username>$"+playerNames[i]+"$");
+            outSocket.flush();
+
         }
+    }
+
+    //INITIALIZATION 2
+
+    public void sendPrivateObj(int id)
+    {
+        outSocket.println("<privateObj>$id$");
+        outSocket.flush();
+        outSocket.println("<id>$"+Integer.toString(id)+"$");
+        outSocket.flush();
+
     }
 
     public void sendScheme(int id)
@@ -247,10 +224,52 @@ public class ServerPlayer extends Thread
         outSocket.flush();
     }
 
+    public void sendPubObjs(int id1, int id2, int id3)
+    {
+        outSocket.println("<pubobj>$"+Integer.toString(id1)+"$");
+        outSocket.flush();
+        outSocket.println("<pubobj>$"+Integer.toString(id2)+"$");
+        outSocket.flush();
+        outSocket.println("<pubobj>$"+Integer.toString(id3)+"$");
+        outSocket.flush();
+    }
 
+    public int[] receiveScheme() throws IOException, InvalidinSocketException
+    {
+        outSocket.println("<insert>$scheme$");
+        outSocket.flush();
+        int[] temp = new int[2];
+        msg=inSocket.readLine();
+        simpleDecode(msg);
 
+        if(Integer.parseInt(tempArg)<1||Integer.parseInt(tempArg)>12)
+            throw new InvalidinSocketException();
 
+        temp[0]=Integer.parseInt(tempArg);
+        msg=inSocket.readLine();
+        simpleDecode(msg);
 
+        if(Integer.parseInt(tempArg)!=1&&Integer.parseInt(tempArg)!=2)
+            throw new InvalidinSocketException();
+
+        temp[1]=Integer.parseInt(tempArg);
+        outSocket.println("<wait>$players$");
+        outSocket.flush();
+        return temp;
+    }
+
+    public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException {
+        for(int i=0;i<numPlayers;i++)
+        {
+            outSocket.println("<player>$"+Integer.toString(i+1)+"$");
+            outSocket.flush();
+            outSocket.println("<scheme>$"+Integer.toString(vect[i].getID())+"$");
+            outSocket.flush();
+            outSocket.println("<fb>$"+Integer.toString(vect[i].getfb())+"$");
+            outSocket.flush();
+            outSocket.println("<favtokens>$"+Integer.toString(vect[i].getDiff(vect[i].getfb())));
+        }
+    }
 
 }
 

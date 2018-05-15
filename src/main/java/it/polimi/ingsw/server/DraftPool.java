@@ -86,7 +86,7 @@ public class DraftPool
     {
         // replaces a die in a certain position with a declared die
         if (index>=dim||index<0||draft[index].isDisabled()) throw new InvalidIntArgumentException();
-        if (toPlace==null||toPlace.isDisabled()) throw new GenericInvalidArgumentException();
+        if (toPlace==null) throw new GenericInvalidArgumentException();
 
         Die tempDie = draft[index];
         draft[index]=toPlace;

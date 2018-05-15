@@ -1,12 +1,9 @@
 package it.polimi.ingsw.server;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-
 import java.util.*;
 
 
 public class PrivateObjective {
     private int color;
-
 
     public PrivateObjective(int num) {
 
@@ -17,19 +14,10 @@ public class PrivateObjective {
         return color;
     }
 
-
-    public int calculateBonus(SchemeCard toCalc) throws InvalidIntArgumentException {
-        int bonus = 0;
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j=0; j<5; j++)
-            {
-                if (toCalc.getDie(i,j).getColor()==color)
-                    bonus=bonus+toCalc.getDie(i,j).getValue();
-            }
-        }
-        return bonus;
+    public int calculateBonus(SchemeCard toCalc)
+    {
+        return 0;
     }
+
 
 }

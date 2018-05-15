@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.*;
 
 public class DieTest
@@ -38,21 +37,6 @@ public class DieTest
     {
         die.disableDie();
         Assertions.assertEquals(0, die.getValue());
-    }
-
-    @Test
-    public void checksetValueTest() throws InvalidIntArgumentException {
-        die.setValueTest(5);
-        Assertions.assertEquals(5,die.getValue());
-    }
-
-    @Test
-    public void checksetValueTestException(){
-        try {
-            die.setValueTest(7);
-        } catch (InvalidIntArgumentException e) {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
-        }
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.*;
 public class DiceContainer {
     private Die[] dice;
 
-    public DiceContainer() throws InvalidIntArgumentException {
+    public DiceContainer() {
 
         dice = new Die[90];
         for (int i = 0; i < 18; i++)

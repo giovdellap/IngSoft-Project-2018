@@ -13,7 +13,7 @@ public class ContainerTest
     private int testCase=9;
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException
+    public void setUp()
     {
         container = new DiceContainer();
         Die[] testVector = new Die[testCase];

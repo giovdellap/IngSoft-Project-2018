@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.*;
 
@@ -14,7 +13,6 @@ public class DraftPoolTest
     Die tempDie;
     Die tempDie2;
     RoundDice testRoudDice;
-    Die tempDie3;
 
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException {
@@ -23,7 +21,7 @@ public class DraftPoolTest
         testDP = new DraftPool(players);
         tempDie=new Die(0);
         tempDie2=new Die(1);
-        tempDie3=null;
+
 
     }
 
@@ -34,7 +32,7 @@ public class DraftPoolTest
     }
 
     @Test
-    public void checkReturnException(){
+    public void checkReturnException1(){
         try {
             tempDie=testDP.returnDie(-2);
         }
@@ -88,60 +86,5 @@ public class DraftPoolTest
 
 
     }
-
-    @Test
-    public void checkReplaceDie() throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        boolean flag=false;
-        testDP.replaceDie(3,tempDie);
-        if (testDP.returnDie(3).getColor()==0) flag=true;
-        Assertions.assertEquals(true,flag);
-
-    }
-
-    @Test
-    public void checkReplaceDieException1() throws GenericInvalidArgumentException {
-
-        try {
-            testDP.replaceDie(12,tempDie);
-
-        } catch (InvalidIntArgumentException e) {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
-        }
-
-
-    }
-
-    @Test
-    public void checkReplaceDieException2() throws InvalidIntArgumentException {
-
-        try {
-            testDP.replaceDie(4,tempDie3);
-        } catch (GenericInvalidArgumentException e) {
-            Assertions.assertEquals(e.getMessage(),"Generic invalid argument");
-        }
-    }
-
-    @Test
-    public void checkReplaceDieException3() throws GenericInvalidArgumentException {
-        try {
-            testDP.pickUpDie(5);
-            testDP.replaceDie(5,tempDie);
-        } catch (InvalidIntArgumentException e) {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
-        }
-    }
-
-    @Test
-    public void checkReplaceDieException4() throws InvalidIntArgumentException {
-        try {
-            tempDie.disableDie();
-            testDP.replaceDie(5,tempDie);
-        } catch (GenericInvalidArgumentException e) {
-            Assertions.assertEquals(e.getMessage(),"Generic invalid argument");
-        }
-
-    }
-
-
 
 }

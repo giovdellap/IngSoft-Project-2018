@@ -6,13 +6,9 @@ import java.util.*;
 
 public class PublicObjective
 {
-    //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
-    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
-
     private int id;
     private int bonus;
     private boolean isDisabled= false;
-
 
     public PublicObjective(int id) throws InvalidIntArgumentException
     {
@@ -57,15 +53,15 @@ public class PublicObjective
         }
 
         if (id==2) {
-            bonus = calculateTwo(scheme);
+            this.bonus = 5;
         }
 
         if (id==3) {
-            bonus = calculateThree(scheme);
+            this.bonus = 5;
         }
 
         if (id==4) {
-            bonus = calculateFour(scheme);
+            this.bonus = 4;
         }
 
         if (id==5) {
@@ -126,16 +122,10 @@ public class PublicObjective
 
             for(int k=0;k<5;k++)
             {
-                if(scheme.getDie(i,k).getColor()!=0) {
-                    if (temp[scheme.getDie(i, k).getColor() - 1] == 0)
-                        flag = false;
-
-                    temp[scheme.getDie(i, k).getColor() - 1] = 0;
-                }
-
-                if(scheme.getDie(i,k).getColor()==0)
+                if(temp[scheme.getDie(i,k).getColor()-1]==0)
                     flag = false;
 
+                temp[scheme.getDie(i,k).getColor()-1]=0;
             }
 
             if(flag)
@@ -146,40 +136,24 @@ public class PublicObjective
         return bonus;
     }
 
-
-
     private int calculateTwo(SchemeCard scheme) throws InvalidIntArgumentException {
-
         int bonus=0;
         int[] temp = new int[5];
-
         for(int i=0;i<5;i++)
         {
-            for(int j=0;j<5;j++)
+            for(int j=0;j<4;j++)
                 temp[j]=1;
-            boolean flag=true;
-            for(int z=0;z<4;z++) {
-
-                if (scheme.getDie(z, i).getColor() != 0)
-                    temp[scheme.getDie(z, i).getColor() - 1] = 0;
-                if(scheme.getDie(z,i).getColor()==0)
-                    flag=false;
-            }
+            for(int z=0;z<4;z++)
+                temp[scheme.getDie(i,z).getColor()-1]=0;
             int check=2;
-
-            for(int j=0;j<5;j++)
+            for(int j=0;j<4;j++)
                 if(temp[j]==1)
                     check--;
-
-            if(check==1&&flag)
-                bonus = bonus + 5;
-
+            if(check==1)
+                bonus=bonus+5;
         }
-
         return bonus;
     }
-
-
 
     private int calculateThree(SchemeCard scheme) throws InvalidIntArgumentException {
         int bonus=0;
@@ -189,8 +163,7 @@ public class PublicObjective
             for(int j=0;j<6;j++)
                 temp[j]=1;
             for(int j=0;j<5;j++)
-                if (scheme.getDie(i, j).getColor() != 0)
-                    temp[scheme.getDie(i,j).getValue()-1]=0;
+                temp[scheme.getDie(i,j).getValue()-1]=0;
             int test=2;
             for(int j=0;j<6;j++)
                 if(temp[j]==1)
@@ -204,15 +177,12 @@ public class PublicObjective
     private int calculateFour(SchemeCard scheme) throws InvalidIntArgumentException {
         int bonus=0;
         int[] temp = new int[6];
-
         for(int i=0;i<5;i++)
         {
             for(int j=0;j<6;j++)
                 temp[j]=1;
             for(int j=0;j<4;j++)
-                if (scheme.getDie(j, i).getColor() != 0)
-                     temp[scheme.getDie(j,i).getValue()-1]=0;
-
+                temp[scheme.getDie(j,i).getValue()-1]=0;
             int test=3;
             for(int j=0;j<6;j++)
                 if(temp[j]==1)
