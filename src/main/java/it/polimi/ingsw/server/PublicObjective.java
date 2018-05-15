@@ -49,7 +49,7 @@ public class PublicObjective {
     }
 
 
-    public int setBonus(SchemeCard scheme) throws InvalidIntArgumentException {
+    public int setBonus(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (id == 1) {
             bonus = calculateOne(scheme);
@@ -84,7 +84,7 @@ public class PublicObjective {
         }
 
         if (id == 9) {
-            this.bonus=9;
+            bonus = calculateNine(scheme);
         }
 
         if (id == 10) {
@@ -108,9 +108,11 @@ public class PublicObjective {
     }
 
 
-    private int calculateOne(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateOne(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        SchemeCard tempScheme = scheme;
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int[] temp = new int[5];
 
@@ -143,7 +145,10 @@ public class PublicObjective {
     }
 
 
-    private int calculateTwo(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateTwo(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
 
         int bonus = 0;
         int[] temp = new int[5];
@@ -174,9 +179,14 @@ public class PublicObjective {
     }
 
 
-    private int calculateThree(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateThree(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int[] temp = new int[6];
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++)
                 temp[j] = 1;
@@ -193,7 +203,11 @@ public class PublicObjective {
         return bonus;
     }
 
-    private int calculateFour(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateFour(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int[] temp = new int[6];
 
@@ -215,7 +229,11 @@ public class PublicObjective {
     }
 
 
-    private int calculateFive(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateFive(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int cont1 = 0;
         int cont2 = 0;
@@ -250,7 +268,10 @@ public class PublicObjective {
     }
 
 
-    private int calculateSix(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateSix(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
 
         int bonus = 0;
         int cont3 = 0;
@@ -286,7 +307,10 @@ public class PublicObjective {
     }
 
 
-    private int calculateSeven(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateSeven(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
 
         int bonus = 0;
         int cont5 = 0;
@@ -322,7 +346,11 @@ public class PublicObjective {
     }
 
 
-    private int calculateEight(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateEight(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int min = 3;
         int[] temp = new int[6];
@@ -352,7 +380,42 @@ public class PublicObjective {
     }
 
 
-    private int calculateTen(SchemeCard scheme) throws InvalidIntArgumentException {
+    private int calculateNine(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
+        int bonus = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return bonus;
+
+
+    }
+
+
+    private int calculateTen(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (scheme==null)
+            throw new GenericInvalidArgumentException();
+
         int bonus = 0;
         int min = 4;
         int[] temp = new int[5];

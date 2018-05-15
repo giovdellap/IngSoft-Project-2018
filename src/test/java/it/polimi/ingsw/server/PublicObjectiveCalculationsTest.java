@@ -16,7 +16,6 @@ public class PublicObjectiveCalculationsTest {
     SchemeCard schemeTest;
     PublicObjective publicObjectiveTest;
     int bonusTest;
-    int[][] diceSchemeTest;
     Die DieTest1;
     Die DieTest2;
     Die DieTest3;
@@ -65,6 +64,27 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+
+    @Test
+    public void checkCalculateOneException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(1);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
+
     @Test
     public void checkCalculateTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -89,6 +109,25 @@ public class PublicObjectiveCalculationsTest {
 
         Assertions.assertEquals(10,bonusTest);
 
+
+    }
+
+
+    @Test
+    public void checkCalculateTwoException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(2);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
 
     }
 
@@ -130,6 +169,27 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+
+    @Test
+    public void checkCalculateThreeException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(3);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
+
     @Test
     public void checkCalculateFour() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -164,6 +224,25 @@ public class PublicObjectiveCalculationsTest {
 
 
     @Test
+    public void checkCalculateFourException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(4);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
+    @Test
     public void checkCalculateFive() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         publicObjectiveTest = new PublicObjective(5);
@@ -193,6 +272,26 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+
+    @Test
+    public void checkCalculateFiveException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(5);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
     @Test
     public void checkCalculateSix() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
@@ -220,6 +319,25 @@ public class PublicObjectiveCalculationsTest {
 
         Assertions.assertEquals(4,bonusTest);
 
+
+    }
+
+
+    @Test
+    public void checkCalculateSixException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(6);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
 
     }
 
@@ -252,6 +370,26 @@ public class PublicObjectiveCalculationsTest {
 
 
     }
+
+
+    @Test
+    public void checkCalculateSevenException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(7);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
 
     @Test
     public void checkCalculateEight() throws InvalidIntArgumentException, GenericInvalidArgumentException {
@@ -286,6 +424,26 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+
+    @Test
+    public void checkCalculateEightException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(8);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
     @Test
     public void checkCalculateTen() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
@@ -310,4 +468,27 @@ public class PublicObjectiveCalculationsTest {
 
     }
 
+
+    @Test
+    public void checkCalculateTenException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        publicObjectiveTest = new PublicObjective(10);
+        schemeTest = null;
+
+        try {
+            publicObjectiveTest.setBonus(schemeTest);
+        }
+
+        catch (GenericInvalidArgumentException e) {
+
+            Assertions.assertEquals(true,e.getMessage().equals("Generic invalid argument"));
+
+        }
+
+    }
+
+
 }
+
+
+
