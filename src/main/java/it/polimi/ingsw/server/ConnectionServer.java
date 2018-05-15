@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
+
+import java.io.IOException;
 import java.util.*;
 
 public interface ConnectionServer
@@ -7,13 +10,11 @@ public interface ConnectionServer
 
     public void sendPrivObj(int player, int id);
 
-    public void sendSchemes(SchemeCard tempScheme, int player);
+    public void sendSchemes(int player, int id1, int id2);
 
-    public void sendScoreMarkers(int[] scoreVector);
+    public void sendPubObjs(int id1, int id2, int id3);
 
-    public void sendPubObjs(int[] pubVect);
-
-    public SchemeCard getSelectedScheme(int player);
+    public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException;
 
     public void sendDraftPool(DraftPool draft);
 

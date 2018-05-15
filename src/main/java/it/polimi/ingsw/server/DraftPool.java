@@ -16,7 +16,7 @@ public class DraftPool
     {
         if (players<2||players>4)throw new InvalidIntArgumentException();
         dim=(players*2)+1;
-        DiceContainer container = new DiceContainer();
+        container = new DiceContainer();
         draft = container.throwDice(dim);
         for(int i=0;i<dim;i++) {
             draft[i].throwDie();
@@ -31,24 +31,30 @@ public class DraftPool
         if (index>=dim||index<0||draft[index].isDisabled()) throw new InvalidIntArgumentException();
         int counter=index;
         boolean flag=true;
+        boolean reachedMax=false;
         while(flag)
         {
-            if (draft[counter].isDisabled())
-                flag=false;
             if (counter==dim-1)
-                flag=false;
-            if (flag)
-                counter++;
+            {
+                flag = false;
+                reachedMax=true;
+            }
+            if(!reachedMax) {
+                if (draft[counter].isDisabled())
+                    flag = false;
+                if (flag)
+                    counter++;
+            }
         }
 
 
-        for(int i = index; i <counter; i++)
+        for(int i = index; i <counter-1; i++)
         {
             draft[i] = draft[i++];
 
         }
 
-        draft[counter].disableDie();
+        draft[counter-1].disableDie();
 
     }
 
@@ -58,12 +64,17 @@ public class DraftPool
         // draft update at the beginning of the round
         int counter=0;
         while(!draft[counter].isDisabled())
+        {
+            System.out.println(Boolean.toString(draft[counter].isDisabled()));
             counter++;
+        }
+        System.out.println(Integer.toString(counter));
         RoundDice tempRD = new RoundDice(counter);
         for(int i=0;i<counter;i++)
         {
             tempRD.addDie(draft[i]);
-            draft[i].disableDie();
+            System.out.println(Boolean.toString(tempRD.getDie(i).isDisabled()));
+
         }
         draft=container.throwDice(dim);
         for(int i=0;i<dim;i++)
