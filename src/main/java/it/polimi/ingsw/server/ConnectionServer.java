@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
 import java.io.IOException;
-import java.util.*;
 
 public interface ConnectionServer
 {

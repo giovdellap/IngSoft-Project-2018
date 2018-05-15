@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
-import java.util.*;
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 
 public class CheckingMethods
 {

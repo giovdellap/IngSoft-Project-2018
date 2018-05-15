@@ -1,6 +1,5 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.ModelComponent;
 
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class RoundTrack

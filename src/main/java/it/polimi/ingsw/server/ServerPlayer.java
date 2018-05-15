@@ -1,12 +1,11 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
 import java.io.*;
 import java.net.Socket;
-import java.lang.StringBuilder.*;
-import java.util.ArrayList;
 
 public class ServerPlayer extends Thread
 {
@@ -63,26 +62,26 @@ public class ServerPlayer extends Thread
 
     public void initializeFirst() {
         try {
-            outSocket.println("<player>$1$");
+            outSocket.println("#player#$1$");
             outSocket.flush();
 
             while(username=="")
             {
-                outSocket.println("<insert>$username$");
+                outSocket.println("#insert#$username$");
                 outSocket.flush();
                 msg = inSocket.readLine();
                 simpleDecode(msg);
                 if (tempCmd.equals("username"))
                 {
                     username = tempArg;
-                    outSocket.println("<confirm>$username$");
+                    outSocket.println("#confirm#$username$");
                     outSocket.flush();
                 }
             }
 
             while(numPlayers==1)
             {
-                outSocket.println("<insert>$numplayers$");
+                outSocket.println("#insert#$numplayers$");
                 outSocket.flush();
                 msg = inSocket.readLine();
                 simpleDecode(msg);
@@ -94,9 +93,9 @@ public class ServerPlayer extends Thread
                 }
 
             }
-            outSocket.println("<confirm>$numplayers$");
+            outSocket.println("#confirm#$numplayers$");
             outSocket.flush();
-            outSocket.println("<wait>$players$");
+            outSocket.println("#wait#$players$");
         } catch(Exception e) {
             try {
                 System.out.println("Exception e");
@@ -113,10 +112,10 @@ public class ServerPlayer extends Thread
         tempCmd="";
         tempArg="";
         int index=0;
-        if(tempStr.charAt(index)=='<')
+        if(tempStr.charAt(index)=='#')
         {
             index++;
-            while (tempStr.charAt(index) != '>')
+            while (tempStr.charAt(index) != '#')
             {
                 tempCmd+=Character.toString(tempStr.charAt(index));
                 index++;
@@ -137,12 +136,12 @@ public class ServerPlayer extends Thread
     public void initializeN()
     {
         try {
-            outSocket.println("<player>$"+Integer.toString(id+1)+"$");
+            outSocket.println("#player#$"+Integer.toString(id+1)+"$");
             outSocket.flush();
 
             while(username=="")
             {
-                outSocket.println("<insert>$username$");
+                outSocket.println("#insert#$username$");
                 outSocket.flush();
                 msg = inSocket.readLine();
                 simpleDecode(msg);
@@ -153,7 +152,7 @@ public class ServerPlayer extends Thread
                     }
                 }
             }
-            outSocket.println("<wait>$players$");
+            outSocket.println("#wait#$players$");
 
 
         } catch(Exception e) {
@@ -199,9 +198,9 @@ public class ServerPlayer extends Thread
         playerNames=temp;
         for(int i=0;i<numPlayers;i++)
         {
-            outSocket.println("<player>$" + Integer.toString(i + 1) + "$");
+            outSocket.println("#player#$" + Integer.toString(i + 1) + "$");
             outSocket.flush();
-            outSocket.println("<username>$"+playerNames[i]+"$");
+            outSocket.println("#username#$"+playerNames[i]+"$");
             outSocket.flush();
 
         }
@@ -211,32 +210,32 @@ public class ServerPlayer extends Thread
 
     public void sendPrivateObj(int id)
     {
-        outSocket.println("<privateObj>$id$");
+        outSocket.println("#privateObj#$id$");
         outSocket.flush();
-        outSocket.println("<id>$"+Integer.toString(id)+"$");
+        outSocket.println("#id#$"+Integer.toString(id)+"$");
         outSocket.flush();
 
     }
 
     public void sendScheme(int id)
     {
-        outSocket.println("<scheme>$"+Integer.toString(id)+"$");
+        outSocket.println("#scheme#$"+Integer.toString(id)+"$");
         outSocket.flush();
     }
 
     public void sendPubObjs(int id1, int id2, int id3)
     {
-        outSocket.println("<pubobj>$"+Integer.toString(id1)+"$");
+        outSocket.println("#pubobj#$"+Integer.toString(id1)+"$");
         outSocket.flush();
-        outSocket.println("<pubobj>$"+Integer.toString(id2)+"$");
+        outSocket.println("#pubobj#$"+Integer.toString(id2)+"$");
         outSocket.flush();
-        outSocket.println("<pubobj>$"+Integer.toString(id3)+"$");
+        outSocket.println("#pubobj#$"+Integer.toString(id3)+"$");
         outSocket.flush();
     }
 
     public int[] receiveScheme() throws IOException, InvalidinSocketException
     {
-        outSocket.println("<insert>$scheme$");
+        outSocket.println("#insert#$scheme$");
         outSocket.flush();
         int[] temp = new int[2];
         msg=inSocket.readLine();
@@ -253,7 +252,7 @@ public class ServerPlayer extends Thread
             throw new InvalidinSocketException();
 
         temp[1]=Integer.parseInt(tempArg);
-        outSocket.println("<wait>$players$");
+        outSocket.println("#wait#$players$");
         outSocket.flush();
         return temp;
     }
@@ -261,13 +260,13 @@ public class ServerPlayer extends Thread
     public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException {
         for(int i=0;i<numPlayers;i++)
         {
-            outSocket.println("<player>$"+Integer.toString(i+1)+"$");
+            outSocket.println("#player#$"+Integer.toString(i+1)+"$");
             outSocket.flush();
-            outSocket.println("<scheme>$"+Integer.toString(vect[i].getID())+"$");
+            outSocket.println("#scheme#$"+Integer.toString(vect[i].getID())+"$");
             outSocket.flush();
-            outSocket.println("<fb>$"+Integer.toString(vect[i].getfb())+"$");
+            outSocket.println("#fb#$"+Integer.toString(vect[i].getfb())+"$");
             outSocket.flush();
-            outSocket.println("<favtokens>$"+Integer.toString(vect[i].getDiff(vect[i].getfb())));
+            outSocket.println("#favtokens#$"+Integer.toString(vect[i].getDiff(vect[i].getfb())));
         }
     }
 

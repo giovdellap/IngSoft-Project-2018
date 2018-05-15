@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
@@ -7,7 +9,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SocketServer implements ConnectionServer {

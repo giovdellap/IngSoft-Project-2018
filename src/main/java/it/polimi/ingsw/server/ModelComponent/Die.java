@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.ModelComponent;
 
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
