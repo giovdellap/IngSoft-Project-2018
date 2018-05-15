@@ -23,23 +23,15 @@ public class PrivateObjectivesDeck
         {
             boolean flag=false;
             while(!flag) {
-                System.out.println("check 1");
                 int rand = (int)(Math.random()*4);
-                System.out.println("check 2");
                 flag=true;
-                if(i>0) {
-                    for (int p = 0; p < i; p++) {
-                        System.out.println("check p: " + Integer.toString(p));
-                        if (rand+1 == temp[p].getColor()) {
-                            System.out.println("check if");
+                if(i>0)
+                    for (int p = 0; p < i; p++)
+                        if (rand+1 == temp[p].getColor())
                             flag = false;
-                        }
-                    }
-                }
-                System.out.println("check flag: "+Boolean.toString(flag)+" i="+Integer.toString(i));
                 if(flag)
                     temp[i] = new PrivateObjective(rand+1);
-                System.out.println("temp[i] color = "+Integer.toString(temp[i].getColor()));
+                //System.out.println("temp[i] color = "+Integer.toString(temp[i].getColor()));
             }
         }
         return temp;

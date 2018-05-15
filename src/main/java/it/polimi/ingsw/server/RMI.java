@@ -14,6 +14,14 @@ public class RMI implements ConnectionServer
 
     }
 
+    public void sendSchemes(int player, int id1, int id2) {
+
+    }
+
+    public void sendPubObjs(int id1, int id2, int id3) {
+
+    }
+
     public void sendSchemes(SchemeCard tempScheme, int player)
     {
 
@@ -29,7 +37,7 @@ public class RMI implements ConnectionServer
 
     }
 
-    public SchemeCard getSelectedScheme(int player)
+    public int[] getSelectedScheme(int player)
     {
         return null;
     }

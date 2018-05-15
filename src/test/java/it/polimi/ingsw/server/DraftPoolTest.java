@@ -21,7 +21,6 @@ public class DraftPoolTest
         testDP = new DraftPool(players);
         tempDie=new Die(0);
         tempDie2=new Die(1);
-        testRoudDice= new RoundDice(1);
 
 
     }
@@ -69,20 +68,18 @@ public class DraftPoolTest
 
         boolean flag=true;
 
-        testDP.pickUpDie(1);
-        testDP.pickUpDie(2);
-        testDP.pickUpDie(3);
-        testDP.pickUpDie(4);
-        testDP.pickUpDie(5);
-
         tempDie=testDP.returnDie(0);
-        tempDie2=testDP.returnDie(6);
+        tempDie2=testDP.returnDie(1);
+        testDP.pickUpDie(2);
+        testDP.pickUpDie(2);
+        testDP.pickUpDie(2);
+        testDP.pickUpDie(2);
+        //testDP.pickUpDie(2);
+        testRoudDice = new RoundDice(2);
+        testRoudDice=testDP.updateDraftDice();
 
-        testDP.updateDraftDice();
-
-
-        if (!tempDie2.equals(testRoudDice.getDie(0))) flag=false;
-        if (!tempDie.equals(testRoudDice.getDie(1))) flag=false;
+        if (!tempDie2.equals(testRoudDice.getDie(1))) flag=false;
+        if (!tempDie.equals(testRoudDice.getDie(0))) flag=false;
 
         Assertions.assertEquals(true, flag);
 
