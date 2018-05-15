@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09e29196-343d-4608-80c4-318b24494c84" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/ConnectionServer.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/ConnectionServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/DraftPool.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/DraftPool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Main.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Match.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Match.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/PrivateObjectivesDeck.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/PrivateObjectivesDeck.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/RMI.class" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/RMI.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionServer.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DraftPool.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/DraftPool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Main.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/RMI.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/RMI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerPlayer.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketServer.java" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/DraftPoolTest.java" afterPath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/DraftPoolTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,9 +18,11 @@
       <file leaf-file-name="Match.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="56" column="49" lean-forward="false" selection-start-line="56" selection-start-column="49" selection-end-line="56" selection-end-column="49" />
-              <folding />
+            <state relative-caret-position="1534">
+              <caret line="60" column="38" lean-forward="false" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
+              <folding>
+                <marker date="1526379174270" expanded="true" signature="4104:4110" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -42,8 +30,18 @@
       <file leaf-file-name="PrivateObjectivesDeck.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
+            <state relative-caret-position="246">
               <caret line="33" column="63" lean-forward="false" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PublicObjective.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PublicObjective.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1600">
+              <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -62,7 +60,7 @@
       <file leaf-file-name="ServerPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1780">
+            <state relative-caret-position="6448">
               <caret line="263" column="63" lean-forward="false" selection-start-line="263" selection-start-column="63" selection-end-line="263" selection-end-column="63" />
               <folding />
             </state>
@@ -72,17 +70,17 @@
       <file leaf-file-name="SchemeCard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SchemeCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2990">
+            <state relative-caret-position="532">
               <caret line="119" column="0" lean-forward="false" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SocketServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SocketServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
+            <state relative-caret-position="-208">
               <caret line="88" column="78" lean-forward="false" selection-start-line="88" selection-start-column="78" selection-end-line="88" selection-end-column="78" />
               <folding />
             </state>
@@ -139,9 +137,9 @@
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerExceptions/InvalidinSocketException.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerPlayer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" />
       </list>
     </option>
   </component>
@@ -160,12 +158,20 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -252,6 +258,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -478,11 +487,11 @@
       <listeners />
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.PublicObjectivesDeckTest" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.DraftPoolTest.checkupdateDraftDice" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.PrivateObjectivesDeckTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.PublicObjectiveTest" />
-      <item index="4" class="java.lang.String" itemvalue="Application.Unnamed" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Unnamed" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.PublicObjectivesDeckTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.DraftPoolTest.checkupdateDraftDice" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.PrivateObjectivesDeckTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.PublicObjectiveTest" />
       <item index="5" class="java.lang.String" itemvalue="JUnit.DraftPoolTest" />
     </list>
     <recent_temporary>
@@ -545,34 +554,33 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -760,13 +768,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/PrivateObjectivesDeckTest.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/PublicObjectivesDeckTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PublicObjective.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
-          <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/PublicObjectiveTest.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/it/polimi/ingsw/server/PrivateObjectiveTest.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/RoundDice.java">
@@ -846,27 +847,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="33" column="63" lean-forward="false" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SchemeCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2990">
-          <caret line="119" column="0" lean-forward="false" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="56" column="49" lean-forward="false" selection-start-line="56" selection-start-column="49" selection-end-line="56" selection-end-column="49" />
-          <folding />
+        <state relative-caret-position="1534">
+          <caret line="60" column="38" lean-forward="false" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
+          <folding>
+            <marker date="1526379174270" expanded="true" signature="4104:4110" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -880,16 +867,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1780">
+        <state relative-caret-position="6448">
           <caret line="263" column="63" lean-forward="false" selection-start-line="263" selection-start-column="63" selection-end-line="263" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SchemeCard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="119" column="0" lean-forward="false" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
+        <state relative-caret-position="-208">
           <caret line="88" column="78" lean-forward="false" selection-start-line="88" selection-start-column="78" selection-end-line="88" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PrivateObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="33" column="63" lean-forward="false" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/PublicObjective.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1600">
+          <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
           <folding />
         </state>
       </provider>
