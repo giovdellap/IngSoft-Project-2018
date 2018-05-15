@@ -13,7 +13,7 @@ DiceContainer:
 - [X] checkNotNull
 - [X] checkInvalidThrow
 - [X] testThatDice
-        //check that throwing 90 dices extracts 18 dice for color
+        //check that throwing 90 dices extracts 18 dice per color
       
 RoundDice
 - [X] checkAddandGet
@@ -104,15 +104,25 @@ PublicObjectives
 
 PublicObjectiveCalculationTest
 - [X] checkCalculateOne
+- [X] checkCalculateOneException
 - [X] checkCalculateTwo
+- [X] checkCalculateTwoException
 - [X] checkCalculateThree
+- [X] checkCalculateThreeException
 - [X] checkCalculateFour
+- [X] checkCalculateFourException
 - [X] checkCalculateFive
+- [X] checkCalculateFiveException
 - [X] checkCalculateSix
+- [X] checkCalculateSixException
 - [X] checkCalculateSeven
+- [X] checkCalculateSevenException
 - [X] checkCalculateEight
+- [X] checkCalculateEightException
 - [X] checkCalculateNine
+- [X] checkCalculateNineException
 - [X] checkCalculateTen
+- [X] checkCalculateTenException
 
 Planning to extend branch coverage by new extended parameters(checks should be right, aren't them?)
 
