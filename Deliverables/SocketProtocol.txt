@@ -11,11 +11,11 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  Communication String's structure:
 
- <Cmd>$Arg$
+ #Cmd#$Arg$
  Cmd = what is passed
  Arg = data
  Ex.:
- <privobj>$3$
+ #privobj#$3$
  Private Objective with ID 3 is assigned to the player
 
 ------------------------------------------
@@ -47,62 +47,62 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  PLAYER 1:
 
- S: <player>$1$
- S: <insert>$username$
- C: <username>$bob$
- S: <confirm>$username$
- S: <insert>$numplayers$
- C: <numplayers>$n$
- S: <confirm>$numplayers$
- S: <wait>$players$
+ S: #player#$1$
+ S: #insert#$username$
+ C: #username#$bob$
+ S: #confirm#$username$
+ S: #insert#$numplayers$
+ C: #numplayers#$n$
+ S: #confirm#$numplayers$
+ S: #wait#$players$
 
 
  PLAYER N:
 
- S: <player>$n$
- S: <insert>$username$
- C: <username>$bob$
- S: <insert>$username$
- C: <username>$alan$
- S: <confirm>$username$
- S: <wait>$players$
+ S: #player#$n$
+ S: #insert#$username$
+ C: #username#$bob$
+ S: #insert#$username$
+ C: #username#$alan$
+ S: #confirm#$username$
+ S: #wait#$players$
  
  ---------------------------------------
  
  INITIALIZATION 1: PHASE 2
  
  n times:
- S: <player>$$
- S: <username>$jon doe$
+ S: #player#$$
+ S: #username#$jon doe$
 
  ---------------------------------------
 
  INITIALIZATION 2
 
- S: <privobj>$id$
- S: <scheme>$id1$
- S: <scheme>$id2$
+ S: #privobj#$id$
+ S: #scheme#$id1$
+ S: #scheme#$id2$
 
  n times:
- S: <scoremarker>$index$
- S: <index>$id$
+ S: #scoremarker#$index$
+ S: #index#$id$
 
  3 times:
- S: <pubobj>$id$
+ S: #pubobj#$id$
  //here you don't need 2 communication phases because order is not relevant
 
- S: <insert>$scheme$
- C: <scheme>$id$
- C: <fb>$1||2$
+ S: #insert#$scheme$
+ C: #scheme#$id$
+ C: #fb#$1||2$
 
- S: <wait>$players$
+ S: #wait#$players$
 
  --------------------------------------
 
  INITIALIZATION 2: PHASE 2
  Everyone has chosen his schemecard
 
- S: <player>$id$
- S: <scheme>$id$
- S: <fb>$1||2$
- S: <favtokens>$tokens$
+ S: #player#$id$
+ S: #scheme#$id$
+ S: #fb#$1||2$
+ S: #favtokens#$tokens$
