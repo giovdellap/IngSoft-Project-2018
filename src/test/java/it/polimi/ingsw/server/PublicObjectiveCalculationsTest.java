@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Vector;
+
 public class PublicObjectiveCalculationsTest {
 
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
@@ -16,12 +18,28 @@ public class PublicObjectiveCalculationsTest {
     SchemeCard schemeTest;
     PublicObjective publicObjectiveTest;
     int bonusTest;
+
     Die DieTest1;
     Die DieTest2;
     Die DieTest3;
     Die DieTest4;
     Die DieTest5;
     Die DieTest6;
+    Die DieTest7;
+    Die DieTest8;
+    Die DieTest9;
+    Die DieTest10;
+    Die DieTest11;
+    Die DieTest12;
+    Die DieTest13;
+    Die DieTest14;
+    Die DieTest15;
+    Die DieTest16;
+    Die DieTest17;
+    Die DieTest18;
+    Die DieTest19;
+    Die DieTest20;
+
 
 
     @BeforeEach
@@ -453,15 +471,55 @@ public class PublicObjectiveCalculationsTest {
         DieTest3 = new Die(1);
         DieTest4 = new Die(1);
 
-        schemeTest.setDie(DieTest1,1,2);
-        schemeTest.setDie(DieTest2,1,4);
-        schemeTest.setDie(DieTest3,2,1);
+        DieTest5 = new Die(2);
+        DieTest6 = new Die(2);
+        DieTest7 = new Die(2);
+
+        DieTest8 = new Die(3);
+        DieTest9 = new Die(3);
+        DieTest10 = new Die(3);
+        DieTest11 = new Die(3);
+
+        DieTest12 = new Die(4);
+        DieTest13 = new Die(4);
+        DieTest14 = new Die(4);
+        DieTest15 = new Die(4);
+
+        DieTest16 = new Die(5);
+        DieTest17 = new Die(5);
+        DieTest18 = new Die(5);
+        DieTest19 = new Die(5);
+        DieTest20 = new Die(5);
+
+        schemeTest.setDie(DieTest1,0,1);
+        schemeTest.setDie(DieTest2,1,2);
+        schemeTest.setDie(DieTest3,1,4);
         schemeTest.setDie(DieTest4,2,3);
+
+        schemeTest.setDie(DieTest5,1,0);
+        schemeTest.setDie(DieTest6,2,1);
+        schemeTest.setDie(DieTest7,3,0);
+
+        schemeTest.setDie(DieTest8,0,4);
+        schemeTest.setDie(DieTest9,1,3);
+        schemeTest.setDie(DieTest10,3,1);
+        schemeTest.setDie(DieTest11,3,2);
+
+        schemeTest.setDie(DieTest12,0,0);
+        schemeTest.setDie(DieTest13,1,1);
+        schemeTest.setDie(DieTest14,2,2);
+        schemeTest.setDie(DieTest15,2,0);
+
+        schemeTest.setDie(DieTest16,0,2);
+        schemeTest.setDie(DieTest17,0,3);
+        schemeTest.setDie(DieTest18,2,4);
+        schemeTest.setDie(DieTest19,3,4);
+        schemeTest.setDie(DieTest20,3,3);
 
 
         bonusTest = publicObjectiveTest.setBonus(schemeTest);
 
-        Assertions.assertEquals(4,bonusTest);
+        Assertions.assertEquals(15,bonusTest);
 
     }
 

@@ -393,22 +393,24 @@ public class PublicObjective {
             {
                 boolean flag=false;
                 if(!temp.getDie(x, y).isDisabled()) {
+
                     int color=temp.getDie(x,y).getColor();
-                    if((x+1>-1&&x+1<5&&y-1>-1&&y-1<4&&(temp.getDie(x+1, y-1)!=null)&&(flag==false)&&color==temp.getDie(x+1,y-1).getColor())) {
+
+                    if((x+1>-1 && x+1<4 && y-1>-1 && y-1<5 && (temp.getDie(x+1, y-1)!=null) && (flag==false) && color==temp.getDie(x+1,y-1).getColor())) {
                         bonus++;
                         flag=true;
                     }
-                    if(x+1>-1&&x+1<5&&y+1>-1&&y+1<4&&(temp.getDie(x+1, y+1)!=null)&&flag==false&&color==temp.getDie(x+1,y+1).getColor())
+                    if(x+1>-1 && x+1<4 && y+1>-1 && y+1<5 && (temp.getDie(x+1, y+1)!=null) && flag==false && color==temp.getDie(x+1,y+1).getColor())
                     {
                         flag=true;
                         bonus++;
                     }
-                    if(x-1>-1&&x-1<5&&y+1>-1&&y+1<4&&(temp.getDie(x-1, y+1)!=null)&&flag==false&&color==temp.getDie(x-1,y+1).getColor())
+                    if(x-1>-1 && x-1<4 && y+1>-1 && y+1<5 && (temp.getDie(x-1, y+1)!=null) && flag==false && color==temp.getDie(x-1,y+1).getColor())
                     {
                         flag=true;
                         bonus++;
                     }
-                    if(x-1>-1&&x-1<5&&y-1>-1&&y-1<4&&(temp.getDie(x-1,y-1)!=null)&&flag==false&&color==temp.getDie(x-1,y-1).getColor())
+                    if(x-1>-1 && x-1<4 && y-1>-1 && y-1<5 && (temp.getDie(x-1,y-1)!=null) && flag==false && color==temp.getDie(x-1,y-1).getColor())
                     {
                         flag=true;
                         bonus++;
