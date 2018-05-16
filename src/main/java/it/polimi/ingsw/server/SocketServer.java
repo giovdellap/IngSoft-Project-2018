@@ -108,7 +108,7 @@ public class SocketServer implements ConnectionServer {
         return players.get(player).receiveScheme();
     }
 
-    public void sendSchemestoEveryOne(SchemeCard[] tempVect) throws InvalidIntArgumentException {
+    public void sendSchemestoEveryone(SchemeCard[] tempVect) throws InvalidIntArgumentException {
         for(int i=0;i<numPlayers;i++)
         {
             players.get(i).sendSchemeVect(tempVect);

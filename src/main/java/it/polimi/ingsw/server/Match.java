@@ -85,7 +85,7 @@ public class Match
         for(int i=0;i<numPlayers;i++) {
             server.sendSchemes(i, modelInstance.getTempSchemes(i).getID(), modelInstance.getTempSchemes(i+numPlayers).getID());
         }
-        System.out.println("SCHEMES SENDED OK");
+        System.out.println("SCHEMES SENT OK");
 
         //public objectives
         server.sendPubObjs(modelInstance.getPubObj(0).getId(), modelInstance.getPubObj(1).getId(), modelInstance.getPubObj(2).getId());
@@ -109,7 +109,7 @@ public class Match
         for(int i=0;i<numPlayers;i++)
             temp[i] = modelInstance.getSchemebyIndex(i);
 
-        server.sendSchemestoEveryOne(temp);
+        server.sendSchemestoEveryone(temp);
 
         System.out.println("End initialization 2");
 
