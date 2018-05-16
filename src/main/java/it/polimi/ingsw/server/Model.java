@@ -52,7 +52,7 @@ public class Model
     }
 
     public PublicObjective getPubObj(int index) throws InvalidIntArgumentException {
-        if(index<0||index>=numPlayers)
+        if(index<0||index>=3)
             throw new InvalidIntArgumentException();
         return pubObjs[index];
     }

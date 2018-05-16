@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
@@ -23,28 +24,33 @@ public class ServerPlayer extends Thread
     private String[] tempNames;
     private String[] playerNames;
 
-    public ServerPlayer(Socket s, int n)
-    {
-        try {
-            System.out.println("check del ServerPlayer");
-            socket = s;
-            id=n;
-            inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            System.out.println("check fine costruttore serverplayer");
-            numPlayers=1;
+    public MinorLogger sPlayerLog;
+
+    public ServerPlayer(Socket s, int n) throws IOException {
+
+        sPlayerLog = new MinorLogger();
+        sPlayerLog.minorLog("ServerPlayer Logger operative");
 
 
-        } catch(Exception ex)
-        {
-            System.out.println("Exception ex");
-        }
+        sPlayerLog.minorLog("check del ServerPlayer");
+        socket = s;
+        id=n;
+        inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+        sPlayerLog.minorLog("check fine costruttore serverplayer");
+        numPlayers=1;
+
+
     }
 
     public ServerPlayer(Socket s, int n, String[] tempArr)
     {
         try {
-            System.out.println("ServerPlayer 2 check");
+
+            sPlayerLog = new MinorLogger();
+            sPlayerLog.minorLog("ServerPlayer Logger operative");
+
+            sPlayerLog.minorLog("ServerPlayer 2 check");
             this.socket = s;
             this.id=n;
             this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -54,7 +60,7 @@ public class ServerPlayer extends Thread
 
         } catch(Exception ex)
         {
-            System.out.println("Exception ex");
+            sPlayerLog.minorLog("Exception ex");
         }
     }
 
@@ -98,9 +104,9 @@ public class ServerPlayer extends Thread
             outSocket.println("#wait#$players$");
         } catch(Exception e) {
             try {
-                System.out.println("Exception e");
+                sPlayerLog.minorLog("Exception e");
                 socket.close();
-                System.out.println("Socket closed");
+                sPlayerLog.minorLog("Socket closed");
             } catch(Exception ex)
             {}
         }

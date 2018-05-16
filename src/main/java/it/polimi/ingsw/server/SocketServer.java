@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Loggers.MajorLogger;
+import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -24,10 +26,17 @@ public class SocketServer implements ConnectionServer {
     private Socket generalSocket;
     private ServerPlayer test;
 
+    public MinorLogger sServerLog;
+
     public SocketServer() {
-        System.out.println("start socketserver constructor");
+
+        sServerLog = new MinorLogger();
+        sServerLog.minorLog("SocketServer Logger operative");
+
+        sServerLog.minorLog("start socketserver constructor");
         players = new ArrayList<ServerPlayer>();
-        System.out.println("end socketserver connection");
+        sServerLog.minorLog("end socketserver connection");
+
     }
 
 
@@ -36,17 +45,19 @@ public class SocketServer implements ConnectionServer {
 
     public int initializeFPS() throws IOException
     {
-        System.out.println("start intialization 1 player 1");
+        sServerLog.minorLog("start intialization 1 player 1");
         serverSocket = new ServerSocket(PORT);
         Socket generalSocket = serverSocket.accept();
 
-        System.out.println("Client " + Integer.toString(counter+1) + " connected");
+        sServerLog.minorLog("Client " + Integer.toString(counter+1) + " connected");
         players.add(new ServerPlayer(generalSocket, counter));
+        sServerLog.stackLog(players.get(0).sPlayerLog.updateFather());
 
         players.get(0).initializeFirst();
-        System.out.println("Client: "+Integer.toString(counter+1)+" username: "+players.get(0).getUsername());
+        sServerLog.stackLog(players.get(0).sPlayerLog.updateFather());
+        sServerLog.minorLog("Client: "+Integer.toString(counter+1)+" username: "+players.get(0).getUsername());
         numPlayers = players.get(0).getNumPlayers();
-        System.out.println("numPlayers: "+Integer.toString(numPlayers));
+        sServerLog.minorLog("numPlayers: "+Integer.toString(numPlayers));
 
         playersNames = new String[numPlayers];
         playersNames[0] = players.get(0).getUsername();
@@ -63,56 +74,70 @@ public class SocketServer implements ConnectionServer {
         }
         serverSocket = new ServerSocket(PORT + counter);
         generalSocket = serverSocket.accept();
-        System.out.println("Client " + Integer.toString(counter+1) + " connected");
+        sServerLog.minorLog("Client " + Integer.toString(counter+1) + " connected");
         players.add(new ServerPlayer(generalSocket, counter, temp));
+        sServerLog.stackLog(players.get(counter).sPlayerLog.updateFather());
         players.get(counter).initializeN();
+        sServerLog.stackLog(players.get(counter).sPlayerLog.updateFather());
         playersNames[counter] = players.get(counter).getUsername();
-        System.out.println("Client: "+Integer.toString(counter+1)+" username: "+players.get(counter).getUsername());
+        sServerLog.minorLog("Client: "+Integer.toString(counter+1)+" username: "+players.get(counter).getUsername());
 
         counter++;
     }
 
-    public void initialization1Phase2() {
-        System.out.println("Start Initialization 1 phase 2");
+    public String[] initialization1Phase2() {
+        sServerLog.minorLog("Start Initialization 1 phase 2");
         playersNames = new String[numPlayers];
-        for (int i = 0; i < numPlayers; i++)
-            playersNames[i] = players.get(i).getUsername();
         for (int i = 0; i < numPlayers; i++) {
-            players.get(i).sendPlayersUsernames(playersNames);
+            playersNames[i] = players.get(i).getUsername();
+            sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
         }
-        System.out.println("End initialization 1 phase 2");
+
+        for (int i = 0; i < numPlayers; i++) {
+        players.get(i).sendPlayersUsernames(playersNames);
+        sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
+        }
+
+        sServerLog.minorLog("End initialization 1 phase 2");
+        return playersNames;
     }
 
     //INITIALIZATION 2
 
     public void sendPrivObj(int player, int id) {
         players.get(player).sendPrivateObj(id);
-        System.out.println("Private objective id "+Integer.toString(id)+" sent to player "+Integer.toString(player+1));
+        sServerLog.stackLog(players.get(player).sPlayerLog.updateFather());
+        sServerLog.minorLog("Private objective id "+Integer.toString(id)+" sent to player "+Integer.toString(player+1));
     }
 
     public void sendSchemes(int player, int id1, int id2) {
         players.get(player).sendScheme(id1);
         players.get(player).sendScheme(id2);
-        System.out.println("schemes id "+Integer.toString(id1)+", id "+Integer.toString(id2)+" sent to player "+Integer.toString(player+1));
+        sServerLog.stackLog(players.get(player).sPlayerLog.updateFather());
+        sServerLog.minorLog("schemes id "+Integer.toString(id1)+", id "+Integer.toString(id2)+" sent to player "+Integer.toString(player+1));
     }
 
     public void sendPubObjs(int id1, int id2, int id3)
     {
         for(int i=0;i<numPlayers;i++) {
             players.get(i).sendPubObjs(id1, id2, id3);
-            System.out.println("public objectives id " + Integer.toString(id1) + ", " + Integer.toString(id2) + ", " + Integer.toString(id3) + " sent to player " + Integer.toString(i+1));
+            sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
+            sServerLog.minorLog("public objectives id " + Integer.toString(id1) + ", " + Integer.toString(id2) + ", " + Integer.toString(id3) + " sent to player " + Integer.toString(i+1));
         }
     }
 
     public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException {
-        return players.get(player).receiveScheme();
+        int[] temp = players.get(player).receiveScheme();
+        sServerLog.stackLog(players.get(player).sPlayerLog.updateFather());
+        return temp;
     }
 
     public void sendSchemestoEveryone(SchemeCard[] tempVect) throws InvalidIntArgumentException {
         for(int i=0;i<numPlayers;i++)
         {
             players.get(i).sendSchemeVect(tempVect);
-            System.out.println("All schemes sent to player "+Integer.toString(i+1));
+            sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
+            sServerLog.minorLog("All schemes sent to player "+Integer.toString(i+1));
         }
 
     }
