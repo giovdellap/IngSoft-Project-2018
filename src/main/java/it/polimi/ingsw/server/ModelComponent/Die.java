@@ -6,6 +6,9 @@ import java.util.*;
 
 public class Die
 {
+    //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
+    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+
     private int value;
     private int color;
 
@@ -19,12 +22,10 @@ public class Die
     public void throwDie()
     {
         value = (int)(Math.random()*5+1);
-        // tira dado
     }
 
     public void disableDie()
     {
-        // usato per disabilitare i dadi nel sacchetto
         value=0;
     }
 
@@ -49,6 +50,29 @@ public class Die
     public void setValueTest(int n) throws InvalidIntArgumentException {
         if (n<0||n>6)throw new InvalidIntArgumentException();
         value=n;
+    }
+
+    public String toString() {
+
+        String tempString = "";
+
+        if (this.color==1)
+            tempString = "Die color: yellow , Die value: " + Integer.toString(this.getValue());
+
+        if (this.color==2)
+            tempString = "Die color: red , Die value: " + Integer.toString(this.getValue());
+
+        if (this.color==3)
+            tempString = "Die color: green , Die value: " + Integer.toString(this.getValue());
+
+        if (this.color==4)
+            tempString = "Die color: blue , Die value: " + Integer.toString(this.getValue());
+
+        if (this.color==5)
+            tempString = "Die color: violet , Die value: " + Integer.toString(this.getValue());
+
+        return tempString;
+
     }
 
 }

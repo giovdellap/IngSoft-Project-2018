@@ -9,9 +9,9 @@ public class DieTest
     private Die die;
 
     @BeforeEach
-    public  void SetUp()
+    public void SetUp()
     {
-        die = new Die((int)Math.random()*5+1);
+        die = new Die((int)(Math.random()*5)+1);
         die.throwDie();
     }
 
@@ -54,6 +54,30 @@ public class DieTest
         } catch (InvalidIntArgumentException e) {
             Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
+    }
+
+    @Test
+    public void checkToString() {
+
+       int tempColor = die.getColor();
+       int tempValue = die.getValue();
+       String tempString1 = die.toString();
+
+       if (tempColor==1)
+           Assertions.assertEquals(true,tempString1.equals("Die color: yellow , Die value: " + Integer.toString(tempValue)));
+
+       if (tempColor==2)
+            Assertions.assertEquals(true,tempString1.equals("Die color: red , Die value: " + Integer.toString(tempValue)));
+
+       if (tempColor==3)
+            Assertions.assertEquals(true,tempString1.equals("Die color: green , Die value: " + Integer.toString(tempValue)));
+
+       if (tempColor==4)
+            Assertions.assertEquals(true,tempString1.equals("Die color: blue , Die value: " + Integer.toString(tempValue)));
+
+       if (tempColor==5)
+            Assertions.assertEquals(true,tempString1.equals("Die color: violet , Die value: " + Integer.toString(tempValue)));
+
     }
 
 }
