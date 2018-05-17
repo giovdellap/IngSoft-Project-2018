@@ -32,12 +32,12 @@ public class ServerPlayer extends Thread
         sPlayerLog.minorLog("ServerPlayer Logger operative");
 
 
-        sPlayerLog.minorLog("check del ServerPlayer");
+        sPlayerLog.minorLog("ServerPlayer check");
         socket = s;
         id=n;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-        sPlayerLog.minorLog("check fine costruttore serverplayer");
+        sPlayerLog.minorLog("check serverplayer constructor end");
         numPlayers=1;
 
 

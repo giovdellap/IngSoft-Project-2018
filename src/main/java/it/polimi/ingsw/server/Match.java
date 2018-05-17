@@ -120,11 +120,11 @@ public class Match
             matchLog.minorLog("Player "+Integer.toString(i+1)+" FB = "+Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
         }
         matchLog.minorLog("SCHEMES RECEPTION OK");
-        matchLog.minorLog("initialization 2: phase 1 ended");
+        matchLog.minorLog("Initialization 2: Phase 1 ended");
 
 
         //INITIALIZATION 2: PHASE 2
-        matchLog.minorLog("initialization 2: phase 2 started");
+        matchLog.minorLog("Initialization 2: Phase 2 started");
         SchemeCard[] temp = new SchemeCard[numPlayers];
         for(int i=0;i<numPlayers;i++)
             temp[i] = modelInstance.getSchemebyIndex(i);

@@ -29,7 +29,7 @@ public class MajorLogger
         }
 
         System.out.println("");
-        System.out.println("END LOG");
+        System.out.println("LOG END");
     }
 
     public void stackLog(ArrayList<String> temp)
