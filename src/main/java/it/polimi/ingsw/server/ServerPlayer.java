@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
@@ -23,10 +24,11 @@ public class ServerPlayer extends Thread
     private boolean firstPlayerHasDone;
     private String[] tempNames;
     private String[] playerNames;
+    private boolean connected = true;
 
     public MinorLogger sPlayerLog;
 
-    public ServerPlayer(Socket s, int n) throws IOException {
+    public ServerPlayer(Socket s, int n) throws IOException, GenericInvalidArgumentException {
 
         sPlayerLog = new MinorLogger();
         sPlayerLog.minorLog("ServerPlayer Logger operative");
@@ -43,8 +45,7 @@ public class ServerPlayer extends Thread
 
     }
 
-    public ServerPlayer(Socket s, int n, String[] tempArr)
-    {
+    public ServerPlayer(Socket s, int n, String[] tempArr) throws GenericInvalidArgumentException {
         try {
 
             sPlayerLog = new MinorLogger();
@@ -59,9 +60,9 @@ public class ServerPlayer extends Thread
             tempNames = tempArr;
 
         } catch(Exception ex)
-        {
-            sPlayerLog.minorLog("Exception ex");
-        }
+            {
+                sPlayerLog.minorLog("Exception ex");
+            }
     }
 
     //INITIALIZATION 1
@@ -163,9 +164,10 @@ public class ServerPlayer extends Thread
 
         } catch(Exception e) {
             try {
-                System.out.println("Exception e");
+                sPlayerLog.minorLog("Exception e");
                 socket.close();
-                System.out.println("Socket closed");
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
             } catch(Exception ex)
             {}
         }
@@ -199,16 +201,26 @@ public class ServerPlayer extends Thread
 
     public void sendPlayersUsernames(String[] temp)
     {
-        numPlayers=temp.length;
-        playerNames=new String[numPlayers];
-        playerNames=temp;
-        for(int i=0;i<numPlayers;i++)
-        {
-            outSocket.println("#player#$" + Integer.toString(i + 1) + "$");
-            outSocket.flush();
-            outSocket.println("#username#$"+playerNames[i]+"$");
-            outSocket.flush();
+        try {
+            numPlayers = temp.length;
+            playerNames = new String[numPlayers];
+            playerNames = temp;
+            for (int i = 0; i < numPlayers; i++) {
+                outSocket.println("#player#$" + Integer.toString(i + 1) + "$");
+                outSocket.flush();
+                outSocket.println("#username#$" + playerNames[i] + "$");
+                outSocket.flush();
 
+            }
+        } catch (Exception e)
+        {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch(Exception ex)
+            {}
         }
     }
 
@@ -216,36 +228,90 @@ public class ServerPlayer extends Thread
 
     public void sendPrivateObj(int id)
     {
-        outSocket.println("#privateObj#$id$");
-        outSocket.flush();
-        outSocket.println("#id#$"+Integer.toString(id)+"$");
-        outSocket.flush();
+        try {
+            outSocket.println("#privateObj#$id$");
+            outSocket.flush();
+            outSocket.println("#id#$" + Integer.toString(id) + "$");
+            outSocket.flush();
+        } catch (Exception e)
+        {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch(Exception ex)
+            {}
+        }
 
     }
 
     public void sendScheme(int id)
     {
-        outSocket.println("#scheme#$"+Integer.toString(id)+"$");
-        outSocket.flush();
+        try {
+            outSocket.println("#scheme#$" + Integer.toString(id) + "$");
+            outSocket.flush();
+        } catch (Exception e) {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch (Exception ex) {
+            }
+        }
     }
 
     public void sendPubObjs(int id1, int id2, int id3)
     {
-        outSocket.println("#pubobj#$"+Integer.toString(id1)+"$");
-        outSocket.flush();
-        outSocket.println("#pubobj#$"+Integer.toString(id2)+"$");
-        outSocket.flush();
-        outSocket.println("#pubobj#$"+Integer.toString(id3)+"$");
-        outSocket.flush();
+        try {
+            outSocket.println("#pubobj#$" + Integer.toString(id1) + "$");
+            outSocket.flush();
+            outSocket.println("#pubobj#$" + Integer.toString(id2) + "$");
+            outSocket.flush();
+            outSocket.println("#pubobj#$" + Integer.toString(id3) + "$");
+            outSocket.flush();
+        } catch (Exception e) {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch (Exception ex) {
+            }
+        }
     }
 
     public int[] receiveScheme() throws IOException, InvalidinSocketException
     {
-        outSocket.println("#insert#$scheme$");
-        outSocket.flush();
         int[] temp = new int[2];
-        msg=inSocket.readLine();
-        simpleDecode(msg);
+        try {
+            outSocket.println("#insert#$scheme$");
+            outSocket.flush();
+        } catch (Exception e) {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch (Exception ex) {
+            }
+        }
+
+        try {
+            msg = inSocket.readLine();
+            simpleDecode(msg);
+        } catch (Exception e)
+        {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch (Exception ex) {
+            }
+        }
+
 
         if(Integer.parseInt(tempArg)<1||Integer.parseInt(tempArg)>12)
             throw new InvalidinSocketException();
@@ -258,22 +324,53 @@ public class ServerPlayer extends Thread
             throw new InvalidinSocketException();
 
         temp[1]=Integer.parseInt(tempArg);
-        outSocket.println("#wait#$players$");
-        outSocket.flush();
+        try {
+            outSocket.println("#wait#$players$");
+            outSocket.flush();
+        } catch (Exception e) {
+            try {
+                sPlayerLog.minorLog("Exception e");
+                socket.close();
+                sPlayerLog.minorLog("Socket closed");
+                disconnectionManager();
+            } catch (Exception ex) {
+            }
+        }
         return temp;
     }
 
     public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException {
         for(int i=0;i<numPlayers;i++)
         {
-            outSocket.println("#player#$"+Integer.toString(i+1)+"$");
-            outSocket.flush();
-            outSocket.println("#scheme#$"+Integer.toString(vect[i].getID())+"$");
-            outSocket.flush();
-            outSocket.println("#fb#$"+Integer.toString(vect[i].getfb())+"$");
-            outSocket.flush();
-            outSocket.println("#favtokens#$"+Integer.toString(vect[i].getDiff(vect[i].getfb())));
+            try {
+                outSocket.println("#player#$" + Integer.toString(i + 1) + "$");
+                outSocket.flush();
+                outSocket.println("#scheme#$" + Integer.toString(vect[i].getID()) + "$");
+                outSocket.flush();
+                outSocket.println("#fb#$" + Integer.toString(vect[i].getfb()) + "$");
+                outSocket.flush();
+                outSocket.println("#favtokens#$" + Integer.toString(vect[i].getDiff(vect[i].getfb())));
+            } catch (Exception e) {
+                try {
+                    sPlayerLog.minorLog("Exception e");
+                    socket.close();
+                    sPlayerLog.minorLog("Socket closed");
+                    disconnectionManager();
+                } catch (Exception ex) {
+                }
+            }
         }
+    }
+
+    //CONNECTION LOST MANAGEMENT
+    public void disconnectionManager() throws GenericInvalidArgumentException {
+        connected = false;
+        sPlayerLog.minorLog("CLIENT "+Integer.toString(id+1)+" DISCONNECTED");
+    }
+
+    public boolean connectionCheck()
+    {
+        return connected;
     }
 
 }

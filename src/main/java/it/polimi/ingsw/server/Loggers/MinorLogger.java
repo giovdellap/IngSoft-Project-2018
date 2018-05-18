@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.Loggers;
 
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+
 import java.util.ArrayList;
 
 public class MinorLogger
@@ -11,14 +13,16 @@ public class MinorLogger
         log = new ArrayList<String>();
     }
 
-    public void minorLog(String s)
-    {
+    public void minorLog(String s) throws GenericInvalidArgumentException {
+        if(s==null)
+            throw new GenericInvalidArgumentException();
         System.out.println(s);
         log.add(s);
     }
 
-    public void stackLog(ArrayList<String> temp)
-    {
+    public void stackLog(ArrayList<String> temp) throws GenericInvalidArgumentException {
+        if(temp==null)
+            throw new GenericInvalidArgumentException();
         int i=0;
         while(i<temp.size())
         {
@@ -29,14 +33,11 @@ public class MinorLogger
 
     public ArrayList<String> updateFather()
     {
-        int i=0;
-        ArrayList<String> temp = new ArrayList<String>();
-        while(i<temp.size())
-        {
-            temp.add(log.get(i));
-            i++;
-        }
+        return log;
+    }
+
+    public  void reinitialize()
+    {
         log = new ArrayList<String>();
-        return temp;
     }
 }

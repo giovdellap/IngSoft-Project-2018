@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
 import java.io.IOException;
@@ -9,13 +10,13 @@ import java.io.IOException;
 public interface ConnectionServer
 {
 
-    public void sendPrivObj(int player, int id);
+    public void sendPrivObj(int player, int id) throws GenericInvalidArgumentException;
 
-    public void sendSchemes(int player, int id1, int id2);
+    public void sendSchemes(int player, int id1, int id2) throws GenericInvalidArgumentException;
 
-    public void sendPubObjs(int id1, int id2, int id3);
+    public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException;
 
-    public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException;
+    public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException, GenericInvalidArgumentException;
 
     public void sendDraftPool(DraftPool draft);
 
