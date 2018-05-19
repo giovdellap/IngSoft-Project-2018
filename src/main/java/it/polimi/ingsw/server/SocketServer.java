@@ -99,9 +99,10 @@ public class SocketServer implements ConnectionServer {
         }
 
         for (int i = 0; i < numPlayers; i++) {
-        players.get(i).sendPlayersUsernames(playersNames);
-        sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
-        players.get(i).sPlayerLog.reinitialize();
+            players.get(i).sendNumPlayers();
+            players.get(i).sendPlayersUsernames(playersNames);
+            sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
+            players.get(i).sPlayerLog.reinitialize();
         }
 
         sServerLog.minorLog("End initialization 1 phase 2");

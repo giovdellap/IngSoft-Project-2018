@@ -199,6 +199,12 @@ public class ServerPlayer extends Thread
         return flag;
     }
 
+    public void sendNumPlayers()
+    {
+        outSocket.println("#numplayers#$"+Integer.toString(numPlayers)+"$");
+        outSocket.flush();
+    }
+
     public void sendPlayersUsernames(String[] temp)
     {
         try {
