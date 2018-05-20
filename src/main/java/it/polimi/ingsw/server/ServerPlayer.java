@@ -41,8 +41,6 @@ public class ServerPlayer extends Thread
         outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
         sPlayerLog.minorLog("check serverplayer constructor end");
         numPlayers=1;
-
-
     }
 
     public ServerPlayer(Socket s, int n, String[] tempArr) throws GenericInvalidArgumentException {
@@ -103,6 +101,7 @@ public class ServerPlayer extends Thread
             outSocket.println("#confirm#$numplayers$");
             outSocket.flush();
             outSocket.println("#wait#$players$");
+            outSocket.flush();
         } catch(Exception e) {
             try {
                 sPlayerLog.minorLog("Exception e");
@@ -156,6 +155,8 @@ public class ServerPlayer extends Thread
                 {
                     if(checkExistingName()) {
                         username = tempArg;
+                        outSocket.println("#confirm#$username$");
+                        outSocket.flush();
                     }
                 }
             }
@@ -199,8 +200,9 @@ public class ServerPlayer extends Thread
         return flag;
     }
 
-    public void sendNumPlayers()
+    public void sendNumPlayers(int n)
     {
+        numPlayers=n;
         outSocket.println("#numplayers#$"+Integer.toString(numPlayers)+"$");
         outSocket.flush();
     }

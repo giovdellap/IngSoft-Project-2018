@@ -32,7 +32,11 @@ public class Multiplayer {
         cSocket.socketLogger.reinitialize();
 
         players = cSocket.getNumPlayers();
+        loggerMP.stackLog(cSocket.socketLogger.updateFather());
+        cSocket.socketLogger.reinitialize();
+
         String[] playerNames = cSocket.getPlayers();
+        System.out.println("check finale");
         loggerMP.stackLog(cSocket.socketLogger.updateFather());
         cSocket.socketLogger.reinitialize();
 

@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class SocketClient implements ConnectionClient {
 
@@ -28,6 +29,7 @@ public class SocketClient implements ConnectionClient {
     private String tempCmd;
     private String tempArg;
     private boolean isConfirmed;
+    private boolean isConnected;
 
     private int playerID=0;
     private int numPlayers=0;
@@ -36,15 +38,11 @@ public class SocketClient implements ConnectionClient {
 
         socketLogger = new MinorLogger();
         socketLogger.minorLog("SocketClient logger operative");
+        isConnected=false;
 
-        if(!firstClient())
-            if(!nClient(1))
-                if(!nClient(2))
-                    if(!nClient(3)) {
-                        socketLogger.minorLog("CONNECTION FAILED");
-                        outVideo.println("CONNECTION FAILED");
-                    }
+        connect();
 
+        socket = new Socket("localhost", finalPort);
         this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
         this.inKeyboard = new BufferedReader(new InputStreamReader(System.in));
@@ -52,7 +50,6 @@ public class SocketClient implements ConnectionClient {
         isConfirmed = false;
         socketLogger.minorLog("inSocket/outSocket/inKeyboard/outVideo initialized");
 
-        finalPort = socket.getPort();
         msgIN = inSocket.readLine();
         simpleDecode(msgIN);
         playerID = Integer.parseInt(tempArg);
@@ -62,51 +59,44 @@ public class SocketClient implements ConnectionClient {
 
         usernameInsertion();
         if(playerID==1)
-        numPlayersInsertion();
+            numPlayersInsertion();
 
-
-        msgIN=inSocket.readLine();
+        msgIN = inSocket.readLine();
         simpleDecode(msgIN);
-        if(tempCmd=="wait"&&tempArg=="players")
+        if(tempCmd.equals("wait")&&tempArg.equals("players"))
         {
-            outVideo.println("WAITING FOR OTHER PLAYERS");
-            socketLogger.minorLog("Initialization 1: phase 1 completed");
+            socketLogger.minorLog("waiting for players");
+            outVideo.println("waiting for players");
+            outVideo.flush();
         }
+
+        socketLogger.minorLog("Initialization 1: phase 1 completed");
+
     }
 
     //INITIALIZATION 1: PHASE 1
 
-    private boolean firstClient() throws IOException {
-        try
-        {
-            socket = new Socket("localhost", PORT);
-        } catch(Exception e)
-        {
-            System.out.println("port "+Integer.toString(PORT)+" not working");
-            socket.close();
-            return false;
-        }
-        return true;
-    }
+    private void connect() throws IOException, GenericInvalidArgumentException {
+        socket = new Socket("localhost", PORT);
+        this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
+        socketLogger.minorLog("Connected on port 7777");
 
-    private boolean nClient(int n) throws IOException {
-        try
-        {
-            socket = new Socket("localhost", PORT+n);
-        } catch(Exception e)
-        {
-            System.out.println("port "+Integer.toString(PORT+n)+" not working");
-            socket.close();
-            return false;
-        }
-        return true;
+        msgIN = inSocket.readLine();
+        simpleDecode(msgIN);
+        if(tempCmd.equals("switch"))
+            finalPort = Integer.parseInt(tempArg);
+
+        socket.close();
     }
 
     private void simpleDecode(String tempStr)
     {
         //parts the message into command and argument
+        System.out.println("check 1 simple decode");
         tempCmd="";
         tempArg="";
+        System.out.println("check 2 simple decode");
         int index=0;
         if(tempStr.charAt(index)=='#')
         {
@@ -116,8 +106,9 @@ public class SocketClient implements ConnectionClient {
                 tempCmd+=Character.toString(tempStr.charAt(index));
                 index++;
             }
+            System.out.println(tempCmd);
             index++;
-            if(tempStr.charAt(index)=='$');
+            if(tempStr.charAt(index)=='$')
             {
                 index++;
                 while(tempStr.charAt(index)!='$')
@@ -125,20 +116,19 @@ public class SocketClient implements ConnectionClient {
                     tempArg+=Character.toString(tempStr.charAt(index));
                     index++;
                 }
+                System.out.println(tempArg);
             }
         }
     }
 
     public void usernameInsertion() throws IOException, GenericInvalidArgumentException {
         isConfirmed = false;
-        System.out.println("check 1");
         msgIN=inSocket.readLine();
         simpleDecode(msgIN);
         System.out.println(msgIN);
         while(!isConfirmed) {
             if (tempCmd.equals("insert")&&tempArg.equals("username"))
             {
-                System.out.println("check 2");
                 outVideo.println("INSERT USERNAME");
                 outVideo.flush();
                 socketLogger.minorLog("username requested from server");
@@ -147,6 +137,8 @@ public class SocketClient implements ConnectionClient {
                 outSocket.println("#username#$"+msgOUT+"$");
                 outSocket.flush();
                 msgIN=inSocket.readLine();
+                while(msgIN==null)
+                    msgIN=inSocket.readLine();
                 simpleDecode(msgIN);
                 if(tempCmd.equals("confirm")&&tempArg.equals("username")) {
                     isConfirmed = true;
@@ -184,20 +176,15 @@ public class SocketClient implements ConnectionClient {
                 }
             }
         }
-        msgIN = inSocket.readLine();
-        simpleDecode(msgIN);
-        if(tempCmd.equals("wait")&&tempArg.equals("players"))
-        {
-            socketLogger.minorLog("waiting for players");
-            outVideo.println("waiting for players");
-            outVideo.flush();
-        }
+
     }
 
     //INITIALIZATION 1: PHASE 2
 
     public int getNumPlayers() throws IOException, GenericInvalidArgumentException {
         msgIN = inSocket.readLine();
+        while(msgIN==null)
+            msgIN=inSocket.readLine();
         simpleDecode(msgIN);
         if(tempCmd.equals("numplayers")) {
             numPlayers = Integer.parseInt(tempArg);
@@ -211,21 +198,34 @@ public class SocketClient implements ConnectionClient {
     public String[] getPlayers() throws IOException, GenericInvalidArgumentException {
         String[] temp = new String[numPlayers];
         int i=0;
+        System.out.println("check 1");
         while(i<numPlayers)
         {
-            msgIN = inSocket.readLine();
+            msgIN=inSocket.readLine();
+            while(msgIN==null)
+                msgIN = inSocket.readLine();
             simpleDecode(msgIN);
+            System.out.println(msgIN);
             if(tempCmd.equals("player")&&tempArg==Integer.toString(i+1))
             {
                 msgIN = inSocket.readLine();
+                while(msgIN==null)
+                    msgIN = inSocket.readLine();
                 simpleDecode(msgIN);
+                System.out.println(msgIN);
+                System.out.println(Integer.toString(i));
+                System.out.println("tempArg: "+tempArg);
+                System.out.println("tempCmd: "+tempCmd);
                 if(tempCmd.equals("username"))
                 {
                     temp[i]=tempArg;
+                    System.out.println(tempArg);
                     outVideo.println("PLAYER "+Integer.toString(i+1)+": "+tempArg);
+                    outVideo.flush();
                     socketLogger.minorLog("player "+Integer.toString(i+1)+": "+tempArg);
                 }
             }
+            i++;
         }
         return temp;
     }

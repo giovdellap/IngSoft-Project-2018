@@ -8,10 +8,12 @@ import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class SocketServer implements ConnectionServer {
@@ -27,7 +29,12 @@ public class SocketServer implements ConnectionServer {
     private Socket generalSocket;
     private ServerPlayer test;
 
+    private Socket socket;
+    private BufferedReader inSocket;
+    private PrintWriter outSocket;
+
     public MinorLogger sServerLog;
+
 
     public SocketServer() throws GenericInvalidArgumentException {
 
@@ -38,15 +45,36 @@ public class SocketServer implements ConnectionServer {
         players = new ArrayList<ServerPlayer>();
         sServerLog.minorLog("end socketserver connection");
 
+
     }
 
+    //ACCEPTATION
+    public void acceptAndSwitch() throws IOException, GenericInvalidArgumentException {
+        serverSocket = new ServerSocket(PORT);
+        Socket generalSocket = serverSocket.accept();
+        sServerLog.minorLog("Client "+Integer.toString(counter+1)+" accepted on port "+Integer.toString(PORT));
+
+        inSocket = new BufferedReader(new InputStreamReader(generalSocket.getInputStream()));
+        outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(generalSocket.getOutputStream())), true);
+
+        outSocket.println("#switch#$"+Integer.toString(PORT+counter+1)+"$");
+        outSocket.flush();
+        sServerLog.minorLog("Port "+Integer.toString(PORT+counter+1)+" sent to Client "+Integer.toString(counter+1)+" to switch");
+
+        generalSocket.close();
+        serverSocket.close();
+        sServerLog.minorLog("Socket on port 7777 closed");
+    }
 
     //INITIALIZATION 1
 
 
     public int initializeFPS() throws IOException, GenericInvalidArgumentException {
         sServerLog.minorLog("start intialization 1 player 1");
-        serverSocket = new ServerSocket(PORT);
+
+        acceptAndSwitch();
+
+        serverSocket = new ServerSocket(PORT+counter+1);
         Socket generalSocket = serverSocket.accept();
 
         sServerLog.minorLog("Client " + Integer.toString(counter+1) + " connected");
@@ -74,7 +102,10 @@ public class SocketServer implements ConnectionServer {
         for (int i = 0; i < counter; i++) {
             temp[i] = playersNames[i];
         }
-        serverSocket = new ServerSocket(PORT + counter);
+
+        acceptAndSwitch();
+
+        serverSocket = new ServerSocket(PORT+counter+1);
         generalSocket = serverSocket.accept();
         sServerLog.minorLog("Client " + Integer.toString(counter+1) + " connected");
         players.add(new ServerPlayer(generalSocket, counter, temp));
@@ -99,7 +130,7 @@ public class SocketServer implements ConnectionServer {
         }
 
         for (int i = 0; i < numPlayers; i++) {
-            players.get(i).sendNumPlayers();
+            players.get(i).sendNumPlayers(numPlayers);
             players.get(i).sendPlayersUsernames(playersNames);
             sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
             players.get(i).sPlayerLog.reinitialize();
