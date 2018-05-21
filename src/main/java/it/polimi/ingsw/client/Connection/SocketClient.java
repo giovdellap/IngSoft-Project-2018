@@ -206,16 +206,13 @@ public class SocketClient implements ConnectionClient {
                 msgIN = inSocket.readLine();
             simpleDecode(msgIN);
             System.out.println(msgIN);
-            if(tempCmd.equals("player")&&tempArg==Integer.toString(i+1))
+            if(tempCmd.equals("player")&&tempArg.equals(Integer.toString(i+1)))
             {
                 msgIN = inSocket.readLine();
                 while(msgIN==null)
                     msgIN = inSocket.readLine();
                 simpleDecode(msgIN);
-                System.out.println(msgIN);
-                System.out.println(Integer.toString(i));
-                System.out.println("tempArg: "+tempArg);
-                System.out.println("tempCmd: "+tempCmd);
+
                 if(tempCmd.equals("username"))
                 {
                     temp[i]=tempArg;
