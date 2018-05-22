@@ -1,31 +1,32 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.MultiPackage;
 
 
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+
+import java.io.IOException;
 
 public interface ConnectionClient {
 
 
+
+    public int getPrivObj() throws IOException, GenericInvalidArgumentException;
+
+    public int[] getSchemes() throws IOException, GenericInvalidArgumentException;
+
+
+    public int[] getPublicObjs() throws IOException, GenericInvalidArgumentException;
+
+    public void sendScheme(int[] arg);
+
+    public int[] getOppSchemes() throws IOException, GenericInvalidArgumentException;
+
     public void toolCardUsed(int id);
-
-    public void getPrivObj();
-
-    public int[] getSchemes();
-
-    public int getScoreMarkers();
-
-
-    public int[] getPublicObjs();
-
-
-    public SchemeCardMP getOppSchemes();
-
 
     public DraftPoolMP getDraftPool();
 
 
-    public void sendScheme(SchemeCardMP sc);
 
 
     public SchemeCardMP receiveOppScheme();

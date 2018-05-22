@@ -4,7 +4,7 @@ package it.polimi.ingsw.client.ViewSP;
 import it.polimi.ingsw.client.ModelComponentsSP.DraftPoolSP;
 import it.polimi.ingsw.client.ModelComponentsSP.SchemeCardSP;
 
-import it.polimi.ingsw.client.SPViewInterface;
+import it.polimi.ingsw.client.SinglePackage.SPViewInterface;
 
 public class CLISP implements SPViewInterface
 {

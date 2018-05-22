@@ -187,6 +187,7 @@ public class SocketServer implements ConnectionServer {
             temp[1]=0;
             return temp;
         }
+
     }
 
     public void sendSchemestoEveryone(SchemeCard[] tempVect) throws InvalidIntArgumentException, GenericInvalidArgumentException {

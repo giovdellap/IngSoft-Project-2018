@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.Connection;
 
 
-import it.polimi.ingsw.client.ConnectionClient;
+import it.polimi.ingsw.client.MultiPackage.ConnectionClient;
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
 
@@ -12,14 +12,19 @@ public class RMI implements ConnectionClient
         //costruttore
     }
 
+    public void sendScheme(int[] arg)
+    {
+
+    }
+
     public void toolCardUsed(int id)
     {
 
     }
 
-    public void getPrivObj()
+    public int getPrivObj()
     {
-
+        return 0;
     }
 
     public int[] getSchemes()
@@ -38,7 +43,7 @@ public class RMI implements ConnectionClient
         return null;
     }
 
-    public SchemeCardMP getOppSchemes()
+    public int[] getOppSchemes()
     {
 
         return null;

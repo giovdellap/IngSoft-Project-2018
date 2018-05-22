@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.ViewObservers;
 
 
-import it.polimi.ingsw.client.MPViewObserverInterface;
+import it.polimi.ingsw.client.MultiPackage.MPViewObserverInterface;
 
 public class ToolsCardObserver implements MPViewObserverInterface {
 

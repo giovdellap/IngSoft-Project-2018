@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.Connection;
 
 
-import it.polimi.ingsw.client.ConnectionClient;
+import it.polimi.ingsw.client.MultiPackage.ConnectionClient;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
@@ -9,8 +9,6 @@ import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Timer;
 
 public class SocketClient implements ConnectionClient {
 
@@ -23,6 +21,7 @@ public class SocketClient implements ConnectionClient {
     private PrintWriter outSocket;
     private BufferedReader inKeyboard;
     private PrintWriter outVideo;
+
 
     private String msgIN;
     private String msgOUT;
@@ -49,6 +48,7 @@ public class SocketClient implements ConnectionClient {
         this.outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
         isConfirmed = false;
         socketLogger.minorLog("inSocket/outSocket/inKeyboard/outVideo initialized");
+        isConnected=true;
 
         msgIN = inSocket.readLine();
         simpleDecode(msgIN);
@@ -66,7 +66,11 @@ public class SocketClient implements ConnectionClient {
         if(tempCmd.equals("wait")&&tempArg.equals("players"))
         {
             socketLogger.minorLog("waiting for players");
-            outVideo.println("waiting for players");
+
+            outVideo.println();
+            outVideo.flush();
+
+            outVideo.println("waiting for players..");
             outVideo.flush();
         }
 
@@ -93,10 +97,8 @@ public class SocketClient implements ConnectionClient {
     private void simpleDecode(String tempStr)
     {
         //parts the message into command and argument
-        System.out.println("check 1 simple decode");
         tempCmd="";
         tempArg="";
-        System.out.println("check 2 simple decode");
         int index=0;
         if(tempStr.charAt(index)=='#')
         {
@@ -106,7 +108,6 @@ public class SocketClient implements ConnectionClient {
                 tempCmd+=Character.toString(tempStr.charAt(index));
                 index++;
             }
-            System.out.println(tempCmd);
             index++;
             if(tempStr.charAt(index)=='$')
             {
@@ -116,7 +117,6 @@ public class SocketClient implements ConnectionClient {
                     tempArg+=Character.toString(tempStr.charAt(index));
                     index++;
                 }
-                System.out.println(tempArg);
             }
         }
     }
@@ -125,10 +125,11 @@ public class SocketClient implements ConnectionClient {
         isConfirmed = false;
         msgIN=inSocket.readLine();
         simpleDecode(msgIN);
-        System.out.println(msgIN);
         while(!isConfirmed) {
             if (tempCmd.equals("insert")&&tempArg.equals("username"))
             {
+                outVideo.println();
+                outVideo.flush();
                 outVideo.println("INSERT USERNAME");
                 outVideo.flush();
                 socketLogger.minorLog("username requested from server");
@@ -142,6 +143,10 @@ public class SocketClient implements ConnectionClient {
                 simpleDecode(msgIN);
                 if(tempCmd.equals("confirm")&&tempArg.equals("username")) {
                     isConfirmed = true;
+
+                    outVideo.println();
+                    outVideo.flush();
+
                     outVideo.println("username "+msgOUT+" accepted");
                     outVideo.flush();
                     socketLogger.minorLog("Username "+msgOUT+" accepted");
@@ -158,7 +163,10 @@ public class SocketClient implements ConnectionClient {
         {
             if(tempCmd.equals("insert")&&tempArg.equals("numplayers"))
             {
-                outVideo.println("INSERT PLAYERS' NUMBER");
+                outVideo.println();
+                outVideo.flush();
+
+                outVideo.println("INSERT PLAYERS NUMBER");
                 outVideo.flush();
                 socketLogger.minorLog("numPlayers requested from server");
                 msgOUT = inKeyboard.readLine();
@@ -170,6 +178,10 @@ public class SocketClient implements ConnectionClient {
                 if(tempCmd.equals("confirm")&&tempArg.equals("numplayers"))
                 {
                     isConfirmed=true;
+
+                    outVideo.println();
+                    outVideo.flush();
+
                     outVideo.println("number accepted");
                     outVideo.flush();
                     socketLogger.minorLog("numPlayers "+msgOUT+" accepted");
@@ -183,12 +195,12 @@ public class SocketClient implements ConnectionClient {
 
     public int getNumPlayers() throws IOException, GenericInvalidArgumentException {
         msgIN = inSocket.readLine();
-        while(msgIN==null)
-            msgIN=inSocket.readLine();
         simpleDecode(msgIN);
         if(tempCmd.equals("numplayers")) {
             numPlayers = Integer.parseInt(tempArg);
             socketLogger.minorLog("numPlayers = "+tempCmd);
+            outVideo.println();
+            outVideo.flush();
             outVideo.println(tempArg+" PLAYERS");
             outVideo.flush();
         }
@@ -198,14 +210,10 @@ public class SocketClient implements ConnectionClient {
     public String[] getPlayers() throws IOException, GenericInvalidArgumentException {
         String[] temp = new String[numPlayers];
         int i=0;
-        System.out.println("check 1");
         while(i<numPlayers)
         {
             msgIN=inSocket.readLine();
-            while(msgIN==null)
-                msgIN = inSocket.readLine();
             simpleDecode(msgIN);
-            System.out.println(msgIN);
             if(tempCmd.equals("player")&&tempArg.equals(Integer.toString(i+1)))
             {
                 msgIN = inSocket.readLine();
@@ -216,7 +224,6 @@ public class SocketClient implements ConnectionClient {
                 if(tempCmd.equals("username"))
                 {
                     temp[i]=tempArg;
-                    System.out.println(tempArg);
                     outVideo.println("PLAYER "+Integer.toString(i+1)+": "+tempArg);
                     outVideo.flush();
                     socketLogger.minorLog("player "+Integer.toString(i+1)+": "+tempArg);
@@ -227,39 +234,207 @@ public class SocketClient implements ConnectionClient {
         return temp;
     }
 
+    //INITIALIZATION 2
 
-    public void toolCardUsed(int id)
-    {
+    public int getPrivObj() throws IOException, GenericInvalidArgumentException {
+        msgIN = inSocket.readLine();
+        simpleDecode(msgIN);
+        if(tempCmd.equals("privobj")) {
+            socketLogger.minorLog("Received private objective ID: "+tempArg);
+            outVideo.println();
+            outVideo.flush();
+            outVideo.println("PRIVATE OBJECTIVE : "+tempArg);
+            outVideo.flush();
+            return Integer.parseInt(tempArg);
+        }
+        else {
+            return 0;
+
+        }
+    }
+
+    public int[] getSchemes() throws IOException, GenericInvalidArgumentException {
+        int temp[] = new int[2];
+
+        outVideo.println();
+        outVideo.flush();
+
+        msgIN=inSocket.readLine();
+        simpleDecode(msgIN);
+        if(tempCmd.equals("scheme")) {
+            temp[0] = Integer.parseInt(tempArg);
+            outVideo.println("EXTRACTED SCHEME ID: "+tempArg);
+            outVideo.flush();
+            socketLogger.minorLog("Scheme "+tempArg+" received");
+        }
+
+        msgIN=inSocket.readLine();
+        simpleDecode(msgIN);
+
+        if(tempCmd.equals("scheme"))
+        {
+            temp[1] = Integer.parseInt(tempArg);
+            outVideo.println("EXTRACTED SCHEME ID: "+tempArg);
+            outVideo.flush();
+            socketLogger.minorLog("Scheme "+tempArg+" received");
+        }
+
+        return temp;
 
     }
 
-    public void getPrivObj()
-    {
+    public int[] getPublicObjs() throws IOException, GenericInvalidArgumentException {
+
+        int[] temp = new int[3];
+
+        outVideo.println();
+        outVideo.flush();
+
+        for(int i=0; i<3; i++)
+        {
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+
+            if(tempCmd.equals("pubobj"))
+            {
+                socketLogger.minorLog("Public Objective "+Integer.toString(i+1)+" ID: "+tempArg);
+                outVideo.println("PUBLIC OBJECTIVE "+Integer.toString(i+1)+" ID: "+tempArg);
+                outVideo.flush();
+
+                temp[i] = Integer.parseInt(tempArg);
+            }
+        }
+        return temp;
+    }
+
+    public int[] selectAndSendScheme(int[] arg) throws IOException, GenericInvalidArgumentException {
+        boolean flag=false;
+        int[] temp = new int[2];
+
+        outVideo.println();
+        outVideo.flush();
+
+        while(!flag)
+        {
+            msgIN=inSocket.readLine();
+            simpleDecode(msgIN);
+
+            if(tempCmd.equals("insert")&&tempArg.equals("scheme")) {
+                outVideo.println("SELECT A SCHEME");
+                outVideo.flush();
+                msgOUT = inKeyboard.readLine();
+            }
+            if(Integer.parseInt(msgOUT)==arg[0]||Integer.parseInt(msgOUT)==arg[1])
+                flag=true;
+            else
+            {
+                outVideo.println("SCHEME ID NOT VALID");
+                outVideo.flush();
+            }
+        }
+        socketLogger.minorLog("Scheme "+msgOUT+" selected");
+        temp[0] = Integer.parseInt(msgOUT);
+        outSocket.println("#scheme#$"+msgOUT+"$");
+        outSocket.flush();
+
+        outVideo.println();
+        outVideo.flush();
+
+        flag=false;
+        while(!flag)
+        {
+            outVideo.println("SELECT FRONT OR BACK");
+            outVideo.flush();
+
+            outVideo.println("INSERT F FOR FRONT, B FOR BACK");
+            outVideo.flush();
+
+            msgOUT = inKeyboard.readLine();
+            if(msgOUT.equals("F")||msgOUT.equals("B"))
+                flag=true;
+            else
+            {
+                outSocket.println("INSERTION NOT VALID");
+                outSocket.flush();
+            }
+        }
+        if(msgOUT.equals("F")) {
+            socketLogger.minorLog("front selected");
+            outSocket.println("#fb#$1$");
+            outSocket.flush();
+            temp[1]=1;
+        }
+        else {
+            socketLogger.minorLog("back selected");
+            outSocket.println("#fb#$2$");
+            outSocket.flush();
+            temp[1]=2;
+        }
+
+        msgIN = inSocket.readLine();
+        simpleDecode(msgIN);
+
+
+        if(tempCmd.equals("wait")&&tempArg.equals("players"))
+        {
+            outVideo.println();
+            outVideo.flush();
+
+            outVideo.println("WAITING FOR PLAYERS..");
+            outVideo.flush();
+
+            socketLogger.minorLog("waiting for players");
+        }
+        return temp;
 
     }
 
-    public int[] getSchemes()
-    {
-        return null;
+    public int[] getOppSchemes() throws IOException, GenericInvalidArgumentException {
+        int[] temp = new int[4];
 
+        outVideo.println();
+        outVideo.flush();
+
+        msgIN = inSocket.readLine();
+        simpleDecode(msgIN);
+        if(tempCmd.equals("player"))
+        {
+            temp[0]=Integer.parseInt(tempArg);
+
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+            if(tempCmd.equals("scheme"))
+            {
+
+                temp[1] = Integer.parseInt(tempArg);
+                socketLogger.minorLog("Player "+Integer.toString(temp[0])+" selected scheme "+tempArg);
+
+                msgIN = inSocket.readLine();
+                simpleDecode(msgIN);
+                if(tempCmd.equals("fb"))
+                {
+
+                    temp[2] = Integer.parseInt(tempArg);
+                    socketLogger.minorLog("with fb "+tempArg);
+
+                    msgIN = inSocket.readLine();
+                    simpleDecode(msgIN);
+                    if(tempCmd.equals("favtokens"))
+                    {
+                        temp[3] = Integer.parseInt(tempArg);
+                        socketLogger.minorLog("favour tokens: "+tempArg);
+                        outVideo.println("Player "+Integer.toString(temp[0])+" selected scheme "+Integer.toString(temp[1])+" fb: "+Integer.toString(temp[2])+" and got "+Integer.toString(temp[3])+" favourtokens");
+                        outVideo.flush();
+                    }
+                }
+            }
+        }
+        return temp;
     }
 
-    public int getScoreMarkers()
+    public boolean connectionCheck()
     {
-
-        return 0;
-    }
-
-    public int[] getPublicObjs()
-    {
-
-        return null;
-    }
-
-    public SchemeCardMP getOppSchemes()
-    {
-
-        return null;
+        return isConnected;
     }
 
     public DraftPoolMP getDraftPool()
@@ -268,7 +443,7 @@ public class SocketClient implements ConnectionClient {
         return null;
     }
 
-    public void sendScheme(SchemeCardMP sc)
+    public void sendScheme(int[] arg)
     {
 
     }
@@ -305,6 +480,11 @@ public class SocketClient implements ConnectionClient {
     public int getScores()
     {
         return 0;
+
+    }
+
+    public void toolCardUsed(int id)
+    {
 
     }
 

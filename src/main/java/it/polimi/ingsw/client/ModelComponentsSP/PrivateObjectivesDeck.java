@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.ModelComponentsSP;
 
 
-import it.polimi.ingsw.client.ModelComponentSP;
+import it.polimi.ingsw.client.SinglePackage.ModelComponentSP;
 
 public class PrivateObjectivesDeck implements ModelComponentSP
 {

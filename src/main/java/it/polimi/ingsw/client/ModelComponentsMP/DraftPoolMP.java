@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.ModelComponentsMP;
 
-
-import it.polimi.ingsw.client.ModelComponentMP;
+import it.polimi.ingsw.client.MultiPackage.ModelComponentMP;
 
 import java.util.*;
 
@@ -17,26 +16,30 @@ public class DraftPoolMP implements ModelComponentMP {
     }
 
 
-    public void pickUpDie(int index) {
+    public void pickUpDie(int index)
+    {
 
         // raccoglie il dado
     }
 
 
-    public void updateDraft() {
+    public void updateDraft()
+    {
 
         // aggiorna il draft
     }
 
 
-    public DieMP replaceDie(int index, DieMP toPlace) {
+    public DieMP replaceDie(int index, DieMP toPlace)
+    {
 
         // rimpiazza il dado
         return null;
     }
 
 
-    public DieMP returnDie(int pos) {
+    public DieMP returnDie(int pos)
+    {
 
         // ritorna il dado
         return null;

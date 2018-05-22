@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.ViewSubjects;
 
 
-import it.polimi.ingsw.client.MPViewSubjectInterface;
+import it.polimi.ingsw.client.MultiPackage.MPViewSubjectInterface;
 
 public class Move implements MPViewSubjectInterface {
 
