@@ -303,6 +303,22 @@ public class SocketClient implements ConnectionClient {
 
                 temp[i] = Integer.parseInt(tempArg);
             }
+
+        }
+
+        msgIN = inSocket.readLine();
+        simpleDecode(msgIN);
+
+        if(tempCmd.equals("wait")&&tempArg.equals("players"))
+        {
+            outVideo.println();
+            outVideo.flush();
+
+            outVideo.println("WAITING FOR PLAYERS..");
+            outVideo.flush();
+
+
+            socketLogger.minorLog("waiting for players");
         }
         return temp;
     }
@@ -354,17 +370,22 @@ public class SocketClient implements ConnectionClient {
                 flag=true;
             else
             {
-                outSocket.println("INSERTION NOT VALID");
-                outSocket.flush();
+                outVideo.println("INSERTION NOT VALID");
+                outVideo.flush();
             }
         }
+
+        System.out.println(msgOUT);
+
         if(msgOUT.equals("F")) {
+
             socketLogger.minorLog("front selected");
             outSocket.println("#fb#$1$");
             outSocket.flush();
             temp[1]=1;
         }
         else {
+            System.out.println("sono in else");
             socketLogger.minorLog("back selected");
             outSocket.println("#fb#$2$");
             outSocket.flush();
@@ -382,6 +403,7 @@ public class SocketClient implements ConnectionClient {
 
             outVideo.println("WAITING FOR PLAYERS..");
             outVideo.flush();
+
 
             socketLogger.minorLog("waiting for players");
         }

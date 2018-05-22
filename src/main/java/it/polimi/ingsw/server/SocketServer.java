@@ -171,6 +171,7 @@ public class SocketServer implements ConnectionServer {
                 sServerLog.minorLog("public objectives id " + Integer.toString(id1) + ", " + Integer.toString(id2) + ", " + Integer.toString(id3) + " sent to player " + Integer.toString(i + 1));
             }
         }
+
     }
 
     public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException, GenericInvalidArgumentException {

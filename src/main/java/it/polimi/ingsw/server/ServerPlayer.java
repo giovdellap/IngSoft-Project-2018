@@ -277,6 +277,7 @@ public class ServerPlayer extends Thread
             outSocket.flush();
             outSocket.println("#pubobj#$" + Integer.toString(id3) + "$");
             outSocket.flush();
+            outSocket.println("#wait#$players$");
         } catch (Exception e) {
             try {
                 sPlayerLog.minorLog("Exception e");
@@ -290,7 +291,7 @@ public class ServerPlayer extends Thread
 
     public int[] receiveScheme() throws IOException, InvalidinSocketException
     {
-        System.out.println("siamo in receivescheme");
+
         int[] temp = new int[2];
         try {
             outSocket.println("#insert#$scheme$");
@@ -319,7 +320,7 @@ public class ServerPlayer extends Thread
             }
         }
 
-        System.out.println(msg);
+
         if(Integer.parseInt(tempArg)<1||Integer.parseInt(tempArg)>12)
             throw new InvalidinSocketException();
 
@@ -328,8 +329,11 @@ public class ServerPlayer extends Thread
         msg=inSocket.readLine();
         simpleDecode(msg);
 
-        if(!tempCmd.equals("fb")&&Integer.parseInt(tempArg)!=1&&Integer.parseInt(tempArg)!=2)
+
+        if((!tempCmd.equals("fb"))||(Integer.parseInt(tempArg)!=1&&Integer.parseInt(tempArg)!=2)) {
+
             throw new InvalidinSocketException();
+        }
 
         temp[1]=Integer.parseInt(tempArg);
         try {
