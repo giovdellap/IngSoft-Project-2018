@@ -61,8 +61,6 @@ public class Model
     {
         if(player<0||player>=numPlayers)
             throw new InvalidIntArgumentException();
-        if(id==0&&fb==0)
-            playerSchemes[player]=null;
         else {
             playerSchemes[player] = scDeck.extractSchemebyID(id);
             playerSchemes[player].setfb(fb);

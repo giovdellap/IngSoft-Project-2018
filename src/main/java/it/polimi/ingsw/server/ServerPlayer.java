@@ -65,7 +65,7 @@ public class ServerPlayer extends Thread
 
     //INITIALIZATION 1
 
-    public void initializeFirst() {
+    public void initializeFirst() throws GenericInvalidArgumentException {
         try {
             outSocket.println("#player#$1$");
             outSocket.flush();
@@ -107,9 +107,12 @@ public class ServerPlayer extends Thread
                 sPlayerLog.minorLog("Exception e");
                 socket.close();
                 sPlayerLog.minorLog("Socket closed");
+
             } catch(Exception ex)
             {}
         }
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
     private void simpleDecode(String tempStr)
@@ -139,8 +142,7 @@ public class ServerPlayer extends Thread
         }
     }
 
-    public void initializeN()
-    {
+    public void initializeN() throws GenericInvalidArgumentException {
         try {
             outSocket.println("#player#$"+Integer.toString(id+1)+"$");
             outSocket.flush();
@@ -172,6 +174,9 @@ public class ServerPlayer extends Thread
             } catch(Exception ex)
             {}
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
     public int getNumPlayers()
@@ -200,15 +205,16 @@ public class ServerPlayer extends Thread
         return flag;
     }
 
-    public void sendNumPlayers(int n)
-    {
+    public void sendNumPlayers(int n) throws GenericInvalidArgumentException {
         numPlayers=n;
         outSocket.println("#numplayers#$"+Integer.toString(numPlayers)+"$");
         outSocket.flush();
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
-    public void sendPlayersUsernames(String[] temp)
-    {
+    public void sendPlayersUsernames(String[] temp) throws GenericInvalidArgumentException {
         try {
             numPlayers = temp.length;
             playerNames = new String[numPlayers];
@@ -230,12 +236,14 @@ public class ServerPlayer extends Thread
             } catch(Exception ex)
             {}
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
     //INITIALIZATION 2
 
-    public void sendPrivateObj(int id)
-    {
+    public void sendPrivateObj(int id) throws GenericInvalidArgumentException {
         try {
             outSocket.println("#privobj#$"+Integer.toString(id)+"$");
             outSocket.flush();
@@ -250,10 +258,11 @@ public class ServerPlayer extends Thread
             {}
         }
 
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
-    public void sendScheme(int id)
-    {
+    public void sendScheme(int id) throws GenericInvalidArgumentException {
         try {
             outSocket.println("#scheme#$" + Integer.toString(id) + "$");
             outSocket.flush();
@@ -266,10 +275,12 @@ public class ServerPlayer extends Thread
             } catch (Exception ex) {
             }
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
-    public void sendPubObjs(int id1, int id2, int id3)
-    {
+    public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException {
         try {
             outSocket.println("#pubobj#$" + Integer.toString(id1) + "$");
             outSocket.flush();
@@ -280,17 +291,19 @@ public class ServerPlayer extends Thread
             outSocket.println("#wait#$players$");
         } catch (Exception e) {
             try {
+                disconnectionManager();
                 sPlayerLog.minorLog("Exception e");
                 socket.close();
                 sPlayerLog.minorLog("Socket closed");
-                disconnectionManager();
             } catch (Exception ex) {
             }
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
-    public int[] receiveScheme() throws IOException, InvalidinSocketException
-    {
+    public int[] receiveScheme() throws IOException, InvalidinSocketException, GenericInvalidArgumentException {
 
         int[] temp = new int[2];
         try {
@@ -320,7 +333,13 @@ public class ServerPlayer extends Thread
             }
         }
 
-
+        if(!connectionCheck())
+        {
+            temp[0]=0;
+            temp[1]=0;
+            disconnectionManager();
+            return temp;
+        }
         if(Integer.parseInt(tempArg)<1||Integer.parseInt(tempArg)>12)
             throw new InvalidinSocketException();
 
@@ -348,10 +367,14 @@ public class ServerPlayer extends Thread
             } catch (Exception ex) {
             }
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
+
         return temp;
     }
 
-    public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException {
+    public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException, GenericInvalidArgumentException {
         for(int i=0;i<numPlayers;i++)
         {
             try {
@@ -372,10 +395,13 @@ public class ServerPlayer extends Thread
                 }
             }
         }
+
+        if(socket.isClosed())
+            disconnectionManager();
     }
 
     //CONNECTION LOST MANAGEMENT
-    public void disconnectionManager() throws GenericInvalidArgumentException {
+    private void disconnectionManager() throws GenericInvalidArgumentException {
         connected = false;
         sPlayerLog.minorLog("CLIENT "+Integer.toString(id+1)+" DISCONNECTED");
     }
@@ -385,5 +411,10 @@ public class ServerPlayer extends Thread
         return connected;
     }
 
+    public void notifyDisconnectedPlayer(int playerID) throws GenericInvalidArgumentException {
+        outSocket.println("#fail#$"+Integer.toString(playerID)+"$");
+        outSocket.flush();
+        sPlayerLog.minorLog("Disconnection player "+Integer.toString(playerID)+" notified to player "+Integer.toString(id));
+    }
 }
 

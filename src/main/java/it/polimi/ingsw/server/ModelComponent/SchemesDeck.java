@@ -699,7 +699,9 @@ public class SchemesDeck
     {
         SchemeCard scheme;
 
-        if(id<0 || id>13)
+        if(id==0)
+            return new SchemeCard((0));
+        if(id<1 || id>13)
             throw new InvalidIntArgumentException();
 
             scheme = deck[id-1];

@@ -95,6 +95,7 @@ public class SocketServer implements ConnectionServer {
             playersNames[i] = "";
         counter++;
         return numPlayers;
+
     }
 
     public void initializeNPS() throws IOException, GenericInvalidArgumentException {
@@ -127,14 +128,23 @@ public class SocketServer implements ConnectionServer {
             playersNames[i] = players.get(i).getUsername();
             sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
             players.get(i).sPlayerLog.reinitialize();
+
         }
 
+        notifyConnectionStatus();
+
+
         for (int i = 0; i < numPlayers; i++) {
-            players.get(i).sendNumPlayers(numPlayers);
-            players.get(i).sendPlayersUsernames(playersNames);
-            sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
-            players.get(i).sPlayerLog.reinitialize();
+            if(players.get(i).connectionCheck()) {
+                players.get(i).sendNumPlayers(numPlayers);
+                players.get(i).sendPlayersUsernames(playersNames);
+                sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
+                players.get(i).sPlayerLog.reinitialize();
+            }
         }
+
+        notifyConnectionStatus();
+
 
         sServerLog.minorLog("End initialization 1 phase 2");
         return playersNames;
@@ -149,6 +159,9 @@ public class SocketServer implements ConnectionServer {
             players.get(player).sPlayerLog.reinitialize();
             sServerLog.minorLog("Private objective id " + Integer.toString(id) + " sent to player " + Integer.toString(player + 1));
         }
+
+        notifyConnectionStatus();
+
     }
 
     public void sendSchemes(int player, int id1, int id2) throws GenericInvalidArgumentException {
@@ -159,6 +172,9 @@ public class SocketServer implements ConnectionServer {
             players.get(player).sPlayerLog.reinitialize();
             sServerLog.minorLog("schemes id " + Integer.toString(id1) + ", id " + Integer.toString(id2) + " sent to player " + Integer.toString(player + 1));
         }
+
+        notifyConnectionStatus();
+
     }
 
     public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException {
@@ -172,13 +188,17 @@ public class SocketServer implements ConnectionServer {
             }
         }
 
+        notifyConnectionStatus();
+
     }
 
     public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException, GenericInvalidArgumentException {
+        System.out.println(Boolean.toString(players.get(player).connectionCheck()));
         if(players.get(player).connectionCheck()) {
             int[] temp = players.get(player).receiveScheme();
             sServerLog.stackLog(players.get(player).sPlayerLog.updateFather());
             players.get(player).sPlayerLog.reinitialize();
+            notifyConnectionStatus();
             return temp;
         }
         else
@@ -186,6 +206,7 @@ public class SocketServer implements ConnectionServer {
             int[] temp = new int[2];
             temp[0]=0;
             temp[1]=0;
+            notifyConnectionStatus();
             return temp;
         }
 
@@ -199,6 +220,22 @@ public class SocketServer implements ConnectionServer {
                 sServerLog.stackLog(players.get(i).sPlayerLog.updateFather());
                 players.get(i).sPlayerLog.reinitialize();
                 sServerLog.minorLog("All schemes sent to player " + Integer.toString(i + 1));
+            }
+        }
+        notifyConnectionStatus();
+
+    }
+
+    public void notifyConnectionStatus() throws GenericInvalidArgumentException {
+        for(int i=0; i<numPlayers;i++)
+        {
+            if(!players.get(i).connectionCheck())
+            {
+                for(int n=0;n<numPlayers;n++)
+                {
+                    if(players.get(n).connectionCheck())
+                        players.get(n).notifyDisconnectedPlayer(i+1);
+                }
             }
         }
 

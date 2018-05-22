@@ -23,7 +23,7 @@ public class SchemeCard
     public SchemeCard(int i) throws InvalidIntArgumentException
     {
 
-        if (i<1 || i>12)
+        if (i<0 || i>12)
             throw new InvalidIntArgumentException();
 
         fb=0;
@@ -113,7 +113,9 @@ public class SchemeCard
         if (fb==2)
             this.fb=2;
 
-        if (fb < 1 || fb > 2)
+        if(fb==0)
+            this.fb=0;
+        if (fb < 0 || fb > 2)
             throw new InvalidIntArgumentException();
 
     }

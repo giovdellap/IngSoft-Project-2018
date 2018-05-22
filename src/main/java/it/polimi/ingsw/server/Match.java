@@ -129,8 +129,6 @@ public class Match
             temp=server.getSelectedScheme(i);
             matchLog.stackLog(server.sServerLog.updateFather());
             server.sServerLog.reinitialize();
-            if(temp[0]==0&&temp[1]==0)
-                connectedPlayers[i]=0;
             modelInstance.setSelectedScheme(i,temp[0], temp[1]);
             matchLog.minorLog("Player "+Integer.toString(i+1)+" Schemeid = "+Integer.toString(modelInstance.getSchemebyIndex(i).getID()));
             matchLog.minorLog("Player "+Integer.toString(i+1)+" FB = "+Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));

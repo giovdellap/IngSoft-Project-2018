@@ -196,6 +196,15 @@ public class SocketClient implements ConnectionClient {
     public int getNumPlayers() throws IOException, GenericInvalidArgumentException {
         msgIN = inSocket.readLine();
         simpleDecode(msgIN);
+
+        if(tempCmd.equals("fail"))
+        {
+            outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+            outVideo.flush();
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+        }
+
         if(tempCmd.equals("numplayers")) {
             numPlayers = Integer.parseInt(tempArg);
             socketLogger.minorLog("numPlayers = "+tempCmd);
@@ -214,6 +223,15 @@ public class SocketClient implements ConnectionClient {
         {
             msgIN=inSocket.readLine();
             simpleDecode(msgIN);
+
+            if(tempCmd.equals("fail"))
+            {
+                outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+                outVideo.flush();
+                msgIN = inSocket.readLine();
+                simpleDecode(msgIN);
+            }
+
             if(tempCmd.equals("player")&&tempArg.equals(Integer.toString(i+1)))
             {
                 msgIN = inSocket.readLine();
@@ -239,6 +257,15 @@ public class SocketClient implements ConnectionClient {
     public int getPrivObj() throws IOException, GenericInvalidArgumentException {
         msgIN = inSocket.readLine();
         simpleDecode(msgIN);
+
+        if(tempCmd.equals("fail"))
+        {
+            outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+            outVideo.flush();
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+        }
+
         if(tempCmd.equals("privobj")) {
             socketLogger.minorLog("Received private objective ID: "+tempArg);
             outVideo.println();
@@ -261,6 +288,15 @@ public class SocketClient implements ConnectionClient {
 
         msgIN=inSocket.readLine();
         simpleDecode(msgIN);
+
+        if(tempCmd.equals("fail"))
+        {
+            outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+            outVideo.flush();
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+        }
+
         if(tempCmd.equals("scheme")) {
             temp[0] = Integer.parseInt(tempArg);
             outVideo.println("EXTRACTED SCHEME ID: "+tempArg);
@@ -294,6 +330,14 @@ public class SocketClient implements ConnectionClient {
         {
             msgIN = inSocket.readLine();
             simpleDecode(msgIN);
+
+            if(tempCmd.equals("fail"))
+            {
+                outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+                outVideo.flush();
+                msgIN = inSocket.readLine();
+                simpleDecode(msgIN);
+            }
 
             if(tempCmd.equals("pubobj"))
             {
@@ -334,6 +378,14 @@ public class SocketClient implements ConnectionClient {
         {
             msgIN=inSocket.readLine();
             simpleDecode(msgIN);
+
+            if(tempCmd.equals("fail"))
+            {
+                outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+                outVideo.flush();
+                msgIN = inSocket.readLine();
+                simpleDecode(msgIN);
+            }
 
             if(tempCmd.equals("insert")&&tempArg.equals("scheme")) {
                 outVideo.println("SELECT A SCHEME");
@@ -419,9 +471,21 @@ public class SocketClient implements ConnectionClient {
 
         msgIN = inSocket.readLine();
         simpleDecode(msgIN);
+        System.out.println();
+
+        if(tempCmd.equals("fail"))
+        {
+            outVideo.println("PLAYER "+tempArg+" DISCONNECTED");
+            outVideo.flush();
+            msgIN = inSocket.readLine();
+            simpleDecode(msgIN);
+        }
+
         if(tempCmd.equals("player"))
         {
             temp[0]=Integer.parseInt(tempArg);
+            String disconnectedID=tempArg;
+
 
             msgIN = inSocket.readLine();
             simpleDecode(msgIN);
@@ -429,6 +493,16 @@ public class SocketClient implements ConnectionClient {
             {
 
                 temp[1] = Integer.parseInt(tempArg);
+
+                if(temp[0]==0)
+                {
+                    temp[1]=0;
+                    temp[2]=0;
+                    outVideo.println("Player "+disconnectedID+" disconnected");
+                    outVideo.flush();
+                    socketLogger.minorLog("Player "+disconnectedID+" disconnected");
+                }
+
                 socketLogger.minorLog("Player "+Integer.toString(temp[0])+" selected scheme "+tempArg);
 
                 msgIN = inSocket.readLine();
@@ -440,6 +514,7 @@ public class SocketClient implements ConnectionClient {
                     socketLogger.minorLog("with fb "+tempArg);
 
                     msgIN = inSocket.readLine();
+                    System.out.println(msgIN);
                     simpleDecode(msgIN);
                     if(tempCmd.equals("favtokens"))
                     {
