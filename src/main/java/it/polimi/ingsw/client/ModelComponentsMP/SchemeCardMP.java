@@ -21,7 +21,7 @@ public class SchemeCardMP
 
     public SchemeCardMP(int i) throws InvalidIntArgumentException
     {
-        if (i<0 || i>12) throw new InvalidIntArgumentException();
+        if (i<1 || i>12) throw new InvalidIntArgumentException();
 
         fb=0;
         id=i;
