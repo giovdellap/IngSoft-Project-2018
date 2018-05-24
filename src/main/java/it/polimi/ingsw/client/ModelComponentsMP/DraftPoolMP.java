@@ -14,7 +14,9 @@ public class DraftPoolMP implements ModelComponentMP {
 
     public DraftPoolMP(DieMP[] dice) throws InvalidIntArgumentException
     {
+
         dim = dice.length;
+        draft = new DieMP[dim];
         draft = dice;
     }
 
@@ -72,6 +74,7 @@ public class DraftPoolMP implements ModelComponentMP {
     {
         if (pos>=dim||pos<0) throw new InvalidIntArgumentException();
         if(draft[pos]!=null&&draft[pos].isDisabled()) throw new InvalidIntArgumentException();
+
         DieMP tempDie = draft[pos];
         return tempDie;
 
