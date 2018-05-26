@@ -13,11 +13,13 @@ public class ToolCardOne extends ToolCard {
         setToolCardName("Grozing Pliers");
     }
 
-    public boolean checkToolCardOne(Die initialDie, int modify, SchemeCard schemeCard, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public boolean checkToolCardOne(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        Die toPlace = draft.returnDie(pos);
 
         // modify = 1 +   ,   modify = 2 -
 
-        if (initialDie == null || schemeCard == null)
+        if (toPlace == null || scheme == null || draft.returnDie(pos).isDisabled())
             throw new GenericInvalidArgumentException();
 
         if (x < 0 || x > 3 || y < 0 || y > 4)
@@ -26,16 +28,18 @@ public class ToolCardOne extends ToolCard {
         if (modify != 1 && modify != 2)
             throw new InvalidIntArgumentException();
 
-        if (!schemeCard.getDie(x, y).isDisabled())
-            throw new GenericInvalidArgumentException();
+        if (!scheme.getDie(x, y).isDisabled()) {
+            System.out.println("That position is already occupied");
+            return false;
+        }
 
         if (modify == 1) {
-            if (initialDie.getValue() == 6)
+            if (toPlace.getValue() == 6)
                 return false;
         }
 
         if (modify == 2) {
-            if (initialDie.getValue() == 1)
+            if (toPlace.getValue() == 1)
                 return false;
         }
 
@@ -44,9 +48,21 @@ public class ToolCardOne extends ToolCard {
     }
 
 
-    public SchemeCard applyModifies(SchemeCard schemeCard, Die toPlace, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
-        schemeCard.setDie(toPlace, x, y);
-        return schemeCard;
+    public SchemeCard applyModifies(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        Die toPlace = draft.returnDie(pos);
+
+        // modify = 1 +   ,   modify = 2 -
+
+        if(modify==1)
+            toPlace.setValueTest(toPlace.getValue()+1);
+
+        if(modify==2)
+            toPlace.setValueTest(toPlace.getValue()-1);
+
+        scheme.setDie(toPlace, x, y);
+        draft.pickUpDie(pos);
+        return scheme;
     }
 
 
