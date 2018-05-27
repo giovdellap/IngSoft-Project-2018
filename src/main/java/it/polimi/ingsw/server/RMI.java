@@ -19,7 +19,7 @@ public class RMI implements ConnectionServer
 
     }
 
-    public void sendPubObjs(int id1, int id2, int id3) {
+    public void sendPubObjs(int player, int id1, int id2, int id3) {
 
     }
 

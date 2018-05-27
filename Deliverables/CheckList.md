@@ -15,23 +15,6 @@ DiceContainer:
 - [X] testThatDice
         //check that throwing 90 dices extracts 18 dice per color
       
-CheckingMethods:
-- [X] checkMoveOneFalse
-- [X] checkMoveOneTrue
-- [X] checkMoveTwoFalse
-- [X] checkMoveTwoTrue
-- [X] checkMoveThreeFalse
-- [X] checkMoveThreeTrue
-- [X] checkMoveFourTrue
-- [X] checkMoveFourFalse
-- [X] checkMoveFiveTrue
-- [X] checkMoveFiveFalse
-- [X] checkFirstMoveOne
-- [X] checkFirstMoveTwo
-- [X] checkFirstMoveThree
-- [X] checkFirstMoveFour
-- [X] checkFirstMoveFive
-
 RoundDice
 - [X] checkAddandGet
 - [X] checkAddException
@@ -119,20 +102,6 @@ PublicObjectives
 - [X] checkDisablePublicObjective
 - [X] checkToString
 
-MajorLogger
-- [X] checkLogandReturnLog
-- [X] checkLogException
-- [X] checkGetLog
-- [X] checkStackLogException
-- [X] checkToString
-
-MinorLogger
-- [X] checkLogandUpdateFather
-- [X] checkLogException
-- [X] checkStackLog
-- [X] checkStackLogException
-- [X] checkReinitialize
-
 PublicObjectiveCalculationTest
 - [X] checkCalculateOne
 - [X] checkCalculateOneException
@@ -154,13 +123,6 @@ PublicObjectiveCalculationTest
 - [X] checkCalculateNineException
 - [X] checkCalculateTen
 - [X] checkCalculateTenException
-
-ToolCardOne
-- [X] checkDieOneToSix
-- [X] checkDieSixToOne
-- [X] checkFullCellException
-- [X] checkApplyModifies
-
 
 Planning to extend branch coverage by new extended parameters(checks should be right, aren't them?)
 

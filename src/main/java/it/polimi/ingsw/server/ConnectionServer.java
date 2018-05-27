@@ -10,11 +10,11 @@ import java.io.IOException;
 public interface ConnectionServer
 {
 
-    public void sendPrivObj(int player, int id) throws GenericInvalidArgumentException;
+    public void sendPrivObj(int player, int id) throws GenericInvalidArgumentException, IOException;
 
-    public void sendSchemes(int player, int id1, int id2) throws GenericInvalidArgumentException;
+    public void sendSchemes(int player, int id1, int id2) throws GenericInvalidArgumentException, IOException;
 
-    public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException;
+    public void sendPubObjs(int player, int id1, int id2, int id3) throws GenericInvalidArgumentException, IOException;
 
     public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException, GenericInvalidArgumentException;
 

@@ -7,6 +7,7 @@ public class Model
 {
     private int numPlayers=0;
     private DraftPool draft;
+    private ToolsDeck tDeck;
     private SchemesDeck scDeck;
     private RoundTrack track;
     private PrivateObjectivesDeck prDeck;
