@@ -7,19 +7,12 @@ import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class CheckingMethods {
+
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
-    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+    //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     public CheckingMethods() {
 
-    }
-
-    public void checkToolUsed(int player, int toolId, SchemeCard tempScheme) {
-        // controlla se il tool viene usato in maniera corretta
-    }
-
-    public void checkToolUsed(int player, int toolId, SchemeCard tempScheme, DraftPool draft) {
-        // controlla se il tool viene usato in maniera corretta (modifica draftpool)
     }
 
     public boolean checkMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
