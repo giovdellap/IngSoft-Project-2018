@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.ModelComponentsMP.DieMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
 import org.junit.jupiter.api.*;
 
 

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.ModelComponentsMP.SchemesDeckMP;
+
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

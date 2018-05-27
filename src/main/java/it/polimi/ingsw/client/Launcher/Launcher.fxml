@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.Launcher.LauncherController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Connessione">
+               <items>
+                  <CheckMenuItem mnemonicParsing="false" text="Socket" />
+                  <CheckMenuItem mnemonicParsing="false" text="RMI" />
+               </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Opzioni Grafica">
+               <items>
+                  <CheckMenuItem mnemonicParsing="false" text="JavaFX" />
+                  <CheckMenuItem mnemonicParsing="false" text="Terminale" />
+                  <CheckMenuItem mnemonicParsing="false" text="Schermo Intero" />
+               </items>
+        </Menu>
+            <Menu mnemonicParsing="false" onAction="#enterDemoMode" onMenuValidation="#enterDemoMode" text="Dev Tools">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#enterDemoMode" onMenuValidation="#enterDemoMode" text="Enter Demo Mode" />
+               </items></Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView cache="true" fitHeight="695.0" fitWidth="1280.0" focusTraversable="true" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@launcherWallpaper.jpg" />
+               </image></ImageView>
+            <GridPane layoutX="309.0" layoutY="278.0" prefHeight="275.0" prefWidth="663.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="129.0" prefWidth="338.0" style="-fx-background-color: grey;" text="SINGLEPLAYER" textFill="#822a08f7">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#enterMPMode" prefHeight="126.0" prefWidth="330.0" style="-fx-background-color: grey;" text="MULTIPLAYER" textFill="#822a08f7" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
+            <Button layoutX="984.0" layoutY="583.0" mnemonicParsing="false" onAction="#enterDemoMode" onMouseClicked="#enterDemoMode" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: grey;" text="Enter Demo Mode" textFill="#0cfc0c">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <TextField id="ipField" fx:id="ipField" layoutX="547.0" layoutY="567.0" onAction="#setIP" prefHeight="92.0" prefWidth="360.0" promptText="Inserisci indirizzo ip/localhost">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

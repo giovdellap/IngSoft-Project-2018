@@ -16,6 +16,7 @@ public class MinorLogger
     public void minorLog(String s) throws GenericInvalidArgumentException {
         if(s==null)
             throw new GenericInvalidArgumentException();
+        System.out.println(s);
         log.add(s);
     }
 

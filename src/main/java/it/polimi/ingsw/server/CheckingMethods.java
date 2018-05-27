@@ -107,5 +107,11 @@ public class CheckingMethods {
 
     }
 
+    public boolean checkFirstMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
+        if(x!=0 && x!=3 && y!=0 && y!=4)
+            return false;
+
+        return true;
+    }
 }

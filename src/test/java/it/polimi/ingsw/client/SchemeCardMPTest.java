@@ -2,8 +2,9 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.ModelComponentsMP.DieMP;
-import it.polimi.ingsw.client.ModelComponentsMP.SchemeCardMP;
+
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import org.junit.jupiter.api.*;
 
 public class SchemeCardMPTest {
