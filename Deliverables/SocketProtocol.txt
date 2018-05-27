@@ -108,3 +108,51 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: #scheme#$id$
  S: #fb#$1||2$
  S: #favtokens#$tokens$
+ 
+ -------------------------------------
+ 
+ DEMO CONNECTION PROTOCOL
+ 
+ 1.MODEL COMPONENTS DECLARATION
+ In order:
+  - SchemeCard
+   - DraftPool
+   
+  -----------------------------
+  
+  SCHEMECARD:
+  
+  S: #model#$scheme$
+  S: #id#$n$
+  S: #fb#$fb$
+  
+  F"For or each die:
+  
+  S: #color#$n$
+  S: #value#$n$
+  S: #x#$n$
+  S: #y#$n$
+  
+       ...
+       
+ S: #end#$scheme$
+  
+--------------------------
+
+
+
+
+
+
+-------------------------
+ToolCard 3 Demo
+
+C: #x0#$x$
+C: #y0#$y$
+C: #x1#$x$
+C: #y1#$y$
+
+S: #check#$n$
+// 1 if true, 2 if false
+
+  
