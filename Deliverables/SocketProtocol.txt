@@ -137,6 +137,19 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
        
  S: #end#$scheme$
   
+  
+DRAFTPOOL:
+
+S: #model#$draft$
+
+For each die:
+S: #index#$m$
+
+S: #color#$n$
+S: #vale#$n$
+
+
+S: #end#$draft$
 --------------------------
 
 
@@ -154,5 +167,12 @@ C: #y1#$y$
 
 S: #check#$n$
 // 1 if true, 2 if false
+------------------------
+
+C: #index#$n$
+C: #x#$n$
+C: #y#$n$
+
+S: #check#$n$
 
   
