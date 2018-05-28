@@ -151,11 +151,13 @@ S: #vale#$n$
 
 S: #end#$draft$
 --------------------------
+Move Demo
 
+C: #index#$n$
+C: #x#$n$
+C: #y#$n$
 
-
-
-
+S: #check#$n$
 
 -------------------------
 ToolCard 3 Demo
@@ -169,10 +171,6 @@ S: #check#$n$
 // 1 if true, 2 if false
 ------------------------
 
-C: #index#$n$
-C: #x#$n$
-C: #y#$n$
 
-S: #check#$n$
 
   
