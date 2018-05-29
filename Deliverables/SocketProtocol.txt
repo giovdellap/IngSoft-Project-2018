@@ -111,6 +111,41 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  
  -------------------------------------
  
+ STARTING FIRST ROUND
+ 
+ DRAFTPOOL:
+
+S: #model#$draft$
+
+For each die:
+S: #index#$m$
+
+S: #color#$n$
+S: #vale#$n$
+
+
+S: #end#$draft$
+ 
+ -----------------------------------
+ 
+TURN:
+ 
+ACTIVE PLAYER:
+
+S: #chioce#$action$
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ -----------------------------------
+ -----------------------------------
+ -----------------------------------
  DEMO CONNECTION PROTOCOL
  
  1.MODEL COMPONENTS DECLARATION
