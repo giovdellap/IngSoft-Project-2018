@@ -74,12 +74,20 @@ public class Model
         return playerSchemes[index];
     }
 
+    public DraftPool getDraft()
+    {
+        return draft;
+    }
+
     //INITIALIZATION ROUND
 
-    //Starting model'match components
-    public void updateNumPlayers(int n)
-    {
+    //Starting model's match components
+    public void updateNumPlayers(int n) throws InvalidIntArgumentException {
         numPlayers=n;
-
+        draft = new DraftPool(numPlayers);
+        track = new RoundTrack();
     }
+
+
+
 }

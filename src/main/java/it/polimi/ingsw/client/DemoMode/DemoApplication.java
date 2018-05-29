@@ -54,7 +54,7 @@ public class DemoApplication extends Application
             }
         };
 
-        root.addEventHandler(ActionEvent, demoHandler);
+        //root.addEventHandler(ActionEvent, demoHandler);
 
     }
 }

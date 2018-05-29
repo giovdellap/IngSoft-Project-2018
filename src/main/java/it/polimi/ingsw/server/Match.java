@@ -56,8 +56,10 @@ public class Match
         initialization2();
 
         //START ROUNDS
-
-
+        numPlayers=playerNames.size();
+        modelInstance.updateNumPlayers(numPlayers);
+        draftClientsInitialization();
+        startRound();
     }
 
 
@@ -155,6 +157,30 @@ public class Match
         matchLog.stackLog(server.sServerLog.updateFather());
         server.sServerLog.reinitialize();
         matchLog.minorLog("PUBLIC OBJECTIVES OK");
+    }
+
+    //ROUND METHODS
+
+    public void draftClientsInitialization() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        server.sendDraftFirstTime(modelInstance.getDraft());
+
+    }
+
+    public void startRound()
+    {
+
+    }
+
+    public void round()
+    {
+
+    }
+
+    public void turn(int index)
+    {
+        int whatToDo;
+        //whatToDo = server.getWhatToDo(index);
     }
 
     //DISCONNECTION MANAGEMENT

@@ -28,9 +28,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Demos/Tool3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Demos/Tool3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/client/Client.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/client/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/client/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Match.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Match.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/Tool.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/server/ToolsDeck.class" beforeDir="false" />
     </list>
@@ -52,13 +54,13 @@
       <file leaf-file-name="JavaFXApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/JavaFXApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="786">
+            <state relative-caret-position="2132">
               <caret line="100" column="21" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AwesomeFXMLLoader.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AwesomeFXMLLoader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/AwesomeFXMLLoader.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="338">
@@ -70,8 +72,49 @@
       <file leaf-file-name="Match.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1248">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="1700">
+              <caret line="131" selection-start-line="131" selection-end-line="131" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="370">
+              <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+              <folding>
+                <element signature="e#7893#7894#0" expanded="true" />
+                <element signature="e#7945#7946#0" expanded="true" />
+                <element signature="e#9605#9613#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrivateObjectivesDeck.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/PrivateObjectivesDeck.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SocketPlayer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="35">
+              <caret line="323" column="17" selection-start-line="323" selection-start-column="17" selection-end-line="323" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DemoApplication.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/DemoApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -79,8 +122,21 @@
       <file leaf-file-name="Model.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            <state relative-caret-position="218">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+              <folding>
+                <element signature="e#2426#2427#0" expanded="true" />
+                <element signature="e#2454#2455#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DraftPool.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="841">
+              <caret line="114" column="16" lean-forward="true" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -117,7 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/MultiPackage/ConnectionClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/MultiPackage/ModelMP.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Connection/RMI.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/MultiPackage/Multiplayer.java" />
@@ -130,8 +185,6 @@
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/SchemeCard.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/RMI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/Connection/SocketClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/Connection/RMI.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/ModelInitialization/InitializationSceneController.java" />
@@ -161,13 +214,16 @@
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Launcher/LauncherExecute.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/SelectDemoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Demos/Move.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/DemoApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/MoveDemo/MoveDemoExecute.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/selectDemo.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/MoveDemo/moveDemo.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/MoveDemo/MoveDemoController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/DemoApplication.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionManager.java" />
       </list>
     </option>
   </component>
@@ -192,8 +248,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -243,31 +298,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ingsw" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="PackageMP" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LM54" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IngSoft-Project-2018" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ingsw" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="PackageMP" type="462c0819:PsiDirectoryNode" />
-              <item name="ViewMP" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LM54" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IngSoft-Project-2018" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ingsw" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="PackageMP" type="462c0819:PsiDirectoryNode" />
-              <item name="ViewMP" type="462c0819:PsiDirectoryNode" />
-              <item name="JavaFX" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LM54" type="b2602c69:ProjectViewProjectNode" />
@@ -277,12 +308,14 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ingsw" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelComponent" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -501,17 +534,18 @@
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.5132837" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3296845" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32624868" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25292242" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Designer" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2046875" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2046875" />
       <window_info anchor="bottom" id="SonarLint" order="11" weight="0.17806041" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -522,7 +556,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296875" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.5132837" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info id="Learn" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -531,7 +564,6 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3296845" />
@@ -540,16 +572,17 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23697917" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.38363442" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32904056" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info id="Learn" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296875" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -557,7 +590,7 @@
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="9" visible="true" weight="0.047821466" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296875" />
       <window_info id="Favorites" order="5" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -596,16 +629,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/SelectDemoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/MoveDemo/MoveDemoController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2262">
@@ -711,13 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="333" column="1" lean-forward="true" selection-start-line="333" selection-start-column="1" selection-end-line="333" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ToolCards/ToolCardOne.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -741,13 +757,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ToolsDeck.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Tool.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2834">
-          <caret line="121" column="46" selection-start-line="121" selection-start-column="46" selection-end-line="121" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/Client.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/RMI.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -805,13 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Demos/Tool3.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
@@ -846,9 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="598">
           <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -863,20 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4039">
           <caret line="177" column="54" selection-start-line="177" selection-start-column="54" selection-end-line="177" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/DemoApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="910">
-          <caret line="50" column="72" selection-start-line="50" selection-start-column="72" selection-end-line="50" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1248">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>
@@ -912,16 +897,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/JavaFXApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
+        <state relative-caret-position="2132">
           <caret line="100" column="21" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
         </state>
       </provider>
@@ -930,6 +908,64 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
           <caret line="17" column="90" selection-start-line="17" selection-start-column="90" selection-end-line="17" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/DraftPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="841">
+          <caret line="114" column="16" lean-forward="true" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/DemoMode/DemoApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/SocketPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="323" column="17" selection-start-line="323" selection-start-column="17" selection-end-line="323" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ModelComponent/PrivateObjectivesDeck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#2426#2427#0" expanded="true" />
+            <element signature="e#2454#2455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="131" selection-start-line="131" selection-end-line="131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ConnectionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+          <folding>
+            <element signature="e#7893#7894#0" expanded="true" />
+            <element signature="e#7945#7946#0" expanded="true" />
+            <element signature="e#9605#9613#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
