@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Demos.Move;
+import it.polimi.ingsw.server.Demos.Tool3;
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -52,6 +54,20 @@ public class SocketPlayer extends Thread
             outSocket.flush();
 
             simpleDecode(inSocket.readLine());
+            if (tempCmd.equals("demo"))
+            {
+                if (tempArg.equals("1"))
+                {
+                    Move demo=new Move(socket);
+
+                }
+                if (tempArg.equals("5"))
+                {
+                    Tool3 demo=new Tool3(socket);
+                }
+
+            }
+
             System.out.println("tempArg: "+tempArg);
             return tempArg;
         } catch (Exception e)

@@ -5,33 +5,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.PackageMP.ViewMP.JavaFX.WaitScenes.GeneralWaitController">
+<fx:root type="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.PackageMP.ViewMP.JavaFX.WaitScenes.GeneralWaitController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Sagrada6.jpg" />
-               </image>
-            </ImageView>
-            <AnchorPane prefHeight="514.0" prefWidth="1280.0">
-               <children>
-                  <ProgressIndicator layoutX="472.0" layoutY="121.0" prefHeight="289.0" prefWidth="336.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="6.0" layoutY="514.0" prefHeight="200.0" prefWidth="1280.0">
-               <children>
-                  <Label alignment="CENTER" layoutX="170.0" layoutY="13.0" opacity="0.89" prefHeight="174.0" prefWidth="941.0" style="-fx-background-color: BROWN;" text="CREAZIONE LOBBY IN CORSO">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Sagrada6.jpg" />
+         </image>
+      </ImageView>
+      <ProgressIndicator layoutX="472.0" layoutY="150.0" prefHeight="289.0" prefWidth="336.0" />
+      <Label alignment="CENTER" layoutX="170.0" layoutY="492.0" opacity="0.89" prefHeight="174.0" prefWidth="941.0" style="-fx-background-color: BROWN;" text="CREAZIONE LOBBY IN CORSO">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
-</VBox>
+</fx:root>

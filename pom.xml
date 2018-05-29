@@ -22,6 +22,7 @@
                 <directory>src/main/java/it/polimi/ingsw/client/Launcher</directory>
                 <includes>
                     <include>**/*.fxml</include>
+                    <include>**/*.jpg</include>
                 </includes>
             </resource>
             <resource>
@@ -29,6 +30,8 @@
                 <directory>src/main/java/it/polimi/ingsw/client/DemoMode</directory>
                 <includes>
                     <include>**/*.fxml</include>
+                    <include>**/*.jpg</include>
+
                 </includes>
             </resource>
             <resource>
@@ -36,6 +39,8 @@
                 <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX</directory>
                 <includes>
                     <include>**/*.fxml</include>
+                    <include>**/*.jpg</include>
+
                 </includes>
             </resource>
             <resource>
@@ -43,6 +48,8 @@
                 <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/ModelInitialization</directory>
                 <includes>
                     <include>**/*.fxml</include>
+                    <include>**/*.jpg</include>
+
                 </includes>
             </resource>
             <resource>
@@ -50,6 +57,8 @@
                 <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/UsernameInsertion</directory>
                 <includes>
                     <include>**/*.fxml</include>
+                    <include>**/*.jpg</include>
+
                 </includes>
             </resource>
             <resource>
@@ -57,58 +66,12 @@
                 <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/WaitScenes</directory>
                 <includes>
                     <include>**/*.fxml</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>images</directory>
-                <includes>
                     <include>**/*.jpg</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Launcher</directory>
-                <includes>
-                    <include>**/*.jpg</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX</directory>
-                <includes>
-                    <include>**/*.jpg</include>
+
                 </includes>
             </resource>
 
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Miscellaneous/Jpgs</directory>
-                <includes>
-                    <include>**/*.jpg</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/ModelInitialization</directory>
-                <includes>
-                    <include>**/*.jpg</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/UsernameInsertion</directory>
-                <includes>
-                    <include>**/*.jpg</include>
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/WaitScenes</directory>
-                <includes>
-                    <include>**/*.jpg</include>
-                </includes>
-            </resource>jpg     </resources>
+            </resources>
     </build>
     <packaging>jar</packaging>
 

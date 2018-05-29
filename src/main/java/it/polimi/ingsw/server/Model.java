@@ -22,6 +22,8 @@ public class Model
             this.numPlayers=numPlayers;
     }
 
+    //INITIALIZATION
+
     public void setPrivateObjectives() throws InvalidIntArgumentException {
         prDeck = new PrivateObjectivesDeck();
         playersPrObjs = new PrivateObjective[numPlayers];
@@ -70,5 +72,14 @@ public class Model
         if(index<0||index>=numPlayers)
             throw  new InvalidIntArgumentException();
         return playerSchemes[index];
+    }
+
+    //INITIALIZATION ROUND
+
+    //Starting model'match components
+    public void updateNumPlayers(int n)
+    {
+        numPlayers=n;
+
     }
 }

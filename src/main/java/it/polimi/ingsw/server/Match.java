@@ -55,6 +55,9 @@ public class Match
         //INITIALIZATION 2
         initialization2();
 
+        //START ROUNDS
+
+
     }
 
 
@@ -74,20 +77,20 @@ public class Match
         initPubObjs();
         updatePlayersInit();
 
-        //reception schemes                     riceve e controlla schemi selezionati
+        //reception schemes
         receiveAndcheckScheme();
         updatePlayersInit();
 
 
 
-        //INITIALIZATION 2: PHASE 2                               manda a tutti
+        //INITIALIZATION 2: PHASE 2
         matchLog.minorLog("Initialization 2: Phase 2 started");
         SchemeCard[] temp = new SchemeCard[numPlayers];
         for(int i=0;i<numPlayers;i++) {
             temp[i] = modelInstance.getSchemebyIndex(i);
         }
 
-        server.sendSchemestoEveryone(temp);                     //-------------------------
+        server.sendSchemestoEveryone(temp);
 
         matchLog.stackLog(server.sServerLog.updateFather());
         server.sServerLog.reinitialize();

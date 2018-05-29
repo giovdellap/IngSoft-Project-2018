@@ -81,7 +81,7 @@ public class ConnectionManager implements ConnectionServer {
         players.add(new SocketPlayer(generalSocket));
         boolean accFlag=false;
         while(!accFlag) {
-            String username = players.get(players.size()-1).insertUsername();
+            String username = players.get(players.size()-1).insertUsername();       //--------------------
             System.out.println(username);
             System.out.println("check username: "+checkUsername(username));
             if(checkUsername(username))

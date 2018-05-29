@@ -14,21 +14,28 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class JavaFXApplication extends Application
 {
     //GRAPHICS
-    private FXMLLoader loader;
+    private AwesomeFXMLLoader loader;
 
     private ControllerMP cont3;
     private InitializationSceneController cont2;
     private UsernameSceneController cont1;
 
-    private Parent root;
+    private Parent rootNameScene;
+    private Parent rootWait1;
+    private Parent rootWait2;
+    private Parent rootInitScene;
+    private Parent rootGameScene;
     private Scene currentScene;
+
 
     //MATCH HANDLING
     private int round;
@@ -56,7 +63,6 @@ public class JavaFXApplication extends Application
     {
         //INITIALIZATION 1: PHASE 1
 
-        System.out.println("Qui ci arrivi?");
 
         loggerMP = new MinorLogger();
         loggerMP.minorLog("MultiPlayer logger operative");
@@ -75,13 +81,14 @@ public class JavaFXApplication extends Application
         socketLoggerUpdate();
 
         //Starting username scene
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("Initialization/UsernameInsertion/usernameScene.fxml"));
-        root = loader.load();
-        cont1 = loader.getController();
-        currentScene = new Scene(root);
+        loader = new AwesomeFXMLLoader();
+        loader.setUsernameScene();
+        rootNameScene = loader.load();
+        currentScene = new Scene(rootNameScene);
         stage.setTitle("SAGRADA");
         stage.setScene(currentScene);
         stage.show();
+        cont1 = loader.getController();
         loggerMP.minorLog("Graphics is operative");
 
         //username insertion and validation
@@ -94,10 +101,7 @@ public class JavaFXApplication extends Application
                 try {
                     if(checkUsername())
                     {
-                        loadWaitScene(stage);
-                        setupModel();
-                        setUpInitializationScene(stage);
-                        loadInitSceneHandler(stage);
+                        init2(stage);
                     }
                 } catch (GenericInvalidArgumentException e) {
                     e.printStackTrace();
@@ -109,7 +113,7 @@ public class JavaFXApplication extends Application
             }
         };
 
-        root.addEventHandler(ActionEvent.ACTION, nameHandler);
+        rootNameScene.addEventHandler(ActionEvent.ACTION, nameHandler);
 
     }
 
@@ -120,16 +124,6 @@ public class JavaFXApplication extends Application
     }
 
     //INITIALIZATION 1: PHASE 1
-
-
-    public String getUsername()
-    {
-        String temp;
-        temp = cont1.getTempUsername();
-        while(temp.equals(""))
-            temp = cont1.getTempUsername();
-        return temp;
-    }
 
     private boolean checkUsername() throws GenericInvalidArgumentException, IOException {
         String temp;
@@ -146,15 +140,24 @@ public class JavaFXApplication extends Application
             return tempFlag;
     }
 
-    private void loadWaitScene(Stage stage) throws IOException {
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("WaitScenes/waitScene1.fxml"));
-        root = loader.load();
-        currentScene = new Scene(root);
+    //INITIALIZATION 2
+
+    public void init2(Stage init2Stage) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
+        loadWaitScene1(init2Stage);
+        setupModel();
+        setUpInitializationScene(init2Stage);
+        loadInitSceneHandler(init2Stage);
+    }
+
+    private void loadWaitScene1(Stage stage) throws IOException {
+        loader.setWaitScene1();
+        rootWait1 = loader.load();
+        currentScene = new Scene(rootWait1);
         stage.setScene(currentScene);
         stage.show();
     }
 
-    //INITIALIZATION 2
+
 
     //setting up model components
     private void setupModel() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
@@ -176,16 +179,15 @@ public class JavaFXApplication extends Application
 
     //initializing initialization scene by model components from server
     private void setUpInitializationScene(Stage thisStage) throws IOException {
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("Initialization/ModelInitialization/initializationScene.fxml"));
+        loader.setModelInitializationScene();
+        loader.setRoot(loader.getLocation());
+        rootInitScene = loader.load();
         cont2 = loader.getController();
 
         //setting images on controller
         cont2.setPrObj(modelSession.getMyPrObj());
         cont2.setSchemes(modelSession.getTempScheme(0), modelSession.getTempScheme(0));
         cont2.setPublicObjectives(modelSession.getPubObjs(0), modelSession.getPubObjs(1), modelSession.getPubObjs(2));
-
-        root = loader.load();
-        currentScene = new Scene(root);
 
         thisStage.setScene(currentScene);
         thisStage.show();
@@ -211,13 +213,14 @@ public class JavaFXApplication extends Application
                 }
             }
         };
-        root.addEventHandler(ActionEvent.ACTION, initHandler);
+        rootInitScene.addEventHandler(ActionEvent.ACTION, initHandler);
     }
 
     private void setWaitScene2(Stage thisStage) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("WaitScenes/waitScene2.fxml"));
-        root = loader.load();
-        currentScene = new Scene(root);
+        loader.setWait2Scene();
+        loader.setRoot(loader.getLocation());
+        rootWait2 = loader.load();
+        currentScene = new Scene(rootWait2);
         thisStage.setScene(currentScene);
         thisStage.show();
 
@@ -240,8 +243,9 @@ public class JavaFXApplication extends Application
                 myId = players[i].getId();
         }
 
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("WaitScenes/waitScene2.fxml"));
-        root = loader.load();
+        loader.setGameScene();
+        loader.setRoot(loader.getLocation());
+        rootGameScene = loader.load();
         cont3 = loader.getController();
         cont3.setUpPlayers(players, myId);
     }

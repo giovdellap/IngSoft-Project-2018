@@ -1,19 +1,18 @@
 package it.polimi.ingsw.server.Demos;
 
-import it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ToolCards.ToolCard;
 import it.polimi.ingsw.server.ToolCards.ToolCardThree;
 
 import java.io.*;
 import java.net.Socket;
 
-public class Tool3 {
-
+public class Move
+{
     // connections
     private Socket socket;
     private BufferedReader inSocket;
@@ -23,13 +22,15 @@ public class Tool3 {
     private String msgIn;
 
     // model components
-    ToolCardThree toolCardThree;
-    SchemesDeck schemesDeck;
-    SchemeCard schemeCard;
-    Die[] testDice;
+    private ToolCardThree toolCardThree;
+    private SchemesDeck schemesDeck;
+    private SchemeCard schemeCard;
+    private Die[] testDice;
+    private DraftPool draft;
 
 
-    public Tool3(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
+
+    public Move(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
 
         socket = s;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -74,11 +75,16 @@ public class Tool3 {
         schemeCard.setDie(testDice[6],3,4);
         schemeCard.setDie(testDice[7],3,3);
 
+        draft = new DraftPool(3);
+        draft.pickUpDie(4);
+        draft.pickUpDie(2);
 
     }
 
     private void demoModePreparation() throws InvalidIntArgumentException, IOException {
 
+
+        // SENDING SCHEMECARD
         outSocket.println(simpleEncode("model", "scheme"));
         outSocket.flush();
         outSocket.println(simpleEncode("id", Integer.toString(schemeCard.getID())));
@@ -118,6 +124,24 @@ public class Tool3 {
         else
             demoModePreparation();
 
+
+        //SENDING DRAFTPOOL
+
+        outSocket.println(simpleEncode("model", "draft"));
+        outSocket.flush();
+
+        for(int i=0;i<5;i++)
+        {
+            outSocket.println(simpleEncode("index", Integer.toString(i)));
+            outSocket.flush();
+
+            outSocket.println(simpleEncode("color", Integer.toString(draft.returnDie(i).getColor())));
+            outSocket.flush();
+
+            outSocket.println(simpleEncode("value", Integer.toString(draft.returnDie(i).getValue())));
+        }
+
+
     }
 
     private void checkAndUpdate() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
@@ -129,38 +153,30 @@ public class Tool3 {
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-
-        if (tempCmd.equals("x0"))
-            posx0 = Integer.parseInt(tempArg);
+        posx0 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-
-        if (tempCmd.equals("y0"))
-            posy0 = Integer.parseInt(tempArg);
+        posy0 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-
-        if (tempCmd.equals("x1"))
-            posx1 = Integer.parseInt(tempArg);
+        posx1 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-
-        if (tempCmd.equals("y1"))
-            posy1 = Integer.parseInt(tempArg);
+        posy1 = Integer.parseInt(tempArg);
 
         boolean flag = toolCardThree.checkToolCardThree(posx0,posy0,schemeCard,posx1,posy1);
 
         if(flag) {
-            schemeCard = toolCardThree.applyModifies(posx0,posy0,schemeCard,posx1,posy1);
             outSocket.println(simpleEncode("check","1"));
+            outSocket.flush();
         }
 
         if(!flag) {
-            outSocket.println(simpleEncode("check","2"));
-            checkAndUpdate();
+            outSocket.println(simpleEncode("check", "2"));
+            outSocket.flush();
         }
 
 
@@ -202,7 +218,4 @@ public class Tool3 {
             }
         }
     }
-
-
-
 }

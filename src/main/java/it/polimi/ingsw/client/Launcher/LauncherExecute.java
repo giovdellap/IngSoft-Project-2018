@@ -12,6 +12,7 @@ import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class LauncherExecute extends Application
 {
@@ -52,7 +53,7 @@ public class LauncherExecute extends Application
                 }
                 if(settings[0]==3&&(!controller.getIp().equals("")))
                 {
-                    DemoApplication demoApp = new DemoApplication();
+                    DemoApplication demoApp = new DemoApplication(controller.getIp());
                     try {
                         demoApp.start(stage);
                     } catch (Exception e) {
