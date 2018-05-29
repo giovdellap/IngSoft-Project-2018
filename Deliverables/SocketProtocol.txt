@@ -105,6 +105,7 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  Everyone has chosen his schemecard
 
  S: #player#$id$
+ S: #username#$name$
  S: #scheme#$id$
  S: #fb#$1||2$
  S: #favtokens#$tokens$
