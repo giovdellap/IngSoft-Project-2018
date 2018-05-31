@@ -22,6 +22,8 @@ public class Model
             this.numPlayers=numPlayers;
     }
 
+    //INITIALIZATION
+
     public void setPrivateObjectives() throws InvalidIntArgumentException {
         prDeck = new PrivateObjectivesDeck();
         playersPrObjs = new PrivateObjective[numPlayers];
@@ -71,4 +73,21 @@ public class Model
             throw  new InvalidIntArgumentException();
         return playerSchemes[index];
     }
+
+    public DraftPool getDraft()
+    {
+        return draft;
+    }
+
+    //INITIALIZATION ROUND
+
+    //Starting model's match components
+    public void updateNumPlayers(int n) throws InvalidIntArgumentException {
+        numPlayers=n;
+        draft = new DraftPool(numPlayers);
+        track = new RoundTrack();
+    }
+
+
+
 }

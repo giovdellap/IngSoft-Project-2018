@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Demos.Move;
+import it.polimi.ingsw.server.Demos.Tool3;
 import it.polimi.ingsw.server.Loggers.MinorLogger;
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -52,6 +55,20 @@ public class SocketPlayer extends Thread
             outSocket.flush();
 
             simpleDecode(inSocket.readLine());
+            if (tempCmd.equals("demo"))
+            {
+                if (tempArg.equals("1"))
+                {
+                    Move demo=new Move(socket);
+
+                }
+                if (tempArg.equals("5"))
+                {
+                    Tool3 demo=new Tool3(socket);
+                }
+
+            }
+
             System.out.println("tempArg: "+tempArg);
             return tempArg;
         } catch (Exception e)
@@ -234,8 +251,6 @@ public class SocketPlayer extends Thread
     }
 
     public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException, GenericInvalidArgumentException {
-
-
         for(int i=0;i<numPlayers;i++)
         {
             try {
@@ -269,6 +284,45 @@ public class SocketPlayer extends Thread
             disconnectionManager();
     }
 
+    //ROUND METHODS
+
+    public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        try {
+            outSocket.println(simpleEncode("model", "draft"));
+            outSocket.flush();
+
+            for (int i = 0; i < draft.getSize(); i++) {
+                outSocket.println(simpleEncode("index", Integer.toString(i)));
+                outSocket.flush();
+
+                outSocket.println(simpleEncode("color", Integer.toString(draft.returnDie(i).getColor())));
+                outSocket.flush();
+
+                outSocket.println(simpleEncode("value", Integer.toString(draft.returnDie(i).getValue())));
+                outSocket.flush();
+            }
+
+            outSocket.println(simpleEncode("end", "draft"));
+        }catch (Exception e)
+        {
+            try {
+            socket.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
+            }
+        }
+
+        if(socket.isClosed())
+            disconnectionManager();
+    }
+
+    //TURN METHODS
+
+    public int whatAreYouDoing()
+    {
+        //outSocket.println(sim);
+        return 0;
+    }
 
 
     //CONNECTION LOST MANAGEMENT

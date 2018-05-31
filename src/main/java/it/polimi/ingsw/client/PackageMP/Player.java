@@ -20,6 +20,7 @@ public class Player
 
     public void setPlayerScheme(SchemeCardMP temp) throws it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException {
         playerScheme = temp;
+        tokens = temp.getDiff(temp.getfb());
     }
 
     public void setId(int id) {
