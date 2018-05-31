@@ -102,17 +102,4 @@ public class DraftPool
 
     }
 
-    public int getSize()
-    {
-        int i=0;
-        boolean flag=false;
-        while(i<draft.length&&!flag)
-        {
-            if(draft[i].isDisabled())
-                flag=true;
-            else i++;
-        }
-        return i;
-    }
-
 }

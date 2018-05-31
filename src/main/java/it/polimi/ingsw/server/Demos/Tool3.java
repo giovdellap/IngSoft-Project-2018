@@ -29,7 +29,7 @@ public class Tool3 {
     Die[] testDice;
 
 
-    public Tool3(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void Tool3(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
 
         socket = s;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));

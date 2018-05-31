@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.PackageMP.Player;
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
@@ -57,14 +56,14 @@ public class ConnectionManager implements ConnectionServer {
         acceptation();
 
         //timer
-        while (elapsedTime < 120*1000 && players.size()<maxPlayers)
+        while (elapsedTime < 120*1000 && players.size()<=maxPlayers)
         {
             acceptation();
             if(elapsedTime>=60*1000&&elapsedTime<90*1000)
                 maxPlayers=3;
             if(elapsedTime>=90*1000)
                 maxPlayers=2;
-            elapsedTime = System.currentTimeMillis() - startTime;
+            elapsedTime = (new Date()).getTime() - startTime;
             System.out.println(elapsedTime);
             System.out.println(maxPlayers);
         }
@@ -82,7 +81,7 @@ public class ConnectionManager implements ConnectionServer {
         players.add(new SocketPlayer(generalSocket));
         boolean accFlag=false;
         while(!accFlag) {
-            String username = players.get(players.size()-1).insertUsername();       //--------------------
+            String username = players.get(players.size()-1).insertUsername();
             System.out.println(username);
             System.out.println("check username: "+checkUsername(username));
             if(checkUsername(username))
@@ -219,20 +218,6 @@ public class ConnectionManager implements ConnectionServer {
 
     }
 
-    //ROUND METHODS
-    public void sendDraftFirstTime(DraftPool draft) throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        for(SocketPlayer temp : players)
-            for(int i=0;i<draft.getSize();i++)
-                temp.sendDraft(draft);
-    }
-
-    public int getWhatTodo(int index)
-    {
-        return players.get(index).whatAreYouDoing();
-    }
-
-
-
     public void notifyConnectionStatus() throws GenericInvalidArgumentException, IOException {
         for(int i=0; i<players.size();i++)
         {
@@ -299,24 +284,6 @@ public class ConnectionManager implements ConnectionServer {
         for(SocketPlayer pl : players)
             temp.add(pl.getUsername());
 
-        return temp;
-    }
-
-    public void roundDiscManager(int index) throws IOException, GenericInvalidArgumentException {
-        for(SocketPlayer temp : players)
-            temp.notifyDisconnectedPlayer(index);
-    }
-
-    public ArrayList<String> notifyFatherRound()
-    {
-        ArrayList<String> temp = new ArrayList<String>();
-        for(SocketPlayer pl : players)
-        {
-            if(!pl.connectionCheck())
-                temp.add("disconnected");
-            else
-                temp.add(pl.getUsername());
-        }
         return temp;
     }
 

@@ -105,48 +105,12 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  Everyone has chosen his schemecard
 
  S: #player#$id$
- S: #username#$name$
  S: #scheme#$id$
  S: #fb#$1||2$
  S: #favtokens#$tokens$
  
  -------------------------------------
  
- STARTING FIRST ROUND
- 
- DRAFTPOOL:
-
-S: #model#$draft$
-
-For each die:
-S: #index#$m$
-
-S: #color#$n$
-S: #vale#$n$
-
-
-S: #end#$draft$
- 
- -----------------------------------
- 
-TURN:
- 
-ACTIVE PLAYER:
-
-S: #chioce#$action$
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- -----------------------------------
- -----------------------------------
- -----------------------------------
  DEMO CONNECTION PROTOCOL
  
  1.MODEL COMPONENTS DECLARATION
@@ -173,27 +137,12 @@ S: #chioce#$action$
        
  S: #end#$scheme$
   
-  
-DRAFTPOOL:
-
-S: #model#$draft$
-
-For each die:
-S: #index#$m$
-
-S: #color#$n$
-S: #vale#$n$
-
-
-S: #end#$draft$
 --------------------------
-Move Demo
 
-C: #index#$n$
-C: #x#$n$
-C: #y#$n$
 
-S: #check#$n$
+
+
+
 
 -------------------------
 ToolCard 3 Demo
@@ -205,8 +154,5 @@ C: #y1#$y$
 
 S: #check#$n$
 // 1 if true, 2 if false
-------------------------
-
-
 
   
