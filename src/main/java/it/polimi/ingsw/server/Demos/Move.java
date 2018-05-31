@@ -30,7 +30,7 @@ public class Move
 
 
 
-    public Move(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void Tool3(Socket s) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
 
         socket = s;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -153,30 +153,38 @@ public class Move
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-        posx0 = Integer.parseInt(tempArg);
+
+        if (tempCmd.equals("x0"))
+            posx0 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-        posy0 = Integer.parseInt(tempArg);
+
+        if (tempCmd.equals("y0"))
+            posy0 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-        posx1 = Integer.parseInt(tempArg);
+
+        if (tempCmd.equals("x1"))
+            posx1 = Integer.parseInt(tempArg);
 
         msgIn = inSocket.readLine();
         simpleDecode(msgIn);
-        posy1 = Integer.parseInt(tempArg);
+
+        if (tempCmd.equals("y1"))
+            posy1 = Integer.parseInt(tempArg);
 
         boolean flag = toolCardThree.checkToolCardThree(posx0,posy0,schemeCard,posx1,posy1);
 
         if(flag) {
+            schemeCard = toolCardThree.applyModifies(posx0,posy0,schemeCard,posx1,posy1);
             outSocket.println(simpleEncode("check","1"));
-            outSocket.flush();
         }
 
         if(!flag) {
-            outSocket.println(simpleEncode("check", "2"));
-            outSocket.flush();
+            outSocket.println(simpleEncode("check","2"));
+            checkAndUpdate();
         }
 
 

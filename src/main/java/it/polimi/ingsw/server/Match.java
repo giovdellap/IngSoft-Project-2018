@@ -55,11 +55,6 @@ public class Match
         //INITIALIZATION 2
         initialization2();
 
-        //START ROUNDS
-        numPlayers=playerNames.size();
-        modelInstance.updateNumPlayers(numPlayers);
-        draftClientsInitialization();
-        startRound();
     }
 
 
@@ -79,20 +74,20 @@ public class Match
         initPubObjs();
         updatePlayersInit();
 
-        //reception schemes
+        //reception schemes                     riceve e controlla schemi selezionati
         receiveAndcheckScheme();
         updatePlayersInit();
 
 
 
-        //INITIALIZATION 2: PHASE 2
+        //INITIALIZATION 2: PHASE 2                               manda a tutti
         matchLog.minorLog("Initialization 2: Phase 2 started");
         SchemeCard[] temp = new SchemeCard[numPlayers];
         for(int i=0;i<numPlayers;i++) {
             temp[i] = modelInstance.getSchemebyIndex(i);
         }
 
-        server.sendSchemestoEveryone(temp);
+        server.sendSchemestoEveryone(temp);                     //-------------------------
 
         matchLog.stackLog(server.sServerLog.updateFather());
         server.sServerLog.reinitialize();
@@ -157,30 +152,6 @@ public class Match
         matchLog.stackLog(server.sServerLog.updateFather());
         server.sServerLog.reinitialize();
         matchLog.minorLog("PUBLIC OBJECTIVES OK");
-    }
-
-    //ROUND METHODS
-
-    public void draftClientsInitialization() throws InvalidIntArgumentException, GenericInvalidArgumentException {
-
-        server.sendDraftFirstTime(modelInstance.getDraft());
-
-    }
-
-    public void startRound()
-    {
-
-    }
-
-    public void round()
-    {
-
-    }
-
-    public void turn(int index)
-    {
-        int whatToDo;
-        //whatToDo = server.getWhatToDo(index);
     }
 
     //DISCONNECTION MANAGEMENT

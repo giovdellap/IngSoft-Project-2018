@@ -75,4 +75,9 @@ public class DraftPoolMP implements ModelComponentMP {
 
     }
 
+    public int getSize()
+    {
+        return draft.length;
+    }
+
 }

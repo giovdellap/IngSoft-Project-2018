@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -78,37 +79,37 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 7" textFill="#08fffb" GridPane.rowIndex="8">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 7" textFill="#08fffb" GridPane.rowIndex="7">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 3" textFill="#08fffb" GridPane.rowIndex="4">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 3" textFill="#08fffb" GridPane.rowIndex="3">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 2" textFill="#08fffb" GridPane.rowIndex="3">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 2" textFill="#08fffb" GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="First Move" textFill="#08fffb" GridPane.rowIndex="1">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 1" textFill="#08fffb" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 6" textFill="#08fffb" GridPane.rowIndex="7">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 6" textFill="#08fffb" GridPane.rowIndex="6">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 5" textFill="#08fffb" GridPane.rowIndex="6">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 5" textFill="#08fffb" GridPane.rowIndex="5">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 4" textFill="#08fffb" GridPane.rowIndex="5">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 4" textFill="#08fffb" GridPane.rowIndex="4">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -118,66 +119,66 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 8" textFill="#08fffb" GridPane.rowIndex="9">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 8" textFill="#08fffb" GridPane.rowIndex="8">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="moveButton" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1">
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 1" textFill="#08fffb" GridPane.rowIndex="2">
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: orange;" text="GO" textFill="#02f513" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="832.0" style="-fx-background-color: grey;" text="ToolCard 9" textFill="#08fffb" GridPane.rowIndex="9">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="moveButton1" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton2" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton3" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton4" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="firstMoveButton" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton6" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton7" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="tool3Button" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="moveButton9" alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="433.0" style="-fx-background-color: #7f0301;" text="GO" textFill="#2dff04" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
                </children>
             </GridPane>
          </content>
@@ -196,6 +197,23 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <children>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" text="Demo name:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea prefHeight="200.0" prefWidth="200.0" text="Demo log&#10;Demo log&#10;Demo log&#10;Demo log&#10;Demo log&#10;Demo log&#10;&#10;" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea prefHeight="127.0" prefWidth="396.0" text="Test result:&#10;&#10;PASSED" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextArea>
+               </children>
             </GridPane>
          </children>
     </HBox>
