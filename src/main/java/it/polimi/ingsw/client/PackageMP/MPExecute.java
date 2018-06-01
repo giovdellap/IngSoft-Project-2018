@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.PackageMP;
 
 import it.polimi.ingsw.client.Loggers.MajorLogger;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -24,6 +26,7 @@ public class MPExecute extends Application {
 
     //general
     private boolean firstFlag;
+    private String myUsername;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,27 +52,43 @@ public class MPExecute extends Application {
             }
         }
 
+        myUsername=tempUsername;
+        graphicsManager.waitForPlayers();
+        gmLoggerUpdate();
         modelManagerMP = new ModelManagerMP();
         mpLogger.majorLog("ModelManager started");
 
         //setting private objective
         modelManagerMP.setMyPrivObj(connectionManager.getPrivObj());
         cmLoggerUpdate();
-        mmLoggerUpdate();
 
         //setting schemes
         int[] tempSchemes = connectionManager.getTempSchemes();
         cmLoggerUpdate();
         modelManagerMP.setTempSchemes(tempSchemes[0], tempSchemes[1]);
-        mmLoggerUpdate();
 
         //setting public objectives
         modelManagerMP.setPubObjs(connectionManager.getPubObjs());
         cmLoggerUpdate();
-        mmLoggerUpdate();
 
-        //getting selected scheme
-        //int[] toCheckScheme = graphicsManager.getSelectedScheme();
+        //SCHEME SELECTION
+
+        firstFlag=false;
+        while(!firstFlag) {
+            //getting connection check
+            connectionManager.getSelectionCheck();
+
+            //getting selected scheme
+            PublicObjectiveMP[] tempPubObjs = new PublicObjectiveMP[3];
+            for (int i = 0; i < 3; i++)
+                tempPubObjs[i] = modelManagerMP.getPubObjs(i);
+            SchemeCardMP toCheckScheme = graphicsManager.getSelectedScheme(modelManagerMP.getTempScheme(0), modelManagerMP.getTempScheme(1), myUsername, modelManagerMP.getMyPrObj(), tempPubObjs);
+
+            //sending scheme and get confirmation
+            firstFlag = connectionManager.getSchemeConfirm(toCheckScheme);
+        }
+        graphicsManager.waitForPlayers2();
+
     }
 
     public MPExecute(String ip, int[] toSet) throws GenericInvalidArgumentException {

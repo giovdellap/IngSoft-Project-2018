@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.PackageMP;
 
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 
 public class Player
 {

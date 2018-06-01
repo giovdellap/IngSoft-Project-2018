@@ -23,9 +23,6 @@ public class SocketClient {
     private BufferedReader inSocket;
     private PrintWriter outSocket;
 
-    private BufferedReader inKeyboard;
-    private PrintWriter outVideo;
-
     private SocketDecoder decoder;
 
     private String msgIN;
@@ -37,7 +34,7 @@ public class SocketClient {
     private int numPlayers=0;
     private String serverIP;
 
-    public SocketClient(String ip) throws GenericInvalidArgumentException, IOException {
+    public SocketClient(String ip) throws GenericInvalidArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
 
         socketLogger = new MinorLogger();
         socketLogger.minorLog("SocketClient logger operative");
@@ -49,7 +46,7 @@ public class SocketClient {
 
     //INITIALIZATION 1: PHASE 1
 
-    private void connect() throws IOException, GenericInvalidArgumentException {
+    private void connect() throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         socket = new Socket(serverIP, PORT);
         this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
@@ -59,7 +56,7 @@ public class SocketClient {
     }
 
 
-    public boolean usernameConfirm(String tempusername) throws IOException, GenericInvalidArgumentException {
+    public boolean usernameConfirm(String tempusername) throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         receiveMessage();
         if (decoder.getCmd().equals("insert") && decoder.getArg().equals("username")) {
             sendMessage("username", tempusername);
@@ -69,11 +66,13 @@ public class SocketClient {
             if (decoder.getCmd().equals("confirm") && decoder.getArg().equals("username"))
             {
                 socketLogger.minorLog("username confirmed");
+                receiveMessage();
                 return true;
             }
             else
             {
                 socketLogger.minorLog("username "+tempusername+" refused");
+                receiveMessage();
                 return false;
             }
         } else
@@ -82,7 +81,7 @@ public class SocketClient {
 
     //INITIALIZATION 2
 
-    public int getPrivObj() throws IOException, GenericInvalidArgumentException {
+    public int getPrivObj() throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
        receiveMessage();
 
         if(decoder.getCmd().equals("privobj")) {
@@ -90,12 +89,13 @@ public class SocketClient {
             return Integer.parseInt(decoder.getArg());
         }
         else
-            return getPrivObj();
+            return 0;
     }
 
 
-    public int[] getSchemes() throws IOException, GenericInvalidArgumentException {
+    public int[] getSchemes() throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         int temp[] = new int[2];
+
 
         receiveMessage();
         temp[0] = Integer.parseInt(decoder.getArg());
@@ -107,7 +107,7 @@ public class SocketClient {
 
         return temp;
     }
-    public int[] getPubObjs() throws IOException, GenericInvalidArgumentException {
+    public int[] getPubObjs() throws IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
             int[] temp = new int[3];
             for(int i=0; i<3; i++)
             {
@@ -116,101 +116,34 @@ public class SocketClient {
                temp[i] = Integer.parseInt(decoder.getArg());
             }
 
-            receiveMessage();
-            if(decoder.getCmd().equals("wait")&&decoder.getArg().equals("players"))
-            {
                 socketLogger.minorLog("waiting for players");
-            }
+
             return temp;
-        }
-    /*
-        public boolean selectScheme(int id, int fb) throws IOException {
-            msgIN = inSocket.readLine();
-            simpleDecode(msgIN);
+    }
+    public void getSelectionCheck() throws IOException {
+        //gets insert scheme command from the server
+        receiveMessage();
+        if(!decoder.getCmd().equals("insert"))
+            getSelectionCheck();
+    }
 
-            if(tempCmd.equals("insert")&&tempArg.equals("scheme"))
-            {
-                outSocket.println(simpleEncode("scheme", Integer.toString(id)));
-                outSocket.println();
+    public boolean getSchemeConfirmation(int schemeId, int fb) throws IOException {
+        sendMessage("scheme", Integer.toString(schemeId));
+        sendMessage("fb", Integer.toString(fb));
 
-                outSocket.println(simpleEncode("fb", Integer.toString(fb)));
-                outSocket.flush();
-
-                msgIN = inSocket.readLine();
-                simpleDecode(msgIN);
-
-                if(tempCmd.equals("wait")&&tempArg.equals("players"))
-                    return true;
-                else
-                    return false;
-            }
-            else
-                selectScheme(id, fb);
+        receiveMessage();
+        if(decoder.getCmd().equals("insert")&&decoder.getArg().equals("scheme"))
             return false;
+        if(decoder.getArg().equals("confirm")&&decoder.equals("scheme"))
+        {
+            receiveMessage();
+            return true;
         }
+        else
+            return false;
+    }
 
-        //INITIALIZATION 2: PHASE 2
 
-        public int getNumPlayers() throws IOException {
-            msgIN = inSocket.readLine();
-            simpleDecode(msgIN);
-
-            if(tempCmd.equals("numplayers"))
-            {
-                numPlayers = Integer.parseInt(tempArg);
-                return numPlayers;
-            }
-            else
-                getNumPlayers();
-            return 0;
-        }
-
-        public Player getPlayer() throws IOException, InvalidIntArgumentException {
-            int id;
-
-            msgIN = inSocket.readLine();
-            simpleDecode(msgIN);
-            if(tempCmd.equals("player")) {
-                id = Integer.parseInt(tempArg);
-
-                msgIN = inSocket.readLine();
-                simpleDecode(msgIN);
-                if(tempCmd.equals("username")) {
-                    Player temp = new Player(id, tempArg);
-
-                    msgIN = inSocket.readLine();
-                    simpleDecode(msgIN);
-                    if (tempCmd.equals("scheme")) {
-                        SchemesDeckMP tempSCDeck = new SchemesDeckMP();
-                        SchemeCardMP tempSC = tempSCDeck.extractSchemebyID(id);
-
-                        msgIN = inSocket.readLine();
-                        simpleDecode(msgIN);
-
-                        if(tempCmd.equals("fb")) {
-                            tempSC.setfb(Integer.parseInt(tempArg));
-                            temp.setPlayerScheme(tempSC);
-
-                            msgIN = inSocket.readLine();
-                            simpleDecode(msgIN);
-                            if(tempCmd.equals("favtokens")) {
-                                temp.setTokens(Integer.parseInt(tempArg));
-
-                                msgIN = inSocket.readLine();
-                                simpleDecode(msgIN);
-                                if(tempCmd.equals("wait")&&tempArg.equals("players"))
-                                    return temp;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-                getPlayer();
-            return null;
-        }
-
-    */
     //RECEPTION
     private void receiveMessage() throws IOException {
         decoder.simpleDecode(inSocket.readLine());

@@ -22,13 +22,14 @@ public class ModelGeneratorTest
         emptyScheme.setfb(1);
         testScheme = schemesDeckMP.extractSchemebyID(7);
         testScheme.setfb(1);
+        modelGenerator = new ModelGenerator();
     }
 
     @Test
     public void testEmptyScheme() throws InvalidIntArgumentException {
-        for(int i=0;i<11;i++)
+        for(int i=0;i<5;i++)
         {
-            System.out.println(modelGenerator.getScheme(emptyScheme)[i]);
+            System.out.println(modelGenerator.getScheme(emptyScheme)[i]+"/");
         }
         Assertions.assertEquals(true, true);
     }

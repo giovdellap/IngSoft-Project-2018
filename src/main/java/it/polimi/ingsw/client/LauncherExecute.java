@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.DemoMode.DemoApplication;
 import it.polimi.ingsw.client.PackageMP.MPExecute;
+import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -10,58 +11,45 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.*;
+
 public class LauncherExecute extends Application
 {
 
-    public LauncherController controller;
     public Boolean hasDone=false;
 
     private int[] settings;// temp[0] = mode, temp[1] = connection, temp[2] = graphics
+    private String ip;
 
 
 
     public void start(final Stage stage) throws Exception
     {
-        System.out.println("sono qui");
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Launcher.fxml"));
-        Parent root = loader.load();
+        BufferedReader inKeyboard;
+        PrintWriter outVideo;
+        CLIToolsManager cliToolsManager;
+        settings[1]=1;
+        settings[2]=2;
 
-        controller = loader.getController();
+        inKeyboard = new BufferedReader(new InputStreamReader(System.in));
+        outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
+        cliToolsManager = new CLIToolsManager();
 
-        Scene scene = new Scene(root);
-        stage.setTitle("SAGRADA");
-        stage.setScene(scene);
-        stage.show();
+        outVideo.println();
+        outVideo.println();
+        outVideo.println(cliToolsManager.simpleQuestionsMaker("PREMI S PER GIOCATORE SINGOLO, M PER MULTIGIOCATORE", 40, true));
+        outVideo.flush();
+        String msgIN = inKeyboard.readLine();
+        if(msgIN.charAt(0)=='M')
+        {
+            settings[0] = 2;
+            outVideo.println(cliToolsManager.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 40, true));
+            outVideo.flush();
+            ip = inKeyboard.readLine();
 
-        javafx.event.EventHandler<ActionEvent> buttonHandler = new javafx.event.EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setSettings(controller.getMode(), controller.getConnection(), controller.getGraphicMode());
-                done();
-                if(settings[0]==2&&(!controller.getIp().equals("")))
-                {
-                    try {
-                        MPExecute mpExecute = new MPExecute(controller.getIp(), settings);
-                        mpExecute.start(stage);
-                    } catch (GenericInvalidArgumentException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(settings[0]==3&&(!controller.getIp().equals("")))
-                {
-                    DemoApplication demoApp = new DemoApplication();
-                    try {
-                        demoApp.start(stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        root.addEventHandler(ActionEvent.ACTION, buttonHandler);
+            MPExecute mpExecute = new MPExecute(ip, settings);
+            mpExecute.start(stage);
+        }
 
     }
 

@@ -56,7 +56,7 @@ public class ConnectionManager implements ConnectionServer {
         acceptation();
 
         //timer
-        while (elapsedTime < 120*1000 && players.size()<=maxPlayers)
+        while (elapsedTime < 120*1000 && players.size()<maxPlayers)
         {
             acceptation();
             if(elapsedTime>=60*1000&&elapsedTime<90*1000)

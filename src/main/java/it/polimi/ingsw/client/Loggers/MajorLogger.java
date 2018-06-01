@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.Loggers;
 
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 
 import java.util.ArrayList;
 

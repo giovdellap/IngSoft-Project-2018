@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.PackageMP;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
+import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 
 public class ModelManagerMP
@@ -51,19 +52,19 @@ public class ModelManagerMP
         tempSchemes[1] = scDeck.extractSchemebyID(id2);
     }
 
-    public int getMyPrObj()
+    public PrivateObjectiveMP getMyPrObj()
     {
-        return myPrObj.getColor();
+        return myPrObj;
     }
 
-    public int getTempScheme(int index)
+    public SchemeCardMP getTempScheme(int index)
     {
-        return tempSchemes[index].getID();
+        return tempSchemes[index];
     }
 
-    public int getPubObjs(int index)
+    public PublicObjectiveMP getPubObjs(int index)
     {
-        return pubObjs[index].getId();
+        return pubObjs[index];
     }
 
 
