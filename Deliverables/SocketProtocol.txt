@@ -111,31 +111,22 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  
  -------------------------------------
  
- DEMO CONNECTION PROTOCOL
- 
- 1.MODEL COMPONENTS DECLARATION
- In order:
-  - SchemeCard
-   - DraftPool
-   
-  -----------------------------
+ TURN   
+------------------------------
   
-  SCHEMECARD:
+  DRAFTPOOL:
+    
+  For each die:
+  S/C: #model#$draft$
   
-  S: #model#$scheme$
-  S: #id#$n$
-  S: #fb#$fb$
+  For each die:
   
-  F"For or each die:
-  
-  S: #color#$n$
-  S: #value#$n$
-  S: #x#$n$
-  S: #y#$n$
-  
-       ...
-       
- S: #end#$scheme$
+  S/C: #index#$n$
+  S/C: #color#$n$
+  S/C: #value#$n$
+    
+     
+  S/C: #end#$draft$
   
 --------------------------
 
