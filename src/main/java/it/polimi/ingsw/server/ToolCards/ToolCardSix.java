@@ -27,6 +27,30 @@ public class ToolCardSix extends ToolCard {
             return false;
         }
 
+        boolean flag = false;
+
+        for (int i = -1; i < 2; i++)
+            for (int j = -1; j < 2; j++)
+                if ((x + i < 4) && (x + i > -1) && (y + j < 5) && (y + j > -1))
+                    if(!scheme.getDie(x + i, y + j).isDisabled())
+                        flag = true;
+
+
+        if (!flag) {
+            System.out.println("You must position your die orthogonally or diagonally adjacent to another die");
+            return false;
+        }
+
+        if (scheme.getCell(scheme.getfb(), x, y) > 0 && scheme.getCell(scheme.getfb(), x, y) < 6 && toPlace.getColor() != scheme.getCell(scheme.getfb(), x, y)) {
+            System.out.println("You must position your die on the same color cell of your scheme");
+            return false;
+        }
+
+        if (scheme.getCell(scheme.getfb(), x, y) > 5 && scheme.getCell(scheme.getfb(), x, y) < 12 && toPlace.getValue() != (scheme.getCell(scheme.getfb(), x, y) - 5)) {
+            System.out.println("You must position your die on the same number cell of your scheme");
+            return false;
+        }
+
         if (x + 1 < 4) {
             if (!scheme.getDie(x + 1, y).isDisabled())
                 if (scheme.getDie(x + 1, y).getColor() == toPlace.getColor()) {
