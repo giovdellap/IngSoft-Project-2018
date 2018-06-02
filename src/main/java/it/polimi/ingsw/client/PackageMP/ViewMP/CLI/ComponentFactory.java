@@ -1,9 +1,8 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import org.fusesource.jansi.Ansi;
 
@@ -135,5 +134,66 @@ public class ComponentFactory
         iComponent[2]=cliToolsManager.printSpaces(40);
 
         return iComponent;
+    }
+
+    public String[] selectionA(SchemeCardMP scheme, int fb) throws InvalidIntArgumentException
+    {
+        String[] aComponent = new String[6];
+
+        SchemeCardMP tempScheme = scheme;
+        tempScheme.setfb(fb);
+
+        for(int i=0;i<4;i++)
+            aComponent[i]=cliToolsManager.printSpaces(7)+modelGenerator.getScheme(tempScheme)[i]+cliToolsManager.printSpaces(7);
+
+        aComponent[4]=cliToolsManager.printSpaces(20);
+        aComponent[5]="NOME:"+ tempScheme.getName(fb)+"   "+"TOKENS:"+tempScheme.getDiff(fb);
+
+        return aComponent;
+
+    }
+
+    public String[] selectionN(DraftPoolMP draft) throws InvalidIntArgumentException
+    {
+        String[] nComponent = new String[5];
+
+        DraftPoolMP tempdraft = draft;
+
+        int j=0;
+
+        nComponent[0]=cliToolsManager.printSpaces(20);
+        nComponent[1]=cliToolsManager.centerThatString("DRAFTPOOL",20);
+
+        nComponent[2]=cliToolsManager.centerThatString(modelGenerator.getDraft(tempdraft),20);
+
+        nComponent[3]="  1 2 3 4 5 6 7 8 9 ";
+
+        nComponent[4]=cliToolsManager.printSpaces(20);
+
+        return nComponent;
+
+    }
+
+    public String[] selectionM(RoundTrackMP round) throws InvalidIntArgumentException
+    {
+        String[] mComponent = new String[5];
+
+        RoundTrackMP tempround = round;
+
+        int j=0;
+
+        mComponent[0]=cliToolsManager.printSpaces(20);
+        mComponent[1]=cliToolsManager.centerThatString("ROUNDTRACK",20);
+
+        for(int i=2;i<4;i++)
+        {
+            mComponent[i] = modelGenerator.getRoundTrack(tempround)[j];
+            j++;
+        }
+
+        mComponent[4]="  1 2 3 4 5 6 7 8 9 ";
+
+        return mComponent;
+
     }
 }

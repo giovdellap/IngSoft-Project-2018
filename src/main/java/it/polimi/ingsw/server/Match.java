@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class Match
 {
+    //INSTANCE FROM OTHERS CLASSES
     ConnectionManager server;
-
     private Model modelInstance;
 
     private ArrayList<String> playerNames;
@@ -29,39 +29,50 @@ public class Match
 
     public MinorLogger matchLog;
 
-    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException {
+    //COSTRUCTOR
 
+    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException
+    {
+        //INITIALIZATION 0
         matchLog = new MinorLogger();
         matchLog.minorLog("Match Logger operative");
         matchLog.minorLog("start match constructor");
 
         //INITIALIZATION 1
-        matchLog.minorLog("START INITIALIZATION 1");
-        server = new ConnectionManager();
-        matchLog.stackLog(server.sServerLog.updateFather());
-        server.sServerLog.reinitialize();
-
-        playerNames = server.lobbyCreation();
-        numPlayers = playerNames.size();
-        updatePlayersInit();
-        matchLog.stackLog(server.sServerLog.updateFather());
-        server.sServerLog.reinitialize();
-
-        modelInstance = new Model(numPlayers);
-
-        matchLog.minorLog("END INITIALIZATION 1");
-
+        initialization1();
 
         //INITIALIZATION 2
         initialization2();
+    }
 
+    private void initialization1() throws GenericInvalidArgumentException, IOException
+    {
+        matchLog.minorLog("START INITIALIZATION 1");
+
+        server = new ConnectionManager();                           //SERVER
+        matchLog.stackLog(server.sServerLog.updateFather());
+        server.sServerLog.reinitialize();
+
+        playerNames = server.lobbyCreation();                       //PLAYERNAMES
+
+        numPlayers = playerNames.size();
+
+        updatePlayersInit();
+
+        matchLog.stackLog(server.sServerLog.updateFather());
+        server.sServerLog.reinitialize();
+
+        modelInstance = new Model(numPlayers);                      //MODELINSTANCE
+
+        matchLog.minorLog("END INITIALIZATION 1");
     }
 
 
-
-    public void initialization2() throws InvalidIntArgumentException, IOException, InvalidinSocketException, GenericInvalidArgumentException {
-
+    public void initialization2() throws InvalidIntArgumentException, IOException, InvalidinSocketException, GenericInvalidArgumentException
+    {
+        //INITIALIZATION 2: PHASE 1
         matchLog.minorLog("START INITIALIZATION 2 PHASE 1");
+
         //private objectives
         initPrObjs();
         updatePlayersInit();
@@ -74,20 +85,20 @@ public class Match
         initPubObjs();
         updatePlayersInit();
 
-        //reception schemes                     riceve e controlla schemi selezionati
+        //reception schemes
         receiveAndcheckScheme();
         updatePlayersInit();
 
-
-
-        //INITIALIZATION 2: PHASE 2                               manda a tutti
+        //INITIALIZATION 2: PHASE 2
         matchLog.minorLog("Initialization 2: Phase 2 started");
-        SchemeCard[] temp = new SchemeCard[numPlayers];
-        for(int i=0;i<numPlayers;i++) {
-            temp[i] = modelInstance.getSchemebyIndex(i);
-        }
 
-        server.sendSchemestoEveryone(temp);                     //-------------------------
+        SchemeCard[] temp = new SchemeCard[numPlayers];
+
+        for(int i=0;i<numPlayers;i++)
+            temp[i] = modelInstance.getSchemebyIndex(i);
+
+
+        server.sendSchemestoEveryone(temp);
 
         matchLog.stackLog(server.sServerLog.updateFather());
         server.sServerLog.reinitialize();
@@ -97,13 +108,15 @@ public class Match
         matchLog.minorLog("End initialization 2");
     }
 
-    private void receiveAndcheckScheme() throws InvalidinSocketException, GenericInvalidArgumentException, IOException, InvalidIntArgumentException {
-
+    private void receiveAndcheckScheme() throws InvalidinSocketException, GenericInvalidArgumentException, IOException, InvalidIntArgumentException
+    {
         boolean schemeCheck;
 
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++)
+        {
             schemeCheck=false;
-            while (!schemeCheck) {
+            while (!schemeCheck)
+            {
                 int[] temp = new int[2];
                 temp = server.getSelectedScheme(i);
                 matchLog.stackLog(server.sServerLog.updateFather());
@@ -117,15 +130,14 @@ public class Match
                 matchLog.minorLog("Player " + Integer.toString(i + 1) + " FB = " + Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
 
             }
-
         }
     }
 
-
-    private void initPrObjs() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException {
-
+    private void initPrObjs() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException
+    {
         modelInstance.setPrivateObjectives();
-        for(int i=0;i<numPlayers;i++) {
+        for(int i=0;i<numPlayers;i++)
+        {
             server.sendPrivObj(i, modelInstance.getPrivateObjective(i).getColor());
             matchLog.stackLog(server.sServerLog.updateFather());
             server.sServerLog.reinitialize();
@@ -133,9 +145,11 @@ public class Match
         matchLog.minorLog("PRIVATE OBJECTIVES OK");
     }
 
-    private void initSchemes() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException {
+    private void initSchemes() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
+    {
         modelInstance.setSchemesDeck();
-        for(int i=0;i<numPlayers;i++) {
+        for(int i=0;i<numPlayers;i++)
+        {
             server.sendSchemes(i, modelInstance.getTempSchemes(i).getID(), modelInstance.getTempSchemes(i+numPlayers).getID());
             matchLog.stackLog(server.sServerLog.updateFather());
             server.sServerLog.reinitialize();
@@ -143,7 +157,8 @@ public class Match
         matchLog.minorLog("SCHEMES SENT OK");
     }
 
-    private void initPubObjs() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException {
+    private void initPubObjs() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
+    {
         modelInstance.setPubObjs();
         for(int i=0;i<playerNames.size();i++)
         {
@@ -175,7 +190,8 @@ public class Match
         // calcolo finale dei punteggi
     }
 
-    public SchemeCard getPlayerScheme(int player) {
+    public SchemeCard getPlayerScheme(int player)
+    {
         // ritorna lo schema del giocatore in questione
         return null;
     }

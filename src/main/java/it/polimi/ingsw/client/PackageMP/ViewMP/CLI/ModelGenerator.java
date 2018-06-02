@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
@@ -8,7 +9,9 @@ import org.fusesource.jansi.Ansi;
 
 public class ModelGenerator
 {
-    public String[] getScheme(SchemeCardMP scheme) throws InvalidIntArgumentException {
+
+    public String[] getScheme(SchemeCardMP scheme) throws InvalidIntArgumentException
+    {
         //returns a String[5] representing the schemecard
         //1 vector's element = 1 row
 
@@ -17,7 +20,6 @@ public class ModelGenerator
         int z=1;
 
         schemeCard[0]="  12345";
-
 
         for (int i = 0; i < 4; i++)
         {
@@ -173,7 +175,8 @@ public class ModelGenerator
         return schemeCard;
     }
 
-    public String getDraft(DraftPoolMP draft) throws InvalidIntArgumentException {
+    public String getDraft(DraftPoolMP draft) throws InvalidIntArgumentException
+    {
         //returns a string representing the draftpool
 
         int i=0;
@@ -284,10 +287,239 @@ public class ModelGenerator
     }
 
 
-    private String getRoundTrack(RoundTrackMP track)  {
+    public String[] getRoundTrack(RoundTrackMP roundtrack) throws InvalidIntArgumentException
+    {
         //returns a string representing the roundtrack
 
-        return null;
+        String[] track = new String[2];
+
+        int j=0;
+
+        String temp = "";
+
+        String temp1 = "";
+
+        DieMP tempDie;
+
+        for (int i=0;i<10;i++)
+        {
+            tempDie = roundtrack.returnNTurnRoundDice(i).getDie(j);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==1)
+                temp+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==1)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==2)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==3)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==4)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==5)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==6)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==1)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==2)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==3)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==4)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==5)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==6)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==1)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==2)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==3)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==4)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==5)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==6)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==1)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==2)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==3)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==4)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==5)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==6)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==1)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==2)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==3)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==4)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==5)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==6)
+                temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+        }
+
+        track[0]=temp;
+
+        j++;
+
+        for (int i=0;i<10;i++)
+        {
+            tempDie = roundtrack.returnNTurnRoundDice(i).getDie(j);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==2)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==3)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==4)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==5)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 1 && tempDie.getValue()==6)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==2)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==3)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==4)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==5)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 2 && tempDie.getValue()==6)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.RED) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==2)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==3)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==4)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==5)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 3 && tempDie.getValue()==6)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.GREEN) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==2)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==3)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==4)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==5)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 4 && tempDie.getValue()==6)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==1)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==2)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==3)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==4)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==5)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+            if (tempDie.getColor() == 5 && tempDie.getValue()==6)
+                temp1+= Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+
+        }
+
+        track[1]=temp1;
+
+        return track;
     }
 
     //TOOLS

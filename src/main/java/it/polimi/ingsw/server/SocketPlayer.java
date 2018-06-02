@@ -29,11 +29,12 @@ public class SocketPlayer extends Thread
 
     public MinorLogger sPlayerLog;
 
+    //COSTRUCTOR
+
     public SocketPlayer(Socket s) throws IOException, GenericInvalidArgumentException {
 
         sPlayerLog = new MinorLogger();
         sPlayerLog.minorLog("SocketPlayer Logger operative");
-
 
         sPlayerLog.minorLog("SocketPlayer check");
         socket = s;
@@ -46,8 +47,10 @@ public class SocketPlayer extends Thread
 
     //INITIALIZATION 1
 
-    public String insertUsername() throws GenericInvalidArgumentException, IOException {
-        try {
+    public String insertUsername() throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             outSocket.println(simpleEncode("insert", "username"));
             outSocket.flush();
 
@@ -62,9 +65,11 @@ public class SocketPlayer extends Thread
         }
     }
 
-    public void confirmUsername() throws IOException, GenericInvalidArgumentException {
+    public void confirmUsername() throws IOException, GenericInvalidArgumentException
+    {
 
-        try {
+        try
+        {
             username = tempArg;
             outSocket.println(simpleEncode("confirm", "username"));
             outSocket.flush();
@@ -78,14 +83,13 @@ public class SocketPlayer extends Thread
         }
     }
 
-
     public String getUsername()
     {
         return username;
     }
 
-
-    public void init1Phase2NumPl(int num) throws GenericInvalidArgumentException, IOException {
+    public void init1Phase2NumPl(int num) throws GenericInvalidArgumentException, IOException
+    {
         numPlayers = num;
         try
         {
@@ -98,7 +102,8 @@ public class SocketPlayer extends Thread
         }
     }
 
-    public void init1Phase2Player(int index, String name) throws GenericInvalidArgumentException, IOException {
+    public void init1Phase2Player(int index, String name) throws GenericInvalidArgumentException, IOException
+    {
         try
         {
             outSocket.println(simpleEncode("player", Integer.toString(index)));
@@ -116,20 +121,23 @@ public class SocketPlayer extends Thread
 
     //INITIALIZATION 2
 
-    public void sendPrivateObj(int id) throws GenericInvalidArgumentException, IOException {
-       try
-       {
-           outSocket.println(simpleEncode("privobj", Integer.toString(id)));
-           outSocket.flush();
-       } catch (Exception e)
-       {
-           socket.close();
-           disconnectionManager();
-       }
+    public void sendPrivateObj(int id) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
+            outSocket.println(simpleEncode("privobj", Integer.toString(id)));
+            outSocket.flush();
+        } catch (Exception e)
+        {
+            socket.close();
+            disconnectionManager();
+        }
     }
 
-    public void sendScheme(int id) throws GenericInvalidArgumentException, IOException {
-        try {
+    public void sendScheme(int id) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             outSocket.println(simpleEncode("scheme", Integer.toString(id)));
             outSocket.flush();
         } catch(Exception e)
@@ -139,46 +147,53 @@ public class SocketPlayer extends Thread
         }
     }
 
-    public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException, IOException {
-       try
-       {
-           outSocket.println(simpleEncode("pubobj", Integer.toString(id1)));
-           outSocket.flush();
+    public void sendPubObjs(int id1, int id2, int id3) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
+            outSocket.println(simpleEncode("pubobj", Integer.toString(id1)));
+            outSocket.flush();
 
-           outSocket.println(simpleEncode("pubobj", Integer.toString(id2)));
-           outSocket.flush();
+            outSocket.println(simpleEncode("pubobj", Integer.toString(id2)));
+            outSocket.flush();
 
-           outSocket.println(simpleEncode("pubobj", Integer.toString(id3)));
-           outSocket.flush();
-       } catch (Exception e)
-       {
-           socket.close();
-           disconnectionManager();
-       }
+            outSocket.println(simpleEncode("pubobj", Integer.toString(id3)));
+            outSocket.flush();
+        } catch (Exception e)
+        {
+            socket.close();
+            disconnectionManager();
+        }
     }
 
-    public void setPlayersNames(String[]usernames){
+    public void setPlayersNames(String[]usernames)
+    {
         playerNames=usernames;
-
     }
 
-    public int[] receiveScheme() throws IOException, InvalidinSocketException, GenericInvalidArgumentException {
+    public int[] receiveScheme() throws IOException, InvalidinSocketException, GenericInvalidArgumentException
+    {
 
         int[] temp = new int[2];
-        try {
+        try
+        {
             outSocket.println("#insert#$scheme$");
             outSocket.flush();
-        } catch (Exception e) {
-            try {
+        } catch (Exception e)
+        {
+            try
+            {
                 sPlayerLog.minorLog("Exception e");
                 socket.close();
                 sPlayerLog.minorLog("Socket closed");
                 disconnectionManager();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
             }
         }
 
-        try {
+        try
+        {
             msg = inSocket.readLine();
             simpleDecode(msg);
         } catch (Exception e)

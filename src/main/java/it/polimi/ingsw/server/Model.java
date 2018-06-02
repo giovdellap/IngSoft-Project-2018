@@ -19,22 +19,26 @@ public class Model
 
     public Model(int numPlayers)
     {
-            this.numPlayers=numPlayers;
+        this.numPlayers=numPlayers;
     }
 
-    public void setPrivateObjectives() throws InvalidIntArgumentException {
+    public void setPrivateObjectives() throws InvalidIntArgumentException
+    {
         prDeck = new PrivateObjectivesDeck();
         playersPrObjs = new PrivateObjective[numPlayers];
         playersPrObjs = prDeck.extractPrObj(numPlayers);
     }
 
-    public PrivateObjective getPrivateObjective(int index) throws InvalidIntArgumentException {
+    public PrivateObjective getPrivateObjective(int index) throws InvalidIntArgumentException
+    {
         if(index<0||index>=numPlayers)
             throw new InvalidIntArgumentException();
+
         return playersPrObjs[index];
     }
 
-    public void setSchemesDeck() throws InvalidIntArgumentException {
+    public void setSchemesDeck() throws InvalidIntArgumentException
+    {
         scDeck = new SchemesDeck();
         tempSchemes = scDeck.extractSchemes(numPlayers*2);
         playerSchemes = new SchemeCard[numPlayers];
@@ -45,12 +49,14 @@ public class Model
         return tempSchemes[index];
     }
 
-    public void setPubObjs() throws InvalidIntArgumentException {
+    public void setPubObjs() throws InvalidIntArgumentException
+    {
         pubDeck = new PublicObjectivesDeck();
         pubObjs = pubDeck.extractPubObjs();
     }
 
-    public PublicObjective getPubObj(int index) throws InvalidIntArgumentException {
+    public PublicObjective getPubObj(int index) throws InvalidIntArgumentException
+    {
         if(index<0||index>=3)
             throw new InvalidIntArgumentException();
         return pubObjs[index];
@@ -66,7 +72,8 @@ public class Model
         }
     }
 
-    public SchemeCard getSchemebyIndex(int index) throws InvalidIntArgumentException {
+    public SchemeCard getSchemebyIndex(int index) throws InvalidIntArgumentException
+    {
         if(index<0||index>=numPlayers)
             throw  new InvalidIntArgumentException();
         return playerSchemes[index];
