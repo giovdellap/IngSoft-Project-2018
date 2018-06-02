@@ -256,6 +256,7 @@ TOOLCARD 10:
 SERVER CHECK RESPONSE
 
 
+
 -----------------------------------
 
 TURN PROTOCOL:
@@ -275,12 +276,20 @@ S: toolcard update
 active player:
 S: #wait#$todo$
 C: #todo#$z$ ---> 0 = pass, 1 = move; 2 = tool
-
 if(todo==1)
   SERVER CHECK RESPONSE
    client move protocol
    SERVER CHECK RESPONSE
-   
 if(todo==2)
  SERVER CHECK RESPONSE
  client tool protocol
+ 
+ S: #end#$turn$
+ 
+ 
+ NOT ACTIVE PLAYERS MOVE NOTIFIER:
+ S: #player#$id$
+ S: #action#$move$
+ S: draftpool model protocol
+ S: player schemecard model protocol
+ S: #move#$end$
