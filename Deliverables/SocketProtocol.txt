@@ -110,29 +110,44 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: #favtokens#$tokens$
  
  -------------------------------------
+ -------------------------------------
  
- TURN   
+ 
+ MODEL COMPONENT'S PROTOCOL   
 ------------------------------
   
   DRAFTPOOL:
     
   For each die:
-  S/C: #model#$draft$
+  #model#$draft$
   
   For each die:
   
-  S/C: #index#$n$
-  S/C: #color#$n$
-  S/C: #value#$n$
+  #index#$n$
+  #color#$n$
+  #value#$n$
     
      
-  S/C: #end#$draft$
+  #end#$draft$
   
 --------------------------
 
+ SCHEMECARD
 
+For each die on the schemecard:
 
-
+ #x#$n$
+ #y#$m$
+ #color#$c$
+ #value#$v$
+ 
+ ----------------------
+ TOOLCARD UPDATE
+ 
+ For each SchemeCard
+ 
+ #id#$n$
+ #tokens#$m$
 
 
 -------------------------
