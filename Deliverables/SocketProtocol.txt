@@ -118,7 +118,7 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
   
   DRAFTPOOL:
     
-  For each die:
+  SERVER:
   #model#$draft$
   
   For each die:
@@ -129,36 +129,142 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
     
      
   #end#$draft$
-  
+
+
+
+  CLIENT:
+  #model#$draft$
+  #index#$i$
 --------------------------
 
  SCHEMECARD
 
-For each die on the schemecard:
+SERVER:
+#model#$scheme$
 
+For each die on the schemecard:
  #x#$n$
  #y#$m$
  #color#$c$
  #value#$v$
  
+ #end#$scheme$
+ 
+ CLIENT:
+ 
+ MOVE:
+ #x#$n$
+ #y#$m$
+ 
+ 
+ ---------------------
+  
+  
+  ROUNDTRACK:
+  
+  SERVER:
+  For each round:
+  #round#$i$
+  
+  For each die in that roundDice:
+  #die#$index$
+  #color#$c$
+  #value#$v$
+ 
  ----------------------
  TOOLCARD UPDATE
- 
+ (Server side)
  For each SchemeCard
  
  #id#$n$
  #tokens#$m$
+ 
+ ----------------------
+ CLIENT MOVE PROTOCOL
+ 
+ #client#$move$
+ model component draftpool client protocol
+ model component schemecard client protocol
+
+ 
+ ---------------------
+SERVER CHECK RESPONSE:
+
+#toolcheck#$bool$
+
+---------------------
+TOOLCARD CLIENT PROTOCOL:
+#tool#$id$
 
 
--------------------------
-ToolCard 3 Demo
+TOOLCARD 1:
+#x#$n$
+#y#$m$
+#action#$+/-$
+SERVER CHECK RESPONSE
 
-C: #x0#$x$
-C: #y0#$y$
-C: #x1#$x$
-C: #y1#$y$
+TOOLCARD 2:
+#x0#$n0$
+#y0#$m0$
+#x1#$n1$
+#y1#$m1$
+SERVER CHECK RESPONSE
 
-S: #check#$n$
-// 1 if true, 2 if false
+TOOLCARD 3:
+#x0#$n0$
+#y0#$m0$
+#x1#$n1$
+#y1#$m1$
+SERVER CHECK RESPONSE
+
+TOOLCARD 4:
+#die#$1$
+#x0#$n0$
+#y0#$m0$
+#x1#$n1$
+#y1#$m1$
+
+#die#$2$
+#x0#$n0$
+#y0#$m0$
+#x1#$n1$
+#y1#$m1$
+SERVER CHECK RESPONSE
+
+TOOLCARD 5:
+#round#$r$
+#index#$i$
+model component draftpool client protocol
+SERVER CHECK RESPONSE
+
+TOOLCARD 6:
+first check:
+model component draftpool client protocol
+
+SERVER CHECK RESPONSE
+
+second check:
+model component schemecard client protocol
+
+SERVER CHECK RESPONSE
+
+TOOLCARD 7:
+SERVER CHECK RESPONSE
+
+TOOLCARD 8:
+SERVER CHECK RESPONSE
+client move protocol
+until timer
+
+TOOLCARD 9:
+client move protocol
+SERVER CHECK RESPONSE
+
+TOOLCARD 10:
+#x#$n$
+#y#$m$
+SERVER CHECK RESPONSE
+
+
 
   
