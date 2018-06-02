@@ -45,19 +45,6 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
 
  From the beginning, to when ALL clients are initilized and ready to receive data
 
- PLAYER 1:
-
- S: #player#$1$
- S: #insert#$username$
- C: #username#$bob$
- S: #confirm#$username$
- S: #insert#$numplayers$
- C: #numplayers#$n$
- S: #confirm#$numplayers$
- S: #wait#$players$
-
-
- PLAYER N:
 
  S: #player#$n$
  S: #insert#$username$
@@ -67,14 +54,6 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: #confirm#$username$
  S: #wait#$players$
  
- ---------------------------------------
- 
- INITIALIZATION 1: PHASE 2
- 
- n times:
- S: #player#$$
- S: #username#$jon doe$
-
  ---------------------------------------
 
  INITIALIZATION 2
@@ -91,6 +70,9 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  S: #pubobj#$id$
  //here you don't need 2 communication phases because order is not relevant
 
+ 3 times:
+ S: #tool#$id$
+ 
  S: #wait#$players$
  
  S: #insert#$scheme$
@@ -105,6 +87,7 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  Everyone has chosen his schemecard
 
  S: #player#$id$
+ S: #username#$name$
  S: #scheme#$id$
  S: #fb#$1||2$
  S: #favtokens#$tokens$
@@ -163,6 +146,8 @@ For each die on the schemecard:
   ROUNDTRACK:
   
   SERVER:
+  #model#$track$
+  
   For each round:
   #round#$i$
   
@@ -171,6 +156,8 @@ For each die on the schemecard:
   #color#$c$
   #value#$v$
  
+  #end#$track$
+  
  ----------------------
  TOOLCARD UPDATE
  (Server side)
@@ -181,8 +168,7 @@ For each die on the schemecard:
  #tokens#$m$
  
  #end#$tool$
- 
- 
+  
  ----------------------
  CLIENT MOVE PROTOCOL
  
@@ -199,6 +185,7 @@ SERVER CHECK RESPONSE:
 ---------------------
 TOOLCARD CLIENT PROTOCOL:
 #tool#$id$
+SERVER CHECK RESPONSE
 
 
 TOOLCARD 1:
