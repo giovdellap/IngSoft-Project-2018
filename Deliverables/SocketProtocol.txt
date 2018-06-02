@@ -73,7 +73,6 @@ MESSAGE PROTOCOL FOR SOCKET CONNECTIONS
  3 times:
  S: #tool#$id$
  
- S: #wait#$players$
  
  S: #insert#$scheme$
  C: #scheme#$id$
