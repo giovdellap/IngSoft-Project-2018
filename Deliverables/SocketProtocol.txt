@@ -162,7 +162,7 @@ For each die on the schemecard:
  (Server side)
  
  #model#$tool$
- For each SchemeCard
+ For each ToolCard
  #id#$n$
  #tokens#$m$
  
@@ -256,5 +256,31 @@ TOOLCARD 10:
 SERVER CHECK RESPONSE
 
 
+-----------------------------------
 
+TURN PROTOCOL:
+
+to all players:
+S: #round#$r$
+S: #disconnected#$n$
+  if(n!=0)
+  #S: #id#$id$
   
+S: #active#$id$
+S: draftpool model protocol
+S: schemecard model protocol
+S: roundtrack model protocol
+S: toolcard update
+
+active player:
+S: #wait#$todo$
+C: #todo#$z$ ---> 0 = pass, 1 = move; 2 = tool
+
+if(todo==1)
+  SERVER CHECK RESPONSE
+   client move protocol
+   SERVER CHECK RESPONSE
+   
+if(todo==2)
+ SERVER CHECK RESPONSE
+ client tool protocol
