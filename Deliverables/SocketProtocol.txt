@@ -174,10 +174,14 @@ For each die on the schemecard:
  ----------------------
  TOOLCARD UPDATE
  (Server side)
- For each SchemeCard
  
+ #model#$tool$
+ For each SchemeCard
  #id#$n$
  #tokens#$m$
+ 
+ #end#$tool$
+ 
  
  ----------------------
  CLIENT MOVE PROTOCOL
