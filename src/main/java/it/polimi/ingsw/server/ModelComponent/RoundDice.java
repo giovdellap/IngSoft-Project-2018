@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.ModelComponent;
 
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class RoundDice
@@ -31,17 +32,23 @@ public class RoundDice
             throw new FullDataStructureException();
     }
 
-    public Die getDie(int pos) throws InvalidIntArgumentException
-    {
-        if(pos>index||pos<0||diceVector[pos].isDisabled())
+    public Die getDie(int pos) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        if(pos>index||pos<0)
             throw new InvalidIntArgumentException();
+
+        if(diceVector[pos].isDisabled())
+           throw new GenericInvalidArgumentException();
+
         return diceVector[pos];
     }
 
-    public void deleteDie(int pos) throws InvalidIntArgumentException
-    {
-        if(pos>index||pos<0||diceVector[pos].isDisabled())
+    public void deleteDie(int pos) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        if(pos>index||pos<0)
             throw new InvalidIntArgumentException();
+
+        if(diceVector[pos].isDisabled())
+            throw new GenericInvalidArgumentException();
+
         diceVector[pos].disableDie();
     }
 

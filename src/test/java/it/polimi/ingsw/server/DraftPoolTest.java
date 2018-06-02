@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.ModelComponent.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.*;
 
@@ -66,8 +67,9 @@ public class DraftPoolTest
             Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }
     }
+
     @Test
-    public void checkupdateDraftDice() throws InvalidIntArgumentException, FullDataStructureException {
+    public void checkUpdateDraftDice() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
 
         boolean flag=true;
 
@@ -86,8 +88,24 @@ public class DraftPoolTest
 
         Assertions.assertEquals(true, flag);
 
+    }
 
+    @Test
+    public void checkReplaceDieOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
+        tempDie2 = testDP.replaceDie(1,tempDie);
+
+        Assertions.assertEquals(true,testDP.returnDie(1).equals(tempDie));
+
+    }
+
+    @Test
+    public void checkReplaceDieTwo() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        Die tempDie3 = testDP.returnDie(1);
+        tempDie2 = testDP.replaceDie(1,tempDie);
+
+        Assertions.assertEquals(true,tempDie3.equals(tempDie2));
     }
 
 }

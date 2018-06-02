@@ -57,8 +57,7 @@ public class DraftPool
     }
 
 
-    public RoundDice updateDraftDice() throws InvalidIntArgumentException, FullDataStructureException
-    {
+    public RoundDice updateDraftDice() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
         // draft update at the beginning of the round
         int counter=0;
         while(!draft[counter].isDisabled())
@@ -96,7 +95,7 @@ public class DraftPool
     {
 
         if (pos>=dim||pos<0) throw new InvalidIntArgumentException();
-        if(draft[pos]!=null&&draft[pos].isDisabled()) throw new InvalidIntArgumentException();
+        if(draft[pos].isDisabled()) throw new InvalidIntArgumentException();
         Die tempDie = draft[pos];
         return tempDie;
 
