@@ -5,11 +5,13 @@ public class RoundTrackMP {
 
     private RoundDiceMP[] roundVector;
     private int index;
+    private int round;
 
     public RoundTrackMP()
     {
         roundVector = new RoundDiceMP[10];
         index=0;
+        round=0;
     }
 
     public void addRound(RoundDiceMP temp) throws InvalidIntArgumentException
@@ -37,6 +39,14 @@ public class RoundTrackMP {
         if(turn<0||turn>=index)
             throw new InvalidIntArgumentException();
         roundVector[turn] = toSet;
+    }
+    public void setRound(int round)
+    {
+        this.round=round;
+    }
+    public int getRound()
+    {
+        return round;
     }
 
 }

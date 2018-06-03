@@ -18,6 +18,5 @@ public class Main
 
         LauncherExecute launcherExe = new LauncherExecute();
         launcherExe.go();
-
     }
 }

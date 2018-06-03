@@ -19,9 +19,12 @@ public class GraphicsManager
 
     private BeautifulCLI beautifulCLI;
 
-
+    private int [] toolsId;
 
     public GraphicsManager(int graphics) throws GenericInvalidArgumentException {
+
+        toolsId = new int[3];
+
         this.graphics=graphics;
         gmLogger = new MinorLogger();
         gmLogger.minorLog("graphics operative");
@@ -53,7 +56,7 @@ public class GraphicsManager
 
     public SchemeCardMP getSelectedScheme(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs) throws InvalidIntArgumentException, IOException {
         if(graphics==2)
-             return beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs);
+             return beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs,toolsId);
         else
             return null;
     }

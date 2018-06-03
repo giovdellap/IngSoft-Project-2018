@@ -9,6 +9,13 @@ import org.fusesource.jansi.Ansi;
 
 public class ModelGenerator
 {
+    private CLIToolsManager clito;
+
+    public ModelGenerator()
+    {
+        clito= new CLIToolsManager();
+    }
+
     public String[] getScheme(SchemeCardMP scheme) throws InvalidIntArgumentException
     {
         //returns a String[5] representing the schemecard
@@ -85,6 +92,7 @@ public class ModelGenerator
             diceDraft += toUnicode(draft.returnDie(i));
             i++;
         }
+        diceDraft+=printSpaces(10-draft.getSize());
         return diceDraft;
     }
 
@@ -92,6 +100,7 @@ public class ModelGenerator
     {
         //returns a string representing the roundtrack
 
+        CLIToolsManager clito = new CLIToolsManager();
         String[] track = new String[2];
 
         int j=0;
@@ -100,17 +109,22 @@ public class ModelGenerator
 
         String temp1 = "";
 
-        for(int i=0;i<10;i++)
+        for(int i=0;i<roundtrack.returnActualTurn();i++)
             temp += toUnicode(roundtrack.returnNTurnRoundDice(i).getDie(j));
 
-        track[0]=temp;
+
+
+        track[0]=clito.printSpacesEnder(temp, 10);
 
         j++;
 
-        for(int i=0;i<10;i++)
-            temp1 += toUnicode(roundtrack.returnNTurnRoundDice(i).getDie(j));
-
-        track[1]=temp1;
+        for(int i=0;i<roundtrack.returnActualTurn();i++) {
+            if (j < roundtrack.returnNTurnRoundDice(i).returnDim())
+                temp1 += toUnicode(roundtrack.returnNTurnRoundDice(i).getDie(j));
+            else
+                temp1 += "-";
+        }
+        track[1]=clito.printSpacesEnder(temp1, 10);
 
         return track;
     }

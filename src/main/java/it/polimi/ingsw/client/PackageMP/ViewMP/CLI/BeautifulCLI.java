@@ -52,10 +52,10 @@ public class BeautifulCLI
         printOut(cliToolsManager.sceneEnder(40));
     }
 
-    public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs) throws InvalidIntArgumentException, IOException {
+    public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs,int[] tools) throws InvalidIntArgumentException, IOException {
 
         printOut(cliToolsManager.sceneInitializer(40));
-        printOut(printerMaker.getSelectionScene(scheme1, scheme2, username, privObj, pubObjs));
+        printOut(printerMaker.getSelectionScene(scheme1, scheme2, username, privObj, pubObjs, tools));
         readIt();
         while (Integer.parseInt(msgIN)<1||Integer.parseInt(msgIN)>4)
         {
