@@ -269,7 +269,6 @@ S: #disconnected#$n$
   
 S: #active#$id$
 S: draftpool model protocol
-S: schemecard model protocol
 S: roundtrack model protocol
 S: toolcard update
 
