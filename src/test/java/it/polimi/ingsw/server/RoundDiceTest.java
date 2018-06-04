@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.ModelComponent.Die;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +28,7 @@ public class RoundDiceTest
     }
 
     @Test
-    public void checkAddandGet() throws FullDataStructureException, InvalidIntArgumentException
-    {
+    public void checkAddandGet() throws FullDataStructureException, InvalidIntArgumentException, GenericInvalidArgumentException {
         //checks that methods add and return dice correctly
         testRD.addDie(testDie1);
         Die tempDie = testRD.getDie(0);
@@ -63,8 +63,7 @@ public class RoundDiceTest
 }
 
     @Test
-    public void checkGetException() throws FullDataStructureException
-    {
+    public void checkGetException() throws FullDataStructureException, GenericInvalidArgumentException {
         boolean flag = false;
         try
         {
@@ -84,8 +83,7 @@ public class RoundDiceTest
     }
 
     @Test
-    public void checkDelete() throws FullDataStructureException, InvalidIntArgumentException
-    {
+    public void checkDelete() throws FullDataStructureException, InvalidIntArgumentException, GenericInvalidArgumentException {
         boolean flag= false;
 
         testRD.addDie(testDie1);
@@ -106,8 +104,7 @@ public class RoundDiceTest
     }
 
     @Test
-    public void checkDeleteException() throws FullDataStructureException
-    {
+    public void checkDeleteException() throws FullDataStructureException, GenericInvalidArgumentException {
         boolean flag= false;
         try
         {
@@ -134,4 +131,29 @@ public class RoundDiceTest
         testRD.addDie(testDie2);
         Assertions.assertEquals(2, testRD.returnDim());
     }
+
+    @Test
+    public void checkReplaceDieOne() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
+
+        testRD.addDie(testDie1);
+        testRD.addDie(testDie2);
+
+        testDie1 = testRD.replaceDie(testDie2,1);
+
+        Assertions.assertEquals(true,testRD.getDie(1).equals(testDie2));
+
+    }
+
+    @Test
+    public void checkReplaceDieTwo() throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+
+        testRD.addDie(testDie1);
+        testRD.addDie(testDie2);
+
+        Die tempDie3 = testRD.getDie(1);
+        testDie2 = testRD.replaceDie(testDie1,1);
+
+        Assertions.assertEquals(true,tempDie3.equals(testDie2));
+    }
+
 }

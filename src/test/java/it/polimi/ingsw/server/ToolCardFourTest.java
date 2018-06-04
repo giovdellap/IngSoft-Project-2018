@@ -77,11 +77,11 @@ public class ToolCardFourTest {
     @Test
     public void checkToolCardFourTestThree() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        boolean flag = false;
+        boolean flag = true;
         testDie = new Die(2);
         testDie2 = new Die(4);
-        testDie3 = new Die(5);
-        testDie4 = new Die(6);
+        testDie3 = new Die(2);
+        testDie4 = new Die(4);
 
         testScheme.setDie(testDie,0,0);
         testScheme.setDie(testDie2,1,0);
@@ -90,7 +90,58 @@ public class ToolCardFourTest {
 
         flag = toolCardFourTest.checkToolCardFour(0,0,1,0,testScheme,1,3,1,4);
 
-        Assertions.assertEquals(true,flag);
+        Assertions.assertEquals(false,flag);
+
+    }
+
+    @Test
+    public void checkToolCardFourTestFour() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        testDie = new Die(2);
+        testDie2 = new Die(4);
+        testDie3 = new Die(3);
+        testDie4 = new Die(5);
+
+        testDie.setValueTest(2);
+        testDie2.setValueTest(3);
+        testDie3.setValueTest(2);
+        testDie4.setValueTest(3);
+
+        testScheme.setDie(testDie,2,4);
+        testScheme.setDie(testDie2,3,4);
+        testScheme.setDie(testDie3,0,0);
+        testScheme.setDie(testDie4,1,0);
+
+        flag = toolCardFourTest.checkToolCardFour(0,0,1,0,testScheme,1,4,0,4);
+
+        Assertions.assertEquals(false,flag);
+
+
+    }
+
+    @Test
+    public void checkApplyModifies() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        testDie = new Die(2);
+        testDie2 = new Die(4);
+        testDie3 = new Die(3);
+        testDie4 = new Die(5);
+
+        testDie.setValueTest(2);
+        testDie2.setValueTest(3);
+        testDie3.setValueTest(2);
+        testDie4.setValueTest(3);
+
+        testScheme.setDie(testDie,2,4);
+        testScheme.setDie(testDie2,3,4);
+        testScheme.setDie(testDie3,0,0);
+        testScheme.setDie(testDie4,1,0);
+
+        testScheme = toolCardFourTest.applyModifies(0,0,1,0,testScheme,0,3,0,4);
+
+        Assertions.assertEquals(true, (testScheme.getDie(0,3).equals(testDie3) && testScheme.getDie(0,4).equals(testDie4)));
 
 
     }
