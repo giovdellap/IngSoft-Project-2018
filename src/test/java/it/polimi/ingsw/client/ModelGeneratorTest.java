@@ -16,7 +16,8 @@ public class ModelGeneratorTest
     private ModelGenerator modelGenerator;
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException {
+    public void setUp() throws InvalidIntArgumentException
+    {
         schemesDeckMP = new SchemesDeckMP();
         emptyScheme = schemesDeckMP.extractSchemebyID(5);
         emptyScheme.setfb(1);
@@ -26,11 +27,11 @@ public class ModelGeneratorTest
     }
 
     @Test
-    public void testEmptyScheme() throws InvalidIntArgumentException {
+    public void testEmptyScheme() throws InvalidIntArgumentException
+    {
         for(int i=0;i<5;i++)
-        {
             System.out.println(modelGenerator.getScheme(emptyScheme)[i]+"/");
-        }
+
         Assertions.assertEquals(true, true);
     }
 }
