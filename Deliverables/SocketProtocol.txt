@@ -299,7 +299,7 @@ if(todo==2)
 
 BONUS PROTOCOL:
 
-for every player:
+for each player:
 S:#index#$n$
 S:#username#$string$
 S:#privobj#
