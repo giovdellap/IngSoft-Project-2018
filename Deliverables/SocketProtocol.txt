@@ -292,3 +292,26 @@ if(todo==2)
  S: draftpool model protocol
  S: player schemecard model protocol
  S: #move#$end$
+
+
+
+-----------------------------------
+
+BONUS PROTOCOL:
+
+for every player:
+S:#index#$n$
+S:#username#$string$
+S:#privobj#
+S:#pubobj1#$n$
+S:#pubobj2#$n$
+S:#pubobj3#$n$
+S:#token#$m$
+S:#minus#$s$
+S:#tot#$t$
+
+
+
+
+
+
