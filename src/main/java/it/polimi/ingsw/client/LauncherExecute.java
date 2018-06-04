@@ -21,6 +21,8 @@ public class LauncherExecute extends Application
     private int[] settings;// temp[0] = mode, temp[1] = connection, temp[2] = graphics
     private String ip;
 
+
+
     public void start(final Stage stage) throws Exception
     {
         BufferedReader inKeyboard;

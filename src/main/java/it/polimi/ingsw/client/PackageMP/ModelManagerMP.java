@@ -12,8 +12,7 @@ public class ModelManagerMP
 
     private int numPlayers=0;
     private DraftPoolMP draft;
-    //TO INSERT: RoundtrackMP
-    //TO INSERT: RoundDiceMP
+    private RoundTrackMP track;
 
     private SchemesDeckMP scDeck;
     private PublicObjectiveMP[] pubObjs;
@@ -65,6 +64,24 @@ public class ModelManagerMP
     public PublicObjectiveMP getPubObjs(int index)
     {
         return pubObjs[index];
+    }
+
+    //DRAFTPOOL
+    public void setDraft(DraftPoolMP arg) { draft=arg;}
+
+    public DraftPoolMP getDraft()
+    {
+        return draft;
+    }
+
+    //TRACK
+    public void setTrack(RoundTrackMP arg)
+    {
+        track=arg;
+    }
+    public RoundTrackMP getTrack()
+    {
+        return track;
     }
 
 

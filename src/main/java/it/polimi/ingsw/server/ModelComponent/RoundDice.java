@@ -32,23 +32,17 @@ public class RoundDice
             throw new FullDataStructureException();
     }
 
-    public Die getDie(int pos) throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        if(pos>index||pos<0)
+    public Die getDie(int pos) throws InvalidIntArgumentException
+    {
+        if(pos>index||pos<0||diceVector[pos].isDisabled())
             throw new InvalidIntArgumentException();
-
-        if(diceVector[pos].isDisabled())
-           throw new GenericInvalidArgumentException();
-
         return diceVector[pos];
     }
 
-    public void deleteDie(int pos) throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        if(pos>index||pos<0)
+    public void deleteDie(int pos) throws InvalidIntArgumentException
+    {
+        if(pos>index||pos<0||diceVector[pos].isDisabled())
             throw new InvalidIntArgumentException();
-
-        if(diceVector[pos].isDisabled())
-            throw new GenericInvalidArgumentException();
-
         diceVector[pos].disableDie();
     }
 

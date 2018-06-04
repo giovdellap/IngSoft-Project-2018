@@ -32,36 +32,7 @@ public class ToolCardFour extends ToolCard {
             return false;
         }
 
-
         // check color and value restrictions for the placement of the first die
-
-
-        boolean flag = false;
-
-        for (int i = -1; i < 2; i++)
-            for (int j = -1; j < 2; j++)
-                if ((x11 + i < 4) && (x11 + i > -1) && (y11 + j < 5) && (y11 + j > -1))
-                    if(!scheme.getDie(x11 + i, y11 + j).isDisabled())
-                        flag = true;
-
-
-        if (!flag) {
-            System.out.println("You must position your die orthogonally or diagonally adjacent to another die");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x11, y11) > 0 && scheme.getCell(scheme.getfb(), x11, y11) < 6 && toPlace1.getColor() != scheme.getCell(scheme.getfb(), x11, y11)) {
-            System.out.println("You must position your die on the same color cell of your scheme");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x11, y11) > 5 && scheme.getCell(scheme.getfb(), x11, y11) < 12 && toPlace1.getValue() != (scheme.getCell(scheme.getfb(), x11, y11) - 5)) {
-            System.out.println("You must position your die on the same number cell of your scheme");
-            return false;
-        }
-
 
         if (x11 + 1 < 4) {
             if (!scheme.getDie(x11 + 1, y11).isDisabled())
@@ -76,7 +47,7 @@ public class ToolCardFour extends ToolCard {
                 }
         }
 
-        if (x11 - 1 > -1) {
+        if (x11 - 1 > 0) {
             if (!scheme.getDie(x11 - 1, y11).isDisabled())
                 if (scheme.getDie(x11 - 1, y11).getColor() == toPlace1.getColor()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
@@ -102,7 +73,7 @@ public class ToolCardFour extends ToolCard {
                 }
         }
 
-        if (y11 - 1 > -1) {
+        if (y11 - 1 > 0) {
             if (!scheme.getDie(x11, y11 - 1).isDisabled())
                 if (scheme.getDie(x11, y11 - 1).getColor() == toPlace1.getColor()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
@@ -115,36 +86,7 @@ public class ToolCardFour extends ToolCard {
                 }
         }
 
-
         //check color and value restrictions for the placement of the second die
-
-
-        flag = false;
-
-        for (int i = -1; i < 2; i++)
-            for (int j = -1; j < 2; j++)
-                if ((x22 + i < 4) && (x22 + i > -1) && (y22 + j < 5) && (y22 + j > -1))
-                    if(!scheme.getDie(x22 + i, y22 + j).isDisabled())
-                        flag = true;
-
-
-        if (!flag) {
-            System.out.println("You must position your die orthogonally or diagonally adjacent to another die");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x22, y22) > 0 && scheme.getCell(scheme.getfb(), x22, y22) < 6 && toPlace1.getColor() != scheme.getCell(scheme.getfb(), x22, y22)) {
-            System.out.println("You must position your die on the same color cell of your scheme");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x22, y22) > 5 && scheme.getCell(scheme.getfb(), x22, y22) < 12 && toPlace1.getValue() != (scheme.getCell(scheme.getfb(), x22, y22) - 5)) {
-            System.out.println("You must position your die on the same number cell of your scheme");
-            return false;
-        }
-
 
         if (x22 + 1 < 4) {
             if (!scheme.getDie(x22 + 1, y22).isDisabled())
@@ -159,7 +101,7 @@ public class ToolCardFour extends ToolCard {
                 }
         }
 
-        if (x22 - 1 > -1) {
+        if (x22 - 1 > 0) {
             if (!scheme.getDie(x22 - 1, y22).isDisabled())
                 if (scheme.getDie(x22 - 1, y22).getColor() == toPlace2.getColor()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
@@ -185,7 +127,7 @@ public class ToolCardFour extends ToolCard {
                 }
         }
 
-        if (y22 - 1 > -1) {
+        if (y22 - 1 > 0) {
             if (!scheme.getDie(x22, y22 - 1).isDisabled())
                 if (scheme.getDie(x22, y22 - 1).getColor() == toPlace2.getColor()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same color");

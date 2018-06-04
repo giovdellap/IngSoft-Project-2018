@@ -1,16 +1,22 @@
 package it.polimi.ingsw.client.PackageMP.Connection;
 
 
+import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
-import it.polimi.ingsw.client.PackageMP.Player;
+import it.polimi.ingsw.client.PackageMP.PlayerClient;
+import it.polimi.ingsw.commons.SocketDecoder;
+import it.polimi.ingsw.commons.SocketEncoder;
+import it.polimi.ingsw.commons.SocketProtocolTransformer;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class SocketClient {
 
@@ -23,7 +29,9 @@ public class SocketClient {
     private BufferedReader inSocket;
     private PrintWriter outSocket;
 
+    private SocketProtocolTransformer transformer;
     private SocketDecoder decoder;
+    private SocketEncoder encoder;
 
     private String msgIN;
     private String msgOUT;
@@ -40,7 +48,9 @@ public class SocketClient {
         socketLogger.minorLog("SocketClient logger operative");
         isConnected=false;
         serverIP = ip;
+        transformer = new SocketProtocolTransformer();
         decoder = new SocketDecoder();
+        encoder = new SocketEncoder();
         connect();
     }
 
@@ -58,12 +68,12 @@ public class SocketClient {
 
     public boolean usernameConfirm(String tempusername) throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         receiveMessage();
-        if (decoder.getCmd().equals("insert") && decoder.getArg().equals("username")) {
+        if (transformer.getCmd().equals("insert") && transformer.getArg().equals("username")) {
             sendMessage("username", tempusername);
             socketLogger.minorLog("username "+tempusername+" sent");
 
             receiveMessage();
-            if (decoder.getCmd().equals("confirm") && decoder.getArg().equals("username"))
+            if (transformer.getCmd().equals("confirm") && transformer.getArg().equals("username"))
             {
                 socketLogger.minorLog("username confirmed");
                 receiveMessage();
@@ -84,9 +94,9 @@ public class SocketClient {
     public int getPrivObj() throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
        receiveMessage();
 
-        if(decoder.getCmd().equals("privobj")) {
-            socketLogger.minorLog("Received private objective ID: "+decoder.getArg());
-            return Integer.parseInt(decoder.getArg());
+        if(transformer.getCmd().equals("privobj")) {
+            socketLogger.minorLog("Received private objective ID: "+ transformer.getArg());
+            return Integer.parseInt(transformer.getArg());
         }
         else
             return 0;
@@ -98,12 +108,12 @@ public class SocketClient {
 
 
         receiveMessage();
-        temp[0] = Integer.parseInt(decoder.getArg());
-        socketLogger.minorLog("Scheme "+decoder.getArg()+" received");
+        temp[0] = Integer.parseInt(transformer.getArg());
+        socketLogger.minorLog("Scheme "+ transformer.getArg()+" received");
 
         receiveMessage();
-        temp[1] = Integer.parseInt(decoder.getArg());
-        socketLogger.minorLog("Scheme "+decoder.getArg()+" received");
+        temp[1] = Integer.parseInt(transformer.getArg());
+        socketLogger.minorLog("Scheme "+ transformer.getArg()+" received");
 
         return temp;
     }
@@ -112,18 +122,28 @@ public class SocketClient {
             for(int i=0; i<3; i++)
             {
                receiveMessage();
-               socketLogger.minorLog("Public Objective "+Integer.toString(i+1)+" ID: "+decoder.getArg());
-               temp[i] = Integer.parseInt(decoder.getArg());
+               socketLogger.minorLog("Public Objective "+Integer.toString(i+1)+" ID: "+ transformer.getArg());
+               temp[i] = Integer.parseInt(transformer.getArg());
             }
 
                 socketLogger.minorLog("waiting for players");
 
             return temp;
     }
+    public int[] getTools() throws IOException {
+        int[] temp = new int[3];
+        receiveMessage();
+        temp[0] = Integer.parseInt(transformer.getArg());
+        receiveMessage();
+        temp[1] = Integer.parseInt(transformer.getArg());
+        receiveMessage();
+        temp[2] = Integer.parseInt(transformer.getArg());
+        return temp;
+    }
     public void getSelectionCheck() throws IOException {
         //gets insert scheme command from the server
         receiveMessage();
-        if(!decoder.getCmd().equals("insert"))
+        if(!transformer.getCmd().equals("insert"))
             getSelectionCheck();
     }
 
@@ -132,9 +152,9 @@ public class SocketClient {
         sendMessage("fb", Integer.toString(fb));
 
         receiveMessage();
-        if(decoder.getCmd().equals("insert")&&decoder.getArg().equals("scheme"))
+        if(transformer.getCmd().equals("insert")&& transformer.getArg().equals("scheme"))
             return false;
-        if(decoder.getArg().equals("confirm")&&decoder.equals("scheme"))
+        if(transformer.getArg().equals("confirm")&& transformer.equals("scheme"))
         {
             receiveMessage();
             return true;
@@ -143,17 +163,173 @@ public class SocketClient {
             return false;
     }
 
+    //INITIALIZATION 2: PHASE 2
+    public PlayerClient[] getPlayersStart(String myUsername) throws IOException, InvalidIntArgumentException {
+        //receives players before the start of first round
+
+        SchemesDeckMP deck = new SchemesDeckMP();
+        receiveMessage();
+        int numPlayers=Integer.parseInt(transformer.getArg());
+        PlayerClient[] temp = new PlayerClient[numPlayers];
+        for(int i=0;i<numPlayers;i++)
+        {
+            //setting id & username
+            receiveMessage();
+            receiveMessage();
+            if(transformer.getArg().equals(myUsername))
+                temp[i] = new PlayerClient(i, transformer.getArg(), true);
+            else
+                temp[i] = new PlayerClient(i, transformer.getArg(), false);
+
+
+            //setting schemecard
+            receiveMessage();
+            int id = Integer.parseInt(transformer.getArg());
+            receiveMessage();
+            SchemeCardMP tempSC = deck.extractSchemebyID(id);
+            tempSC.setfb(Integer.parseInt(transformer.getArg()));
+            temp[i].setPlayerScheme(tempSC);
+
+            //setting tokens
+            receiveMessage();
+            temp[i].setTokens(Integer.parseInt(transformer.getArg()));
+
+        }
+        return temp;
+    }
+
+    //TURN METHODS
+
+    //turn initialization
+    public int newTurn() throws IOException {
+        //receives round string
+        receiveMessage();
+        return Integer.parseInt(transformer.getArg());
+    }
+    public int[] getDiscPlayers() throws IOException {
+        receiveMessage();
+        int num = Integer.parseInt(transformer.getArg());
+        int[] temp = new int[num];
+
+        for(int i=0;i<num;i++)
+        {
+            receiveMessage();
+            temp[i] = Integer.parseInt(transformer.getArg());
+        }
+        return temp;
+    }
+    public int getActive() throws IOException {
+        receiveMessage();
+        return Integer.parseInt(transformer.getArg());
+    }
+
+    public boolean askForActive() throws IOException {
+        receiveMessage();
+        if(transformer.getCmd().equals("wait")&&transformer.getArg().equals("todo"))
+            return true;
+        else
+            return false;
+    }
+    public boolean toDo(int arg) throws IOException {
+        sendMessage("todo", Integer.toString(arg));
+        return serverCheck();
+    }
+    public boolean move(int[] arg) throws IOException {
+        sendMessage("client", "move");
+        sendEncoded(encoder.draftEncoder(arg[0]));
+        sendEncoded(encoder.schemeCardEncoder(arg[1], arg[2]));
+        return serverCheck();
+    }
+
+    //NOT MY TURN
+    public int[] getAction() throws IOException {
+        //int[0] = player id, int[1] = what he does
+        int[] temp = new int[2];
+        receiveMessage();
+        temp[0] = Integer.parseInt(transformer.getArg());
+        receiveMessage();
+        temp[1] = Integer.parseInt(transformer.getArg());
+        return temp;
+
+    }
+
+
+    //MODEL COMPONENTS DECODING
+    public DraftPoolMP getDraft() throws IOException, InvalidIntArgumentException {
+
+        ArrayList<String> tempAl = new ArrayList<String>();
+        //receives the arraylist
+        receiveMessage();
+        if(transformer.getCmd().equals("model")&&transformer.getArg().equals("draft")) {
+            simpleReceive();
+            transformer.simpleDecode(msgIN);
+            while(!(transformer.getCmd().equals("end")&&transformer.getArg().equals("draft")))
+            {
+                tempAl.add(msgIN);
+                simpleReceive();
+                transformer.simpleDecode(msgIN);
+            }
+        }
+        return decoder.draftPoolDecoder(tempAl);
+    }
+    public RoundTrackMP getTrack() throws IOException, InvalidIntArgumentException, FullDataStructureException {
+        ArrayList<String> tempAl = new ArrayList<String>();
+        //receives the arraylist
+        receiveMessage();
+        if(transformer.getCmd().equals("model")&&transformer.getArg().equals("track")) {
+            simpleReceive();
+            transformer.simpleDecode(msgIN);
+            while(!(transformer.getCmd().equals("end")&&transformer.getArg().equals("track")))
+            {
+                tempAl.add(msgIN);
+                simpleReceive();
+                transformer.simpleDecode(msgIN);
+            }
+        }
+        return decoder.roundTrackDecoder(tempAl);
+    }
+    public int[] toolCardUpdate() throws IOException {
+
+        String[] temp = new String[6];
+        receiveMessage();
+        if(transformer.getCmd().equals("model")&&transformer.getArg().equals("track")) {
+            for(int i=0;i<6;i++)
+            {
+                simpleReceive();
+                temp[i] = msgIN;
+            }
+            receiveMessage();
+        }
+        return decoder.toolTokensDecode(temp);
+    }
+
+    //SERVER CHECKS
+    private boolean serverCheck() throws IOException {
+        receiveMessage();
+        return Boolean.getBoolean(transformer.getArg());
+    }
 
     //RECEPTION
     private void receiveMessage() throws IOException {
-        decoder.simpleDecode(inSocket.readLine());
+        transformer.simpleDecode(inSocket.readLine());
+    }
+    private void simpleReceive() throws IOException {
+        msgIN = inSocket.readLine();
     }
 
     //SENDING
     private void sendMessage(String cmd, String arg)
     {
-        outSocket.println(decoder.simpleEncode(cmd, arg));
+        outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();
+    }
+    private void sendEncoded(String[] arg)
+    {
+        for(int i=0;i<arg.length;i++)
+        {
+            outSocket.println(arg[i]);
+            outSocket.flush();
+        }
     }
 
 
@@ -166,79 +342,5 @@ public class SocketClient {
     }
 
 
-
-    public DraftPoolMP getDraftPool()
-    {
-
-        return null;
-    }
-
-    public void sendScheme(int[] arg)
-    {
-
-    }
-
-    public SchemeCardMP receiveOppScheme()
-    {
-        return null;
-    }
-
-    public int receiveOppTokens()
-    {
-
-        return 0;
-    }
-
-    public int oppUsesaTool()
-    {
-
-        return 0;
-    }
-
-    public int changeTurn()
-    {
-
-        return 0;
-    }
-
-    public int getIdScoreBoard()
-    {
-        return 0;
-
-    }
-
-    public int getScores()
-    {
-        return 0;
-
-    }
-
-    public void toolCardUsed(int id)
-    {
-
-    }
-
-    public boolean checkedToolCardUsed()
-    {
-        return true;
-
-    }
-
-    public boolean checkedMove()
-    {
-        return true;
-
-    }
-
-    public void sendDraft(DraftPoolMP draft)
-    {
-
-    }
-
-    public int[] receiveNewToolTokens()
-    {
-
-        return null;
-    }
 
 }

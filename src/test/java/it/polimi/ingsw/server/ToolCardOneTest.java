@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import com.sun.xml.internal.ws.policy.AssertionSet;
 import it.polimi.ingsw.server.ModelComponent.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;

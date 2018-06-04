@@ -219,4 +219,14 @@ public class SchemeCardMP
 
         return temp;
     }
+
+    public int getNumDice()
+    {
+        int temp=0;
+        for(int x=0;x<4;x++)
+            for(int y=0;y<5;y++)
+                if(!diceScheme[x][y].isDisabled())
+                    temp++;
+        return temp;
+    }
 }

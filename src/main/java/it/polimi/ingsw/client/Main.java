@@ -11,6 +11,7 @@ public class Main
     private static int connection=0;
     private static int graphicsMode=0;
 
+
     public static void main(String[] args) throws Exception {
 
         MajorLogger logger =new MajorLogger();
@@ -18,5 +19,10 @@ public class Main
 
         LauncherExecute launcherExe = new LauncherExecute();
         launcherExe.go();
+
+
     }
+
+
+
 }

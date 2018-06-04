@@ -1,6 +1,6 @@
-package it.polimi.ingsw.client.PackageMP.Connection;
+package it.polimi.ingsw.commons;
 
-public class SocketDecoder
+public class SocketProtocolTransformer
 {
     private String tempCmd;
     private String tempArg;

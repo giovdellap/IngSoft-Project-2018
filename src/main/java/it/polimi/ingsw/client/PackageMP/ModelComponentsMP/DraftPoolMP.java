@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentMP;
-import it.polimi.ingsw.server.ModelComponent.Die;
 
 public class DraftPoolMP implements ModelComponentMP {
 
@@ -79,6 +78,15 @@ public class DraftPoolMP implements ModelComponentMP {
     public int getSize()
     {
         return draft.length;
+    }
+
+    public int getDiceNum()
+    {
+        //returns not disabled dice counter
+        int i=0;
+        while(!draft[i].isDisabled())
+            i++;
+        return i;
     }
 
 }

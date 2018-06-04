@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Connection.SocketPlayer;
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -15,13 +17,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class ConnectionManager implements ConnectionServer {
+public class ConnectionManager {
 
     public static int PORT = 7777;
-    private int counter = 0;
 
     private ArrayList<SocketPlayer> players;
-    private Boolean[] isConnected;
+    private ArrayList<Integer> disconnectedUsersIDs;
     private String[] playersNames;
     private boolean matchEnd = false;
 
@@ -30,7 +31,6 @@ public class ConnectionManager implements ConnectionServer {
     private SocketPlayer test;
 
     public MinorLogger sServerLog;
-
 
     public ConnectionManager() throws GenericInvalidArgumentException, IOException
     {
@@ -42,12 +42,71 @@ public class ConnectionManager implements ConnectionServer {
         sServerLog.minorLog("end socketserver connection");
 
         serverSocket = new ServerSocket(PORT);
+
     }
+
+    //TURN
+
+    public void turnInitialization(int round, int activeId, DraftPool draft, RoundTrack track, int[] tokens) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+        disconnectedUsersIDs = new ArrayList<Integer>();
+
+        for(SocketPlayer player : players)
+        {
+            if(player.connectionCheck()) {
+                player.sendTurnData(round, disconnectedUsersIDs, activeId);
+                player.sendDraft(draft);
+                player.sendRoundTrack(track, round);
+                player.sendTools(tokens[0], tokens[1], tokens[2]);
+                player.sendWait();
+            }
+        }
+    }
+
+    public int getWhatToDo(int player) throws IOException, GenericInvalidArgumentException {
+        if(players.get(player).connectionCheck())
+            return players.get(player).getToDo();
+        else
+            return 0;
+    }
+
+    public void sendServerResponse(boolean response, int player) throws IOException, GenericInvalidArgumentException {
+        players.get(player).serverCheckResponse(response);
+    }
+
+    public int[] getMove(int player) throws IOException, GenericInvalidArgumentException {
+        int[] temp = new int[3];
+        temp[0] = players.get(player).receiveDraftPoolMove();
+        int[] tt = players.get(player).receiveSchemeCardMove();
+        temp[1] = tt[0];
+        temp[2] = tt[1];
+        return temp;
+    }
+
+    public void notifyMove(int activePlayer, DraftPool draft, SchemeCard scheme) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+        //notifies other players about activeplayer move
+        for(int i=0;i<players.size();i++)
+            if(players.get(i).connectionCheck()&&i!=activePlayer)
+            {
+               players.get(i).notifyAction(activePlayer, 1);
+               players.get(i).sendDraft(draft);
+               players.get(i).sendScheme(scheme);
+               players.get(i).endAction(1);
+            }
+    }
+
+    public void notifyEndTurn(int player) throws IOException, GenericInvalidArgumentException {
+        players.get(player).endTurnNotifier();
+    }
+
+    public int getToolId(int player) throws IOException, GenericInvalidArgumentException {
+        return players.get(player).getToolId();
+    }
+
 
     //ACCEPTATION
 
-    public ArrayList<String> lobbyCreation() throws IOException, GenericInvalidArgumentException {
-
+    public ArrayList<String> lobbyCreation() throws IOException, GenericInvalidArgumentException
+    {
         long startTime = System.currentTimeMillis();
         long elapsedTime = 0;
         int maxPlayers=4;
@@ -76,18 +135,17 @@ public class ConnectionManager implements ConnectionServer {
 
     private void acceptation() throws IOException, GenericInvalidArgumentException
     {
+        System.out.println("sono in acceptation");
         generalSocket = serverSocket.accept();
         players.add(new SocketPlayer(generalSocket));
         boolean accFlag=false;
-        while(!accFlag)
-        {
+        while(!accFlag) {
             String username = players.get(players.size()-1).insertUsername();
             System.out.println(username);
             System.out.println("check username: "+checkUsername(username));
             if(checkUsername(username))
             {
-                if(players.get(players.size()-1).connectionCheck())
-                {
+                if(players.get(players.size()-1).connectionCheck()) {
                     System.out.println("check");
                     players.get(players.size() - 1).confirmUsername();
                     if(players.get(players.size()-1).connectionCheck())
@@ -135,11 +193,11 @@ public class ConnectionManager implements ConnectionServer {
         }
         else
             initializationDiscManager(player);
+
     }
 
     public void sendPubObjs(int player, int id1, int id2, int id3) throws GenericInvalidArgumentException, IOException
     {
-
         if(players.get(player).connectionCheck())
         {
             players.get(player).sendPubObjs(id1, id2, id3);
@@ -151,8 +209,21 @@ public class ConnectionManager implements ConnectionServer {
             initializationDiscManager(player);
     }
 
+    public void sendTools(int player, int[] toolsIDs) throws GenericInvalidArgumentException, IOException {
+        if(players.get(player).connectionCheck())
+        {
+            players.get(player).sendTools(toolsIDs[0], toolsIDs[1], toolsIDs[2]);
+            sServerLog.stackLog(players.get(player).sPlayerLog.updateFather());
+            players.get(player).sPlayerLog.reinitialize();
+            sServerLog.minorLog("tools id " + Integer.toString(toolsIDs[0]) + ", " + Integer.toString(toolsIDs[1]) + ", " + Integer.toString(toolsIDs[2]) + " sent to player " + Integer.toString(player + 1));
+        }
+        else
+            initializationDiscManager(player);
+    }
+
     public int[] getSelectedScheme(int player) throws IOException, InvalidinSocketException, GenericInvalidArgumentException
     {
+        System.out.println(Boolean.toString(players.get(player).connectionCheck()));
         if(players.get(player).connectionCheck())
         {
             int[] temp = players.get(player).receiveScheme();
@@ -168,6 +239,7 @@ public class ConnectionManager implements ConnectionServer {
             temp[1]=0;
             return temp;
         }
+
     }
 
     public void sendSchemestoEveryone(SchemeCard[] tempVect) throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException
@@ -175,7 +247,10 @@ public class ConnectionManager implements ConnectionServer {
         playersNames=new String[players.size()];
 
         for (int i=0;i<players.size();i++)
+        {
             playersNames[i]=players.get(i).getUsername();
+
+        }
 
         for(SocketPlayer temp : players)
         {
@@ -185,6 +260,7 @@ public class ConnectionManager implements ConnectionServer {
 
         for(SocketPlayer temp : players)
             temp.setPlayersNames(playersNames);
+
 
         for(SocketPlayer temp : players)
         {
@@ -213,25 +289,6 @@ public class ConnectionManager implements ConnectionServer {
         }
     }
 
-    public void notifyConnectionStatus() throws GenericInvalidArgumentException, IOException
-    {
-        for(int i=0; i<players.size();i++)
-        {
-            if(!players.get(i).connectionCheck())
-            {
-                for(int n=0;n<players.size();n++)
-                {
-                    if(players.get(n).connectionCheck())
-                        players.get(n).notifyDisconnectedPlayer(i+1);
-                }
-            }
-        }
-    }
-
-    public void sendDraftPool(DraftPool draft)
-    {
-
-    }
 
     public SchemeCard checkMove()
     {
@@ -273,12 +330,15 @@ public class ConnectionManager implements ConnectionServer {
 
     //DISCONNECTION MANAGEMENT
 
-
     private void initializationDiscManager(int index) throws GenericInvalidArgumentException, IOException
     {
         players.remove(index);
         //for(SocketPlayer temp : players)
-        //temp.notifyDisconnectedPlayer(index);
+            //temp.notifyDisconnectedPlayer(index);
+    }
+    private void mainDiscManager(int index)
+    {
+        disconnectedUsersIDs.add(index);
     }
 
 
@@ -289,6 +349,22 @@ public class ConnectionManager implements ConnectionServer {
             temp.add(pl.getUsername());
 
         return temp;
+    }
+
+    public void notifyConnectionStatus() throws GenericInvalidArgumentException, IOException
+    {
+        for(int i=0; i<players.size();i++)
+        {
+            if(!players.get(i).connectionCheck())
+            {
+                for(int n=0;n<players.size();n++)
+                {
+                    if(players.get(n).connectionCheck())
+                        players.get(n).notifyDisconnectedPlayer(i+1);
+                }
+            }
+        }
+
     }
 
 }

@@ -2,9 +2,7 @@ package it.polimi.ingsw.client.PackageMP;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.BeautifulCLI;
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import javafx.stage.Stage;
@@ -19,12 +17,19 @@ public class GraphicsManager
 
     private BeautifulCLI beautifulCLI;
 
-    private int [] toolsId;
+    //TURN SETTINGS
+    private PlayerClient[] players;
+    private DraftPoolMP draft;
+    private RoundTrackMP track;
+    private int[] toolsUsage;
+    private int activePlayer;
+    private int me;
+    private int round;
+    private int[] disconnected;
+
+
 
     public GraphicsManager(int graphics) throws GenericInvalidArgumentException {
-
-        toolsId = new int[3];
-
         this.graphics=graphics;
         gmLogger = new MinorLogger();
         gmLogger.minorLog("graphics operative");
@@ -54,9 +59,9 @@ public class GraphicsManager
             beautifulCLI.setWaitScene();
     }
 
-    public SchemeCardMP getSelectedScheme(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs) throws InvalidIntArgumentException, IOException {
+    public SchemeCardMP getSelectedScheme(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException {
         if(graphics==2)
-             return beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs,toolsId);
+             return beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
         else
             return null;
     }
@@ -66,22 +71,59 @@ public class GraphicsManager
         if(graphics==2)
             beautifulCLI.setWaitScene2();
     }
-/*
-    public int[] getSelectedScheme(Stage stage, ModelManagerMP mm)
-    {
-        if(graphics==2)
-        {
-            cliController.setSelectionScene();
-            //missing part
 
-            EventHandler<ActionEvent> schemeHandler = new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if(Integer.parseInt(cliController.getChangedText())>0)
-                }
-            }
+    //TURN
+    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, int[] disconnected)
+    {
+        this.players=players;
+        this.draft=draft;
+        this.track=track;
+        this.toolsUsage=tools;
+        this.activePlayer=activePlayer;
+        this.me=me;
+        this.round=round;
+        this.disconnected=disconnected;
+    }
+    public int askForWhat() throws InvalidIntArgumentException, IOException {
+        if(graphics==2) {
+            if (disconnected != null)
+                return beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
+            else
+                return beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round);
 
         }
+        else
+            return 0;
     }
-    */
+
+    //move
+    public int[] move() throws IOException {
+        if(graphics==2)
+            return beautifulCLI.move();
+        else
+            return null;
+    }
+    public void cantMove()
+    {
+        if(graphics==2)
+            beautifulCLI.cantMove();
+    }
+    public void moveAccepted()
+    {
+        if(graphics==2)
+            beautifulCLI.moveAccepted();
+    }
+    public void moveRefused()
+    {
+        if(graphics==2)
+            beautifulCLI.moveRefused();
+    }
+
+    public void setToolsId(int[] tools)
+    {
+        beautifulCLI.setToolsID(tools);
+    }
+
+
+
 }

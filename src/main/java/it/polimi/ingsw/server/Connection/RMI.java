@@ -1,5 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Connection;
 
+import it.polimi.ingsw.server.ConnectionServer;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 

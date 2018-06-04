@@ -60,7 +60,7 @@ public class ToolCardTwo extends ToolCard {
                 }
         }
 
-        if (x - 1 > -1) {
+        if (x - 1 > 0) {
             if (!scheme.getDie(x - 1, y).isDisabled())
                 if (scheme.getDie(x - 1, y).getValue() == dieToPlace.getValue()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same value");
@@ -76,7 +76,7 @@ public class ToolCardTwo extends ToolCard {
                 }
         }
 
-        if (y - 1 > -1) {
+        if (y - 1 > 0) {
             if (!scheme.getDie(x, y - 1).isDisabled())
                 if (scheme.getDie(x, y - 1).getValue() == dieToPlace.getValue()) {
                     System.out.println("You can't position your die orthogonally adjacent to another die of the same value");

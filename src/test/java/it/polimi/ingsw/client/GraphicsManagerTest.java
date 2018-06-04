@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
+import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.client.PackageMP.GraphicsManager;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
@@ -9,21 +11,27 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class GameSceneTest {
+import java.io.IOException;
+
+public class GraphicsManagerTest
+{
+    private GraphicsManager graphicsManager;
+
 
     PlayerClient[] players;
     DraftPoolMP draft;
     RoundTrackMP tempRound;
     PrivateObjectiveMP testPrivObj;
     PublicObjectiveMP[] tempPubObj;
-    int[] tempTools;
+    private int[] tempTools;
+    private int[] tools;
 
     PrinterMaker printerMaker;
 
-
     @BeforeEach
+    public void setUp() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException, IOException {
+        graphicsManager = new GraphicsManager(2);
 
-    public void setUp() throws InvalidIntArgumentException, FullDataStructureException {
         DraftPoolMP tempDraft;
         printerMaker=new PrinterMaker();
         players= new PlayerClient[2];
@@ -97,19 +105,21 @@ public class GameSceneTest {
 
         printerMaker.setToolsIdTest(whatf);
 
+        SchemesDeckMP schemesDeckMP = new SchemesDeckMP();
+        SchemeCardMP testScheme = schemesDeckMP.extractSchemebyID(5);
+        SchemeCardMP testScheme1 = schemesDeckMP.extractSchemebyID(7);
+
+        SchemeCardMP test = graphicsManager.getSelectedScheme(testScheme, testScheme1, "gesu bestia", testPrivObj, tempPubObj, whatf);
     }
 
     @Test
-    public void gameSceneTest() throws InvalidIntArgumentException
-    {
-        for(int i=0;i<21;i++) {
-            System.out.println(printerMaker.getGameScene(players, draft, tempRound, testPrivObj, tempPubObj, tempTools, 1, 1)[i]);
+    public void testTurnScene() throws InvalidIntArgumentException, IOException {
+        int what = graphicsManager.askForWhat();
+        if(what==1)
+        {
+            int[] move = graphicsManager.move();
+            graphicsManager.moveAccepted();
         }
-        Assertions.assertEquals(true, true);
-
+        Assertions.assertEquals(true, 1==(2/2));
     }
-
-
-
-
 }

@@ -2,37 +2,38 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.*;
+import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
+import it.polimi.ingsw.server.ToolCards.ToolCardUsageRecord;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Match
 {
-    //INSTANCE FROM OTHERS CLASSES
-    ConnectionManager server;
+    //Managers
+    private ConnectionManager server;
     private Model modelInstance;
+    private TurnManager turnManager;
+    private ToolCardUsageRecord toolRecord;
+    private CheckingMethods checkingMethods;
 
+    //datas
     private ArrayList<String> playerNames;
-
     private int numPlayers=0;
-    private int round;
-    private int playerTurn;
     private int[] connectedPlayers;
 
-    //General Model Components
-
-    private int[] playerTokens;
-    private int[] scores;
+    //score
+    private String[] ranking;
+    private int[][] rankingSpecs;
 
     public MinorLogger matchLog;
 
     //COSTRUCTOR
 
-    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException
-    {
+    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
         //INITIALIZATION 0
         matchLog = new MinorLogger();
         matchLog.minorLog("Match Logger operative");
@@ -44,6 +45,141 @@ public class Match
         //INITIALIZATION 2
         initialization2();
     }
+
+
+
+    private void startMatch() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException, FullDataStructureException {
+
+        //initializing turn manager
+        turnManager = new TurnManager(setUpTurnManager());
+        //Initializing draftPool
+        modelInstance.setFinalNumPlayers(playerNames.size());
+        modelInstance.draftPoolInitialization();
+        //Initializing roundTrack
+        modelInstance.roundTrackInitialization();
+        //initializing checkingMethods
+        checkingMethods = new CheckingMethods();
+
+        //START MATCH
+        turnManager.start();
+        while(!turnManager.theEnd())
+        {
+            turn();
+            turnManager.endTurn();
+            if(turnManager.getActivePlayer()==0&&!turnManager.theEnd())
+                modelInstance.roundEnd();
+        }
+        calculateScore();
+
+    }
+
+    private void turn() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException {
+        //manages turn progress
+
+        boolean toolUsed=false;
+        boolean moveUsed=false;
+        boolean endTurn=false;
+
+        server.turnInitialization(turnManager.getRound(), turnManager.getActivePlayer(), modelInstance.getDraft(), modelInstance.getTrack(), toolRecord.getRecord());
+        while(!endTurn)
+        {
+            int todo = server.getWhatToDo(turnManager.getActivePlayer());
+            if(todo==0)
+                endTurn=true;
+            if(todo==1&&moveUsed==false)
+                moveUsed=move();
+            if(todo==2&&toolUsed==false)
+                toolUsed=tool();
+            if(toolUsed==true&&moveUsed==true)
+                endTurn=true;
+        }
+        server.notifyEndTurn(turnManager.getActivePlayer());
+    }
+
+    private boolean move() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException {
+        //int[0] = draft index, int[1] = scheme x, int[2] = scheme y
+
+        //sends true response and gets modifies
+        server.sendServerResponse(true, turnManager.getActivePlayer());
+        int[] temp = server.getMove(turnManager.getActivePlayer());
+
+        //checks modifies
+        SchemeCard tempSC = modelInstance.getSchemebyIndex(turnManager.getActivePlayer());
+        DraftPool tempDP = modelInstance.getDraft();
+        Die tempDie = tempDP.returnDie(temp[0]);
+        tempDP.pickUpDie(temp[0]);
+        boolean flag = checkingMethods.checkMove(tempSC, tempDie, temp[1], temp[2]);
+
+        //eventually applies modifies
+        if(flag==true)
+        {
+            modelInstance.setDraft(tempDP);
+            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), tempSC);
+            server.sendServerResponse(true, turnManager.getActivePlayer());
+            server.notifyMove(turnManager.getActivePlayer(), tempDP, tempSC);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private boolean tool() throws GenericInvalidArgumentException, IOException {
+        //gets tool id
+        int id = server.getToolId(turnManager.getActivePlayer());
+        int check = toolRecord.checkAndApplyUsage(turnManager.getTokens(), id);
+        if(check==0)
+        {
+            server.sendServerResponse(false, turnManager.getActivePlayer());
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
+    public void calculateScore() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        ranking = new String[numPlayers];
+        rankingSpecs = new int[numPlayers][7];
+
+        String[] temp = new String[numPlayers];
+        int[][] tempSpecs = new int[numPlayers][7]; //columns: 0=priv, 1=pub1, 2=pub2, 3=pub3, 4=tokens, 5=minus, 6=tot
+
+        for(int i=0;i<numPlayers;i++)
+        {
+            Player player = turnManager.getPlayer(i);
+            temp[i] = player.getName();
+
+            tempSpecs[i][0] = modelInstance.getPrivateObjective(i).calculateBonus(modelInstance.getSchemebyIndex(i));
+            tempSpecs[i][1] = modelInstance.getPubObj(0).setBonus(modelInstance.getSchemebyIndex(i));
+            tempSpecs[i][2] = modelInstance.getPubObj(1).setBonus(modelInstance.getSchemebyIndex(i));
+            tempSpecs[i][3] = modelInstance.getPubObj(2).setBonus(modelInstance.getSchemebyIndex(i));
+            tempSpecs[i][4] = player.getTokens();
+            tempSpecs[i][5] = 0;
+            for(int x=0;x<4;x++)
+                for(int y=0;y<5;y++)
+                    if(modelInstance.getSchemebyIndex(i).getDie(x, y).isDisabled())
+                        tempSpecs[i][5]++;
+            tempSpecs[i][6] = tempSpecs[i][0]+tempSpecs[i][1]+tempSpecs[i][2]+tempSpecs[i][3]+tempSpecs[i][4]-tempSpecs[i][5];
+        }
+
+        for(int i=0;i<numPlayers;i++) {
+            int max=0;
+            int index=0;
+            for (int j=0;j<numPlayers;i++)
+            if(temp[j]!=null&&tempSpecs[j][6]>max) {
+                index = j;
+                max = tempSpecs[j][6];
+            }
+            ranking[i] = temp[index];
+            for(int n=0;n<7;n++)
+                rankingSpecs[i][n] = tempSpecs[index][n];
+        }
+    }
+
+
+    //INITIALIZATION METHODS
 
     private void initialization1() throws GenericInvalidArgumentException, IOException
     {
@@ -68,8 +204,7 @@ public class Match
     }
 
 
-    public void initialization2() throws InvalidIntArgumentException, IOException, InvalidinSocketException, GenericInvalidArgumentException
-    {
+    public void initialization2() throws InvalidIntArgumentException, IOException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
         //INITIALIZATION 2: PHASE 1
         matchLog.minorLog("START INITIALIZATION 2 PHASE 1");
 
@@ -83,6 +218,10 @@ public class Match
 
         //public objectives
         initPubObjs();
+        updatePlayersInit();
+
+        //tools
+        initTools();
         updatePlayersInit();
 
         //reception schemes
@@ -106,6 +245,8 @@ public class Match
         updatePlayersInit();
 
         matchLog.minorLog("End initialization 2");
+
+        startMatch();
     }
 
     private void receiveAndcheckScheme() throws InvalidinSocketException, GenericInvalidArgumentException, IOException, InvalidIntArgumentException
@@ -126,8 +267,8 @@ public class Match
                     schemeCheck=true;
 
                 modelInstance.setSelectedScheme(i, temp[0], temp[1]);
-                matchLog.minorLog("Player " + Integer.toString(i + 1) + " Schemeid = " + Integer.toString(modelInstance.getSchemebyIndex(i).getID()));
-                matchLog.minorLog("Player " + Integer.toString(i + 1) + " FB = " + Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
+                matchLog.minorLog("PlayerClient " + Integer.toString(i + 1) + " Schemeid = " + Integer.toString(modelInstance.getSchemebyIndex(i).getID()));
+                matchLog.minorLog("PlayerClient " + Integer.toString(i + 1) + " FB = " + Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
 
             }
         }
@@ -169,6 +310,23 @@ public class Match
         matchLog.minorLog("PUBLIC OBJECTIVES OK");
     }
 
+    private void initTools() throws IOException, GenericInvalidArgumentException {
+        toolRecord = new ToolCardUsageRecord();
+        for(int i=0;i<playerNames.size();i++)
+            server.sendTools(i, toolRecord.getSelectedId());
+    }
+
+    //TURN MANAGER CONSTRUCTOR
+    private Player[] setUpTurnManager() throws InvalidIntArgumentException {
+        //builds the TurnManager argument
+        Player[] temp = new Player[playerNames.size()];
+        for(int i=0;i<playerNames.size();i++)
+        {
+            temp[i] = new Player(i, playerNames.get(i), modelInstance.getSchemebyIndex(i).getDiff(modelInstance.getSchemebyIndex(i).getfb()));
+        }
+        return temp;
+    }
+
     //DISCONNECTION MANAGEMENT
     public void updatePlayersInit()
     {
@@ -185,36 +343,9 @@ public class Match
         }
     }
 
-    public void CalculateScores()
-    {
-        // calcolo finale dei punteggi
-    }
 
-    public SchemeCard getPlayerScheme(int player)
-    {
-        // ritorna lo schema del giocatore in questione
-        return null;
-    }
 
-    public int getPlayerFb(int player)
-    {
-        //
-        return 0;
-    }
 
-    public DraftPool getDraft()
-    {
-        // ritorna la draftpool
-        return null;
-    }
 
-    public void setPlayerScheme(int player, SchemeCard scheme)
-    {
-        // associa lo schema al giocatore
-    }
 
-    public void setDraft(DraftPool draft)
-    {
-        // imposta la draftpool passata come parametro come nuova draftpool
-    }
 }

@@ -151,8 +151,81 @@ public class PrinterMaker
         toolsId=tools;
     }
 
+    public String round(int numround,String activeUsername)
+    {
+        String temp = new String(cliToolsManager.centerThatString(("ROUND: "+numround+"  "+"TURNO: "+activeUsername),40));
 
+        return temp;
+    }
 
+    public String[] disconnectedPlayers(String[] username)
+    {
+        int i = 0;
+
+        String[] tempVect = new String[username.length];
+
+        tempVect[0]=new String("GIOCATORI SCONNESSI: ");
+
+        while (i<username.length)
+        {
+            String temp = new String(username[i]);
+            tempVect[i]=temp;
+            i++;
+        }
+
+            return tempVect;
+    }
+
+    public String[] selectAction()
+    {
+        String[] tempVect = new String[2];
+
+        tempVect[0]= new String(cliToolsManager.centerThatString(("COSA VUOI FARE..?"), 40));
+
+        tempVect[1]= new String(cliToolsManager.centerThatString(("0 PER PASSARE, 2 PER MUOVERE, 3 PER TOOL"), 40));
+
+        return tempVect;
+    }
+
+    public String canMove()
+    {
+        return new String(cliToolsManager.centerThatString(("PUOI MUOVERE "),40));
+    }
+
+    public String cantMove()
+    {
+        return new String(cliToolsManager.centerThatString(("HAI GIA MOSSO"),40));
+    }
+
+    public String insertDraftIndex()
+    {
+        return new String(cliToolsManager.centerThatString(("SELEZIONA LA DRAFT.."),40));
+    }
+
+    public String insertX()
+    {
+        return new String(cliToolsManager.centerThatString(("INSERISCI RIGA.."),40));
+    }
+
+    public String insertY()
+    {
+        return new String(cliToolsManager.centerThatString(("INSERISCI COLONNA.."),40));
+    }
+
+    public String moveAccepted()
+    {
+        return new String(cliToolsManager.centerThatString(("MOSSA ACCETTATA"),40));
+    }
+
+    public String moveRefused()
+    {
+        return new String(cliToolsManager.centerThatString(("MOSSA RIFIUTATA"),40));
+    }
+
+    public String wrongInsertion()
+    {
+        return new String(cliToolsManager.centerThatString(("INSERIMENTO NON VALIDO"),40));
+    }
 
 
     //WAIT SCENES
@@ -170,5 +243,9 @@ public class PrinterMaker
         return cliToolsManager.blankLinesEnder(temp, 13);
     }
 
+    public void setToolsID(int[] tools)
+    {
+        this.toolsId=tools;
 
+    }
 }

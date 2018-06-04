@@ -12,10 +12,13 @@ public class PlayerClient
     private SchemeCardMP playerScheme;
     private int tokens;
 
-    public PlayerClient(int index, String username)
+    private boolean me;
+
+    public PlayerClient(int index, String username, boolean flag)
     {
         id=index;
         name = username;
+        me = flag;
     }
 
     public void setPlayerScheme(SchemeCardMP temp) throws it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException {
@@ -49,6 +52,7 @@ public class PlayerClient
     public String getName() {
         return name;
     }
+    public boolean itsMe() { return me;}
 
 
 }
