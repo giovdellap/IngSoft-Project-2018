@@ -123,4 +123,40 @@ public class SocketEncoder
         return temp;
     }
 
+    //BONUS
+    public String[] bonusEncoder(String[]names, int[][]bonus)
+    {
+        String[] tempVect = new String[names.length*9];
+
+        int z = 0;
+
+        for (int i=0;i<names.length;i++)
+        {
+            int j = 0;
+
+            tempVect[0+z] = transformer.simpleEncode("index", Integer.toString(i));
+            tempVect[1+z]=transformer.simpleEncode("username",names[i]);
+            tempVect[2+z]=transformer.simpleEncode("privobj",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[3+z]=transformer.simpleEncode("pubobj1",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[4+z]=transformer.simpleEncode("pubpbj2",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[5+z]=transformer.simpleEncode("pubpbj3",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[6+z]=transformer.simpleEncode("token",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[7+z]=transformer.simpleEncode("minus",Integer.toString(bonus[i][j]));
+            j++;
+            tempVect[8+z]=transformer.simpleEncode("tot",Integer.toString(bonus[i][j]));
+            j++;
+
+            z=z+9;
+        }
+
+        return tempVect;
+
+    }
+
+
 }

@@ -17,6 +17,9 @@ public class SocketDecoder
         transformer = new SocketProtocolTransformer();
     }
 
+    private String[] names;
+    private int[][] scoresPlayers;
+
     //DRAFTPOOL
     public DraftPoolMP draftPoolDecoder(ArrayList<String> arg) throws InvalidIntArgumentException {
 
@@ -72,6 +75,7 @@ public class SocketDecoder
         }
         return scheme;
     }
+
     public RoundTrackMP roundTrackDecoder(ArrayList<String> arg) throws InvalidIntArgumentException, FullDataStructureException {
         //returns new roundTrack
         RoundTrackMP temp = new RoundTrackMP();
@@ -108,6 +112,7 @@ public class SocketDecoder
         }
         return temp;
     }
+
     public int[] toolTokensDecode(String[] arg)
     {
         int[] temp = new int[3];
@@ -120,6 +125,42 @@ public class SocketDecoder
             temp[index] = Integer.parseInt(transformer.getArg());
         }
         return temp;
+    }
+
+    public void bonusDecoder(String[] bonus)
+    {
+        int i=0;
+        int j=0;
+        int z=0;
+        int h=0;
+
+
+        names=new String[bonus.length/9];
+        scoresPlayers=new int[bonus.length/9][7];
+
+        for (i=0;i<bonus.length/9;i++)                         //num players
+        {
+            transformer.simpleDecode(bonus[0+h]);
+            names[i] = transformer.getArg();
+
+            for (z = 1; z < 9; z++)
+            {
+                transformer.simpleDecode(bonus[z+h]);
+                for (j=0;j<7;j++)
+                    scoresPlayers[i][j] = Integer.parseInt(transformer.getArg());
+            }
+            h=h+9;
+        }
+    }
+
+    public String[] getNames()
+    {
+        return names;
+    }
+
+    public int[][] getScoresPlayers()
+    {
+        return scoresPlayers;
     }
 
 
