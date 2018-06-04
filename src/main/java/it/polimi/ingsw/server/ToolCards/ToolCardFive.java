@@ -57,15 +57,11 @@ public class ToolCardFive extends ToolCard {
 
         RoundDice temp = roundTrack.returnNTurnRoundDice(turn);
         Die toPlace2 = temp.getDie(pos);
-        Die toPlace1 = draft.returnDie(posDraft);
-
-        draft.replaceDie(posDraft,toPlace2);
-        temp.deleteDie(pos);
-        temp.addDie(toPlace1);
-        roundTrack.addRound(temp);
+        Die toPlace1 = draft.replaceDie(posDraft,toPlace2);
+        temp.replaceDie(toPlace1,pos);
+        roundTrack.setSpecificRoundDice(temp,turn);
 
     }
-
 
 
 }

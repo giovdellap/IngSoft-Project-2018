@@ -56,4 +56,14 @@ public class RoundDice
     {
         return dim;
     }
+
+    public Die replaceDie(Die toPlace, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        if (pos>=dim||pos<0||diceVector[pos].isDisabled()) throw new InvalidIntArgumentException();
+        if (toPlace==null) throw new GenericInvalidArgumentException();
+
+        Die tempDie = diceVector[pos];
+        diceVector[pos]=toPlace;
+        return tempDie;
+    }
 }

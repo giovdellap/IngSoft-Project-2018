@@ -29,10 +29,10 @@ public class ToolCardSixTest {
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
 
-        testDie = new Die(0);
-        testDie2 = new Die(0);
-        testDie3 = new Die(0);
-        testDie4 = new Die(0);
+        testDie = new Die(1);
+        testDie2 = new Die(2);
+        testDie3 = new Die(3);
+        testDie4 = new Die(4);
         toolCardSixTest = new ToolCardSix();
         draftTest = new DraftPool(4);
         schemesDeck = new SchemesDeck();
@@ -40,6 +40,66 @@ public class ToolCardSixTest {
         scheme.setfb(2);
 
     }
+
+
+    @Test
+    public void checkToolCardSixTestOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        testDie = draftTest.returnDie(2);
+        testDie.setValueTest(3);
+        scheme.setDie(testDie2,0,3);
+
+        flag = toolCardSixTest.checkToolCardSixSchemeCard(testDie,scheme,0,4);
+
+        Assertions.assertEquals(true,flag);
+
+    }
+
+    @Test
+    public void checkToolCardSixTestTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        boolean flag = true;
+
+        testDie = draftTest.returnDie(2);
+        testDie.setValueTest(3);
+        scheme.setDie(testDie2,0,4);
+
+        flag = toolCardSixTest.checkToolCardSixSchemeCard(testDie,scheme,1,3);
+
+        Assertions.assertEquals(false,flag);
+
+    }
+
+    @Test
+    public void checkApplyModifiesToScheme() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        testDie = draftTest.returnDie(2);
+        testDie.setValueTest(3);
+        scheme.setDie(testDie2,0,4);
+
+        scheme = toolCardSixTest.ApplyModifiesToScheme(testDie,scheme,0,3);
+
+        Assertions.assertEquals(true,scheme.getDie(0,3).equals(testDie));
+
+    }
+
+
+    @Test
+    public void checkApplyModifiesToDraft() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        testDie = draftTest.returnDie(2);
+        testDie.setValueTest(3);
+
+        draftTest = toolCardSixTest.ApplyModifiesToDraft(testDie,draftTest,2);
+
+        Assertions.assertEquals(true,draftTest.returnDie(2).equals(testDie));
+
+    }
+
+
+
 
 
 }

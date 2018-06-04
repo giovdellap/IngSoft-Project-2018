@@ -131,4 +131,29 @@ public class RoundDiceTest
         testRD.addDie(testDie2);
         Assertions.assertEquals(2, testRD.returnDim());
     }
+
+    @Test
+    public void checkReplaceDieOne() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
+
+        testRD.addDie(testDie1);
+        testRD.addDie(testDie2);
+
+        testDie1 = testRD.replaceDie(testDie2,1);
+
+        Assertions.assertEquals(true,testRD.getDie(1).equals(testDie2));
+
+    }
+
+    @Test
+    public void checkReplaceDieTwo() throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+
+        testRD.addDie(testDie1);
+        testRD.addDie(testDie2);
+
+        Die tempDie3 = testRD.getDie(1);
+        testDie2 = testRD.replaceDie(testDie1,1);
+
+        Assertions.assertEquals(true,tempDie3.equals(testDie2));
+    }
+
 }

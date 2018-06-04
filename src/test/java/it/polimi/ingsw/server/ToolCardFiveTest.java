@@ -28,14 +28,14 @@ public class ToolCardFiveTest {
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
 
-        testDie = new Die(0);
-        testDie2 = new Die(0);
-        testDie3 = new Die(0);
-        testDie4 = new Die(0);
+        testDie = new Die(1);
+        testDie2 = new Die(2);
+        testDie3 = new Die(3);
+        testDie4 = new Die(4);
         toolCardFiveTest = new ToolCardFive();
         draftTest = new DraftPool(4);
 
-        roundDiceTest = new RoundDice(9);
+        roundDiceTest = new RoundDice(2);
         roundDiceTest.addDie(testDie);
         roundDiceTest.addDie(testDie2);
 
@@ -46,5 +46,28 @@ public class ToolCardFiveTest {
         toolCardFiveTest.setRoundTrack(trackTest);
 
     }
+
+
+    @Test
+    public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
+
+        toolCardFiveTest.applyModifies(2,0,0);
+
+        Assertions.assertEquals(true,toolCardFiveTest.getDraft().returnDie(2).equals(testDie));
+
+    }
+
+
+    @Test
+    public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
+
+        testDie3 = draftTest.returnDie(2);
+        toolCardFiveTest.applyModifies(2,0,0);
+
+        Assertions.assertEquals(true,toolCardFiveTest.getTrack().returnNTurnRoundDice(0).getDie(0).equals(testDie3));
+
+    }
+
+
 
 }
