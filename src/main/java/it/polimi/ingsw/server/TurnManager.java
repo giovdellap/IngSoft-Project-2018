@@ -106,4 +106,6 @@ public class TurnManager
     {
         players[activePlayer].usedTokens(n);
     }
+
+    public boolean checkFirst() { return round==0&&turnIndex<players.length; }
 }

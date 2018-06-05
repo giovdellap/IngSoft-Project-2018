@@ -87,7 +87,7 @@ public class ModelGenerator
         int i=0;
         String diceDraft = "";
 
-        while(i<draft.getSize())
+        while(i<draft.returnFirstDisabled())
         {
             diceDraft += toUnicode(draft.returnDie(i));
             i++;

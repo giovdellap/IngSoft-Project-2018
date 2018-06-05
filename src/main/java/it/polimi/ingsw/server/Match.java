@@ -108,7 +108,11 @@ public class Match
         DraftPool tempDP = modelInstance.getDraft();
         Die tempDie = tempDP.returnDie(temp[0]);
         tempDP.pickUpDie(temp[0]);
-        boolean flag = checkingMethods.checkMove(tempSC, tempDie, temp[1], temp[2]);
+        boolean flag;
+        if(turnManager.checkFirst())
+            flag = checkingMethods.checkFirstMove(tempSC, tempDie, temp[1], temp[2]);
+        else
+            flag = checkingMethods.checkMove(tempSC, tempDie, temp[1], temp[2]);
 
         //eventually applies modifies
         if(flag==true)

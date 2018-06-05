@@ -227,7 +227,9 @@ public class SocketClient {
     }
     public boolean toDo(int arg) throws IOException {
         sendMessage("todo", Integer.toString(arg));
-        return serverCheck();
+        boolean flag = serverCheck();
+        System.out.println("flag: "+flag);
+        return flag;
     }
     public boolean move(int[] arg) throws IOException {
         sendMessage("client", "move");
@@ -243,7 +245,11 @@ public class SocketClient {
         receiveMessage();
         temp[0] = Integer.parseInt(transformer.getArg());
         receiveMessage();
-        temp[1] = Integer.parseInt(transformer.getArg());
+        System.out.println("arg: "+transformer.getArg());
+        if(transformer.getArg().equals("move"))
+            temp[1] = 1;
+        if(transformer.getArg().equals("pass"))
+            temp[1] = 0;
         return temp;
 
     }
@@ -314,16 +320,19 @@ public class SocketClient {
             receiveMessage();
             tempDie.setValueTest(Integer.parseInt(transformer.getArg()));
 
-            scheme.setDie(tempDie, x, y);
-            if(previousPlayer.getPlayerScheme().getDie(x, y).isDisabled()) {
+            if(previousPlayer.getPlayerScheme().getDie(x, y).getColor()==0) {
                 notMyTurnMove[0] = tempDie.getColor();
                 notMyTurnMove[1] = tempDie.getValue();
                 notMyTurnMove[2] = x;
                 notMyTurnMove[3] = y;
             }
+            scheme.setDie(tempDie, x, y);
+
             receiveMessage();
         }
 
+        receiveMessage();
+        receiveMessage();
         PlayerClient toReturn = previousPlayer;
         toReturn.setPlayerScheme(scheme);
         return toReturn;
@@ -337,13 +346,13 @@ public class SocketClient {
     //SERVER CHECKS
     private boolean serverCheck() throws IOException {
         receiveMessage();
-        return Boolean.getBoolean(transformer.getArg());
+        return Boolean.parseBoolean(transformer.getArg());
     }
 
     //RECEPTION
     private void receiveMessage() throws IOException {
         transformer.simpleDecode(inSocket.readLine());
-        //System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
+        System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
     private void simpleReceive() throws IOException {
         msgIN = inSocket.readLine();
@@ -352,7 +361,7 @@ public class SocketClient {
     //SENDING
     private void sendMessage(String cmd, String arg)
     {
-        //System.out.println("sent "+cmd+" "+arg);
+        System.out.println("sent "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();
     }
@@ -373,7 +382,5 @@ public class SocketClient {
     {
         return isConnected;
     }
-
-
 
 }

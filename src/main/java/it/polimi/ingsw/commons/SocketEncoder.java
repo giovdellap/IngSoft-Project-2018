@@ -23,18 +23,27 @@ public class SocketEncoder
     public String[] draftEncoder(DraftPool draft) throws InvalidIntArgumentException {
         //SERVER VERSION
         //returns the String vector representing given draftpool
-
+        System.out.println("qui");
+        System.out.println(Integer.toString(draft.returnDie(2).getColor()));
+        System.out.println(Integer.toString(draft.getDiceNum()));
         String[] temp = new String[(draft.getDiceNum()*3)+2];
+        System.out.println("cazzo");
         temp[0] = transformer.simpleEncode("model", "draft");
+        System.out.println(temp[0]);
         int i=1;
         int index=0;
         while(i<(draft.getDiceNum()*3)+1)
         {
             temp[i] = transformer.simpleEncode("index", Integer.toString(index));
+            System.out.println(temp[i]);
             i++;
             temp[i] = transformer.simpleEncode("color", Integer.toString(draft.returnDie(index).getColor()));
+            System.out.println(temp[i]);
+
             i++;
             temp[i] = transformer.simpleEncode("value", Integer.toString(draft.returnDie(index).getValue()));
+            System.out.println(temp[i]);
+
             i++;
             index++;
         }

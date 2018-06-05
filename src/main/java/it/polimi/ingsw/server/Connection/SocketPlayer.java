@@ -77,7 +77,10 @@ public class SocketPlayer
     }
 
     public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException {
+        System.out.println("prima");
         String[] temp = socketEncoder.draftEncoder(draft);
+        System.out.println("dopo");
+        System.out.println(temp[0]);
         for(int i=0;i<temp.length;i++)
         {
             try{
@@ -157,7 +160,6 @@ public class SocketPlayer
         try{
             for(int i=0;i<temp.length;i++)
                 sendReadyMessage(temp[i]);
-            sendMessage("end", "scheme");
         } catch (Exception e)
         {
             socket.close();
@@ -625,19 +627,19 @@ public class SocketPlayer
     //RECEIVE/SEND
     private void receiveMessage() throws IOException {
         transformer.simpleDecode(inSocket.readLine());
-        //System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
+        System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
 
     private void sendMessage(String cmd, String arg)
     {
-        //System.out.println("sent: "+cmd+" "+arg);
+        System.out.println("sent: "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();;
     }
 
     private void sendReadyMessage(String s)
     {
-        //System.out.println("sent: "+s);
+        System.out.println("sent: "+s);
         outSocket.println(s);
         outSocket.flush();
     }

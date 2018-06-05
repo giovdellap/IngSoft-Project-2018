@@ -127,14 +127,12 @@ public class MPExecute extends Application {
 
     public void itsMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
         boolean end = false;
-        int advertise=0;
-        int accepted=0;
-
         while(!end) {
             int whatToDo;
 
             whatToDo=graphicsManager.askForWhat();
             boolean toDoResponse = connectionManager.toDo(whatToDo);
+            System.out.println("rcamadonna:"+toDoResponse);
             if(toDoResponse)
             {
                 if(whatToDo==0)
@@ -142,10 +140,6 @@ public class MPExecute extends Application {
                 if(whatToDo==1)
                 {
                     boolean check = move();
-                    if(check)
-                        accepted=1;
-                    else
-                        advertise=1;
                 }
             }
         }
@@ -157,6 +151,7 @@ public class MPExecute extends Application {
         graphicsManager.showTurn();
 
         int[] whoAndWhat = connectionManager.notifyAction();
+        System.out.println("whoandwhat 0: "+Integer.toString(whoAndWhat[1]));
         while(whoAndWhat[1]!=0)//player pass
         {
             if(whoAndWhat[1]==1)//player moves
@@ -165,7 +160,10 @@ public class MPExecute extends Application {
                 PlayerClient activePlayer = connectionManager.getSchemeModifies(matchManager.getPlayer(matchManager.getActivePlayer()));
                 matchManager.setPlayer(matchManager.getActivePlayer(), activePlayer);
                 updateGraphicsManager();
-                graphicsManager.showMove(connectionManager.getNotMyTurnMove()[0], connectionManager.getNotMyTurnMove()[1], connectionManager.getNotMyTurnMove()[2], connectionManager.getNotMyTurnMove()[3]);
+                int[] move = connectionManager.getNotMyTurnMove();
+                graphicsManager.showMove(move[0], move[1], move[2], move[3]);
+                whoAndWhat = connectionManager.notifyAction();
+
             }
         }
     }

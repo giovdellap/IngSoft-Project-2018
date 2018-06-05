@@ -118,7 +118,9 @@ public class BeautifulCLI
         while(!flag)
         {
             readIt();
-            if(Integer.parseInt(msgIN)<0||Integer.parseInt(msgIN)>2)
+            System.out.println("msgIN: "+msgIN);
+            System.out.println(Integer.parseInt(msgIN));
+            if(Integer.parseInt(msgIN)>0&&Integer.parseInt(msgIN)<3)
             {
                 flag = true;
             }
@@ -152,7 +154,7 @@ public class BeautifulCLI
         while(!flag)
         {
             readIt();
-            if(Integer.parseInt(msgIN)<0||Integer.parseInt(msgIN)>2)
+            if(Integer.parseInt(msgIN)>0&&Integer.parseInt(msgIN)<3)
                 flag = true;
             else
             {

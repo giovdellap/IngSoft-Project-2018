@@ -89,4 +89,18 @@ public class DraftPoolMP implements ModelComponentMP {
         return i;
     }
 
+    public int returnFirstDisabled()
+    {
+        int index=draft.length;
+        boolean flag=false;
+        for(int i=0;i<draft.length;i++)
+            if(draft[i].isDisabled()&&(!flag))
+            {
+                index=i;
+                flag=true;
+            }
+
+        return index;
+    }
+
 }

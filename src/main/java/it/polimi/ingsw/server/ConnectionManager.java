@@ -88,6 +88,7 @@ public class ConnectionManager {
             if(players.get(i).connectionCheck()&&i!=activePlayer)
             {
                players.get(i).notifyAction(activePlayer, 1);
+               System.out.println("siamo qui");
                players.get(i).sendDraft(draft);
                players.get(i).sendScheme(scheme);
                players.get(i).endAction(1);
