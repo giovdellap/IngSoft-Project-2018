@@ -116,5 +116,21 @@ public class CLIToolsManager
         return temp;
     }
 
+    public String getColor(int color)
+    {
+        if(color==1)
+            return "giallo";
+        if(color==2)
+            return "rosso";
+        if(color==3)
+            return "verde";
+        if(color==4)
+            return "blu";
+        if(color==5)
+            return "viola";
+        else
+            return null;
+    }
+
 
 }

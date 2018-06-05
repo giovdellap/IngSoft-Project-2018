@@ -116,8 +116,9 @@ public class MPExecute extends Application {
         modelManagerMP.setTrack(connectionManager.getTrack());
         toolRecord.setTokens(connectionManager.getToolsUpdate());
 
+        updateGraphicsManager();
         boolean active = connectionManager.askForActive();
-        if(active==true)
+        if(active)
             itsMyTurn();
         else
             notMyTurn();
@@ -149,10 +150,24 @@ public class MPExecute extends Application {
             }
         }
     }
-    public void notMyTurn() throws IOException {
+    public void notMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
         //gets player action
-        int[] whoAndWhat = connectionManager.notifyAction();
+        System.out.println("not my turn");
+        updateGraphicsManager();
+        graphicsManager.showTurn();
 
+        int[] whoAndWhat = connectionManager.notifyAction();
+        while(whoAndWhat[1]!=0)//player pass
+        {
+            if(whoAndWhat[1]==1)//player moves
+            {
+                modelManagerMP.setDraft(connectionManager.getDraft());
+                PlayerClient activePlayer = connectionManager.getSchemeModifies(matchManager.getPlayer(matchManager.getActivePlayer()));
+                matchManager.setPlayer(matchManager.getActivePlayer(), activePlayer);
+                updateGraphicsManager();
+                graphicsManager.showMove(connectionManager.getNotMyTurnMove()[0], connectionManager.getNotMyTurnMove()[1], connectionManager.getNotMyTurnMove()[2], connectionManager.getNotMyTurnMove()[3]);
+            }
+        }
     }
 
     public boolean move() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {

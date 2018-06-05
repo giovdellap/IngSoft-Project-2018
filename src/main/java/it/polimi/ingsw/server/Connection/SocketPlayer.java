@@ -44,14 +44,13 @@ public class SocketPlayer
     public SocketPlayer(Socket s) throws IOException, GenericInvalidArgumentException {
 
         sPlayerLog = new MinorLogger();
-        sPlayerLog.minorLog("SocketPlayer Logger operative");
 
         socket = s;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-        sPlayerLog.minorLog("check serverplayer constructor end");
 
         transformer = new SocketProtocolTransformer();
+        socketEncoder= new SocketEncoder();
     }
 
     //TURN METHODS
@@ -60,7 +59,7 @@ public class SocketPlayer
         try {
             sendMessage("round", Integer.toString(round));
             sendMessage("disconnected", Integer.toString(discPlayers.size()));
-            if(discPlayers.size()!=0)
+            if(!discPlayers.isEmpty())
             {
                 int i=0;
                 while(i<discPlayers.size())
@@ -132,6 +131,7 @@ public class SocketPlayer
     public int getToDo() throws GenericInvalidArgumentException, IOException {
         try {
             sendMessage("wait", "todo");
+            System.out.println("Wait todo sent");
             receiveMessage();
             return Integer.parseInt(transformer.getArg());
         }catch (Exception e)
@@ -320,7 +320,6 @@ public class SocketPlayer
             outSocket.flush();
 
             simpleDecode(inSocket.readLine());
-            System.out.println("tempArg: "+tempArg);
             return tempArg;
         } catch (Exception e)
         {
@@ -436,7 +435,6 @@ public class SocketPlayer
         sendMessage("tool", Integer.toString(id1));
         sendMessage("tool", Integer.toString(id2));
         sendMessage("tool", Integer.toString(id3));
-
     }
 
     public void setPlayersNames(String[]usernames)
@@ -471,12 +469,14 @@ public class SocketPlayer
             simpleDecode(msg);
         } catch (Exception e)
         {
-            try {
+            try
+            {
                 sPlayerLog.minorLog("Exception e");
                 socket.close();
                 sPlayerLog.minorLog("Socket closed");
                 disconnectionManager();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
             }
         }
 
@@ -487,6 +487,7 @@ public class SocketPlayer
             disconnectionManager();
             return temp;
         }
+
         if(Integer.parseInt(tempArg)<1||Integer.parseInt(tempArg)>12)
             throw new InvalidinSocketException();
 
@@ -495,23 +496,23 @@ public class SocketPlayer
         msg=inSocket.readLine();
         simpleDecode(msg);
 
-
-        if((!tempCmd.equals("fb"))||(Integer.parseInt(tempArg)!=1&&Integer.parseInt(tempArg)!=2)) {
-
+        if((!tempCmd.equals("fb"))||(Integer.parseInt(tempArg)!=1&&Integer.parseInt(tempArg)!=2))
             throw new InvalidinSocketException();
-        }
 
         temp[1]=Integer.parseInt(tempArg);
-        try {
+        try
+        {
             outSocket.println("#wait#$players$");
             outSocket.flush();
         } catch (Exception e) {
-            try {
+            try
+            {
                 sPlayerLog.minorLog("Exception e");
                 socket.close();
                 sPlayerLog.minorLog("Socket closed");
                 disconnectionManager();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
             }
         }
 
@@ -521,13 +522,13 @@ public class SocketPlayer
         return temp;
     }
 
-    public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
-
+    public void sendSchemeVect(SchemeCard[] vect) throws InvalidIntArgumentException, GenericInvalidArgumentException
+    {
         for(int i=0;i<numPlayers;i++)
         {
-            try {
-
+            try
+            {
                 outSocket.println(simpleEncode("player", Integer.toString(i)));
                 outSocket.flush();
 
@@ -542,17 +543,19 @@ public class SocketPlayer
 
                 outSocket.println("#favtokens#$" + Integer.toString(vect[i].getDiff(vect[i].getfb()))+"$");
 
-            } catch (Exception e) {
-                try {
+            } catch (Exception e)
+            {
+                try
+                {
                     sPlayerLog.minorLog("Exception e");
                     socket.close();
                     sPlayerLog.minorLog("Socket closed");
                     disconnectionManager();
-                } catch (Exception ex) {
+                } catch (Exception ex)
+                {
                 }
             }
         }
-
         if(socket.isClosed())
             disconnectionManager();
     }
@@ -622,16 +625,19 @@ public class SocketPlayer
     //RECEIVE/SEND
     private void receiveMessage() throws IOException {
         transformer.simpleDecode(inSocket.readLine());
+        //System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
 
     private void sendMessage(String cmd, String arg)
     {
+        //System.out.println("sent: "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();;
     }
 
     private void sendReadyMessage(String s)
     {
+        //System.out.println("sent: "+s);
         outSocket.println(s);
         outSocket.flush();
     }

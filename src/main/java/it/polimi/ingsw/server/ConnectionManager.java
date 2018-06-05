@@ -35,11 +35,8 @@ public class ConnectionManager {
     public ConnectionManager() throws GenericInvalidArgumentException, IOException
     {
         sServerLog = new MinorLogger();
-        sServerLog.minorLog("ConnectionManager Logger operative");
 
-        sServerLog.minorLog("start socketserver constructor");
         players = new ArrayList<SocketPlayer>();
-        sServerLog.minorLog("end socketserver connection");
 
         serverSocket = new ServerSocket(PORT);
 
@@ -57,12 +54,15 @@ public class ConnectionManager {
                 player.sendDraft(draft);
                 player.sendRoundTrack(track, round);
                 player.sendTools(tokens[0], tokens[1], tokens[2]);
-                player.sendWait();
             }
         }
     }
 
     public int getWhatToDo(int player) throws IOException, GenericInvalidArgumentException {
+        for(SocketPlayer temp : players)
+            if(temp!=players.get(player))
+                if(temp.connectionCheck())
+                    temp.sendWait();
         if(players.get(player).connectionCheck())
             return players.get(player).getToDo();
         else
@@ -122,8 +122,6 @@ public class ConnectionManager {
             if(elapsedTime>=90*1000)
                 maxPlayers=2;
             elapsedTime = (new Date()).getTime() - startTime;
-            System.out.println(elapsedTime);
-            System.out.println(maxPlayers);
         }
 
         ArrayList<String> temp = new ArrayList<String>();
@@ -135,18 +133,15 @@ public class ConnectionManager {
 
     private void acceptation() throws IOException, GenericInvalidArgumentException
     {
-        System.out.println("sono in acceptation");
         generalSocket = serverSocket.accept();
         players.add(new SocketPlayer(generalSocket));
         boolean accFlag=false;
         while(!accFlag) {
             String username = players.get(players.size()-1).insertUsername();
-            System.out.println(username);
-            System.out.println("check username: "+checkUsername(username));
             if(checkUsername(username))
             {
-                if(players.get(players.size()-1).connectionCheck()) {
-                    System.out.println("check");
+                if(players.get(players.size()-1).connectionCheck())
+                {
                     players.get(players.size() - 1).confirmUsername();
                     if(players.get(players.size()-1).connectionCheck())
                         accFlag = true;
@@ -168,7 +163,6 @@ public class ConnectionManager {
             if(players.get(i).getUsername().equals(s))
                 tempFlag=false;
         }
-        System.out.println("tempFlag: "+tempFlag);
         return tempFlag;
     }
 
@@ -247,33 +241,14 @@ public class ConnectionManager {
         playersNames=new String[players.size()];
 
         for (int i=0;i<players.size();i++)
-        {
             playersNames[i]=players.get(i).getUsername();
 
-        }
-
         for(SocketPlayer temp : players)
         {
             temp.setPlayersNames(playersNames);
             temp.init1Phase2NumPl(players.size());
         }
 
-        for(SocketPlayer temp : players)
-            temp.setPlayersNames(playersNames);
-
-
-        for(SocketPlayer temp : players)
-        {
-            temp.init1Phase2NumPl(players.size());
-            if(!temp.connectionCheck())
-                initializationDiscManager(players.indexOf(temp));
-            for(int i=0;i<players.size();i++)
-            {
-                temp.init1Phase2Player(i, players.get(i).getUsername());
-                if(!temp.connectionCheck())
-                    initializationDiscManager(players.indexOf(temp));
-            }
-        }
 
         for(int i=0;i<players.size();i++)
         {
@@ -339,6 +314,8 @@ public class ConnectionManager {
     private void mainDiscManager(int index)
     {
         disconnectedUsersIDs.add(index);
+        if(disconnectedUsersIDs.size()==2)
+            System.exit(1);
     }
 
 

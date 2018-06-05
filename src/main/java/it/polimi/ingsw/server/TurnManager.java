@@ -19,7 +19,7 @@ public class TurnManager
     public TurnManager(Player[] temp) throws GenericInvalidArgumentException {
         players=temp;
         maxTurn=players.length*2;
-        turnLogger.minorLog("TurnManager initialized - "+maxTurn+" turns");
+        turnLogger= new MinorLogger();
     }
 
     public int start() throws GenericInvalidArgumentException {

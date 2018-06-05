@@ -4,10 +4,7 @@ package it.polimi.ingsw.client.PackageMP.Connection;
 import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.SocketDecoder;
 import it.polimi.ingsw.commons.SocketEncoder;
@@ -42,12 +39,16 @@ public class SocketClient {
     private int numPlayers=0;
     private String serverIP;
 
+    private int[] notMyTurnMove;
+
+
     public SocketClient(String ip) throws GenericInvalidArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
 
         socketLogger = new MinorLogger();
         socketLogger.minorLog("SocketClient logger operative");
         isConnected=false;
         serverIP = ip;
+        notMyTurnMove = new int[4];
         transformer = new SocketProtocolTransformer();
         decoder = new SocketDecoder();
         encoder = new SocketEncoder();
@@ -126,8 +127,6 @@ public class SocketClient {
                temp[i] = Integer.parseInt(transformer.getArg());
             }
 
-                socketLogger.minorLog("waiting for players");
-
             return temp;
     }
     public int[] getTools() throws IOException {
@@ -143,22 +142,16 @@ public class SocketClient {
     public void getSelectionCheck() throws IOException {
         //gets insert scheme command from the server
         receiveMessage();
-        if(!transformer.getCmd().equals("insert"))
-            getSelectionCheck();
     }
 
     public boolean getSchemeConfirmation(int schemeId, int fb) throws IOException {
+
         sendMessage("scheme", Integer.toString(schemeId));
         sendMessage("fb", Integer.toString(fb));
 
         receiveMessage();
-        if(transformer.getCmd().equals("insert")&& transformer.getArg().equals("scheme"))
-            return false;
-        if(transformer.getArg().equals("confirm")&& transformer.equals("scheme"))
-        {
-            receiveMessage();
+        if(transformer.getCmd().equals("wait")&& transformer.getArg().equals("players"))
             return true;
-        }
         else
             return false;
     }
@@ -173,13 +166,14 @@ public class SocketClient {
         PlayerClient[] temp = new PlayerClient[numPlayers];
         for(int i=0;i<numPlayers;i++)
         {
+            PlayerClient player;
             //setting id & username
             receiveMessage();
             receiveMessage();
             if(transformer.getArg().equals(myUsername))
-                temp[i] = new PlayerClient(i, transformer.getArg(), true);
+                player = new PlayerClient(i, transformer.getArg(), true);
             else
-                temp[i] = new PlayerClient(i, transformer.getArg(), false);
+                player  = new PlayerClient(i, transformer.getArg(), false);
 
 
             //setting schemecard
@@ -188,12 +182,13 @@ public class SocketClient {
             receiveMessage();
             SchemeCardMP tempSC = deck.extractSchemebyID(id);
             tempSC.setfb(Integer.parseInt(transformer.getArg()));
-            temp[i].setPlayerScheme(tempSC);
+            player.setPlayerScheme(tempSC);
 
             //setting tokens
             receiveMessage();
-            temp[i].setTokens(Integer.parseInt(transformer.getArg()));
+            player.setTokens(Integer.parseInt(transformer.getArg()));
 
+            temp[i]=player;
         }
         return temp;
     }
@@ -206,15 +201,15 @@ public class SocketClient {
         receiveMessage();
         return Integer.parseInt(transformer.getArg());
     }
-    public int[] getDiscPlayers() throws IOException {
+    public ArrayList<Integer> getDiscPlayers() throws IOException {
         receiveMessage();
         int num = Integer.parseInt(transformer.getArg());
-        int[] temp = new int[num];
+        ArrayList<Integer> temp = new ArrayList<Integer>();
 
         for(int i=0;i<num;i++)
         {
             receiveMessage();
-            temp[i] = Integer.parseInt(transformer.getArg());
+            temp.add(Integer.parseInt(transformer.getArg()));
         }
         return temp;
     }
@@ -225,7 +220,7 @@ public class SocketClient {
 
     public boolean askForActive() throws IOException {
         receiveMessage();
-        if(transformer.getCmd().equals("wait")&&transformer.getArg().equals("todo"))
+        if(transformer.getArg().equals("todo"))
             return true;
         else
             return false;
@@ -291,16 +286,52 @@ public class SocketClient {
     public int[] toolCardUpdate() throws IOException {
 
         String[] temp = new String[6];
+        for(int i=0;i<3;i++)
+        {
+            simpleReceive();
+            temp[i] = msgIN;
+        }
+
+        return decoder.toolTokensDecode(temp);
+    }
+    public PlayerClient getSchemeCard(PlayerClient previousPlayer) throws InvalidIntArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
+        SchemesDeckMP deck = new SchemesDeckMP();
+        SchemeCardMP scheme = deck.extractSchemebyID(previousPlayer.getPlayerScheme().getID());
+        scheme.setfb(previousPlayer.getPlayerScheme().getfb());
+
         receiveMessage();
-        if(transformer.getCmd().equals("model")&&transformer.getArg().equals("track")) {
-            for(int i=0;i<6;i++)
-            {
-                simpleReceive();
-                temp[i] = msgIN;
+        receiveMessage();
+        while (!(transformer.getCmd().equals("end")&&transformer.getArg().equals("scheme")))
+        {
+            //x
+            int x = Integer.parseInt(transformer.getArg());
+            //y
+            receiveMessage();
+            int y = Integer.parseInt(transformer.getArg());
+            //color
+            DieMP tempDie = new DieMP(Integer.parseInt(transformer.getArg()));
+            //value
+            receiveMessage();
+            tempDie.setValueTest(Integer.parseInt(transformer.getArg()));
+
+            scheme.setDie(tempDie, x, y);
+            if(previousPlayer.getPlayerScheme().getDie(x, y).isDisabled()) {
+                notMyTurnMove[0] = tempDie.getColor();
+                notMyTurnMove[1] = tempDie.getValue();
+                notMyTurnMove[2] = x;
+                notMyTurnMove[3] = y;
             }
             receiveMessage();
         }
-        return decoder.toolTokensDecode(temp);
+
+        PlayerClient toReturn = previousPlayer;
+        toReturn.setPlayerScheme(scheme);
+        return toReturn;
+    }
+
+    public int[] getNotMyTurnMove()
+    {
+        return notMyTurnMove;
     }
 
     //SERVER CHECKS
@@ -312,6 +343,7 @@ public class SocketClient {
     //RECEPTION
     private void receiveMessage() throws IOException {
         transformer.simpleDecode(inSocket.readLine());
+        //System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
     private void simpleReceive() throws IOException {
         msgIN = inSocket.readLine();
@@ -320,6 +352,7 @@ public class SocketClient {
     //SENDING
     private void sendMessage(String cmd, String arg)
     {
+        //System.out.println("sent "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();
     }

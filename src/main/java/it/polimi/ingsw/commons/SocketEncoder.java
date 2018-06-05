@@ -38,7 +38,7 @@ public class SocketEncoder
             i++;
             index++;
         }
-        temp[index] = transformer.simpleEncode("end", "draft");
+        temp[i] = transformer.simpleEncode("end", "draft");
         return temp;
     }
 
@@ -106,7 +106,7 @@ public class SocketEncoder
         ArrayList<String> tempAL = new ArrayList<String>();
         tempAL.add(transformer.simpleEncode("model", "track"));
 
-        for(int r=0;r<round;r++)
+        for(int r=0;r<round-1;r++)
         {
             tempAL.add(transformer.simpleEncode("round", Integer.toString(r)));
             RoundDice tempRD = track.returnNTurnRoundDice(r);
@@ -140,9 +140,9 @@ public class SocketEncoder
             j++;
             tempVect[3+z]=transformer.simpleEncode("pubobj1",Integer.toString(bonus[i][j]));
             j++;
-            tempVect[4+z]=transformer.simpleEncode("pubpbj2",Integer.toString(bonus[i][j]));
+            tempVect[4+z]=transformer.simpleEncode("pubobj2",Integer.toString(bonus[i][j]));
             j++;
-            tempVect[5+z]=transformer.simpleEncode("pubpbj3",Integer.toString(bonus[i][j]));
+            tempVect[5+z]=transformer.simpleEncode("pubobj3",Integer.toString(bonus[i][j]));
             j++;
             tempVect[6+z]=transformer.simpleEncode("token",Integer.toString(bonus[i][j]));
             j++;
@@ -157,6 +157,4 @@ public class SocketEncoder
         return tempVect;
 
     }
-
-
 }

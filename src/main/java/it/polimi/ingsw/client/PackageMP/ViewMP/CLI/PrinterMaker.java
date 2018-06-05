@@ -98,7 +98,7 @@ public class PrinterMaker
         ArrayList<String> temp;
         temp=new ArrayList<String>();
         for (int i=0;i<6;i++)
-            temp.add(componentFactory.selectionA(players[0].getPlayerScheme(),players[0].getName(),players[0].getTokens())[i]+componentFactory.selectionA(players[1].getPlayerScheme(),players[1].getName(),players[1].getTokens())[i]);
+            temp.add(componentFactory.selectionA(players[0].getPlayerScheme(), players[0].getName(), players[0].getTokens())[i] + componentFactory.selectionA(players[1].getPlayerScheme(), players[1].getName(), players[1].getTokens())[i]);
 
         temp.add(cliToolsManager.printSpaces(40));
 
@@ -182,7 +182,7 @@ public class PrinterMaker
 
         tempVect[0]= new String(cliToolsManager.centerThatString(("COSA VUOI FARE..?"), 40));
 
-        tempVect[1]= new String(cliToolsManager.centerThatString(("0 PER PASSARE, 2 PER MUOVERE, 3 PER TOOL"), 40));
+        tempVect[1]= new String(cliToolsManager.centerThatString(("0 PER PASSARE, 1 PER MUOVERE, 2 PER TOOL"), 40));
 
         return tempVect;
     }
@@ -227,6 +227,15 @@ public class PrinterMaker
         return new String(cliToolsManager.centerThatString(("INSERIMENTO NON VALIDO"),40));
     }
 
+    //NOT MY TURN STRINGS
+    public String[] notMyTurnMove(String username, int color, int value, int x, int y)
+    {
+        String[] temp = new String[3];
+        temp[0] = cliToolsManager.simpleQuestionsMaker(username+" ha effettuato una mossa", 40, false);
+        temp[1] = cliToolsManager.simpleQuestionsMaker("ha spostato il dado "+cliToolsManager.getColor(color)+" di valore "+Integer.toString(value), 40, false);
+        temp[2] = cliToolsManager.simpleQuestionsMaker("nella cella x:"+Integer.toString(x)+", y: "+Integer.toString(y), 40, false);
+        return temp;
+    }
 
     //WAIT SCENES
     public String[] waitingForPlayersScene()

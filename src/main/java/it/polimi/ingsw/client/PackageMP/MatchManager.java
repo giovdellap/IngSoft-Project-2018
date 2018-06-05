@@ -4,11 +4,13 @@ package it.polimi.ingsw.client.PackageMP;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 
+import java.util.ArrayList;
+
 public class MatchManager
 {
     private PlayerClient[] players;
     private int round;
-    private int[] disconnectedPlayers;
+    private ArrayList<Integer> disconnectedPlayers;
     private int activePlayer;
 
     //PLAYERS
@@ -37,11 +39,11 @@ public class MatchManager
 
     //DISCONNECTED PLAYERS
 
-    public void setDisconnectedPlayers(int[] temp)
+    public void setDisconnectedPlayers(ArrayList<Integer> temp)
     {
         disconnectedPlayers = temp;
     }
-    public int[] getDisconnectedPlayers()
+    public ArrayList<Integer> getDisconnectedPlayers()
     {
         return disconnectedPlayers;
     }

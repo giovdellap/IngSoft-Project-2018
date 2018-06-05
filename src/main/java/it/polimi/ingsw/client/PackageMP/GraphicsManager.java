@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GraphicsManager
 {
@@ -25,7 +26,7 @@ public class GraphicsManager
     private int activePlayer;
     private int me;
     private int round;
-    private int[] disconnected;
+    private ArrayList<Integer> disconnected;
 
 
 
@@ -73,7 +74,7 @@ public class GraphicsManager
     }
 
     //TURN
-    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, int[] disconnected)
+    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
     {
         this.players=players;
         this.draft=draft;
@@ -86,7 +87,7 @@ public class GraphicsManager
     }
     public int askForWhat() throws InvalidIntArgumentException, IOException {
         if(graphics==2) {
-            if (disconnected != null)
+            if (!disconnected.isEmpty())
                 return beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
             else
                 return beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round);
@@ -122,6 +123,22 @@ public class GraphicsManager
     public void setToolsId(int[] tools)
     {
         beautifulCLI.setToolsID(tools);
+    }
+
+
+    //not my turn
+    public void showTurn() throws InvalidIntArgumentException, IOException {
+        if(graphics==2)
+        {
+            if(disconnected.isEmpty())
+                beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round);
+            else
+                beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
+        }
+    }
+    public void showMove(int color, int value, int x, int y) throws InvalidIntArgumentException {
+        if(graphics==2)
+            beautifulCLI.showMove(players, draft, track, toolsUsage, activePlayer, me, color, value, x, y);
     }
 
 

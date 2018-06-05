@@ -11,27 +11,27 @@ import java.util.ArrayList;
 public class SocketDecoder
 {
     private SocketProtocolTransformer transformer;
+    private String[] names;
+    private int[][] scoresPlayers;
 
     public SocketDecoder()
     {
         transformer = new SocketProtocolTransformer();
     }
 
-    private String[] names;
-    private int[][] scoresPlayers;
-
     //DRAFTPOOL
     public DraftPoolMP draftPoolDecoder(ArrayList<String> arg) throws InvalidIntArgumentException {
 
         //returns a full DraftPoolMP
-        DieMP[] temp = new DieMP[(arg.size()-1)/3];
+        DieMP[] temp = new DieMP[(arg.size())/3];
         int i=0;
         int index;
 
         //passing from strings to dice
         transformer.simpleDecode(arg.get(i));
-        while(!(transformer.getCmd().equals("end")&&transformer.getArg().equals("draft")))
+        while(i<arg.size())
         {
+            transformer.simpleDecode(arg.get(i));
             index=Integer.parseInt(transformer.getArg());
             i++;
             transformer.simpleDecode(arg.get(i));
@@ -41,7 +41,6 @@ public class SocketDecoder
             tempDie.setValueTest(Integer.parseInt(transformer.getArg()));
             temp[index]=tempDie;
             i++;
-            transformer.simpleDecode(arg.get(i));
         }
 
         //creating and returning new DraftPool
@@ -75,12 +74,13 @@ public class SocketDecoder
         }
         return scheme;
     }
-
     public RoundTrackMP roundTrackDecoder(ArrayList<String> arg) throws InvalidIntArgumentException, FullDataStructureException {
         //returns new roundTrack
         RoundTrackMP temp = new RoundTrackMP();
         int i=0;
         int round;
+        if(arg.isEmpty())
+            return temp;
 
         //builds a dice ArrayList
         transformer.simpleDecode(arg.get(i));
@@ -112,17 +112,13 @@ public class SocketDecoder
         }
         return temp;
     }
-
     public int[] toolTokensDecode(String[] arg)
     {
         int[] temp = new int[3];
-        for(int i=0;i<6;i++)
+        for(int i=0;i<3;i++)
         {
             transformer.simpleDecode(arg[i]);
-            int index= Integer.parseInt(transformer.getArg());
-            i++;
-            transformer.simpleDecode(arg[i]);
-            temp[index] = Integer.parseInt(transformer.getArg());
+            temp[i] = Integer.parseInt(transformer.getArg());
         }
         return temp;
     }
@@ -162,7 +158,5 @@ public class SocketDecoder
     {
         return scoresPlayers;
     }
-
-
 
 }

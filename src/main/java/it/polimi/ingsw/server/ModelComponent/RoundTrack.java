@@ -28,7 +28,7 @@ public class RoundTrack
 
     public RoundDice returnNTurnRoundDice(int turn) throws InvalidIntArgumentException
     {
-        if(turn<0||turn>=index)
+        if(turn<0||turn>index)
             throw new InvalidIntArgumentException();
         return roundVector[turn];
     }

@@ -264,12 +264,12 @@ public class Match
                 server.sServerLog.reinitialize();
 
                 if (temp[0] == modelInstance.getTempSchemes(i).getID() || temp[0] == modelInstance.getTempSchemes(i + numPlayers).getID())
-                    schemeCheck=true;
-
+                {
+                    schemeCheck = true;
+                }
                 modelInstance.setSelectedScheme(i, temp[0], temp[1]);
                 matchLog.minorLog("PlayerClient " + Integer.toString(i + 1) + " Schemeid = " + Integer.toString(modelInstance.getSchemebyIndex(i).getID()));
                 matchLog.minorLog("PlayerClient " + Integer.toString(i + 1) + " FB = " + Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
-
             }
         }
     }

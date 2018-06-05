@@ -11,6 +11,7 @@ import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ConnectionManager
 {
@@ -122,7 +123,7 @@ public class ConnectionManager
         else
             return 0;
     }
-    public int[] getDisconnectedPlayers() throws IOException {
+    public ArrayList<Integer> getDisconnectedPlayers() throws IOException {
         if(connection==1)
             return socketClient.getDiscPlayers();
         else
@@ -179,8 +180,22 @@ public class ConnectionManager
             return null;
     }
     public int[] getToolsUpdate() throws IOException {
-        if(connection==1)
+        if(connection==1) {
             return socketClient.toolCardUpdate();
+        }
+        else
+            return null;
+    }
+    public PlayerClient getSchemeModifies(PlayerClient previousPlayer) throws GenericInvalidArgumentException, InvalidIntArgumentException, IOException {
+        if(connection==1)
+            return socketClient.getSchemeCard(previousPlayer);
+        else
+            return null;
+    }
+    public int[] getNotMyTurnMove()
+    {
+        if(connection==1)
+            return socketClient.getNotMyTurnMove();
         else
             return null;
     }

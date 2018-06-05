@@ -31,7 +31,7 @@ public class ComponentFactory
         String[] gComponent = new String[7];
 
         for(int i=0;i<5;i++)
-            gComponent[i]=cliToolsManager.printSpaces(7)+modelGenerator.getScheme(tempScheme)[i]+cliToolsManager.printSpaces(7);
+            gComponent[i]=cliToolsManager.printSpaces(7)+modelGenerator.getScheme(tempScheme)[i];//+cliToolsManager.printSpaces(7);
 
         gComponent[5]=cliToolsManager.centerThatString(scheme.getName(fb)+cliToolsManager.printSpaces(3)+Integer.toString(scheme.getDiff(fb)), 20);
 
@@ -139,7 +139,7 @@ public class ComponentFactory
         SchemeCardMP tempScheme = scheme;
 
         for(int i=0;i<5;i++)
-            aComponent[i]=cliToolsManager.printSpaces(7)+modelGenerator.getScheme(tempScheme)[i]+cliToolsManager.printSpaces(7);
+            aComponent[i]=cliToolsManager.printSpaces(7)+modelGenerator.getScheme(tempScheme)[i];//+cliToolsManager.printSpaces(7)
 
         aComponent[5]=username+" > "+"TOKENS:"+tokens;
 

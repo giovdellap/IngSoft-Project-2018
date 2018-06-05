@@ -106,8 +106,9 @@ public class DraftPool
     {
         //returns not disabled dice counter
         int i=0;
-        while(!draft[i].isDisabled())
-            i++;
+        while(i< draft.length)
+            if(!draft[i].isDisabled())
+                i++;
         return i;
     }
 }

@@ -13,7 +13,7 @@ public class ToolCardUsageRecord
 
         int extracted=0;
         selectedId = new int[3];
-        while(extracted<4)
+        while(extracted<3)
         {
             int i = (int)(Math.random()*12+1);
             boolean flag=false;
