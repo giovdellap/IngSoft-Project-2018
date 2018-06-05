@@ -228,7 +228,6 @@ public class SocketClient {
     public boolean toDo(int arg) throws IOException {
         sendMessage("todo", Integer.toString(arg));
         boolean flag = serverCheck();
-        System.out.println("flag: "+flag);
         return flag;
     }
     public boolean move(int[] arg) throws IOException {
@@ -245,7 +244,6 @@ public class SocketClient {
         receiveMessage();
         temp[0] = Integer.parseInt(transformer.getArg());
         receiveMessage();
-        System.out.println("arg: "+transformer.getArg());
         if(transformer.getArg().equals("move"))
             temp[1] = 1;
         if(transformer.getArg().equals("pass"))
@@ -352,7 +350,6 @@ public class SocketClient {
     //RECEPTION
     private void receiveMessage() throws IOException {
         transformer.simpleDecode(inSocket.readLine());
-        System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
     private void simpleReceive() throws IOException {
         msgIN = inSocket.readLine();
@@ -361,7 +358,6 @@ public class SocketClient {
     //SENDING
     private void sendMessage(String cmd, String arg)
     {
-        System.out.println("sent "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();
     }

@@ -20,29 +20,24 @@ public class SocketEncoder
     }
 
     //DRAFTPOOL
-    public String[] draftEncoder(DraftPool draft) throws InvalidIntArgumentException {
+    public String[] draftEncoder(DraftPool draft) throws InvalidIntArgumentException
+    {
         //SERVER VERSION
         //returns the String vector representing given draftpool
-        System.out.println("qui");
-        System.out.println(Integer.toString(draft.returnDie(2).getColor()));
-        System.out.println(Integer.toString(draft.getDiceNum()));
         String[] temp = new String[(draft.getDiceNum()*3)+2];
-        System.out.println("cazzo");
+
         temp[0] = transformer.simpleEncode("model", "draft");
-        System.out.println(temp[0]);
         int i=1;
         int index=0;
         while(i<(draft.getDiceNum()*3)+1)
         {
             temp[i] = transformer.simpleEncode("index", Integer.toString(index));
-            System.out.println(temp[i]);
+
             i++;
             temp[i] = transformer.simpleEncode("color", Integer.toString(draft.returnDie(index).getColor()));
-            System.out.println(temp[i]);
 
             i++;
             temp[i] = transformer.simpleEncode("value", Integer.toString(draft.returnDie(index).getValue()));
-            System.out.println(temp[i]);
 
             i++;
             index++;
@@ -62,7 +57,8 @@ public class SocketEncoder
 
 
     //SCHEMECARD
-    public String[] schemeCardEncoder(SchemeCard schemeCard) throws InvalidIntArgumentException {
+    public String[] schemeCardEncoder(SchemeCard schemeCard) throws InvalidIntArgumentException
+    {
         String[] temp = new String[(schemeCard.getNumDice()*4)+2];
         temp[0] = transformer.simpleEncode("model", "scheme");
         int index=1;
@@ -88,6 +84,7 @@ public class SocketEncoder
         temp[0] = transformer.simpleEncode("model", "scheme");
         temp[1] = transformer.simpleEncode("x", Integer.toString(x));
         temp[2] = transformer.simpleEncode("y", Integer.toString(y));
+
         return temp;
     }
 
@@ -100,18 +97,21 @@ public class SocketEncoder
         temp[0] = transformer.simpleEncode("model", "tool");
         int i=1;
         int id=0;
-        while(i<7) {
+        while(i<7)
+        {
             temp[i]=transformer.simpleEncode("id", Integer.toString(id));
             i++;
             temp[i]=transformer.simpleEncode("tokens", Integer.toString(tokens[id]));
             i++;
             id++;
         }
+
         return temp;
     }
 
     //ROUNDTRACK
-    public String[] roundTrackEncoder(RoundTrack track, int round) throws InvalidIntArgumentException {
+    public String[] roundTrackEncoder(RoundTrack track, int round) throws InvalidIntArgumentException
+    {
         ArrayList<String> tempAL = new ArrayList<String>();
         tempAL.add(transformer.simpleEncode("model", "track"));
 
@@ -129,6 +129,7 @@ public class SocketEncoder
         String[] temp = new String[tempAL.size()];
         for(int i=0;i<tempAL.size();i++)
             temp[i] = tempAL.get(i);
+
         return temp;
     }
 
@@ -164,6 +165,5 @@ public class SocketEncoder
         }
 
         return tempVect;
-
     }
 }

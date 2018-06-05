@@ -41,8 +41,8 @@ public class SocketPlayer
 
     //COSTRUCTOR
 
-    public SocketPlayer(Socket s) throws IOException, GenericInvalidArgumentException {
-
+    public SocketPlayer(Socket s) throws IOException
+    {
         sPlayerLog = new MinorLogger();
 
         socket = s;
@@ -55,8 +55,10 @@ public class SocketPlayer
 
     //TURN METHODS
 
-    public void sendTurnData(int round, ArrayList<Integer> discPlayers, int active) throws IOException, GenericInvalidArgumentException {
-        try {
+    public void sendTurnData(int round, ArrayList<Integer> discPlayers, int active) throws IOException, GenericInvalidArgumentException
+    {
+        try
+        {
             sendMessage("round", Integer.toString(round));
             sendMessage("disconnected", Integer.toString(discPlayers.size()));
             if(!discPlayers.isEmpty())
@@ -76,14 +78,16 @@ public class SocketPlayer
         }
     }
 
-    public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException {
-        System.out.println("prima");
+    public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
+    {
         String[] temp = socketEncoder.draftEncoder(draft);
-        System.out.println("dopo");
-        System.out.println(temp[0]);
+
+        System.out.println("here is the problem");
+
         for(int i=0;i<temp.length;i++)
         {
-            try{
+            try
+            {
                 sendReadyMessage(temp[i]);
             } catch (Exception e)
             {
@@ -94,9 +98,11 @@ public class SocketPlayer
 
     }
 
-    public void sendRoundTrack(RoundTrack track, int round) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException {
+    public void sendRoundTrack(RoundTrack track, int round) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
+    {
         String[] temp = socketEncoder.roundTrackEncoder(track, round);
-        try{
+        try
+        {
             for(int i=0;i<temp.length;i++)
                 sendReadyMessage(temp[i]);
             sendMessage("end", "track");
@@ -108,9 +114,11 @@ public class SocketPlayer
 
     }
 
-    public void toolCardsUpdate(int[] arg) throws IOException, GenericInvalidArgumentException {
+    public void toolCardsUpdate(int[] arg) throws IOException, GenericInvalidArgumentException
+    {
         String[] temp = socketEncoder.toolCardUpdateEncoder(arg);
-        try{
+        try
+        {
             for(int i=0;i<temp.length;i++)
                 sendReadyMessage(temp[i]);
             sendMessage("end", "tool");
@@ -121,8 +129,10 @@ public class SocketPlayer
         }
     }
 
-    public void sendWait() throws IOException, GenericInvalidArgumentException {
-        try {
+    public void sendWait() throws IOException, GenericInvalidArgumentException
+    {
+        try
+        {
             sendMessage("wait", "players");
         } catch (Exception e)
         {
@@ -131,8 +141,10 @@ public class SocketPlayer
         }
     }
 
-    public int getToDo() throws GenericInvalidArgumentException, IOException {
-        try {
+    public int getToDo() throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             sendMessage("wait", "todo");
             System.out.println("Wait todo sent");
             receiveMessage();
@@ -145,8 +157,10 @@ public class SocketPlayer
         }
     }
 
-    public void serverCheckResponse(boolean response) throws GenericInvalidArgumentException, IOException {
-        try{
+    public void serverCheckResponse(boolean response) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             sendMessage("check", Boolean.toString(response));
         } catch (Exception e)
         {
@@ -155,9 +169,11 @@ public class SocketPlayer
         }
     }
 
-    public void sendScheme(SchemeCard scheme) throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException {
+    public void sendScheme(SchemeCard scheme) throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException
+    {
         String[] temp = socketEncoder.schemeCardEncoder(scheme);
-        try{
+        try
+        {
             for(int i=0;i<temp.length;i++)
                 sendReadyMessage(temp[i]);
         } catch (Exception e)
@@ -168,9 +184,10 @@ public class SocketPlayer
     }
 
     //MOVE
-    public int receiveDraftPoolMove() throws IOException, GenericInvalidArgumentException {
-
-        try {
+    public int receiveDraftPoolMove() throws IOException, GenericInvalidArgumentException
+    {
+        try
+        {
             int temp;
             receiveMessage();
             if (transformer.getArg() == "draft") ;
@@ -188,9 +205,11 @@ public class SocketPlayer
         }
     }
 
-    public int[] receiveSchemeCardMove() throws GenericInvalidArgumentException, IOException {
+    public int[] receiveSchemeCardMove() throws GenericInvalidArgumentException, IOException
+    {
         int[] temp = new int[2];
-        try{
+        try
+        {
             receiveMessage();
             if(transformer.getArg().equals("scheme"))
             {
@@ -208,9 +227,11 @@ public class SocketPlayer
         return temp;
     }
 
-    public void notifyAction(int id, int action) throws IOException, GenericInvalidArgumentException {
+    public void notifyAction(int id, int action) throws IOException, GenericInvalidArgumentException
+    {
         //starts notify client about active player's action
-        try{
+        try
+        {
             sendMessage("player", Integer.toString(id));
             if(action==0)
                 sendMessage("action", "pass");
@@ -225,8 +246,10 @@ public class SocketPlayer
         }
     }
 
-    public void endAction(int action) throws GenericInvalidArgumentException, IOException {
-        try{
+    public void endAction(int action) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             if(action==1)
                 sendMessage("end", "move");
             if(action==2)
@@ -238,8 +261,10 @@ public class SocketPlayer
         }
     }
 
-    public void endTurnNotifier() throws GenericInvalidArgumentException, IOException {
-        try{
+    public void endTurnNotifier() throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             sendMessage("end", "turn");
         } catch (Exception e)
         {
@@ -248,9 +273,11 @@ public class SocketPlayer
         }
     }
 
-    public int getToolId() throws IOException, GenericInvalidArgumentException {
+    public int getToolId() throws IOException, GenericInvalidArgumentException
+    {
         int temp;
-        try {
+        try
+        {
             receiveMessage();
         }catch (Exception e)
         {
@@ -262,11 +289,13 @@ public class SocketPlayer
     }
 
     //TOOLS RECEIVE METHODS
-    public int[] receiveSimpleXYTool() throws GenericInvalidArgumentException, IOException {
+    public int[] receiveSimpleXYTool() throws GenericInvalidArgumentException, IOException
+    {
         //receives simple x,y coordinates
 
         int[] temp = new int[2];
-        try {
+        try
+        {
             receiveMessage();
             temp[0] = Integer.parseInt(transformer.getArg());
             receiveMessage();
@@ -280,9 +309,11 @@ public class SocketPlayer
         return temp;
     }
 
-    public char receiveTool1Action() throws GenericInvalidArgumentException, IOException {
+    public char receiveTool1Action() throws GenericInvalidArgumentException, IOException
+    {
         char temp='a';
-        try{
+        try
+        {
             receiveMessage();
             temp = transformer.getArg().charAt(0);
         }catch (Exception e)
@@ -293,9 +324,11 @@ public class SocketPlayer
         return temp;
     }
 
-    public int[] receiveDoubleXYTool() throws GenericInvalidArgumentException, IOException {
+    public int[] receiveDoubleXYTool() throws GenericInvalidArgumentException, IOException
+    {
         int[] temp = new int[4];
-        try{
+        try
+        {
             receiveMessage();
             temp[0] = Integer.parseInt(transformer.getArg());
             receiveMessage();
@@ -322,18 +355,19 @@ public class SocketPlayer
             outSocket.flush();
 
             simpleDecode(inSocket.readLine());
+
             return tempArg;
         } catch (Exception e)
         {
             socket.close();
             disconnectionManager();
+
             return null;
         }
     }
 
     public void confirmUsername() throws IOException, GenericInvalidArgumentException
     {
-
         try
         {
             username = tempArg;
@@ -506,7 +540,8 @@ public class SocketPlayer
         {
             outSocket.println("#wait#$players$");
             outSocket.flush();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             try
             {
                 sPlayerLog.minorLog("Exception e");
@@ -564,7 +599,8 @@ public class SocketPlayer
 
 
     //CONNECTION LOST MANAGEMENT
-    private void disconnectionManager() throws GenericInvalidArgumentException {
+    private void disconnectionManager() throws GenericInvalidArgumentException
+    {
         connected = false;
         sPlayerLog.minorLog("CLIENT "+Integer.toString(id+1)+" DISCONNECTED");
     }
@@ -575,8 +611,10 @@ public class SocketPlayer
         return connected;
     }
 
-    public void notifyDisconnectedPlayer(int playerID) throws GenericInvalidArgumentException, IOException {
-        try {
+    public void notifyDisconnectedPlayer(int playerID) throws GenericInvalidArgumentException, IOException
+    {
+        try
+        {
             outSocket.println("#fail#$" + Integer.toString(playerID) + "$");
             outSocket.flush();
             sPlayerLog.minorLog("Disconnection player " + Integer.toString(playerID) + " notified to player " + Integer.toString(id));
@@ -625,21 +663,19 @@ public class SocketPlayer
     }
 
     //RECEIVE/SEND
-    private void receiveMessage() throws IOException {
+    private void receiveMessage() throws IOException
+    {
         transformer.simpleDecode(inSocket.readLine());
-        System.out.println("received: "+transformer.getCmd()+" "+transformer.getArg());
     }
 
     private void sendMessage(String cmd, String arg)
     {
-        System.out.println("sent: "+cmd+" "+arg);
         outSocket.println(transformer.simpleEncode(cmd, arg));
         outSocket.flush();;
     }
 
     private void sendReadyMessage(String s)
     {
-        System.out.println("sent: "+s);
         outSocket.println(s);
         outSocket.flush();
     }

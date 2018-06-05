@@ -132,7 +132,6 @@ public class MPExecute extends Application {
 
             whatToDo=graphicsManager.askForWhat();
             boolean toDoResponse = connectionManager.toDo(whatToDo);
-            System.out.println("rcamadonna:"+toDoResponse);
             if(toDoResponse)
             {
                 if(whatToDo==0)

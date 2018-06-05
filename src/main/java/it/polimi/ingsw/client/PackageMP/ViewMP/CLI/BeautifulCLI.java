@@ -30,23 +30,27 @@ public class BeautifulCLI
         msgIN = "";
     }
 
-    public String askUsername() throws IOException {
+    public String askUsername() throws IOException
+    {
         //asks for username
 
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getUsernameInsertion());
         readIt();
         printOut(cliToolsManager.sceneEnder(40));
+
         return msgIN;
 
     }
 
-    public String askUsernameAgain(String temp) throws IOException {
+    public String askUsernameAgain(String temp) throws IOException
+    {
 
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getUsernameInsertionAgain(temp));
         readIt();
         printOut(cliToolsManager.sceneEnder(40));
+
         return msgIN;
     }
 
@@ -57,8 +61,8 @@ public class BeautifulCLI
         printOut(cliToolsManager.sceneEnder(40));
     }
 
-    public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException {
-
+    public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
+    {
         privateObjective = privObj;
         this.pubObjs = pubObjs;
         printOut(cliToolsManager.sceneInitializer(40));
@@ -91,6 +95,7 @@ public class BeautifulCLI
             temp.setfb(2);
         }
         printOut(cliToolsManager.sceneEnder(40));
+
         return temp;
     }
 
@@ -118,8 +123,6 @@ public class BeautifulCLI
         while(!flag)
         {
             readIt();
-            System.out.println("msgIN: "+msgIN);
-            System.out.println(Integer.parseInt(msgIN));
             if(Integer.parseInt(msgIN)>0&&Integer.parseInt(msgIN)<3)
             {
                 flag = true;
@@ -132,7 +135,8 @@ public class BeautifulCLI
         }
         return Integer.parseInt(msgIN);
     }
-    public int askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException {
+    public int askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
+    {
         //asks user what to do
         //0 = pass, 1 = move, 2 = tool
         printOut(cliToolsManager.sceneInitializer(40));
@@ -165,8 +169,8 @@ public class BeautifulCLI
         return Integer.parseInt(msgIN);
     }
 
-    public int[] move() throws IOException {
-
+    public int[] move() throws IOException
+    {
         int[] temp = new int[3];
         printOut(printerMaker.canMove());
         printOut(printerMaker.insertDraftIndex());
@@ -181,6 +185,7 @@ public class BeautifulCLI
 
         return temp;
     }
+
     public void cantMove()
     {
         printOut(printerMaker.cantMove());
@@ -197,9 +202,11 @@ public class BeautifulCLI
 
     //NOT MY TURN
 
-    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException {
+    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
+    {
         //asks user what to do
         //0 = pass, 1 = move, 2 = tool
+
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
@@ -215,9 +222,12 @@ public class BeautifulCLI
 
         printOut(cliToolsManager.sceneEnder(40));
     }
-    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException {
+
+    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException
+    {
         //asks user what to do
         //0 = pass, 1 = move, 2 = tool
+
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
@@ -229,7 +239,8 @@ public class BeautifulCLI
     }
 
 
-    public void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int color, int value, int x, int y) throws InvalidIntArgumentException {
+    public void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int color, int value, int x, int y) throws InvalidIntArgumentException
+    {
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
         printOut(printerMaker.notMyTurnMove(players[activePlayer].getName(), color, value, x, y));
@@ -255,13 +266,15 @@ public class BeautifulCLI
         outVideo.flush();
     }
 
-    private void readIt() throws IOException {
+    private void readIt() throws IOException
+    {
         //resets the buffer and reads from it
         outVideo.println("==>");
         outVideo.flush();
         msgIN = inKeyboard.readLine();
         //System.out.println(msgIN);
     }
+
     public void setToolsID(int[] toolsID)
     {
         printerMaker.setToolsID(toolsID);
