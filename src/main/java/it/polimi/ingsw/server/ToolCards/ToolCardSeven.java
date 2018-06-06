@@ -11,12 +11,13 @@ public class ToolCardSeven extends ToolCard {
         setToolCardName("Glazing Hammer");
     }
 
-    public void checkToolCardSeven() {
+    public boolean checkToolCardSeven() {
 
+        return true;
 
     }
 
-    public DraftPool ApplyModifies(DraftPool draft) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public DraftPool applyModifies(DraftPool draft) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         for(int i=0;draft.returnDie(i).isDisabled();i++)
             draft.returnDie(i).throwDie();

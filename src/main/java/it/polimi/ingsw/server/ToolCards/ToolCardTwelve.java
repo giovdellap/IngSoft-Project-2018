@@ -1,26 +1,32 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.server.ModelComponent.RoundDice;
+import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
-public class ToolCardFour extends ToolCard {
+public class ToolCardTwelve extends ToolCard {
 
-    public ToolCardFour() {
-        setToolCardName("Lathekin");
+    public ToolCardTwelve() {
+        setToolCardName("Tap Wheel");
     }
-    
-    public boolean checkToolCardFour(int x01, int y01, int x02, int y02, SchemeCard scheme, int x11, int y11, int x22, int y22) throws GenericInvalidArgumentException, InvalidIntArgumentException {
-        
-        Die toPlace1 = scheme.getDie(x01,y01);
-        Die toPlace2 = scheme.getDie(x02,y02);
 
-        if (toPlace1 == null || toPlace2==null || scheme == null)
-            throw new GenericInvalidArgumentException();
+    public boolean checkToolCardTwelve(RoundTrack track, int turn, int pos, int x01, int y01, int x02, int y02, SchemeCard scheme, int x11, int y11, int x22, int y22) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        if (x01 < 0 || x01 > 3 || y01 < 0 || y01 > 4 || x02 < 0 || x02 > 3 || y02 < 0 || y02 > 4 || x11 < 0 || x11 > 3 || y11 < 0 || y11 > 4 || x22 < 0 || x22 > 3 || y22 < 0 || y22 > 4)
-            throw new InvalidIntArgumentException();
+        RoundDice temp = track.returnNTurnRoundDice(turn);
+        int color = temp.getDie(pos).getColor();
+
+        if (color!=scheme.getDie(x01,y01).getColor() || color!=scheme.getDie(x02,y02).getColor()) {
+            System.out.println("The colors are not equal to the chosen die");
+            return false;
+        }
+
+        if(scheme.getDie(x01,y01).getColor()!=scheme.getDie(x02,y02).getColor()) {
+            System.out.println("The colors of the two dice are not the same");
+            return false;
+        }
 
         if (scheme.getDie(x01,y01).isDisabled() || scheme.getDie(x02,y02).isDisabled()) {
             System.out.println("Dice to position not found");
@@ -31,6 +37,10 @@ public class ToolCardFour extends ToolCard {
             System.out.println("Positions are already occupied");
             return false;
         }
+
+        Die toPlace1 = scheme.getDie(x01,y01);
+        Die toPlace2 = scheme.getDie(x02,y02);
+
 
         boolean flag = false;
 
@@ -82,7 +92,6 @@ public class ToolCardFour extends ToolCard {
             System.out.println("You must position your die on the same number cell of your scheme");
             return false;
         }
-
 
         // check color and value restrictions for the placement of the first die
 
@@ -193,11 +202,9 @@ public class ToolCardFour extends ToolCard {
         }
 
         return true;
-        
     }
 
-
-    public SchemeCard applyModifies(int x01, int y01, int x02, int y02, SchemeCard scheme, int x11, int y11, int x22, int y22) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public SchemeCard applyModifies(int x01, int y01, int x02, int y02, SchemeCard scheme, int x11, int y11, int x22, int y22) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         Die toPlace1 = scheme.getDie(x01,y01);
         Die toPlace2 = scheme.getDie(x02,y02);
@@ -211,6 +218,5 @@ public class ToolCardFour extends ToolCard {
         return scheme;
 
     }
-
 
 }

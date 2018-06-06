@@ -24,6 +24,7 @@ public class ComponentFactoryTest
         componentFactory = new ComponentFactory();
         SchemesDeckMP schemesDeckMP = new SchemesDeckMP();
         schemeCardMP = schemesDeckMP.extractSchemebyID(5);
+        schemeCardMP.setfb(2);
         publicObjectiveMP = new PublicObjectiveMP(3);
 
         DieMP[] tempVectDie= new DieMP[4];
