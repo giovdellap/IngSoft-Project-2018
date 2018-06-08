@@ -8,6 +8,17 @@ import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class ToolCardNine extends ToolCard {
 
+    DraftPool draft;
+    SchemeCard scheme;
+
+    public void setDraft(DraftPool d) {
+        draft = d;
+    }
+
+    public void setScheme(SchemeCard s) {
+        scheme = s;
+    }
+
     public ToolCardNine() {
         setToolCardName("Cork-backed Straightedge");
     }
@@ -96,14 +107,21 @@ public class ToolCardNine extends ToolCard {
 
     }
 
-    public SchemeCard applyModifies(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void applyModifies(int pos, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
-
         scheme.setDie(toPlace,x,y);
-        draft.pickUpDie(pos);
-        return scheme;
 
+        draft.pickUpDie(pos);
+
+    }
+
+    public DraftPool getDraft() {
+        return draft;
+    }
+
+    public SchemeCard getScheme() {
+        return scheme;
     }
 
 

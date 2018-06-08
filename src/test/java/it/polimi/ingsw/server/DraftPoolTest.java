@@ -20,12 +20,10 @@ public class DraftPoolTest
 
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException {
-        players=3;
-        dim=(players*2)+1;
-        testDP = new DraftPool(players);
-        tempDie=new Die(0);
-        tempDie2=new Die(1);
 
+        testDP = new DraftPool(4);
+        tempDie=new Die(1);
+        tempDie2=new Die(2);
 
     }
 
@@ -47,15 +45,14 @@ public class DraftPoolTest
     }
 
     @Test
-    public void checkPickUpDie() {
-        try {
+    public void checkPickUpDie() throws InvalidIntArgumentException {
+
+            tempDie = testDP.returnDie(3);
             testDP.pickUpDie(3);
-            testDP.returnDie(3);
-        }
-        catch (InvalidIntArgumentException e)
-        {
-            Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
-        }
+
+
+            Assertions.assertEquals(false,testDP.returnDie(3).equals(tempDie));
+
     }
     @Test
     public void checkPickUpException(){
@@ -93,7 +90,7 @@ public class DraftPoolTest
     @Test
     public void checkReplaceDieOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        tempDie2 = testDP.replaceDie(1,tempDie);
+        testDP.replaceDie(1,tempDie);
 
         Assertions.assertEquals(true,testDP.returnDie(1).equals(tempDie));
 

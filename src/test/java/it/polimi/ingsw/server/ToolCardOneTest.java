@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 public class ToolCardOneTest {
 
     SchemeCard testScheme;
-    int id = (int)(Math.random()*11+1);
+    int id = (int)(Math.random()*12+1);
     Die testDie;
     Die testDie2;
-    int randomColor= (int)(Math.random()*4+1);
+    int randomColor= (int)(Math.random()*5+1);
     ToolCardOne toolCardOneTest;
     DraftPool draftTest;
     SchemesDeck schemesDeckTest;
@@ -36,6 +36,8 @@ public class ToolCardOneTest {
         toolCardOneTest = new ToolCardOne();
         draftTest = new DraftPool(4);
         System.out.println(testScheme.getName(2));
+        toolCardOneTest.setDraft(draftTest);
+        toolCardOneTest.setScheme(testScheme);
 
     }
 
@@ -82,41 +84,38 @@ public class ToolCardOneTest {
     @Test
     public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        SchemeCard testScheme2;
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        testScheme2 = toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
 
 
-        Assertions.assertEquals(true,testScheme2.getDie(2,4).getValue()==3);
+        Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==3);
 
     }
 
     @Test
     public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        SchemeCard testScheme2;
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        testScheme2 = toolCardOneTest.applyModifies(3,1,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,1,testScheme,draftTest,2,4);
 
 
-        Assertions.assertEquals(true,testScheme2.getDie(2,4).getValue()==5);
+        Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==5);
 
     }
 
     @Test
     public void checkApplyModifiesThree() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        SchemeCard testScheme2;
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        testScheme2 = toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
 
-        Assertions.assertEquals(true,testDie.equals(testScheme2.getDie(2,4)));
+        Assertions.assertEquals(true,testDie.equals(toolCardOneTest.getScheme().getDie(2,4)));
 
     }
 

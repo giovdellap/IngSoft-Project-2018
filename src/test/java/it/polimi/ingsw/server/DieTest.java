@@ -11,7 +11,7 @@ public class DieTest
     @BeforeEach
     public void SetUp()
     {
-        die = new Die((int)(Math.random()*5)+1);
+        die = new Die((int)(Math.random()*6+1));
         die.throwDie();
     }
 

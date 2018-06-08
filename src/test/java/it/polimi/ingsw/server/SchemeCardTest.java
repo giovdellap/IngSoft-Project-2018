@@ -21,10 +21,10 @@ public class SchemeCardTest {
     private String frontName;
     private String backName;
 
-    int id = (int) (Math.random() * 11 + 1);
-    int fb = (int) (Math.random() * 1 + 1);
-    int toInsert = (int) (Math.random() * 10 + 1);
-    int diff = (int) (Math.random() * 5 + 1);
+    int id = (int) (Math.random() * 12 + 1);
+    int fb = (int) (Math.random() * 2 + 1);
+    int toInsert = (int) (Math.random() * 11 + 1);
+    int diff = (int) (Math.random() * 6 + 1);
 
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException {

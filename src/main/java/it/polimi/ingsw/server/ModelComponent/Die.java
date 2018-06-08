@@ -21,7 +21,7 @@ public class Die
 
     public void throwDie()
     {
-        value = (int)(Math.random()*5+1);
+        value = ((int)(Math.random()*6+1));
     }
 
     public void disableDie()

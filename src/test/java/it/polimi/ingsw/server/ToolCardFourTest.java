@@ -17,12 +17,12 @@ import org.junit.jupiter.api.Test;
 public class ToolCardFourTest {
 
     SchemeCard testScheme;
-    int id = (int) (Math.random() * 11 + 1);
+    int id = (int) (Math.random() * 12 + 1);
     Die testDie;
     Die testDie2;
     Die testDie3;
     Die testDie4;
-    int randomColor = (int) (Math.random() * 4 + 1);
+    int randomColor = (int) (Math.random() * 5 + 1);
     ToolCardFour toolCardFourTest;
     SchemesDeck schemesDeckTest;
 

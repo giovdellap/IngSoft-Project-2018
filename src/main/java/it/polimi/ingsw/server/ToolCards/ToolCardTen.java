@@ -8,8 +8,19 @@ import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class ToolCardTen extends ToolCard {
 
+    DraftPool draft;
+    SchemeCard scheme;
+
     public ToolCardTen() {
         setToolCardName("Grinding Stone");
+    }
+
+    public void setDraft(DraftPool d) {
+        draft = d;
+    }
+
+    public void setScheme(SchemeCard s) {
+        scheme = s;
     }
 
     public boolean checkToolCardTen(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
@@ -126,27 +137,58 @@ public class ToolCardTen extends ToolCard {
     }
 
 
-    public SchemeCard applyModifies(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void applyModifies(int pos, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         Die toPlace = draft.returnDie(pos);
 
-        if(toPlace.getValue()==1)
+        boolean changed=false;
+
+        if(toPlace.getValue()==1 && !changed)
+        {
             toPlace.setValueTest(6);
-        if(toPlace.getValue()==2)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==2 && !changed) {
             toPlace.setValueTest(5);
-        if(toPlace.getValue()==3)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==3 && !changed) {
             toPlace.setValueTest(4);
-        if(toPlace.getValue()==4)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==4 && !changed) {
             toPlace.setValueTest(3);
-        if(toPlace.getValue()==5)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==5 && !changed) {
             toPlace.setValueTest(2);
-        if(toPlace.getValue()==6)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==6 && !changed) {
             toPlace.setValueTest(1);
+            changed=true;
+        }
 
         scheme.setDie(toPlace,x,y);
+
         draft.pickUpDie(pos);
-        return scheme;
 
     }
+
+
+    public DraftPool getDraft() {
+        return draft;
+    }
+
+    public SchemeCard getScheme() {
+        return scheme;
+    }
+
+
 
 }

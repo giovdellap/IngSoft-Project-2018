@@ -4,9 +4,11 @@ import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
+import java.util.ArrayList;
+
 public class DraftPool
 {
-    private Die[] draft;
+    private ArrayList<Die> draft;
     private DiceContainer container;
     private int dim;
 
@@ -15,44 +17,23 @@ public class DraftPool
         if (players<2||players>4)throw new InvalidIntArgumentException();
         dim=(players*2)+1;
         container = new DiceContainer();
-        draft = container.throwDice(dim);
-        for(int i=0;i<dim;i++) {
-            draft[i].throwDie();
+        draft = new ArrayList<Die>();
+        Die[] temp = container.throwDice(dim);
 
+        for(int i=0;i<dim;i++) {
+            draft.add(temp[i]);
+            draft.get(i).throwDie();
         }
+
     }
 
 
     public void pickUpDie(int index) throws InvalidIntArgumentException
     {
         // deletes the die in the declared position
-        if (index>=dim||index<0||draft[index].isDisabled()) throw new InvalidIntArgumentException();
-        int counter=index;
-        boolean flag=true;
-        boolean reachedMax=false;
-        while(flag)
-        {
-            if (counter==dim-1)
-            {
-                flag = false;
-                reachedMax=true;
-            }
-            if(!reachedMax) {
-                if (draft[counter].isDisabled())
-                    flag = false;
-                if (flag)
-                    counter++;
-            }
-        }
+        if (index>=dim||index<0) throw new InvalidIntArgumentException();
 
-
-        for(int i = index; i <counter-1; i++)
-        {
-            draft[i] = draft[i++];
-
-        }
-
-        draft[counter-1].disableDie();
+        draft.remove(index);
 
     }
 
@@ -60,34 +41,23 @@ public class DraftPool
     public RoundDice updateDraftDice() throws InvalidIntArgumentException, FullDataStructureException
     {
         // draft update at the beginning of the round
-        int counter=0;
-        while(!draft[counter].isDisabled())
-        {
-            System.out.println(Boolean.toString(draft[counter].isDisabled()));
-            counter++;
-        }
-        System.out.println(Integer.toString(counter));
-        RoundDice tempRD = new RoundDice(counter);
-        for(int i=0;i<counter;i++)
-        {
-            tempRD.addDie(draft[i]);
-            System.out.println(Boolean.toString(tempRD.getDie(i).isDisabled()));
+        RoundDice dice = new RoundDice(draft.size());
 
-        }
-        draft=container.throwDice(dim);
-        for(int i=0;i<dim;i++)
-            draft[i].throwDie();
-        return tempRD;
+        for(Die die:draft)
+            dice.addDie(die);
+
+        return dice;
     }
 
     public Die replaceDie(int index, Die toPlace) throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
         // replaces a die in a certain position with a declared die
-        if (index>=dim||index<0||draft[index].isDisabled()) throw new InvalidIntArgumentException();
+        if (index>=draft.size()||index<0) throw new InvalidIntArgumentException();
         if (toPlace==null) throw new GenericInvalidArgumentException();
 
-        Die tempDie = draft[index];
-        draft[index]=toPlace;
+        Die tempDie = draft.get(index);
+        draft.remove(index);
+        draft.set(index,toPlace);
         return tempDie;
     }
 
@@ -96,22 +66,14 @@ public class DraftPool
     {
 
         if (pos>=dim||pos<0) throw new InvalidIntArgumentException();
-        if(draft[pos]!=null&&draft[pos].isDisabled()) throw new InvalidIntArgumentException();
-        Die tempDie = draft[pos];
-        return tempDie;
+
+        return draft.get(pos);
 
     }
 
     public int getDiceNum()
     {
-        //returns not disabled dice counter
-        int i=0;
-        boolean flag=false;
-        while(i< draft.length&&(!flag))
-            if(!draft[i].isDisabled())
-                i++;
-            else
-                flag=true;
-        return i;
+        return draft.size();
     }
+
 }

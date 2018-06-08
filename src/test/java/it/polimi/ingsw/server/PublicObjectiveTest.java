@@ -18,7 +18,7 @@ public class PublicObjectiveTest {
     private SchemeCard sc2;
     private SchemesDeck testSD;
 
-    int idTest = (int)(Math.random()*9+1);
+    int idTest = (int)(Math.random()*10+1);
 
 
     @BeforeEach

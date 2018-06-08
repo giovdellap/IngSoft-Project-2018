@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.server.ModelComponent.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -9,8 +10,19 @@ import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class ToolCardOne extends ToolCard {
 
+    DraftPool draft;
+    SchemeCard scheme;
+
     public ToolCardOne() {
         setToolCardName("Grozing Pliers");
+    }
+
+    public void setDraft(DraftPool d) {
+        draft = d;
+    }
+
+    public void setScheme(SchemeCard s) {
+        scheme = s;
     }
 
     public boolean checkToolCardOne(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
@@ -48,7 +60,7 @@ public class ToolCardOne extends ToolCard {
     }
 
 
-    public SchemeCard applyModifies(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void applyModifies(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
 
@@ -62,7 +74,15 @@ public class ToolCardOne extends ToolCard {
 
         scheme.setDie(toPlace, x, y);
         draft.pickUpDie(pos);
+
+    }
+
+    public SchemeCard getScheme() {
         return scheme;
+    }
+
+    public DraftPool getDraft() {
+        return draft;
     }
 
 

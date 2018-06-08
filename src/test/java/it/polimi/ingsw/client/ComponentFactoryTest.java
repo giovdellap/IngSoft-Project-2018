@@ -23,7 +23,7 @@ public class ComponentFactoryTest
     @BeforeEach public void setUp() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException {
         componentFactory = new ComponentFactory();
         SchemesDeckMP schemesDeckMP = new SchemesDeckMP();
-        schemeCardMP = schemesDeckMP.extractSchemebyID(5);
+        schemeCardMP = schemesDeckMP.extractSchemebyID(6);
         schemeCardMP.setfb(2);
         publicObjectiveMP = new PublicObjectiveMP(3);
 
