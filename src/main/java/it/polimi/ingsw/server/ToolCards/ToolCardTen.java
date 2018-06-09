@@ -27,18 +27,38 @@ public class ToolCardTen extends ToolCard {
 
         Die toPlace = draft.returnDie(pos);
 
-        if(toPlace.getValue()==1)
+        boolean changed=false;
+
+        if(toPlace.getValue()==1 && !changed)
+        {
             toPlace.setValueTest(6);
-        if(toPlace.getValue()==2)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==2 && !changed) {
             toPlace.setValueTest(5);
-        if(toPlace.getValue()==3)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==3 && !changed) {
             toPlace.setValueTest(4);
-        if(toPlace.getValue()==4)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==4 && !changed) {
             toPlace.setValueTest(3);
-        if(toPlace.getValue()==5)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==5 && !changed) {
             toPlace.setValueTest(2);
-        if(toPlace.getValue()==6)
+            changed=true;
+        }
+
+        if(toPlace.getValue()==6 && !changed) {
             toPlace.setValueTest(1);
+            changed=true;
+        }
 
 
         if (toPlace == null || scheme == null || draft.returnDie(pos).isDisabled())
