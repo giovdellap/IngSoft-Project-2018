@@ -1,0 +1,170 @@
+ToolCard 1
+
+PROTOCOL: 
+#index#$k$
+#x#$n$
+#y#$m$
+#action#$+/-$
+
+ARGUMENTS:
+int index
+int x
+int y
+char action
+
+--------------------------
+
+ToolCard 2-3
+
+PROTOCOL:
+#x0#$n$
+#y0#$m$
+#x1#$k$
+#y1#$z$
+
+ARGUMENTS:
+int x0
+int y0
+int x1
+int y1
+
+--------------------------
+
+ToolCard 4
+
+PROTOCOL:
+#x01#$n$
+#y01#$m$
+#x02#$k$
+#y02#$z$
+#x11#$n$
+#y11#$m$
+#x22#$k$
+#y22#$z$
+
+ARGUMENTS:
+int x01
+int y01
+int x02
+int y02
+int x11
+int y11
+int x22
+int y22
+
+--------------------------
+
+ToolCard 5
+
+PROTOCOL: 
+#index#$k$
+#RoundTrackTurn#$n$
+#RoundDicePos#$m$
+
+ARGUMENTS:
+int index
+int turn
+int pos
+
+--------------------------
+
+ToolCard 6
+
+PROTOCOL: 
+#index#$k$
+#x#$n$
+#y#$m$
+#booleanApplyOne#$t/f$
+#booleanApplyTwo#$t/f$
+
+ARGUMENTS:
+int index
+int x
+int y
+boolean ApplyOne
+boolean ApplyTwo
+
+--------------------------
+
+ToolCard 7
+
+PROTOCOL:
+(Model Component's Protocol)
+
+
+ARGUMENTS:
+
+
+--------------------------
+
+ToolCard 8-9-10
+
+PROTOCOL:
+(Client Move Protocol)
+#index#$k$
+#x#$n$
+#y#$m$
+
+ARGUMENTS:
+int index
+int x
+int y
+
+--------------------------
+
+ToolCard 11
+
+PROTOCOL:
+#index#$k$
+(container)
+#newValue#$z$
+#x#$n$
+#y#$m$
+
+ARGUMENTS:
+int index
+int newValue
+int x
+int y
+
+
+--------------------------
+
+ToolCard 12
+
+PROTOCOL:
+#RoundTrackTurn#$n$
+#RoundDicePos#$m$
+#x01#$n$
+#y01#$m$
+#x02#$k$
+#y02#$z$
+#x11#$n$
+#y11#$m$
+#x22#$k$
+#y22#$z$
+
+ARGUMENTS:
+int turn
+int pos
+int x01
+int y01
+int x02
+int y02
+int x11
+int y11
+int x22
+int y22
+
+
+
+
+
+
+
+
+
+
+
+
+
