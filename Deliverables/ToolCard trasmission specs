@@ -58,8 +58,8 @@ ToolCard 5
 
 PROTOCOL: 
 #index#$k$
-#RoundTrackTurn#$n$
-#RoundDicePos#$m$
+#roundtrackturn#$n$
+#rounddicepos#$m$
 
 ARGUMENTS:
 int index
@@ -74,15 +74,15 @@ PROTOCOL:
 #index#$k$
 #x#$n$
 #y#$m$
-#booleanApplyOne#$t/f$
-#booleanApplyTwo#$t/f$
+#booleanapplyone#$t/f$
+#booleanapplytwo#$t/f$
 
 ARGUMENTS:
 int index
 int x
 int y
-boolean ApplyOne
-boolean ApplyTwo
+boolean applyone
+boolean applytwo
 
 --------------------------
 
@@ -133,8 +133,8 @@ int y
 ToolCard 12
 
 PROTOCOL:
-#RoundTrackTurn#$n$
-#RoundDicePos#$m$
+#roundtrackturn#$n$
+#rounddicepos#$m$
 #x01#$n$
 #y01#$m$
 #x02#$k$
