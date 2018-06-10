@@ -117,13 +117,13 @@ ToolCard 11
 PROTOCOL:
 #index#$k$
 (container)
-#newValue#$z$
+#newvalue#$z$
 #x#$n$
 #y#$m$
 
 ARGUMENTS:
 int index
-int newValue
+int newvalue
 int x
 int y
 
