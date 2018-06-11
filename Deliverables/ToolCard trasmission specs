@@ -117,6 +117,7 @@ ToolCard 11
 PROTOCOL:
 #index#$k$
 (container)
+#newColor#$j$
 #newvalue#$z$
 #x#$n$
 #y#$m$
