@@ -125,6 +125,7 @@ PROTOCOL:
 ARGUMENTS:
 int index
 int newvalue
+int newcolor
 int x
 int y
 
