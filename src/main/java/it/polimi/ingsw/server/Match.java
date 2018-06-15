@@ -175,7 +175,11 @@ public class Match implements Observer
             if(turnManager.getActivePlayer()==0&&!turnManager.theEnd())
                 modelInstance.roundEnd();
         }
-        calculateScore();
+
+        FriendlyScoreCalculator scoreCalculator = new FriendlyScoreCalculator(modelInstance, players);
+        currentEvent=scoreCalculator.calculateScore();
+        for(Player pl:players)
+            pl.sendEvent(currentEvent);
 
     }
 
@@ -502,47 +506,6 @@ public class Match implements Observer
         }
         return false;
     }
-
-    public void calculateScore() throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        ranking = new String[players.size()];
-        rankingSpecs = new int[players.size()][7];
-
-        String[] temp = new String[players.size()];
-        int[][] tempSpecs = new int[players.size()][7]; //columns: 0=priv, 1=pub1, 2=pub2, 3=pub3, 4=tokens, 5=minus, 6=tot
-
-        for(int i=0;i<players.size();i++)
-        {
-            Player player = players.get(i);
-            temp[i] = player.getName();
-
-            tempSpecs[i][0] = modelInstance.getPrivateObjective(i).calculateBonus(modelInstance.getSchemebyIndex(i));
-            tempSpecs[i][1] = modelInstance.getPubObj(0).setBonus(modelInstance.getSchemebyIndex(i));
-            tempSpecs[i][2] = modelInstance.getPubObj(1).setBonus(modelInstance.getSchemebyIndex(i));
-            tempSpecs[i][3] = modelInstance.getPubObj(2).setBonus(modelInstance.getSchemebyIndex(i));
-            tempSpecs[i][4] = player.getTokens();
-            tempSpecs[i][5] = 0;
-            for(int x=0;x<4;x++)
-                for(int y=0;y<5;y++)
-                    if(modelInstance.getSchemebyIndex(i).getDie(x, y).isDisabled())
-                        tempSpecs[i][5]++;
-            tempSpecs[i][6] = tempSpecs[i][0]+tempSpecs[i][1]+tempSpecs[i][2]+tempSpecs[i][3]+tempSpecs[i][4]-tempSpecs[i][5];
-        }
-
-        for(int i=0;i<players.size();i++) {
-            int max=0;
-            int index=0;
-            for (int j=0;j<players.size();i++)
-            if(temp[j]!=null&&tempSpecs[j][6]>max) {
-                index = j;
-                max = tempSpecs[j][6];
-            }
-            ranking[i] = temp[index];
-            for(int n=0;n<7;n++)
-                rankingSpecs[i][n] = tempSpecs[index][n];
-        }
-    }
-
-
 
 
 
