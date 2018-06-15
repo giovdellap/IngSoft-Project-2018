@@ -3,104 +3,57 @@ package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentMP;
+import it.polimi.ingsw.commons.Die;
+
+import java.util.ArrayList;
 
 public class DraftPoolMP implements ModelComponentMP {
 
-    private DieMP[] draft;
-    private int dim;
+    private ArrayList<Die> draft;
 
 
-    public DraftPoolMP(DieMP[] dice) throws InvalidIntArgumentException
+    public DraftPoolMP(ArrayList<Die> dice) throws InvalidIntArgumentException
     {
-        dim = dice.length;
         draft = dice;
     }
 
 
     public void pickUpDie(int index) throws InvalidIntArgumentException
     {
-        if (index>=dim||index<0||draft[index].isDisabled()) throw new InvalidIntArgumentException();
+        if (index>=draft.size()||index<0) throw new InvalidIntArgumentException();
 
-        int counter=index;
-        boolean flag=true;
-        boolean reachedMax=false;
-        while(flag)
-        {
-            if (counter==dim-1)
-            {
-                flag = false;
-                reachedMax=true;
-            }
-            if(!reachedMax) {
-                if (draft[counter].isDisabled())
-                    flag = false;
-                if (flag)
-                    counter++;
-            }
-        }
-
-        for(int i = index; i <counter-1; i++)
-            draft[i] = draft[i++];
-
-        draft[counter-1].disableDie();
-
+        draft.remove(index);
     }
 
 
-    public void updateDraft(DieMP[] dice)
+    public void updateDraft(ArrayList<Die> dice)
     {
         draft=dice;
     }
 
 
-    public DieMP replaceDie(int index, DieMP toPlace) throws InvalidIntArgumentException, GenericInvalidArgumentException
+    public Die replaceDie(int index, Die toPlace) throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
 
-        if (index>=dim || index<0 ||draft[index].isDisabled()) throw new InvalidIntArgumentException();
+        if (index>=draft.size() || index<0) throw new InvalidIntArgumentException();
         if (toPlace==null) throw new GenericInvalidArgumentException();
 
-        DieMP tempDie = draft[index];
-        draft[index]=toPlace;
+        Die tempDie = draft.get(index);
+        draft.set(index, toPlace);
 
         return tempDie;
     }
 
-
-    public DieMP returnDie(int pos) throws InvalidIntArgumentException
+    public Die returnDie(int pos) throws InvalidIntArgumentException
     {
-        if (pos>=dim||pos<0) throw new InvalidIntArgumentException();
-        if(draft[pos]!=null&&draft[pos].isDisabled()) throw new InvalidIntArgumentException();
-        DieMP tempDie = draft[pos];
-        return tempDie;
+        if (pos>=draft.size()||pos<0) throw new InvalidIntArgumentException();
+        return draft.get(pos);
 
     }
 
     public int getSize()
     {
-        return draft.length;
-    }
-
-    public int getDiceNum()
-    {
-        //returns not disabled dice counter
-        int i=0;
-        while(!draft[i].isDisabled())
-            i++;
-        return i;
-    }
-
-    public int returnFirstDisabled()
-    {
-        int index=draft.length;
-        boolean flag=false;
-        for(int i=0;i<draft.length;i++)
-            if(draft[i].isDisabled()&&(!flag))
-            {
-                index=i;
-                flag=true;
-            }
-
-        return index;
+        return draft.size();
     }
 
 }

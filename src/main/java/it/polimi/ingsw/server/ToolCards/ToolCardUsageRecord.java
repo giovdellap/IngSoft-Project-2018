@@ -1,12 +1,18 @@
 package it.polimi.ingsw.server.ToolCards;
 
+import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
 public class ToolCardUsageRecord
 {
     private int[] selectedId;
     private int[] tokens;
+    private ToolCard[] cards;
 
-    public ToolCardUsageRecord()
-    {
+    private FcknSimpleLogger logger;
+
+    public ToolCardUsageRecord() throws InvalidIntArgumentException {
+        logger = new FcknSimpleLogger(0, false);
         tokens = new int[3];
         for (int i=0;i<3;i++)
             tokens[i]=0;
@@ -23,9 +29,12 @@ public class ToolCardUsageRecord
             if(flag==false)
             {
                 selectedId[extracted]=i;
+                logger.log("Tool extracted - ID: "+Integer.toString(i));
                 extracted++;
             }
         }
+        cards = new ToolCard[3];
+        toolCardConstructor();
     }
 
     public int checkAndApplyUsage(int playerTokens, int toolCard)
@@ -53,5 +62,80 @@ public class ToolCardUsageRecord
 
     public int[] getSelectedId() {
         return selectedId;
+    }
+
+    public void toolCardConstructor() throws InvalidIntArgumentException {
+        for(int i=0;i<3;i++)
+        {
+            switch (selectedId[i]){
+                case 1: {
+                    cards[i] = new ToolCardOne();
+                    break;
+                }
+                case 2:
+                {
+                    cards[i] = new ToolCardTwo();
+                    break;
+                }
+                case 3:
+                {
+                    cards[i] = new ToolCardThree();
+                    break;
+                }
+                case 4:
+                {
+                    cards[i] = new ToolCardFour();
+                    break;
+                }
+                case 5:
+                {
+                    cards[i] = new ToolCardFive();
+                    break;
+                }
+                case 6:
+                {
+                    cards[i] = new ToolCardSix();
+                    break;
+                }
+                case 7:
+                {
+                    cards[i] = new ToolCardSeven();
+                    break;
+                }
+                case 8:
+                {
+                    cards[i] = new ToolCardEight();
+                    break;
+                }
+                case 9:
+                {
+                    cards[i] = new ToolCardNine();
+                    break;
+                }
+                case 10:
+                {
+                    cards[i] = new ToolCardTen();
+                    break;
+                }
+                case 11:
+                {
+                    cards[i] = new ToolCardEleven();
+                    break;
+                }
+                case 12:
+                {
+                    cards[i] = new ToolCardTwelve();
+                    break;
+                }
+            }
+        }
+    }
+
+    public ToolCard getCard(int id)
+    {
+        for(int i=0;i<3;i++)
+            if(cards[i].getId()==id)
+                return cards[i];
+        return null;
     }
 }

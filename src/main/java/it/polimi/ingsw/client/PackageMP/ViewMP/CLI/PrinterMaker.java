@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
+import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 
 import java.util.ArrayList;
 
@@ -228,12 +229,12 @@ public class PrinterMaker
     }
 
     //NOT MY TURN STRINGS
-    public String[] notMyTurnMove(String username, int color, int value, int x, int y)
+    public String[] notMyTurnMove(String username, int index, int x, int y)
     {
         String[] temp = new String[3];
         temp[0] = cliToolsManager.simpleQuestionsMaker(username+" ha effettuato una mossa", 40, false);
-        temp[1] = cliToolsManager.simpleQuestionsMaker("ha spostato il dado "+cliToolsManager.getColor(color)+" di valore "+Integer.toString(value), 40, false);
-        temp[2] = cliToolsManager.simpleQuestionsMaker("nella cella x:"+Integer.toString(x)+", y: "+Integer.toString(y), 40, false);
+        temp[1] = cliToolsManager.simpleQuestionsMaker("ha spostato il dado in posizione "+Integer.toString(index+1), 40, false);
+        temp[2] = cliToolsManager.simpleQuestionsMaker("nella cella x:"+Integer.toString(x+1)+", y: "+Integer.toString(y+1), 40, false);
         return temp;
     }
 
@@ -256,5 +257,51 @@ public class PrinterMaker
     {
         this.toolsId=tools;
 
+    }
+
+    public String[] showTool(ToolCardEvent event)
+    {
+        String[] temp;
+
+        switch (event.getId()) {
+            case (1):
+            {
+                temp = new String[2];
+                if (((ToolCardOneEvent) event).getAction() == '+')
+                    temp[0] = cliToolsManager.simpleQuestionsMaker("Il giocatore attivo ha aumentato il valore del dado in posizione " + Integer.toString(((ToolCardOneEvent) event).getIndex()+1), 40, false);
+                temp[1] = cliToolsManager.simpleQuestionsMaker("e lo ha spostato in posizione " + Integer.toString(((ToolCardOneEvent) event).getX()+1) + ", " + Integer.toString(((ToolCardOneEvent) event).getY()+1), 40, false);
+                return temp;
+            }
+            case (2):
+            {
+                temp = new String[2];
+                temp[0] = cliToolsManager.simpleQuestionsMaker("Il giocatore attivo ha spostato il dado dalla posizione "+Integer.toString(((ToolCardTwoThreeEvent)event).getX0()+1)+", "+Integer.toString(((ToolCardTwoThreeEvent) event).getY0()+1), 40, false);
+                temp[1] = cliToolsManager.simpleQuestionsMaker("alla posizione "+Integer.toString(((ToolCardTwoThreeEvent) event).getX1()+1)+", "+Integer.toString(((ToolCardTwoThreeEvent) event).getY1()+1), 40, false);
+                return temp;
+            }
+            case (3):
+            {
+                temp = new String[2];
+                temp[0] = cliToolsManager.simpleQuestionsMaker("Il giocatore attivo ha spostato il dado in posizione "+Integer.toString(((ToolCardTwoThreeEvent)event).getX0()+1)+", "+Integer.toString(((ToolCardTwoThreeEvent) event).getY0()+1), 40, false);
+                temp[1] = cliToolsManager.simpleQuestionsMaker("in posizione "+Integer.toString(((ToolCardTwoThreeEvent) event).getX1()+1)+", "+Integer.toString(((ToolCardTwoThreeEvent) event).getY1()+1), 40, false);
+                return temp;
+            }
+            case (4):
+            {
+                temp = new String[3];
+                temp[0] = cliToolsManager.simpleQuestionsMaker("Il giocatore attivo ha spostato il dado in posizione "+Integer.toString(((ToolCardFourEvent)event).getX01()+1)+", "+Integer.toString(((ToolCardFourEvent) event).getY01()+1), 40, false);
+                temp[1] = cliToolsManager.simpleQuestionsMaker("in posizione "+Integer.toString(((ToolCardFourEvent) event).getX11()+1)+", "+Integer.toString(((ToolCardFourEvent) event).getY11()+1), 40, false);
+                temp[2] = cliToolsManager.simpleQuestionsMaker("il dado "+Integer.toString(((ToolCardFourEvent) event).getX02()+1)+", "+Integer.toString(((ToolCardFourEvent) event).getY02()+1)+ " in posizione "+Integer.toString(((ToolCardFourEvent) event).getX22()+1)+", "+Integer.toString(((ToolCardFourEvent) event).getY22()+1),40 ,false);
+                return temp;
+            }
+            case (5):
+            {
+                temp = new String[2];
+                temp[0] = cliToolsManager.simpleQuestionsMaker("Il giocatore attivo ha sostituito il dado in posizione "+Integer.toString(((ToolCardFiveEvent)event).getIndex()+1), 40, false);
+                temp[1] = cliToolsManager.simpleQuestionsMaker("con il dado in posizione "+Integer.toString(((ToolCardFiveEvent) event).getPos()+1)+" del turno "+Integer.toString(((ToolCardFiveEvent) event).getTurn()+1), 40, false);
+            }
+
+        }
+        return null;
     }
 }

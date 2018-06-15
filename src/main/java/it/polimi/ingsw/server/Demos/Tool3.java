@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.Demos;
 
-import it.polimi.ingsw.server.Model;
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ToolCards.ToolCard;
 import it.polimi.ingsw.server.ToolCards.ToolCardThree;
 
 import java.io.*;

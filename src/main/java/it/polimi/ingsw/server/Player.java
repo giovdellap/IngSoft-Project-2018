@@ -1,21 +1,55 @@
 package it.polimi.ingsw.server;
 
-public class Player
+import it.polimi.ingsw.commons.Events.Event;
+import it.polimi.ingsw.server.Connection.ConnectionManager;
+import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Observable;
+import java.util.Observer;
+
+public class Player extends Observable implements Observer
 {
+    //DATA
     private int id;// player id
     private String name;// player username
     private boolean active;//playing player flag
     private int tokens;//player tokens counter
     private boolean eightUsed;//player ToolCard 8 usage flag
+    private boolean isDisconnected=false;
 
-    public Player(int id, String name, int tokens)
-    {
-        this.id=id;
-        this.name=name;
-        active=false;
-        this.tokens=tokens;
-        eightUsed=false;
+    //MANAGERS
+    private ConnectionManager connectionManager;
+
+
+    public Player(Socket socket) throws IOException, GenericInvalidArgumentException {
+        connectionManager = new ConnectionManager(socket);
+        connectionManager.addObserver(this);
     }
+    public void getUsername(String[] names) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+        name = connectionManager.getUsername(names);
+    }
+    public void getUsername() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+        name = connectionManager.getUsername();
+    }
+
+    //EVENT HANDLING
+    public void handleEvent(Event event) throws IOException, InvalidIntArgumentException {
+        //send-get events
+        connectionManager.handleEvent(event);
+    }
+    public void getEvent() throws IOException, InvalidIntArgumentException {
+        //gets events
+        connectionManager.getEvent();
+    }
+    public void sendEvent(Event event)
+    {
+        connectionManager.sendEvent(event);
+    }
+
+
 
     //GET METHODS
     public String getName()
@@ -27,9 +61,6 @@ public class Player
     {
         return id;
     }
-
-
-
 
 
     //ACTIVATION
@@ -74,4 +105,15 @@ public class Player
         //resets eightUsed when round changes
         eightUsed=false;
     }
+
+    public boolean isDisconnected() {
+        return isDisconnected;
+    }
+
+    public void update(Observable o, Object arg) {
+        setChanged();
+        notifyObservers(arg);
+    }
+
+
 }

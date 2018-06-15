@@ -1,10 +1,11 @@
 package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Die;
 
 public class RoundDiceMP {
 
-    private DieMP[] diceVector;
+    private Die[] diceVector;
     private int index=0;
     private int dim=0;
 
@@ -13,12 +14,12 @@ public class RoundDiceMP {
         if(par<0||par>9)
             throw new InvalidIntArgumentException();
         dim=par;
-        diceVector = new DieMP[dim];
+        diceVector = new Die[dim];
         for(int i=0;i<dim;i++)
-            diceVector[i]=new DieMP(0);
+            diceVector[i]=new Die(0);
     }
 
-    public void addDie(DieMP thisDie) throws FullDataStructureException
+    public void addDie(Die thisDie) throws FullDataStructureException
     {
         if(index<dim)
         {
@@ -30,7 +31,7 @@ public class RoundDiceMP {
             throw new FullDataStructureException();
     }
 
-    public DieMP getDie(int pos) throws InvalidIntArgumentException
+    public Die getDie(int pos) throws InvalidIntArgumentException
     {
         if(pos>index||pos<0||diceVector[pos].isDisabled())
             throw new InvalidIntArgumentException();

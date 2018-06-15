@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -10,11 +10,23 @@ public class ToolCardSix extends ToolCard {
 
     public ToolCardSix() {
         setToolCardName("Flux Brush");
+        setId(6);
     }
 
+    DraftPool draft;
+    SchemeCard scheme;
 
-    public boolean checkToolCardSixSchemeCard(Die toPlace, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void setDraft(DraftPool draft) {
+        this.draft = draft;
+    }
 
+    public void setScheme(SchemeCard scheme) {
+        this.scheme = scheme;
+    }
+
+    public boolean checkToolCardSixSchemeCard(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        Die toPlace = draft.returnDie(pos);
 
         if (toPlace == null || scheme == null)
             throw new GenericInvalidArgumentException();
@@ -107,16 +119,25 @@ public class ToolCardSix extends ToolCard {
 
     }
 
-    public SchemeCard ApplyModifiesToScheme(Die toPlace, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void ApplyModifiesToScheme(int pos, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+        Die toPlace = draft.returnDie(pos);
         scheme.setDie(toPlace,x,y);
-        return scheme;
+        draft.pickUpDie(pos);
     }
 
-    public DraftPool ApplyModifiesToDraft(Die toPlace, DraftPool draft, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void ApplyModifiesToDraft(int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+        Die toPlace = draft.returnDie(pos);
         draft.replaceDie(pos,toPlace);
+    }
+
+
+    public DraftPool getDraft() {
         return draft;
     }
 
-
+    public SchemeCard getScheme() {
+        return scheme;
+    }
 
 }
+

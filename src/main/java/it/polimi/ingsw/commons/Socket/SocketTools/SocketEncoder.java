@@ -1,7 +1,6 @@
-package it.polimi.ingsw.commons;
+package it.polimi.ingsw.commons.Socket.SocketTools;
 
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
@@ -55,6 +54,29 @@ public class SocketEncoder
         return temp;
     }
 
+    public String[] arrayListEncoder(ArrayList<Die> dice) {
+
+        String[] temp = new String[(dice.size())*3];
+        int i=0;
+        int index=0;
+        while(index<dice.size())
+        {
+            temp[i] = transformer.simpleEncode("index", Integer.toString(index));
+
+            i++;
+            temp[i] = transformer.simpleEncode("color", Integer.toString(dice.get(index).getColor()));
+
+            i++;
+            temp[i] = transformer.simpleEncode("value", Integer.toString(dice.get(index).getValue()));
+
+            i++;
+            index++;
+            
+        }
+
+        return temp;
+
+    }
 
     //SCHEMECARD
     public String[] schemeCardEncoder(SchemeCard schemeCard) throws InvalidIntArgumentException

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -29,7 +29,6 @@ public class CheckingMethodsTest {
         dieTest1 = new Die(0);
         dieTest2 = new Die(0);
         schemeCardTest.setfb(2);
-        System.out.println(schemeCardTest.getName(2));
 
     }
 

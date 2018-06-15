@@ -16,7 +16,7 @@ public class PublicObjectiveMPTest {
     private SchemeCardMP sc1;
     private SchemesDeckMP testSD;
 
-    int idTest = (int)(Math.random()*9+1);
+    int idTest = (int)(Math.random()*10+1);
 
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException

@@ -5,9 +5,12 @@ import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
+import it.polimi.ingsw.commons.Die;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class GameSceneTest {
 
@@ -40,27 +43,27 @@ public class GameSceneTest {
         players[1].setPlayerScheme(temp);
         players[1].setTokens(4);
 
-        DieMP die=new DieMP(3);
-        DieMP die1= new DieMP(5);
+        Die die=new Die(3);
+        Die die1= new Die(5);
 
         die.throwDie();
         die1.throwDie();
 
-        DieMP[]dievect= new DieMP[2];
-        dievect[0]=die;
-        dievect[1]=die1;
+        ArrayList<Die>dievect= new ArrayList<Die>(2);
+        dievect.add(die);
+        dievect.add(die1);
 
         draft=new DraftPoolMP(dievect);
 
-        DieMP[] tempVectDie=new DieMP[3];
+        Die[] tempVectDie=new Die[3];
 
-        tempVectDie[0]=new DieMP(4);
+        tempVectDie[0]=new Die(4);
         tempVectDie[0].throwDie();
 
-        tempVectDie[1]=new DieMP(2);
+        tempVectDie[1]=new Die(2);
         tempVectDie[1].throwDie();
 
-        tempVectDie[2]=new DieMP(3);
+        tempVectDie[2]=new Die(3);
         tempVectDie[2].throwDie();
 
 

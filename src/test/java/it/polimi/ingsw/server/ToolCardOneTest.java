@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
@@ -87,7 +87,7 @@ public class ToolCardOneTest {
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,2,2,4);
 
 
         Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==3);
@@ -100,7 +100,7 @@ public class ToolCardOneTest {
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        toolCardOneTest.applyModifies(3,1,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,1,2,4);
 
 
         Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==5);
@@ -113,7 +113,7 @@ public class ToolCardOneTest {
         testDie.setValueTest(4);
         draftTest.replaceDie(3,testDie);
 
-        toolCardOneTest.applyModifies(3,2,testScheme,draftTest,2,4);
+        toolCardOneTest.applyModifies(3,2,2,4);
 
         Assertions.assertEquals(true,testDie.equals(toolCardOneTest.getScheme().getDie(2,4)));
 

@@ -1,10 +1,14 @@
 package it.polimi.ingsw.client.PackageMP;
 
+import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+
+import java.util.ArrayList;
 
 public class ModelManagerMP
 {
@@ -25,7 +29,7 @@ public class ModelManagerMP
     public ModelManagerMP() throws InvalidIntArgumentException {
         scDeck = new SchemesDeckMP();
         pubObjs = new PublicObjectiveMP[3];
-
+        track = new RoundTrackMP();
     }
 
     public void setMyPrivObj(int id) throws InvalidIntArgumentException {
@@ -40,7 +44,10 @@ public class ModelManagerMP
     }
 
     public void setMyScheme(int index, int fb) throws InvalidIntArgumentException {
-        myScheme = tempSchemes[index];
+        if(index==tempSchemes[0].getID())
+            myScheme = tempSchemes[0];
+        else
+            myScheme=tempSchemes[1];
         myScheme.setfb(fb);
     }
 
@@ -67,7 +74,11 @@ public class ModelManagerMP
     }
 
     //DRAFTPOOL
-    public void setDraft(DraftPoolMP arg) { draft=arg;}
+    public void setDraft(ArrayList<Die> arg) throws InvalidIntArgumentException {draft = new DraftPoolMP(arg); }
+
+    public void setDraft(DraftPoolMP draft) {
+        this.draft = draft;
+    }
 
     public DraftPoolMP getDraft()
     {
@@ -75,9 +86,12 @@ public class ModelManagerMP
     }
 
     //TRACK
-    public void setTrack(RoundTrackMP arg)
-    {
-        track=arg;
+    public void setTrack(ArrayList<Die> arg, int round) throws InvalidIntArgumentException, FullDataStructureException {
+        RoundDiceMP tempRD = new RoundDiceMP(arg.size());
+        for(int i=0;i<arg.size();i++)
+            tempRD.addDie(arg.get(i));
+
+        track.setSpecificRoundDice(tempRD, round);
     }
     public RoundTrackMP getTrack()
     {

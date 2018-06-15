@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;

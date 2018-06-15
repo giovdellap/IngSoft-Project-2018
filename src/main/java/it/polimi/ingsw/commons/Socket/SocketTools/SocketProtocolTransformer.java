@@ -1,4 +1,4 @@
-package it.polimi.ingsw.commons;
+package it.polimi.ingsw.commons.Socket.SocketTools;
 
 public class SocketProtocolTransformer
 {

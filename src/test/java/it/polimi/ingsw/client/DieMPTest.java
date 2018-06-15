@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
+import it.polimi.ingsw.commons.Die;
 import org.junit.jupiter.api.*;
 
 
@@ -9,12 +9,12 @@ import org.junit.jupiter.api.*;
 
 public class DieMPTest
 {
-        private DieMP die;
+        private Die die;
 
         @BeforeEach
         public void SetUp()
         {
-                die = new DieMP((int)(Math.random()*5)+1);
+                die = new Die((int)(Math.random()*5)+1);
                 die.throwDie();
         }
 
@@ -45,7 +45,7 @@ public class DieMPTest
         }
 
         @Test
-        public void checksetValueTest() throws InvalidIntArgumentException {
+        public void checksetValueTest() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
                 die.setValueTest(5);
                 Assertions.assertEquals(5,die.getValue());
         }
@@ -54,7 +54,7 @@ public class DieMPTest
         public void checksetValueTestException(){
                 try {
                         die.setValueTest(7);
-                } catch (InvalidIntArgumentException e) {
+                } catch (it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException e) {
                         Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
                 }
         }

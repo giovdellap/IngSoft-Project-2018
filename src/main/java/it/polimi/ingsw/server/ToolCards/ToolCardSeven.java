@@ -9,6 +9,7 @@ public class ToolCardSeven extends ToolCard {
 
     public ToolCardSeven() {
         setToolCardName("Glazing Hammer");
+        setId(7);
     }
 
     public boolean checkToolCardSeven() {

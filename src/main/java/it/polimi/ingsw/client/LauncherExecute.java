@@ -20,6 +20,7 @@ public class LauncherExecute extends Application
 
     private int[] settings;// temp[0] = mode, temp[1] = connection, temp[2] = graphics
     private String ip;
+    private boolean debugMode;
 
 
 
@@ -35,22 +36,32 @@ public class LauncherExecute extends Application
         outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
         cliToolsManager = new CLIToolsManager();
 
-        outVideo.println();
-        outVideo.println();
-        outVideo.println(cliToolsManager.simpleQuestionsMaker("PREMI S PER GIOCATORE SINGOLO, M PER MULTIGIOCATORE", 40, true));
-        outVideo.flush();
-        String msgIN = inKeyboard.readLine();
-        if(msgIN.charAt(0)=='M')
+        outVideo.println("PREMI Y PER DEBUG MODE, N PER LA SHOW MODE");
+        String msgIn = inKeyboard.readLine();
+        if(msgIn.equals("Y"))
         {
-            settings[0] = 2;
-            outVideo.println(cliToolsManager.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 40, true));
-            outVideo.flush();
-            ip = inKeyboard.readLine();
-
+            ip="localhost";
+            settings[0]=2;
             MPExecute mpExecute = new MPExecute(ip, settings);
             mpExecute.start(stage);
         }
+        else {
 
+            outVideo.println();
+            outVideo.println();
+            outVideo.println(cliToolsManager.simpleQuestionsMaker("PREMI S PER GIOCATORE SINGOLO, M PER MULTIGIOCATORE", 40, true));
+            outVideo.flush();
+            String msgIN = inKeyboard.readLine();
+            if (msgIN.charAt(0) == 'M') {
+                settings[0] = 2;
+                outVideo.println(cliToolsManager.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 40, true));
+                outVideo.flush();
+                ip = inKeyboard.readLine();
+
+                MPExecute mpExecute = new MPExecute(ip, settings);
+                mpExecute.start(stage);
+            }
+        }
     }
 
     public LauncherExecute()

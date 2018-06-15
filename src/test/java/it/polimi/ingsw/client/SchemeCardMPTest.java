@@ -3,8 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.commons.Die;
 import org.junit.jupiter.api.*;
 
 public class SchemeCardMPTest {
@@ -13,7 +13,7 @@ public class SchemeCardMPTest {
     //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     private SchemeCardMP testScheme;
-    private DieMP testDie;
+    private Die testDie;
     private int testFront[][];
     private int testBack[][];
     private String frontName;
@@ -30,7 +30,7 @@ public class SchemeCardMPTest {
         testFront = new int[4][5];
         testBack = new int[4][5];
         testScheme = new SchemeCardMP(id);
-        testDie = new DieMP((int) (Math.random() * 5 + 1));
+        testDie = new Die((int) (Math.random() * 5 + 1));
         testDie.throwDie();
         testScheme.setfb(fb);
         testScheme.setName(1,"Test Nome Front");
@@ -461,8 +461,8 @@ public class SchemeCardMPTest {
     @Test
     public void checkReplaceDie() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
-        DieMP testReplaceDie1 = new DieMP((int)Math.random()*5+1);
-        DieMP testReplaceDie2;
+        Die testReplaceDie1 = new Die((int)Math.random()*5+1);
+        Die testReplaceDie2;
 
         testDie.throwDie();
         testScheme.setDie(testDie, 3, 4);

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -10,6 +10,7 @@ public class ToolCardThree extends ToolCard {
 
     public ToolCardThree() {
         setToolCardName("Copper Foil Burnisher");
+        setId(3);
     }
 
     public boolean checkToolCardThree(int x0, int y0, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {

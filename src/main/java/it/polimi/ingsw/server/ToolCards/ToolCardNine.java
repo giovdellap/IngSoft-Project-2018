@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -21,6 +21,7 @@ public class ToolCardNine extends ToolCard {
 
     public ToolCardNine() {
         setToolCardName("Cork-backed Straightedge");
+        setId(9);
     }
 
     public boolean checkToolCardNine(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {

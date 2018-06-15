@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.ModelComponent;
 
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -76,4 +77,8 @@ public class DraftPool
         return draft.size();
     }
 
+    public ArrayList<Die> getDraft()
+    {
+        return draft;
+    }
 }

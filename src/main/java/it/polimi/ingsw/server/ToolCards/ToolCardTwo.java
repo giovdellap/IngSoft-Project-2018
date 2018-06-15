@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
-import it.polimi.ingsw.server.ModelComponent.DraftPool;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -10,6 +9,7 @@ public class ToolCardTwo extends ToolCard {
 
     public ToolCardTwo() {
         setToolCardName("Eglomise Brush");
+        setId(2);
     }
 
     public boolean checkToolCardTwo(int x0, int y0, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {

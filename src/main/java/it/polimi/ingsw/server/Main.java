@@ -11,14 +11,8 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
-        MajorLogger logger = new MajorLogger();
-        logger.majorLog("Logger created");
 
         Match thisMatch = new Match();                              //START A MATCH
 
-        logger.stackLog(thisMatch.matchLog.updateFather());
-        thisMatch.matchLog.reinitialize();
-        logger.majorLog("PROGRAM ENDED");
-        logger.getLog();
     }
 }

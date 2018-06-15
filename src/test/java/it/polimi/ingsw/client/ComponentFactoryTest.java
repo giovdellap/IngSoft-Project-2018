@@ -4,12 +4,12 @@ import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ComponentFactory;
-import it.polimi.ingsw.client.PackageSP.ModelComponentsSP.RoundDice;
-import it.polimi.ingsw.server.ModelComponent.DiceContainer;
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class ComponentFactoryTest
 {
@@ -27,19 +27,23 @@ public class ComponentFactoryTest
         schemeCardMP.setfb(2);
         publicObjectiveMP = new PublicObjectiveMP(3);
 
-        DieMP[] tempVectDie= new DieMP[4];
+        ArrayList<Die> tempVectDie= new ArrayList<Die>();
 
-        tempVectDie[0]=new DieMP(4);
-        tempVectDie[0].throwDie();
+        Die tempDie=new Die(4);
+        tempDie.throwDie();
+        tempVectDie.add(tempDie);
 
-        tempVectDie[1]=new DieMP(2);
-        tempVectDie[1].throwDie();
+        tempDie=new Die(2);
+        tempDie.throwDie();
+        tempVectDie.add(tempDie);
 
-        tempVectDie[2]=new DieMP(3);
-        tempVectDie[2].throwDie();
+        tempDie=new Die(3);
+        tempDie.throwDie();
+        tempVectDie.add(tempDie);
 
-        tempVectDie[3]=new DieMP(1);
-        tempVectDie[3].throwDie();
+        tempDie=new Die(1);
+        tempDie.throwDie();
+        tempVectDie.add(tempDie);
 
         tempDraft=new DraftPoolMP(tempVectDie);
 
@@ -47,10 +51,10 @@ public class ComponentFactoryTest
 
         RoundDiceMP tempRoundDice1= new RoundDiceMP(2);
 
-        tempRoundDice.addDie(tempVectDie[0]);
+        tempRoundDice.addDie(tempVectDie.get(0));
 
-        tempRoundDice1.addDie(tempVectDie[1]);
-        tempRoundDice1.addDie(tempVectDie[2]);
+        tempRoundDice1.addDie(tempVectDie.get(1));
+        tempRoundDice1.addDie(tempVectDie.get(2));
 
         tempRound=new RoundTrackMP();
         tempRound.addRound(tempRoundDice);

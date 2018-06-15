@@ -1,25 +1,28 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.FcknSimpleLogger;
 import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 
+import java.util.ArrayList;
+
 public class TurnManager
 {
-    private Player[] players;
+    private ArrayList<Player> players;
     private int turnIndex;
     private int maxTurn;
     private int round;
     private int activePlayer;
 
-    public MinorLogger turnLogger;
+    private FcknSimpleLogger logger;
 
     //PAY ATTENTION
     //This class doesn't manage disconnections
 
-    public TurnManager(Player[] temp) throws GenericInvalidArgumentException {
+    public TurnManager(ArrayList<Player> temp) throws GenericInvalidArgumentException {
         players=temp;
-        maxTurn=players.length*2;
-        turnLogger= new MinorLogger();
+        maxTurn=players.size()*2;
+        logger = new FcknSimpleLogger(0, false);
     }
 
     public int start() throws GenericInvalidArgumentException {
@@ -27,23 +30,26 @@ public class TurnManager
         //returns the index of first player
         round=0;
         turnIndex=0;
-        players[0].activate();
+        players.get(0).activate();
         activePlayer=0;
-        turnLogger.minorLog("Match started - "+activePlayer+"'s turn");
         return activePlayer;
     }
 
     public void endTurn() throws GenericInvalidArgumentException
     {
         //active player ends his turn
-        players[activePlayer].deactivate();
+        players.get(activePlayer).deactivate();
+        logger.log("prima: "+Boolean.toString(players.get(activePlayer).isActive()));
         calculateNext();
-        players[activePlayer].activate();
+        players.get(activePlayer).activate();
+        logger.log("Dopo: "+Boolean.toString(players.get(activePlayer).isActive()));
+
+        logger.log("END ENDTURN - activePlayer = "+Integer.toString(activePlayer));
+
     }
 
     public int getActivePlayer() throws GenericInvalidArgumentException {
         //returns active player index if connected, active player index+10 if not
-        turnLogger.minorLog("Active player: "+activePlayer);
         return activePlayer;
 
     }
@@ -52,30 +58,26 @@ public class TurnManager
 
         if(turnIndex==maxTurn-1) {
             round++;
-            for (int i = 0; i < players.length; i++)
-                if (players[i].checkEight())
-                    players[i].roundReset();
+            for (int i = 0; i < players.size(); i++)
+                if (players.get(i).checkEight())
+                    players.get(i).roundReset();
             turnIndex=0;
             activePlayer=0;
-            turnLogger.minorLog("Calculated: NEW TURN");
         }
-        if(turnIndex<players.length-1) {
+        if(turnIndex<players.size()-1) {
             turnIndex++;
             activePlayer=turnIndex;
-            turnLogger.minorLog("Calculated: turnIndex = "+turnIndex+" activePlayer = "+activePlayer);
         }
-        if(turnIndex>=players.length&&turnIndex!=maxTurn-1)
+        if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
         {
-            if(turnIndex==players.length-1)
+            if(turnIndex==players.size()-1)
             {
                 turnIndex++;
-                turnLogger.minorLog("Calculated: turnIndex = "+turnIndex+" activePlayer = "+activePlayer);
             }
-            if(turnIndex>=players.length&&turnIndex!=maxTurn-1)
+            if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
             {
                 turnIndex++;
                 activePlayer--;
-                turnLogger.minorLog("Calculated: turnIndex = "+turnIndex+" activePlayer = "+activePlayer);
             }
         }
     }
@@ -85,27 +87,26 @@ public class TurnManager
         return round==10;
     }
 
+    public ArrayList<Player> getPlayers()
+    {
+        return players;
+    }
+    public void setPlayers(ArrayList<Player> toSet)
+    {
+        players = toSet;
+    }
     public int getRound()
     {
-        return round+1;
+        return round;
     }
-
-    public Player getPlayer(int i)
+    public boolean getFirst()
     {
-        return players[i];
+        if(round==0&&turnIndex<players.size())
+            return true;
+        else
+            return false;
     }
-
-    //TOKENS
-
-    public int getTokens()
-    {
-        return players[activePlayer].getTokens();
+    public int getTurnIndex() {
+        return turnIndex;
     }
-
-    public void decreaseTokens(int n)
-    {
-        players[activePlayer].usedTokens(n);
-    }
-
-    public boolean checkFirst() { return round==0&&turnIndex<players.length; }
 }

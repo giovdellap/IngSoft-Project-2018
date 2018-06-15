@@ -1,8 +1,7 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -15,6 +14,7 @@ public class ToolCardOne extends ToolCard {
 
     public ToolCardOne() {
         setToolCardName("Grozing Pliers");
+        setId(1);
     }
 
     public void setDraft(DraftPool d) {
@@ -60,7 +60,7 @@ public class ToolCardOne extends ToolCard {
     }
 
 
-    public void applyModifies(int pos, int modify, SchemeCard scheme, DraftPool draft, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void applyModifies(int pos, int modify, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
 

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DieMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.commons.Die;
 import org.fusesource.jansi.Ansi;
 
 public class ModelGenerator
@@ -87,7 +87,7 @@ public class ModelGenerator
         int i=0;
         String diceDraft = "";
 
-        while(i<draft.returnFirstDisabled())
+        while(i<draft.getSize())
         {
             diceDraft += toUnicode(draft.returnDie(i));
             i++;
@@ -140,7 +140,7 @@ public class ModelGenerator
         return temp;
     }
 
-    public String toUnicode(DieMP tempDie)                  //encode die to unicode die
+    public String toUnicode(Die tempDie)                  //encode die to unicode die
     {
         String temp="";
 

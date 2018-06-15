@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.PackageMP;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 
 import java.util.ArrayList;
 
@@ -14,10 +16,19 @@ public class MatchManager
     private int activePlayer;
 
     //PLAYERS
-    public MatchManager(PlayerClient[] temp)
-    {
-        players=temp;
+    public MatchManager(Initialization2Event event, String me) throws InvalidIntArgumentException {
+        SchemesDeckMP deck = new SchemesDeckMP();
+        players = new PlayerClient[event.getPlayerSize()];
+        for(int i=0;i<players.length;i++)
+        {
+            players[i] = new PlayerClient(i, event.getEventPlayer(i).getName(), me.equals(event.getEventPlayer(i).getName()));
+            SchemeCardMP scheme = deck.extractSchemebyID(event.getEventPlayer(i).getSchemeId());
+            scheme.setfb(event.getEventPlayer(i).getFb());
+            players[i].setPlayerScheme(scheme);
+            players[i].setTokens(event.getEventPlayer(i).getTokens());
+        }
     }
+
     public PlayerClient getPlayer(int index)
     {
         return players[index];
@@ -39,9 +50,13 @@ public class MatchManager
 
     //DISCONNECTED PLAYERS
 
-    public void setDisconnectedPlayers(ArrayList<Integer> temp)
+    public void setDisconnectedPlayers(ArrayList<String> temp)
     {
-        disconnectedPlayers = temp;
+        for(String str: temp)
+            for(int i=0;i<players.length;i++)
+                if(players[i].getName().equals(str))
+                    disconnectedPlayers.add(i);
+
     }
     public ArrayList<Integer> getDisconnectedPlayers()
     {
@@ -75,5 +90,9 @@ public class MatchManager
     public PlayerClient[] getGraphicsUpdate()
     {
         return players;
+    }
+
+    public void setPlayerScheme(int id, SchemeCardMP scheme) throws InvalidIntArgumentException {
+        players[id].setPlayerScheme(scheme);
     }
 }

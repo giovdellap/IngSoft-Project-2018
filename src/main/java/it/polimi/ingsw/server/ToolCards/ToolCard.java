@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.ToolCards;
 
 public abstract class ToolCard {
 
+    int id;
     int favorTokens;
     String toolCardName;
 
@@ -28,5 +29,11 @@ public abstract class ToolCard {
         return this.favorTokens;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public int getId() {
+        return id;
+    }
 }

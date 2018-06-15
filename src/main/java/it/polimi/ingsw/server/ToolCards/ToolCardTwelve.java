@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
@@ -11,6 +11,7 @@ public class ToolCardTwelve extends ToolCard {
 
     public ToolCardTwelve() {
         setToolCardName("Tap Wheel");
+        setId(12);
     }
 
     public boolean checkToolCardTwelve(RoundTrack track, int turn, int pos, int x01, int y01, int x02, int y02, SchemeCard scheme, int x11, int y11, int x22, int y22) throws GenericInvalidArgumentException, InvalidIntArgumentException {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -30,7 +31,9 @@ public class ToolCardSixTest {
     public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
 
         testDie = new Die(1);
+        testDie.setValueTest(1);
         testDie2 = new Die(2);
+        testDie2.setValueTest(2);
         testDie3 = new Die(3);
         testDie4 = new Die(4);
         toolCardSixTest = new ToolCardSix();
@@ -38,6 +41,9 @@ public class ToolCardSixTest {
         schemesDeck = new SchemesDeck();
         scheme = schemesDeck.extractSchemebyID(6);
         scheme.setfb(2);
+        draftTest.replaceDie(1,testDie);
+        toolCardSixTest.setScheme(scheme);
+        toolCardSixTest.setDraft(draftTest);
 
     }
 
@@ -47,11 +53,9 @@ public class ToolCardSixTest {
 
         boolean flag = false;
 
-        testDie = draftTest.returnDie(2);
-        testDie.setValueTest(3);
         scheme.setDie(testDie2,0,3);
 
-        flag = toolCardSixTest.checkToolCardSixSchemeCard(testDie,scheme,0,4);
+        flag = toolCardSixTest.checkToolCardSixSchemeCard(draftTest,1,scheme,0,4);
 
         Assertions.assertEquals(true,flag);
 
@@ -62,11 +66,9 @@ public class ToolCardSixTest {
 
         boolean flag = true;
 
-        testDie = draftTest.returnDie(2);
-        testDie.setValueTest(3);
         scheme.setDie(testDie2,0,4);
 
-        flag = toolCardSixTest.checkToolCardSixSchemeCard(testDie,scheme,1,3);
+        flag = toolCardSixTest.checkToolCardSixSchemeCard(draftTest,1,scheme,1,3);
 
         Assertions.assertEquals(false,flag);
 
@@ -79,9 +81,12 @@ public class ToolCardSixTest {
         testDie.setValueTest(3);
         scheme.setDie(testDie2,0,4);
 
-        scheme = toolCardSixTest.ApplyModifiesToScheme(testDie,scheme,0,3);
+        toolCardSixTest.setScheme(scheme);
+        toolCardSixTest.setDraft(draftTest);
 
-        Assertions.assertEquals(true,scheme.getDie(0,3).equals(testDie));
+        toolCardSixTest.ApplyModifiesToScheme(2,0,3);
+
+        Assertions.assertEquals(true,toolCardSixTest.getScheme().getDie(0,3).equals(testDie));
 
     }
 
@@ -92,9 +97,12 @@ public class ToolCardSixTest {
         testDie = draftTest.returnDie(2);
         testDie.setValueTest(3);
 
-        draftTest = toolCardSixTest.ApplyModifiesToDraft(testDie,draftTest,2);
+        toolCardSixTest.setScheme(scheme);
+        toolCardSixTest.setDraft(draftTest);
 
-        Assertions.assertEquals(true,draftTest.returnDie(2).equals(testDie));
+        toolCardSixTest.ApplyModifiesToDraft(2);
+
+        Assertions.assertEquals(true,toolCardSixTest.getDraft().returnDie(2).equals(testDie));
 
     }
 

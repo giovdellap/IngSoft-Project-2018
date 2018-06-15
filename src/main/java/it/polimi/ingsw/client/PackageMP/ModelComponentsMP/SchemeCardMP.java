@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Die;
 
 //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
 //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
@@ -17,7 +18,7 @@ public class SchemeCardMP
     private boolean isDisabled = false;
     private int front[][];
     private int back[][];
-    private DieMP diceScheme[][];
+    private Die diceScheme[][];
 
     public SchemeCardMP(int i) throws InvalidIntArgumentException
     {
@@ -31,7 +32,7 @@ public class SchemeCardMP
         backDiff=0;
         front = new int[4][5];
         back = new int[4][5];
-        diceScheme = new DieMP[4][5];
+        diceScheme = new Die[4][5];
 
         for(int j=0;j<4;j++)
             for(int z=0;z<5;z++)
@@ -43,7 +44,7 @@ public class SchemeCardMP
         for(int j=0;j<4;j++)
             for(int z=0;z<5;z++)
             {
-                diceScheme[j][z]= new DieMP(0);
+                diceScheme[j][z]= new Die(0);
                 diceScheme[j][z].disableDie();
             }
 
@@ -183,7 +184,7 @@ public class SchemeCardMP
     }
 
 
-    public DieMP getDie(int x, int y) throws InvalidIntArgumentException
+    public Die getDie(int x, int y) throws InvalidIntArgumentException
     {
         if (x < 0 || x > 3 || y < 0 || y > 4 )
             throw new InvalidIntArgumentException();
@@ -191,8 +192,13 @@ public class SchemeCardMP
         return diceScheme[x][y];
     }
 
+    public void disableDie(int x, int y)
+    {
+        diceScheme[x][y].disableDie();
+    }
 
-    public void setDie(DieMP toPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException
+
+    public void setDie(Die toPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
         if (x < 0 || x > 3 || y < 0 || y > 4)
             throw new InvalidIntArgumentException();
@@ -204,9 +210,9 @@ public class SchemeCardMP
     }
 
 
-    public DieMP replaceDie(DieMP toReplace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException
+    public Die replaceDie(Die toReplace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
-        DieMP temp;
+        Die temp;
 
         if (x < 0 || x > 3 || y < 0 || y > 4)
             throw new InvalidIntArgumentException();

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.ModelComponent;
 
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;

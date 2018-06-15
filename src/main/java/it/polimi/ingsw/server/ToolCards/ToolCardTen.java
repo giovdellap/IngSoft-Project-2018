@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -13,6 +13,7 @@ public class ToolCardTen extends ToolCard {
 
     public ToolCardTen() {
         setToolCardName("Grinding Stone");
+        setId(10);
     }
 
     public void setDraft(DraftPool d) {
@@ -59,6 +60,7 @@ public class ToolCardTen extends ToolCard {
             toPlace.setValueTest(1);
             changed=true;
         }
+
 
 
         if (toPlace == null || scheme == null || draft.returnDie(pos).isDisabled())

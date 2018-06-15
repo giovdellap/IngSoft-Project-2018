@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
@@ -16,6 +16,7 @@ public class ToolCardFive extends ToolCard {
 
     public ToolCardFive() throws InvalidIntArgumentException {
         setToolCardName("Lens Cutter");
+        setId(5);
     }
 
     public boolean checkToolCardFive(DraftPool draft, int posDraft, RoundTrack roundTrack, int turn, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {

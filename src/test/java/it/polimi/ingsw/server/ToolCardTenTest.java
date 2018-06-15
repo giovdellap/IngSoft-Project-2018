@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ModelComponent.Die;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
@@ -33,7 +33,6 @@ public class ToolCardTenTest {
         testScheme = testDeck.extractSchemebyID(6);
         testScheme.setfb(2);
         testDraft = new DraftPool(4);
-
         testDie1 = new Die(1);
         testDie1.setValueTest(4);
         testDie2 = new Die(2);
@@ -50,6 +49,7 @@ public class ToolCardTenTest {
 
         boolean flag = false;
 
+        testDraft.replaceDie(1,testDie1);
         toolCardTenTest.setDraft(testDraft);
         toolCardTenTest.setScheme(testScheme);
 

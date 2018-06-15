@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.server.ModelComponent.DiceContainer;
-import it.polimi.ingsw.server.ModelComponent.Die;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.*;
 
