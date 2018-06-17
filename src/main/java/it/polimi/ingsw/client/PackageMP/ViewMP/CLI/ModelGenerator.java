@@ -147,9 +147,6 @@ public class ModelGenerator
         if (tempDie.getColor() == 1 && tempDie.getValue()==1)
             temp+= Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
-        if (tempDie.getColor() == 1 && tempDie.getValue()==1)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
-
         if (tempDie.getColor() == 1 && tempDie.getValue()==2)
             temp += Ansi.ansi().reset().fg(Ansi.Color.YELLOW) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 

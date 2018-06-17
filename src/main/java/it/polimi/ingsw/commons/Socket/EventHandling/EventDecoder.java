@@ -574,8 +574,6 @@ public class EventDecoder
         boolean validate=false;
 
         transformer.simpleDecode(toDecode.get(1));
-        logger.log("dio bastardello "+toDecode.get(1));
-        //1
         if(transformer.getArg().equals("true"))
             validate=true;
 

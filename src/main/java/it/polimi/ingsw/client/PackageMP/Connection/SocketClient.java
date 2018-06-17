@@ -125,7 +125,9 @@ public class SocketClient extends Observable {
     private void sendEncoded(ArrayList<String> arg)
     {
         //DEBUG
+        logger.debugLog(" ");
         logger.debugLog("Send");
+        logger.debugLog(" ");
 
         for(int i=0;i<arg.size();i++)
         {

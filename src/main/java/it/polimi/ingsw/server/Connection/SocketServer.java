@@ -223,7 +223,13 @@ public class SocketServer extends Observable
     private ArrayList<String> listenForEvent() throws IOException
     {
         ArrayList<String> temp = new ArrayList<String>();
+
+        logger.debugLog(" ");
+        logger.debugLog("RECEIVE");
+        logger.debugLog(" ");
+
         String msgIN = inSocket.readLine();
+        logger.debugLog(msgIN);
 
         transformer.simpleDecode(msgIN);
         while(!(transformer.getCmd().equals("end")&&transformer.getArg().equals("event")))
@@ -240,6 +246,10 @@ public class SocketServer extends Observable
     }
     private void sendArrayList(ArrayList<String> toSend)
     {
+        logger.debugLog(" ");
+        logger.debugLog("SEND");
+        logger.debugLog(" ");
+
         for(String go: toSend)
         {
             sendReadyMessage(go);

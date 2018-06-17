@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.FcknSimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -18,12 +19,17 @@ public class CheckingMethods {
 
         boolean flag = false;
 
+        FcknSimpleLogger logger = new FcknSimpleLogger(0, false);
+
         for (int i = -1; i < 2; i++)
             for (int j = -1; j < 2; j++)
-                if ((x + i < 4) && (x + i > -1) && (y + j < 5) && (y + j > -1))
-                    if(!scheme.getDie(x + i, y + j).isDisabled())
+                if ((x + i < 4) && (x + i > -1) && (y + j < 5) && (y + j > -1)) {
+                    logger.log("X: "+Integer.toString(x+i)+" Y: "+Integer.toString(y+j));
+                    logger.log(Boolean.toString(scheme.getDie(x+i, y+j).isDisabled()));
+                    if (!scheme.getDie(x + i, y + j).isDisabled()) {
                         flag = true;
-
+                    }
+                }
 
         if (!flag) {
             System.out.println("You must position your die orthogonally or diagonally adjacent to another die");

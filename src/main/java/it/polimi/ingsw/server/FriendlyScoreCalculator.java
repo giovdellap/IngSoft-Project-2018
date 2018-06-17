@@ -84,9 +84,7 @@ public class FriendlyScoreCalculator
         }
 
         return event;
-        }
     }
-
-
-
 }
+
+

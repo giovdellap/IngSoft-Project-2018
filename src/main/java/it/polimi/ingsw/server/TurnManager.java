@@ -10,6 +10,7 @@ public class TurnManager
 {
     private ArrayList<Player> players;
     private int turnIndex;
+    private int playerIndex;
     private int maxTurn;
     private int round;
     private int activePlayer;
@@ -64,22 +65,23 @@ public class TurnManager
             turnIndex=0;
             activePlayer=0;
         }
+        if(turnIndex>=players.size())
+        {
+            turnIndex++;
+            activePlayer--;
+        }
+        if(turnIndex==players.size()-1)
+        {
+            turnIndex++;
+        }
         if(turnIndex<players.size()-1) {
             turnIndex++;
             activePlayer=turnIndex;
         }
-        if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
-        {
-            if(turnIndex==players.size()-1)
-            {
-                turnIndex++;
-            }
-            if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
-            {
-                turnIndex++;
-                activePlayer--;
-            }
-        }
+        logger.log(" ");
+        logger.log("ActivePlayer: "+Integer.toString(activePlayer));
+        logger.log("TurnIndex: "+Integer.toString(turnIndex));
+        logger.log(" ");
     }
 
     public boolean theEnd()

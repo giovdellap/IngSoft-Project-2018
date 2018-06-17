@@ -12,6 +12,7 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardSixEvent;
+import it.polimi.ingsw.commons.FcknSimpleLogger;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class GraphicsManager extends Observable
     private int round;
     private ArrayList<Integer> disconnected;
 
+    private FcknSimpleLogger logger;
+
 
 
     public GraphicsManager(int graphics) throws GenericInvalidArgumentException {
@@ -49,6 +52,7 @@ public class GraphicsManager extends Observable
             beautifulCLI = new BeautifulCLI();
         }
         disconnected=new ArrayList<Integer>();
+        logger = new FcknSimpleLogger(2, true);
     }
 
     public void askUsername() throws IOException, GenericInvalidArgumentException {
@@ -145,6 +149,7 @@ public class GraphicsManager extends Observable
         beautifulCLI.toolAccepted();
     }
     public void showMove(MoveEvent event) throws InvalidIntArgumentException {
+        logger.debugLog(" color: "+Integer.toString(players[event.getId()].getPlayerScheme().getDie(event.getX(), event.getY()).getColor()));
         if(graphics==2)
             beautifulCLI.showMove(players, draft, track, toolsUsage, activePlayer, me, event);
     }

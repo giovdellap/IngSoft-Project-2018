@@ -152,7 +152,6 @@ public class MPExecute extends Application implements Observer {
             if(!toCheck.getType().equals("PassEvent")) {
                 if (currentEvent.isValidated()) {
                     connectionManager.getEvent();
-                    logger.log("padre pio inculato?:" + Boolean.toString(currentEvent.isValidated()));
                     if (currentEvent.getType().equals("MoveEvent")) {
                         applyMove();
                         updateGraphicsManager();
@@ -204,6 +203,7 @@ public class MPExecute extends Application implements Observer {
         SchemeCardMP tempScheme = matchManager.getPlayer(((MoveEvent) currentEvent).getId()).getPlayerScheme();
         tempScheme.setDie(tempDie, ((MoveEvent)currentEvent).getX(), ((MoveEvent)currentEvent).getY());
         matchManager.setPlayerScheme(((MoveEvent) currentEvent).getId(), tempScheme);
+        logger.log("ApplyMove scheme: "+Integer.toString(matchManager.getGraphicsUpdate()[((MoveEvent) currentEvent).getId()].getPlayerScheme().getDie(((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY()).getColor()));
     }
 
     public void applyTool() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {

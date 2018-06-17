@@ -210,7 +210,14 @@ public class Match implements Observer
             if(currentEvent.getType().equals("MoveEvent")&&!moveUsed)
                 moveUsed=move();
             if(currentEvent instanceof ToolCardEvent&&!toolUsed)
+            {
+                if(moveUsed&&(((ToolCardEvent) currentEvent).getId()==1||((ToolCardEvent) currentEvent).getId()==5||((ToolCardEvent) currentEvent).getId()==6||((ToolCardEvent) currentEvent).getId()==9||((ToolCardEvent) currentEvent).getId()==10||((ToolCardEvent) currentEvent).getId()==11))
+                    players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
                 toolUsed=tool();
+                if(toolUsed&&(((ToolCardEvent) currentEvent).getId()==1||((ToolCardEvent) currentEvent).getId()==5||((ToolCardEvent) currentEvent).getId()==6||((ToolCardEvent) currentEvent).getId()==9||((ToolCardEvent) currentEvent).getId()==10||((ToolCardEvent) currentEvent).getId()==11))
+                    moveUsed=true;
+
+            }
 
         }
     }
@@ -270,7 +277,6 @@ public class Match implements Observer
         SchemeCard tempSC = modelInstance.getSchemebyIndex(turnManager.getActivePlayer());
         DraftPool tempDP = modelInstance.getDraft();
         Die tempDie = tempDP.returnDie(((MoveEvent)currentEvent).getIndex());
-        tempDP.pickUpDie(((MoveEvent)currentEvent).getIndex());
         boolean flag;
         if(turnManager.getFirst())
             flag = checkingMethods.checkFirstMove(tempSC, tempDie, ((MoveEvent)currentEvent).getX(), ((MoveEvent)currentEvent).getY());
@@ -283,8 +289,11 @@ public class Match implements Observer
         if(flag)
         {
             logger.debugLog("move return true");
-            modelInstance.setDraft(tempDP);
+            tempDie = tempDP.returnDie(((MoveEvent)currentEvent).getIndex());
+            tempDP.pickUpDie(((MoveEvent)currentEvent).getIndex());
+            tempSC.setDie(tempDie, ((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY());
             modelInstance.setPlayerScheme(turnManager.getActivePlayer(), tempSC);
+            modelInstance.setDraft(tempDP);
             currentEvent.validate();
             ((MoveEvent) currentEvent).setId(turnManager.getActivePlayer());
             for(int i=0;i<players.size();i++) {

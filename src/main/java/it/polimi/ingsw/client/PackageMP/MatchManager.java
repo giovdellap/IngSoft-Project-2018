@@ -72,20 +72,7 @@ public class MatchManager
         return activePlayer;
     }
 
-    public SchemeCardMP getMyScheme()
-    {
-        for(int i=0;i<players.length;i++)
-        {
-            if(players[i].itsMe())
-                return players[i].getPlayerScheme();
-        }
-        return null;
-    }
-    public void setMyScheme(SchemeCardMP scheme) throws InvalidIntArgumentException {
-        for(int i=0;i<players.length;i++)
-            if(players[i].itsMe())
-                players[i].setPlayerScheme(scheme);
-    }
+
 
     public PlayerClient[] getGraphicsUpdate()
     {
