@@ -172,7 +172,7 @@ public class Match implements Observer
         {
             turn();
             turnManager.endTurn();
-            if(turnManager.getActivePlayer()==0&&!turnManager.theEnd())
+            if(turnManager.isNextRound())
                 modelInstance.roundEnd();
         }
 
@@ -242,8 +242,8 @@ public class Match implements Observer
         {
             event.setNextRound(true);
             ArrayList<Die> temp = new ArrayList<Die>();
-            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()).returnDim();i++)
-                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()).getDie(i));
+            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).returnDim();i++)
+                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i));
             event.setLastRound(temp);
         }
         else

@@ -150,8 +150,8 @@ public class MPExecute extends Application implements Observer {
             graphicsManager.myTurn();
             connectionManager.sendEvent(toCheck);
             if(!toCheck.getType().equals("PassEvent")) {
+                connectionManager.getEvent();
                 if (currentEvent.isValidated()) {
-                    connectionManager.getEvent();
                     if (currentEvent.getType().equals("MoveEvent")) {
                         applyMove();
                         updateGraphicsManager();

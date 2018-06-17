@@ -53,7 +53,7 @@ public class ModelGenerator
                         row +=Ansi.ansi().reset().fg(Ansi.Color.BLUE) + "\u25fc" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
                     if (scheme.getCell(scheme.getfb(),i,j) == 5)
-                        row +=Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u25fc" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+                        row +=Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u25fc" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
                     if (scheme.getCell(scheme.getfb(),i,j) == 6)
                         row +=Ansi.ansi().reset().fg(Ansi.Color.WHITE) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
@@ -224,22 +224,22 @@ public class ModelGenerator
 
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==1)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2680" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==2)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2681" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==3)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2682" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==4)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2683" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==5)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2684" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         if (tempDie.getColor() == 5 && tempDie.getValue()==6)
-            temp += Ansi.ansi().reset().fg(Ansi.Color.CYAN) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
+            temp += Ansi.ansi().reset().fg(Ansi.Color.MAGENTA) + "\u2685" + Ansi.ansi().reset().fg(Ansi.Color.DEFAULT);
 
         return temp;
 

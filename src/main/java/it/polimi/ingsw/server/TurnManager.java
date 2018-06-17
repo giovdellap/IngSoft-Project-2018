@@ -15,6 +15,8 @@ public class TurnManager
     private int round;
     private int activePlayer;
 
+    private boolean nextRound=false;
+
     private FcknSimpleLogger logger;
 
     //PAY ATTENTION
@@ -64,8 +66,9 @@ public class TurnManager
                     players.get(i).roundReset();
             turnIndex=0;
             activePlayer=0;
+            nextRound=true;
         }
-        if(turnIndex>=players.size())
+        if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
         {
             turnIndex++;
             activePlayer--;
@@ -74,10 +77,12 @@ public class TurnManager
         {
             turnIndex++;
         }
-        if(turnIndex<players.size()-1) {
+        if(turnIndex<players.size()-1&&!nextRound) {
             turnIndex++;
             activePlayer=turnIndex;
+
         }
+
         logger.log(" ");
         logger.log("ActivePlayer: "+Integer.toString(activePlayer));
         logger.log("TurnIndex: "+Integer.toString(turnIndex));
@@ -110,5 +115,13 @@ public class TurnManager
     }
     public int getTurnIndex() {
         return turnIndex;
+    }
+
+    public boolean isNextRound() {
+
+        boolean toReturn=nextRound;
+        nextRound=false;
+        return toReturn;
+
     }
 }
