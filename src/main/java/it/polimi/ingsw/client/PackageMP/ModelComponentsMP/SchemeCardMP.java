@@ -197,11 +197,25 @@ public class SchemeCardMP
         diceScheme[x][y].disableDie();
     }
 
+    public void shiftDie(int x0, int y0, int x1, int y1) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
+
+        int color = diceScheme[x0][y0].getColor();
+        int value = diceScheme[x0][y0].getValue();
+
+        Die tempDie = new Die(color);
+        tempDie.setValueTest(value);
+
+        diceScheme[x1][y1] = tempDie;
+        diceScheme[x0][y0].disableDie();
+
+    }
+
 
     public void setDie(Die toPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
         if (x < 0 || x > 3 || y < 0 || y > 4)
             throw new InvalidIntArgumentException();
+
 
         if (toPlace == null || toPlace.isDisabled() || !diceScheme[x][y].isDisabled())
             throw new GenericInvalidArgumentException();
@@ -216,6 +230,7 @@ public class SchemeCardMP
 
         if (x < 0 || x > 3 || y < 0 || y > 4)
             throw new InvalidIntArgumentException();
+
 
         if (toReplace == null || toReplace.isDisabled() || diceScheme[x][y].isDisabled())
             throw new GenericInvalidArgumentException();

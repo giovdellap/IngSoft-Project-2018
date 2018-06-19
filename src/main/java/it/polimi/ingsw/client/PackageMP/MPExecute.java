@@ -4,10 +4,7 @@ import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MajorLogger;
 import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundDiceMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
@@ -18,6 +15,7 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.server.ToolCards.ToolCardTwelve;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -51,6 +49,7 @@ public class MPExecute extends Application implements Observer {
     private Event currentEvent;
     private Event toCheck;
     private FcknSimpleLogger logger;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -129,7 +128,7 @@ public class MPExecute extends Application implements Observer {
         matchManager.setActivePlayer(((TurnEvent) currentEvent).getActive());
         modelManagerMP.setDraft(((TurnEvent) currentEvent).getDraft());
         if(((TurnEvent) currentEvent).isNextRound())
-            modelManagerMP.setTrack(((TurnEvent) currentEvent).getLastRound(), ((TurnEvent) currentEvent).getRound());
+            modelManagerMP.addRound(((TurnEvent) currentEvent).getLastRound());
         toolRecord.setTokens(((TurnEvent) currentEvent).getToolsUpdate());
 
         updateGraphicsManager();
@@ -152,12 +151,14 @@ public class MPExecute extends Application implements Observer {
             if(!toCheck.getType().equals("PassEvent")) {
                 connectionManager.getEvent();
                 if (currentEvent.isValidated()) {
+                    logger.log(currentEvent.getType());
                     if (currentEvent.getType().equals("MoveEvent")) {
                         applyMove();
                         updateGraphicsManager();
                         graphicsManager.moveAccepted();
                     }
-                    if (currentEvent instanceof ToolCardEvent) {
+                    else {
+
                         if (((ToolCardEvent) currentEvent).getId() == 6)
                             toolCard6Part2();
                         applyTool();
@@ -207,6 +208,11 @@ public class MPExecute extends Application implements Observer {
     }
 
     public void applyTool() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+        int minus = toolRecord.getTokensDecrease(((ToolCardEvent)currentEvent).getId());
+        int tokens = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getTokens()-minus;
+        matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).setTokens(tokens);
+
+
         switch (((ToolCardEvent)currentEvent).getId())
         {
             case (1):
@@ -222,35 +228,29 @@ public class MPExecute extends Application implements Observer {
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardOneEvent)currentEvent).getPlayer()).getPlayerScheme();
                 tempScheme.setDie(tempDie, ((ToolCardOneEvent)currentEvent).getX(), ((ToolCardOneEvent)currentEvent).getY());
                 matchManager.setPlayerScheme(((ToolCardOneEvent) currentEvent).getPlayer(), tempScheme);
+                modelManagerMP.setDraft(tempDraft);
                 break;
             }
             case (2):
             {
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                Die tempDie = tempScheme.getDie(((ToolCardTwoThreeEvent)currentEvent).getX0(), ((ToolCardTwoThreeEvent)currentEvent).getY0());
-                tempScheme.disableDie(((ToolCardTwoThreeEvent)currentEvent).getX0(), ((ToolCardTwoThreeEvent)currentEvent).getY0());
-                tempScheme.setDie(tempDie, ((ToolCardTwoThreeEvent)currentEvent).getX1(), ((ToolCardTwoThreeEvent)currentEvent).getY1());
+                tempScheme.shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1() );
                 matchManager.setPlayerScheme(((ToolCardTwoThreeEvent) currentEvent).getPlayer(),tempScheme);
                 break;
+
             }
             case (3):
             {
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                Die tempDie = tempScheme.getDie(((ToolCardTwoThreeEvent)currentEvent).getX0(), ((ToolCardTwoThreeEvent)currentEvent).getY0());
-                tempScheme.disableDie(((ToolCardTwoThreeEvent)currentEvent).getX0(), ((ToolCardTwoThreeEvent)currentEvent).getY0());
-                tempScheme.setDie(tempDie, ((ToolCardTwoThreeEvent)currentEvent).getX1(), ((ToolCardTwoThreeEvent)currentEvent).getY1());
+                tempScheme.shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1());
                 matchManager.setPlayerScheme(((ToolCardTwoThreeEvent) currentEvent).getPlayer(),tempScheme);
                 break;
             }
             case (4):
             {
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                Die tempDie1 = tempScheme.getDie(((ToolCardFourEvent)currentEvent).getX01(), ((ToolCardFourEvent)currentEvent).getY01());
-                Die tempDie2 = tempScheme.getDie(((ToolCardFourEvent)currentEvent).getX02(), ((ToolCardFourEvent)currentEvent).getY02());
-                tempScheme.disableDie(((ToolCardFourEvent)currentEvent).getX01(), ((ToolCardFourEvent)currentEvent).getY01());
-                tempScheme.disableDie(((ToolCardFourEvent)currentEvent).getX02(), ((ToolCardFourEvent)currentEvent).getY02());
-                tempScheme.setDie(tempDie1, ((ToolCardFourEvent)currentEvent).getX11(), ((ToolCardFourEvent)currentEvent).getY11());
-                tempScheme.setDie(tempDie2, ((ToolCardFourEvent)currentEvent).getX22(), ((ToolCardFourEvent)currentEvent).getY22());
+                tempScheme.shiftDie(((ToolCardFourEvent)currentEvent).getX01(),((ToolCardFourEvent) currentEvent).getY01(),((ToolCardFourEvent) currentEvent).getX11(),((ToolCardFourEvent) currentEvent).getY11());
+                tempScheme.shiftDie(((ToolCardFourEvent) currentEvent).getX02(),((ToolCardFourEvent) currentEvent).getY02(),((ToolCardFourEvent) currentEvent).getX22(),((ToolCardFourEvent) currentEvent).getY22());
                 matchManager.setPlayerScheme(((ToolCardFourEvent) currentEvent).getPlayer(),tempScheme);
                 break;
             }
@@ -261,7 +261,7 @@ public class MPExecute extends Application implements Observer {
                 DraftPoolMP tempDraft = modelManagerMP.getDraft();
                 Die tempDraftDie = tempDraft.replaceDie(((ToolCardFiveEvent)currentEvent).getIndex(), tempRoundDie);
                 tempRoundDice.addDie(tempDraftDie);
-                modelManagerMP.getTrack().setSpecificRoundDice(tempRoundDice, ((ToolCardFiveEvent)currentEvent).getTurn());
+                modelManagerMP.setTrack(tempRoundDice.getDiceVector(),((ToolCardFiveEvent) currentEvent).getTurn() );
                 modelManagerMP.setDraft(tempDraft);
                 break;
             }
@@ -328,12 +328,8 @@ public class MPExecute extends Application implements Observer {
             case (12): {
 
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                Die tempDie1 = tempScheme.getDie(((ToolCardTwelveEvent)currentEvent).getX01(), ((ToolCardTwelveEvent)currentEvent).getY01());
-                Die tempDie2 = tempScheme.getDie(((ToolCardTwelveEvent)currentEvent).getX02(), ((ToolCardTwelveEvent)currentEvent).getY02());
-                tempScheme.disableDie(((ToolCardTwelveEvent)currentEvent).getX01(), ((ToolCardTwelveEvent)currentEvent).getY01());
-                tempScheme.disableDie(((ToolCardTwelveEvent)currentEvent).getX02(), ((ToolCardTwelveEvent)currentEvent).getY02());
-                tempScheme.setDie(tempDie1, ((ToolCardTwelveEvent)currentEvent).getX11(), ((ToolCardTwelveEvent)currentEvent).getY11());
-                tempScheme.setDie(tempDie2, ((ToolCardTwelveEvent)currentEvent).getX22(), ((ToolCardTwelveEvent)currentEvent).getY22());
+                tempScheme.shiftDie(((ToolCardTwelveEvent)currentEvent).getX01(),((ToolCardTwelveEvent) currentEvent).getY01(),((ToolCardTwelveEvent) currentEvent).getX11(),((ToolCardTwelveEvent) currentEvent).getY11());
+                tempScheme.shiftDie(((ToolCardTwelveEvent) currentEvent).getX02(),((ToolCardTwelveEvent) currentEvent).getY02(),((ToolCardTwelveEvent) currentEvent).getX22(),((ToolCardTwelveEvent) currentEvent).getY22());
                 matchManager.setPlayerScheme(((ToolCardTwelveEvent) currentEvent).getPlayer(),tempScheme);
                 break;
 
@@ -363,8 +359,7 @@ public class MPExecute extends Application implements Observer {
         mpLogger.majorLog("MPExecute Logger started");
     }
 
-    private void updateGraphicsManager()
-    {
+    private void updateGraphicsManager() throws InvalidIntArgumentException {
         int me=0;
         for(int i=0;i<matchManager.getGraphicsUpdate().length;i++)
             if(matchManager.getGraphicsUpdate()[i].itsMe())

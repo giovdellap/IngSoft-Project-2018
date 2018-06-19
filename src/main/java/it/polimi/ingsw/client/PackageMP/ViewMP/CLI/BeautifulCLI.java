@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
+import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.TurnManager;
 
 import java.io.*;
@@ -169,18 +170,18 @@ public class BeautifulCLI
         return Integer.parseInt(msgIN);
     }
 
-    public int[] move() throws IOException
+    public int[] move(int draftDim) throws IOException
     {
         int[] temp = new int[3];
         printOut(printerMaker.canMove());
         printOut(printerMaker.insertDraftIndex());
-        readIt();
+        readWithExceptions(1,draftDim);
         temp[0] = Integer.parseInt(msgIN)-1;
         printOut(printerMaker.insertX());
-        readIt();
+        readWithExceptions(1,4);
         temp[1] = Integer.parseInt(msgIN)-1;
         printOut(printerMaker.insertY());
-        readIt();
+        readWithExceptions(1,5);
         temp[2] = Integer.parseInt(msgIN)-1;
 
         return temp;
@@ -254,7 +255,7 @@ public class BeautifulCLI
 
 
 
-    public ToolCardEvent useTool() throws IOException {
+    public ToolCardEvent useTool(int draftDim) throws IOException {
 
         boolean flag=false;
 
@@ -272,17 +273,17 @@ public class BeautifulCLI
                 ToolCardOneEvent event = new ToolCardOneEvent(1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Premi + per aumentare il valore del dado, premi - per diminuire il valore del dado",40,true));
                 readIt();
                 event.setAction(msgIN.charAt(0));
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -293,17 +294,17 @@ public class BeautifulCLI
                 ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(2);
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX0(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY0(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX1(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY1(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -314,17 +315,17 @@ public class BeautifulCLI
                 ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(3);
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX0(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY0(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX1(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY1(Integer.parseInt(msgIN)-1);
                 return event;
             }
@@ -335,31 +336,31 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il primo dado che vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del primo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX01(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del primo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY01(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il primo dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX11(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il primo dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY11(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il secondo dado che vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del secondo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX02(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del secondo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY02(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il secondo dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX22(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il secondo dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY22(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -372,14 +373,14 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi sostituire?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da sostituire",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Con quale dado lo vuoi sostituire?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round dove è presente il dado che ti serve",40,true));
-                readIt();
+                readWithExceptions(1,10);
                 event.setTurn(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado che ti serve",40,true));
-                readIt();
+                readWithExceptions(1,9);
                 event.setPos(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -391,7 +392,7 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex((Integer.parseInt(msgIN))-1);
                 return event;
 
@@ -415,13 +416,13 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -433,13 +434,13 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -451,7 +452,7 @@ public class BeautifulCLI
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readIt();
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -462,38 +463,38 @@ public class BeautifulCLI
                 ToolCardTwelveEvent event = new ToolCardTwelveEvent(12);
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round dove sta il dado di cui vuoi prendere il colore",40,true));
-                readIt();
+                readWithExceptions(1,10);
                 event.setTurn(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione dove sta il dado di cui vuoi prendere il colore",40,true));
-                readIt();
+                readWithExceptions(1,9);
                 event.setPos(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il primo dado che vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del primo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX01(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del primo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY01(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il primo dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX11(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il primo dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY11(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il secondo dado che vuoi spostare?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del secondo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX02(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del secondo dado da spostare",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY02(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il secondo dado",40,true));
-                readIt();
+                readWithExceptions(1,4);
                 event.setX22(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il secondo dado",40,true));
-                readIt();
+                readWithExceptions(1,5);
                 event.setY22(Integer.parseInt(msgIN)-1);
                 return event;
 
@@ -510,10 +511,10 @@ public class BeautifulCLI
         printOut(cliToolsManager.printSpaces(40));
         printOut(cliToolsManager.simpleQuestionsMaker("Il dado è stato tirato, nuovo valore " + event.getNewValue(),40,true));
         printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-        readIt();
+        readWithExceptions(1,4);
         event.setX(Integer.parseInt(msgIN)-1);
         printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizioanre il dado",40,true));
-        readIt();
+        readWithExceptions(1,5);
         event.setY(Integer.parseInt(msgIN)-1);
         event.resetValidation();
         return event;
@@ -557,4 +558,17 @@ public class BeautifulCLI
     }
 
 
+    public void readWithExceptions(int leftBound, int rightBound) throws IOException {
+
+        readIt();
+
+        if(Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound) {
+            printOut(printerMaker.wrongInsertion());
+            readWithExceptions(leftBound,rightBound);
+        }
+
+
+    }
+
+    
 }

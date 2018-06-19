@@ -35,7 +35,7 @@ public class ComponentFactory
 
         gComponent[5]=cliToolsManager.centerThatString(scheme.getName(fb)+cliToolsManager.printSpaces(3)+Integer.toString(scheme.getDiff(fb)), 20);
 
-        gComponent[6]=cliToolsManager.centerThatString("NUMERO SELEZONE: "+Integer.toString(num), 20);
+        gComponent[6]=cliToolsManager.centerThatString("NUMERO SELEZIONE: "+Integer.toString(num), 20);
 
         return gComponent;
     }

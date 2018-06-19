@@ -126,6 +126,7 @@ public class Match implements Observer
                     modelInstance.setPlayerScheme(i, scheme);
                     currentEvent.validate();
                     flag=true;
+                    players.get(i).setTokens(modelInstance.getSchemebyIndex(i).getDiff(modelInstance.getSchemebyIndex(i).getfb()));
                 }
                 if(((SchemeSelectionEvent)currentEvent).getId()==modelInstance.getTempSchemes(i+players.size()).getID())
                 {
@@ -134,6 +135,7 @@ public class Match implements Observer
                     modelInstance.setPlayerScheme(i, scheme);
                     currentEvent.validate();
                     flag=true;
+                    players.get(i).setTokens(modelInstance.getSchemebyIndex(i).getDiff(modelInstance.getSchemebyIndex(i).getfb()));
                 }
                 players.get(i).sendEvent(currentEvent);
             }
@@ -194,8 +196,6 @@ public class Match implements Observer
         sendTurnEvent();
         while(!endTurn)
         {
-            if(moveUsed&&toolUsed)
-                endTurn=true;
             players.get(turnManager.getActivePlayer()).getEvent();
 
             if((currentEvent.getType().equals("MoveEvent")&&moveUsed)||(currentEvent.getType().equals("ToolEvent")&&toolUsed))
@@ -209,14 +209,17 @@ public class Match implements Observer
             }
             if(currentEvent.getType().equals("MoveEvent")&&!moveUsed)
                 moveUsed=move();
+            logger.debugLog(currentEvent.getType());
             if(currentEvent instanceof ToolCardEvent&&!toolUsed)
             {
+                logger.debugLog("dentro l'if");
                 if(moveUsed&&(((ToolCardEvent) currentEvent).getId()==1||((ToolCardEvent) currentEvent).getId()==5||((ToolCardEvent) currentEvent).getId()==6||((ToolCardEvent) currentEvent).getId()==9||((ToolCardEvent) currentEvent).getId()==10||((ToolCardEvent) currentEvent).getId()==11))
                     players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                toolUsed=tool();
-                if(toolUsed&&(((ToolCardEvent) currentEvent).getId()==1||((ToolCardEvent) currentEvent).getId()==5||((ToolCardEvent) currentEvent).getId()==6||((ToolCardEvent) currentEvent).getId()==9||((ToolCardEvent) currentEvent).getId()==10||((ToolCardEvent) currentEvent).getId()==11))
-                    moveUsed=true;
-
+                else {
+                    toolUsed = tool();
+                    if (toolUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11))
+                        moveUsed = true;
+                }
             }
 
         }
@@ -242,8 +245,13 @@ public class Match implements Observer
         {
             event.setNextRound(true);
             ArrayList<Die> temp = new ArrayList<Die>();
-            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).returnDim();i++)
-                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i));
+            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).returnDim();i++) {
+                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn() - 1).getDie(i));
+                logger.debugLog("Index: "+Integer.toString(i));
+                logger.debugLog("Value: "+Integer.toString(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i).getValue()));
+                logger.debugLog("Color: "+Integer.toString(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i).getColor()));
+
+            }
             event.setLastRound(temp);
         }
         else
@@ -278,8 +286,11 @@ public class Match implements Observer
         DraftPool tempDP = modelInstance.getDraft();
         Die tempDie = tempDP.returnDie(((MoveEvent)currentEvent).getIndex());
         boolean flag;
-        if(turnManager.getFirst())
-            flag = checkingMethods.checkFirstMove(tempSC, tempDie, ((MoveEvent)currentEvent).getX(), ((MoveEvent)currentEvent).getY());
+        if(!players.get(turnManager.getActivePlayer()).getIPlayedFirstMove()) {
+            flag = checkingMethods.checkFirstMove(tempSC, tempDie, ((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY());
+            if(flag)
+                players.get(turnManager.getActivePlayer()).setIPlayedFirstMove(true);
+        }
         else
             flag = checkingMethods.checkMove(tempSC, tempDie, ((MoveEvent)currentEvent).getX(), ((MoveEvent)currentEvent).getY());
 
@@ -322,10 +333,12 @@ public class Match implements Observer
         for(int i=0;i<3;i++)
             if(toolRecord.getSelectedId()[i]==toolId)
                 flag=true;
+        logger.debugLog("flag: "+Boolean.toString(flag));
         if(!flag)
             return false;
         //check tokens
         int tokens = toolRecord.checkAndApplyUsage(players.get(turnManager.getActivePlayer()).getTokens(), toolId);
+        logger.debugLog("tokens: "+Integer.toString(tokens));
         if(tokens==0)
             return false;
 
@@ -354,6 +367,7 @@ public class Match implements Observer
         {
             case 1:
             {
+                logger.debugLog("dentro checkandapply");
                 card = toolRecord.getCard(1);
                 event = (ToolCardOneEvent)currentEvent;
                 int modify;
@@ -398,7 +412,7 @@ public class Match implements Observer
             {
                 card = toolRecord.getCard(4);
                 event = (ToolCardFourEvent)currentEvent;
-                boolean check = ((ToolCardFour) card).checkToolCardFour(((ToolCardFourEvent)event).getX01(),((ToolCardFourEvent) event).getY01(),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),((ToolCardFourEvent) event).getX22(),((ToolCardFourEvent) event).getY22());
+                boolean check = ((ToolCardFour) card).checkToolCardFour(((ToolCardFourEvent)event).getX01(),((ToolCardFourEvent) event).getY01(),((ToolCardFourEvent) event).getX02(),((ToolCardFourEvent) event).getY02(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),((ToolCardFourEvent) event).getX22(),((ToolCardFourEvent) event).getY22());
                 if(check)
                 {
                     ((ToolCardFour) card).applyModifies(((ToolCardFourEvent) event).getX01(),((ToolCardFourEvent) event).getY01(),((ToolCardFourEvent) event).getX02(),((ToolCardFourEvent) event).getY02(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),((ToolCardFourEvent) event).getX22(),((ToolCardFourEvent) event).getY22());

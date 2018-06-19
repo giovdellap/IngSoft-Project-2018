@@ -326,7 +326,7 @@ public class EventDecoder
                 if (transformer.getCmd().equals("nextRound")) flag = false;
                 i++;
             }
-            event.setLastRound(decoder.arrayListDecoder(vectTemp));
+            event.setLastRound(decoder.arrayListDecoder(vectTemp1));
         }
         else
             event.setLastRound(null);
@@ -345,6 +345,10 @@ public class EventDecoder
 
         event = new ToolCardOneEvent(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
         transformer.simpleDecode(toDecode.get(3));
         event.setIndex(Integer.parseInt(transformer.getArg()));
 
@@ -357,6 +361,9 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(6));
         event.setAction(transformer.getArg().charAt(0));
 
+        transformer.simpleDecode(toDecode.get(7));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
+
         return event;
     }
 
@@ -364,8 +371,13 @@ public class EventDecoder
     {
         ToolCardTwoThreeEvent event;
 
+
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardTwoThreeEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         transformer.simpleDecode(toDecode.get(3));
         event.setX0(Integer.parseInt(transformer.getArg()));
@@ -379,6 +391,8 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(6));
         event.setY1(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(7));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
     }
@@ -389,6 +403,10 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardFourEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         transformer.simpleDecode(toDecode.get(3));
         event.setX01(Integer.parseInt(transformer.getArg()));
@@ -414,6 +432,9 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(10));
         event.setY22(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(11));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
+
         return event;
     }
 
@@ -424,6 +445,10 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardFiveEvent(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
         transformer.simpleDecode(toDecode.get(3));
         event.setIndex(Integer.parseInt(transformer.getArg()));
 
@@ -432,6 +457,9 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(5));
         event.setPos(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(6));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
     }
@@ -442,6 +470,10 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardSixEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         transformer.simpleDecode(toDecode.get(3));
         event.setIndex(Integer.parseInt(transformer.getArg()));
@@ -458,6 +490,9 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(7));
         event.setApplyTwo(Boolean.parseBoolean((transformer.getArg())));
 
+        transformer.simpleDecode(toDecode.get(8));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
+
         return event;
     }
 
@@ -472,6 +507,10 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(2));
 
         event = new ToolCardSevenEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         while (flag)
         {
@@ -494,6 +533,10 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardEightNineTenEvent(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
         transformer.simpleDecode(toDecode.get(3));
         event.setIndex(Integer.parseInt(transformer.getArg()));
 
@@ -502,6 +545,9 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(5));
         event.setY(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(6));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
     }
@@ -512,6 +558,10 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardElevenEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         transformer.simpleDecode(toDecode.get(3));
         event.setIndex(Integer.parseInt(transformer.getArg()));
@@ -525,6 +575,9 @@ public class EventDecoder
         transformer.simpleDecode(toDecode.get(6));
         event.setY(Integer.parseInt(transformer.getArg()));
 
+        transformer.simpleDecode(toDecode.get(7));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
+
         return event;
 
     }
@@ -535,6 +588,10 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(2));
         event = new ToolCardTwelveEvent(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
 
         transformer.simpleDecode(toDecode.get(3));
         event.setTurn(Integer.parseInt(transformer.getArg()));
@@ -565,6 +622,10 @@ public class EventDecoder
 
         transformer.simpleDecode(toDecode.get(12));
         event.setY22(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(13));
+        event.setPlayer(Integer.parseInt(transformer.getArg()));
+
         return event;
     }
 

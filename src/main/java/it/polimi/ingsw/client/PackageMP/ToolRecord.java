@@ -17,4 +17,25 @@ public class ToolRecord
     }
     public int[] getTokens() { return tokens; }
     public int[] getID() { return id; }
+
+    public int getTokensDecrease(int toolId)
+    {
+        int c = getIndexbyId(toolId);
+
+        if(tokens[c]==0)
+            return 1;
+        else
+            return 2;
+
+    }
+
+    public int getIndexbyId(int id)
+    {
+        for(int i=0;i<3;i++)
+        {
+            if(this.id[i]==id)
+                return i;
+        }
+        return  0;
+    }
 }

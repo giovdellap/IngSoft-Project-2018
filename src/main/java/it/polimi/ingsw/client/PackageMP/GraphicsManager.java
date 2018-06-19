@@ -89,16 +89,15 @@ public class GraphicsManager extends Observable
     }
 
     //TURN
-    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
-    {
-        this.players=players;
-        this.draft=draft;
-        this.track=track;
-        this.toolsUsage=tools;
-        this.activePlayer=activePlayer;
-        this.me=me;
-        this.round=round;
-        this.disconnected=disconnected;
+    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException {
+        this.players = players;
+        this.draft = draft;
+        this.track = track;
+        this.toolsUsage = tools;
+        this.activePlayer = activePlayer;
+        this.me = me;
+        this.round = round;
+        this.disconnected = disconnected;
     }
 
     //MY TURN
@@ -117,10 +116,17 @@ public class GraphicsManager extends Observable
             }
             if(whatToDo==1)
             {
-                int[] move = beautifulCLI.move();
+                int[] move = beautifulCLI.move(draft.getSize());
                 currentEvent = new MoveEvent(move[0], move[1], move[2]);
                 setChanged();
                 notifyObservers(currentEvent);
+            }
+            if(whatToDo==2)
+            {
+               currentEvent = beautifulCLI.useTool(draft.getSize());
+               setChanged();
+               notifyObservers(currentEvent);
+
             }
 
         }

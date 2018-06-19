@@ -19,6 +19,11 @@ public class ToolCardUsageRecord
 
         int extracted=0;
         selectedId = new int[3];
+        selectedId[0] = 4;
+        selectedId[1] = 5;
+        selectedId[2] = 6;
+
+        /*
         while(extracted<3)
         {
             int i = (int)(Math.random()*12+1);
@@ -33,13 +38,19 @@ public class ToolCardUsageRecord
                 extracted++;
             }
         }
+        */
         cards = new ToolCard[3];
-        toolCardConstructor();
+        //toolCardConstructor();
+        testToolCardConstructor();
     }
 
-    public int checkAndApplyUsage(int playerTokens, int toolCard)
+    public int checkAndApplyUsage(int playerTokens, int idTool)
     {
         //returns 0 if player cannot use that tool, 1 or 2 if player can use it
+        int toolCard=0;
+        for(int i=0;i<3;i++)
+            if(selectedId[i]==idTool)
+                toolCard=i;
 
         if (tokens[toolCard]==0&&playerTokens>0)
         {
@@ -137,5 +148,11 @@ public class ToolCardUsageRecord
             if(cards[i].getId()==id)
                 return cards[i];
         return null;
+    }
+
+    private void testToolCardConstructor() throws InvalidIntArgumentException {
+        cards[0] = new ToolCardFour();
+        cards[1] = new ToolCardFive();
+        cards[2] = new ToolCardSix();
     }
 }

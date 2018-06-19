@@ -25,7 +25,7 @@ public class ModelGenerator
 
         int z=1;
 
-        schemeCard[0]="  12345";
+        schemeCard[0]=" 12345";
 
         for (int i = 0; i < 4; i++)
         {

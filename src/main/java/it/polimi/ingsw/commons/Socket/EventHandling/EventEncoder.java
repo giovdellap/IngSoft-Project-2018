@@ -153,6 +153,7 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("x",Integer.toString(toolCardOneEvent.getX())));
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardOneEvent.getY())));
         temp.add(transformer.simpleEncode("action",Character.toString(toolCardOneEvent.getAction())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardOneEvent.getPlayer())));
 
         return temp;
     }
@@ -166,6 +167,8 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("y0",Integer.toString(toolCardTwoThreeEvent.getY0())));
         temp.add(transformer.simpleEncode("x1",Integer.toString(toolCardTwoThreeEvent.getX1())));
         temp.add(transformer.simpleEncode("y1",Integer.toString(toolCardTwoThreeEvent.getY1())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardTwoThreeEvent.getPlayer())));
+
 
         return temp;
     }
@@ -183,6 +186,8 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("y11",Integer.toString(toolCardFourEvent.getY11())));
         temp.add(transformer.simpleEncode("x22",Integer.toString(toolCardFourEvent.getX22())));
         temp.add(transformer.simpleEncode("y22",Integer.toString(toolCardFourEvent.getY22())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardFourEvent.getPlayer())));
+
 
         return temp;
     }
@@ -195,6 +200,7 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("index",Integer.toString(toolCardFiveEvent.getIndex())));
         temp.add(transformer.simpleEncode("roundtrackturn",Integer.toString(toolCardFiveEvent.getTurn())));
         temp.add(transformer.simpleEncode("rounddicepos",Integer.toString(toolCardFiveEvent.getPos())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardFiveEvent.getPlayer())));
 
         return temp;
     }
@@ -209,6 +215,7 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardSixEvent.getY())));
         temp.add(transformer.simpleEncode("booleanapplyone",Boolean.toString(toolCardSixEvent.isApplyOne())));
         temp.add(transformer.simpleEncode("booleanapplytwo",Boolean.toString(toolCardSixEvent.isApplyTwo())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardSixEvent.getPlayer())));
 
         return temp;
     }
@@ -223,6 +230,8 @@ public class EventEncoder
 
         for(int i=0;i<tempVector.length;i++)
             temp.add(tempVector[i]);
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardSevenEvent.getPlayer())));
+
 
         return temp;
 
@@ -236,6 +245,8 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("index",Integer.toString(toolCardEightNineTenEvent.getIndex())));
         temp.add(transformer.simpleEncode("x",Integer.toString(toolCardEightNineTenEvent.getX())));
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardEightNineTenEvent.getY())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardEightNineTenEvent.getPlayer())));
+
 
         return temp;
 
@@ -250,6 +261,7 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("newvalue",Integer.toString(toolCardElevenEvent.getNewValue())));
         temp.add(transformer.simpleEncode("x",Integer.toString(toolCardElevenEvent.getX())));
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardElevenEvent.getY())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardElevenEvent.getPlayer())));
 
         return temp;
 
@@ -270,6 +282,8 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("y11",Integer.toString(toolCardTwelveEvent.getY11())));
         temp.add(transformer.simpleEncode("x22",Integer.toString(toolCardTwelveEvent.getX22())));
         temp.add(transformer.simpleEncode("y22",Integer.toString(toolCardTwelveEvent.getY22())));
+        temp.add(transformer.simpleEncode("player",Integer.toString(toolCardTwelveEvent.getPlayer())));
+
 
         return temp;
 

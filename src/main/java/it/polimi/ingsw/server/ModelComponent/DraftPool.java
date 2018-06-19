@@ -47,6 +47,14 @@ public class DraftPool
         for(Die die:draft)
             dice.addDie(die);
 
+        Die[] temp = container.throwDice(dim);
+        draft = new ArrayList<Die>();
+        for(int i=0;i<dim;i++) {
+            draft.add(temp[i]);
+            draft.get(i).throwDie();
+
+        }
+
         return dice;
     }
 

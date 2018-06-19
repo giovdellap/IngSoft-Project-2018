@@ -36,7 +36,7 @@ public class RoundTrackMP {
 
     public void setSpecificRoundDice(RoundDiceMP toSet, int turn) throws InvalidIntArgumentException
     {
-        if(turn<0||turn>=index)
+        if(turn<0||turn>index)
             throw new InvalidIntArgumentException();
         roundVector[turn] = toSet;
     }

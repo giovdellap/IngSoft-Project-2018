@@ -109,6 +109,10 @@ public class CheckingMethods {
 
         if(x!=0 && x!=3 && y!=0 && y!=4)
             return false;
+        if(scheme.getCell(scheme.getfb(), x, y)>0&&scheme.getCell(scheme.getfb(), x, y)<6&&scheme.getCell(scheme.getfb(), x, y)!=dieToPlace.getColor())
+            return false;
+        if(scheme.getCell(scheme.getfb(), x, y)>5&&scheme.getCell(scheme.getfb(), x, y)<12&&(scheme.getCell(scheme.getfb(), x, y)-5)!=dieToPlace.getValue())
+            return false;
 
         return true;
     }

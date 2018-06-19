@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.FcknSimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class ModelManagerMP
 {
-    public MinorLogger mmLogger;
+    private FcknSimpleLogger logger;
 
     private int numPlayers=0;
     private DraftPoolMP draft;
@@ -30,6 +31,8 @@ public class ModelManagerMP
         scDeck = new SchemesDeckMP();
         pubObjs = new PublicObjectiveMP[3];
         track = new RoundTrackMP();
+
+        logger = new FcknSimpleLogger(0, false);
     }
 
     public void setMyPrivObj(int id) throws InvalidIntArgumentException {
@@ -88,14 +91,23 @@ public class ModelManagerMP
     //TRACK
     public void setTrack(ArrayList<Die> arg, int round) throws InvalidIntArgumentException, FullDataStructureException {
         RoundDiceMP tempRD = new RoundDiceMP(arg.size());
-        for(int i=0;i<arg.size();i++)
+        for(int i=0;i<arg.size();i++) {
+            logger.log("COLOR: "+Integer.toString(arg.get(i).getColor()));
             tempRD.addDie(arg.get(i));
-
+            System.out.println("Value: "+Integer.toString(arg.get(i).getValue())+" color: "+Integer.toString(arg.get(i).getColor()));
+        }
         track.setSpecificRoundDice(tempRD, round);
     }
     public RoundTrackMP getTrack()
     {
         return track;
+    }
+
+    public void addRound(ArrayList<Die> arg) throws InvalidIntArgumentException, FullDataStructureException {
+        RoundDiceMP tempRD = new RoundDiceMP(arg.size());
+        for(int i=0;i<arg.size();i++)
+            tempRD.addDie(arg.get(i));
+        track.addRound(tempRD);
     }
 
 

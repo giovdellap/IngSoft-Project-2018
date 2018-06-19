@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.FcknSimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -18,9 +19,12 @@ public class Model
     private SchemeCard[] playerSchemes;
     private PrivateObjective[] playersPrObjs;
 
+    private FcknSimpleLogger logger;
+
     public Model(int numPlayers)
     {
             this.numPlayers=numPlayers;
+            logger = new FcknSimpleLogger(0, false);
     }
 
     //INITIALIZATION
@@ -125,6 +129,8 @@ public class Model
     }
 
     public void roundEnd() throws InvalidIntArgumentException, FullDataStructureException {
-        track.addRound(draft.updateDraftDice());
-    }
+        RoundDice tempRD = draft.updateDraftDice();
+        track.addRound(tempRD);
+        }
+
 }

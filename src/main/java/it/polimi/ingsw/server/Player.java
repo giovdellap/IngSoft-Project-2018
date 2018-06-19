@@ -19,6 +19,7 @@ public class Player extends Observable implements Observer
     private int tokens;//player tokens counter
     private boolean eightUsed;//player ToolCard 8 usage flag
     private boolean isDisconnected=false;
+    private boolean iPlayedFirstMove = false;
 
     //MANAGERS
     private ConnectionManager connectionManager;
@@ -62,6 +63,13 @@ public class Player extends Observable implements Observer
         return id;
     }
 
+    public boolean getIPlayedFirstMove() {
+        return iPlayedFirstMove;
+    }
+
+    public void setIPlayedFirstMove(boolean iPlayedFirstMove) {
+        this.iPlayedFirstMove = iPlayedFirstMove;
+    }
 
     //ACTIVATION
     public void activate()
@@ -81,6 +89,11 @@ public class Player extends Observable implements Observer
 
     //TOKENS
     public int getTokens() { return tokens; }
+
+    public void setTokens(int n)
+    {
+        tokens=n;
+    }
 
     public void usedTokens(int num)
     {
