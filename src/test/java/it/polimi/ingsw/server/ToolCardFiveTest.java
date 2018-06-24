@@ -22,6 +22,8 @@ public class ToolCardFiveTest {
     DraftPool draftTest;
     RoundTrack trackTest;
     RoundDice roundDiceTest;
+    SchemesDeck schemesDeckTest;
+    SchemeCard testScheme;
 
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
     //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
@@ -35,6 +37,9 @@ public class ToolCardFiveTest {
         testDie4 = new Die(4);
         toolCardFiveTest = new ToolCardFive();
         draftTest = new DraftPool(4);
+        schemesDeckTest = new SchemesDeck();
+        testScheme = schemesDeckTest.extractSchemebyID(6);
+        testScheme.setfb(2);
 
         roundDiceTest = new RoundDice(2);
         roundDiceTest.addDie(testDie);
@@ -43,6 +48,7 @@ public class ToolCardFiveTest {
         trackTest = new RoundTrack();
         trackTest.addRound(roundDiceTest);
 
+        toolCardFiveTest.setScheme(testScheme);
         toolCardFiveTest.setDraft(draftTest);
         toolCardFiveTest.setRoundTrack(trackTest);
 
@@ -52,9 +58,11 @@ public class ToolCardFiveTest {
     @Test
     public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
 
-        toolCardFiveTest.applyModifies(2,0,0);
+        testDie2 = toolCardFiveTest.getTrack().returnNTurnRoundDice(0).getDie(0);
 
-        Assertions.assertEquals(true,toolCardFiveTest.getDraft().returnDie(2).equals(testDie));
+        toolCardFiveTest.applyModifies(2,0,0,3,4);
+
+        Assertions.assertEquals(true,testScheme.getDie(3,4).equals(testDie2));
 
     }
 
@@ -63,7 +71,7 @@ public class ToolCardFiveTest {
     public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException, FullDataStructureException {
 
         testDie3 = draftTest.returnDie(2);
-        toolCardFiveTest.applyModifies(2,0,0);
+        toolCardFiveTest.applyModifies(2,0,0,3,4);
 
         Assertions.assertEquals(true,toolCardFiveTest.getTrack().returnNTurnRoundDice(0).getDie(0).equals(testDie3));
 

@@ -403,64 +403,6 @@ public class SchemeCardTest {
 
 
     @Test
-    public void checkGetFront() throws InvalidIntArgumentException {
-
-        boolean flag = true;
-
-        testScheme.setCell(1, 1, 4, 3);
-        testScheme.setCell(1, 3, 4, 2);
-        testScheme.setCell(1, 0, 1, 8);
-        testScheme.setCell(1, 2, 2, 9);
-
-        testFront = testScheme.getFront();
-
-
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 5; j++) {
-
-                System.out.println((String)Integer.toString(testFront[i][j])+" = "+(String)Integer.toString(testScheme.getCell(1,i,j)));
-
-                if (testFront[i][j]!=testScheme.getCell(1,i,j)) {
-                    System.out.println("TEST FAILED");
-                    flag = false;
-                }
-            }
-
-            Assertions.assertEquals(true,flag);
-
-    }
-
-
-    @Test
-    public void checkGetBack() throws InvalidIntArgumentException {
-
-        boolean flag = true;
-
-        testScheme.setCell(2, 3, 1, 2);
-        testScheme.setCell(2, 1, 3, 5);
-        testScheme.setCell(2, 2, 4, 8);
-        testScheme.setCell(2, 1, 2, 11);
-
-        testFront = testScheme.getBack();
-
-
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 5; j++) {
-
-                System.out.println((String)Integer.toString(testFront[i][j])+" = "+(String)Integer.toString(testScheme.getCell(2,i,j)));
-
-                if (testFront[i][j]!=testScheme.getCell(2,i,j)) {
-                    System.out.println("TEST FAILED");
-                    flag = false;
-                }
-            }
-
-        Assertions.assertEquals(true,flag);
-
-    }
-
-
-    @Test
     public void checkReplaceDie() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         Die testReplaceDie1 = new Die((int)Math.random()*5+1);

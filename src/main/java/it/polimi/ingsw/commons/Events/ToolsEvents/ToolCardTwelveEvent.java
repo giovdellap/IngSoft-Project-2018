@@ -2,17 +2,19 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardTwelveEvent extends ToolCardEvent {
 
-    int index;
-    int pos;
-    int turn;
-    int x01;
-    int y01;
-    int x02;
-    int y02;
-    int x11;
-    int y11;
-    int x22;
-    int y22;
+    private int index;
+    private int pos;
+    private int turn;
+    private int x01;
+    private int y01;
+    private int x02;
+    private int y02;
+    private int x11;
+    private int y11;
+    private int x22;
+    private int y22;
+
+    private boolean onlyOne=true;
 
 
     public ToolCardTwelveEvent(int id) {
@@ -108,4 +110,11 @@ public class ToolCardTwelveEvent extends ToolCardEvent {
         return y22;
     }
 
+    public void setOnlyOne(boolean onlyOne) {
+        this.onlyOne = onlyOne;
+    }
+
+    public boolean isOnlyOne() {
+        return onlyOne;
+    }
 }

@@ -21,6 +21,11 @@ public class SchemeCard
 
     private Die diceScheme[][];
 
+    /**
+     * SchemeCard Constructor
+     * @param i
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCard(int i) throws InvalidIntArgumentException
     {
 
@@ -53,6 +58,12 @@ public class SchemeCard
 
     }
 
+    /**
+     * sets scheme's name
+     * @param fb 1 for front, 2 for back
+     * @param name scheme card's name
+     * @throws InvalidIntArgumentException
+     */
     public void setName(int fb, String name) throws InvalidIntArgumentException {
 
 
@@ -67,6 +78,12 @@ public class SchemeCard
 
     }
 
+    /**
+     * gets scheme's name
+     * @param fb 1 for front, 2 for back
+     * @return string with scheme's name
+     * @throws InvalidIntArgumentException
+     */
     public String getName(int fb) throws InvalidIntArgumentException {
 
         if (fb==1)
@@ -83,29 +100,11 @@ public class SchemeCard
 
     }
 
-    public int[][] getFront()
-    {
-        int[][] temp = new int[4][5];
-        for(int i=0;i<4;i++)
-            for(int j=0;j<5;j++)
-            {
-                temp[i][j] = front[i][j];
-            }
-        return temp;
-
-    }
-
-    public int[][] getBack()
-    {
-        int[][] temp = new int[4][5];
-        for(int i=0;i<4;i++)
-            for(int j=0;j<5;j++)
-            {
-                temp[i][j] = back[i][j];
-            }
-        return temp;
-    }
-
+    /**
+     * sets front / back
+     * @param fb 1 for front, 2 for back
+     * @throws InvalidIntArgumentException
+     */
     public void setfb(int fb) throws InvalidIntArgumentException
     {
         if (fb==1)
@@ -121,6 +120,10 @@ public class SchemeCard
 
     }
 
+    /**
+     * gets front / back
+     * @return integer with front / back
+     */
     public int getfb()
     {
 
@@ -128,10 +131,16 @@ public class SchemeCard
 
     }
 
-
+    /**
+     * sets a cell into the dice scheme
+     * @param fb 1 for front, 2 for back
+     * @param x row where to set the cell
+     * @param y column where to set the cell
+     * @param toInsert integer representing the number / color on the dice scheme
+     * @throws InvalidIntArgumentException
+     */
     public void setCell(int fb, int x, int y, int toInsert) throws InvalidIntArgumentException
     {
-        //fronte: fr=1 / retro: fr=2
 
         if (x < 0 || x > 3 || y < 0 || y > 4 || toInsert < 0 || toInsert > 11)
             throw new InvalidIntArgumentException();
@@ -144,12 +153,19 @@ public class SchemeCard
         if (fb < 1 || fb > 2)
             throw new InvalidIntArgumentException();
 
-                }
+    }
 
+    /**
+     * gets cell
+     * @param fb 1 for front, 2 for back
+     * @param x row of the cell to get
+     * @param y column of the cell to get
+     * @return integer representing the number / color on the dice scheme
+     * @throws InvalidIntArgumentException
+     */
 
     public int getCell(int fb, int x, int y) throws InvalidIntArgumentException
     {
-        //fronte: fr=1 / retro: fr=2
 
         if (x < 0 || x > 3 || y < 0 || y > 4 )
             throw new InvalidIntArgumentException();
@@ -169,11 +185,18 @@ public class SchemeCard
 
     }
 
+    /**
+     * gets scheme card's id
+     * @return id
+     */
     public int getID()
     {
         return id;
     }
 
+    /**
+     * disables a scheme card
+     */
     public void disableScheme() {
 
         if (!isDisabled)
@@ -181,16 +204,24 @@ public class SchemeCard
 
     }
 
+    /**
+     * checks if a scheme card is disabled
+     * @return true if the scheme is disabled, false if it's not
+     */
     public boolean checkDisabled() {
 
         return isDisabled;
 
     }
 
-
+    /**
+     * sets difficulty to the scheme card
+     * @param fb 1 for front, 2 for back
+     * @param diff difficulty to set
+     * @throws InvalidIntArgumentException
+     */
     public void setDiff(int fb, int diff) throws InvalidIntArgumentException
     {
-        //fronte: fr=1 / retro: fr=2
 
         if (diff < 0 || diff > 6)
             throw new InvalidIntArgumentException();
@@ -204,9 +235,14 @@ public class SchemeCard
             throw new InvalidIntArgumentException();
     }
 
+    /**
+     * gets the scheme card's difficulty
+     * @param fb 1 for front, 2 for back
+     * @return integer representing the scheme card's difficulty
+     * @throws InvalidIntArgumentException
+     */
     public int getDiff(int fb) throws InvalidIntArgumentException
     {
-        //fronte: fr=1 / retro: fr=2
 
         if (fb == 1)
             return this.frontDiff;
@@ -223,7 +259,13 @@ public class SchemeCard
 
     }
 
-
+    /**
+     * gets selected Die
+     * @param x row where the selected die is
+     * @param y column where the selected die is
+     * @return the selected die
+     * @throws InvalidIntArgumentException
+     */
     public Die getDie(int x, int y) throws InvalidIntArgumentException
     {
         if (x < 0 || x > 3 || y < 0 || y > 4 )
@@ -234,7 +276,14 @@ public class SchemeCard
 
     }
 
-
+    /**
+     * sets a precise die
+     * @param toPlace die to place
+     * @param x row where to place the die
+     * @param y column where to place the die
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     */
     public void setDie(Die toPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         if (x < 0 || x > 3 || y < 0 || y > 4)
@@ -248,7 +297,15 @@ public class SchemeCard
 
     }
 
-
+    /**
+     * replaces a die with another one
+     * @param toReplace die to replace
+     * @param x row where to place the die
+     * @param y column where to place the die
+     * @return the old die
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     */
     public Die replaceDie(Die toReplace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
 
@@ -267,6 +324,10 @@ public class SchemeCard
 
     }
 
+    /**
+     * returns the number of present dice on the dice scheme
+     * @return
+     */
     public int getNumDice()
     {
         int temp=0;
@@ -277,6 +338,26 @@ public class SchemeCard
         return temp;
     }
 
+    /**
+     * shifts a die from one position of the dice scheme to another
+     * @param x0 row of the die to shift
+     * @param y0 column of the die to shift
+     * @param x1 row where to place the die
+     * @param y1 column where to place the die
+     * @throws InvalidIntArgumentException
+     */
+    public void shiftDie(int x0, int y0, int x1, int y1) throws InvalidIntArgumentException {
+
+        int color = diceScheme[x0][y0].getColor();
+        int value = diceScheme[x0][y0].getValue();
+
+        Die tempDie = new Die(color);
+        tempDie.setValue(value);
+
+        diceScheme[x1][y1] = tempDie;
+        diceScheme[x0][y0].disableDie();
+
+    }
 
 
 }

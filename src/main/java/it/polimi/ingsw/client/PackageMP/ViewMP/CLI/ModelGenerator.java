@@ -7,6 +7,8 @@ import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import it.polimi.ingsw.commons.Die;
 import org.fusesource.jansi.Ansi;
 
+import java.util.ArrayList;
+
 public class ModelGenerator
 {
     private CLIToolsManager clito;
@@ -89,7 +91,7 @@ public class ModelGenerator
 
         while(i<draft.getSize())
         {
-            diceDraft += toUnicode(draft.returnDie(i));
+            diceDraft += toUnicode(draft.returnDie(i))+" ";
             i++;
         }
         diceDraft+=printSpaces(10-draft.getSize());
@@ -101,31 +103,29 @@ public class ModelGenerator
         //returns a string representing the roundtrack
 
         CLIToolsManager clito = new CLIToolsManager();
-        String[] track = new String[2];
+        String[] track;
+        ArrayList<String> temp = new ArrayList<String>();
 
-        int j=0;
-
-        String temp = "";
-
-        String temp1 = "";
-
-        for(int i=0;i<roundtrack.returnActualTurn();i++)
-            temp += toUnicode(roundtrack.returnNTurnRoundDice(i).getDie(j));
-
-
-
-        track[0]=clito.printSpacesEnder(temp, 10);
-
-        j++;
-
-        for(int i=0;i<roundtrack.returnActualTurn();i++) {
-            if (j < roundtrack.returnNTurnRoundDice(i).returnDim())
-                temp1 += toUnicode(roundtrack.returnNTurnRoundDice(i).getDie(j));
-            else
-                temp1 += "-";
+        temp.add(clito.printSpaces(5)+"ROUNDTRACK"+clito.printSpaces(5));
+        temp.add("1 2 3 4 5 6 7 8 9 10");
+        for(int i=0;i<calculateDim(roundtrack);i++)
+        {
+            String util = "";
+            for(int j=0;j<roundtrack.returnActualTurn();j++)
+            {
+                if(i>=roundtrack.returnNTurnRoundDice(j).returnDim())
+                    util+="\u2612";
+                else
+                    util+=toUnicode(roundtrack.returnNTurnRoundDice(j).getDie(i));
+                util+=" ";
+            }
+            temp.add(util);
         }
-        track[1]=clito.printSpacesEnder(temp1, 10);
-
+        track = new String[temp.size()];
+        for(int i=0;i<track.length;i++)
+        {
+            track[i]=temp.get(i);
+        }
         return track;
     }
 
@@ -243,5 +243,17 @@ public class ModelGenerator
 
         return temp;
 
+    }
+
+    public int calculateDim(RoundTrackMP round) throws InvalidIntArgumentException
+    {
+        int max=0;
+
+        for (int i=0;i<round.returnActualTurn();i++)
+        {
+            if (round.returnNTurnRoundDice(i).returnDim()>max)
+                max=round.returnNTurnRoundDice(i).returnDim();
+        }
+        return max;
     }
 }

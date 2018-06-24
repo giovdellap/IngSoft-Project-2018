@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ToolCards.ToolCardTwelve;
 import  it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,14 +35,14 @@ public class ToolCardTwelveTest {
         schemeTest.setfb(2);
         testDie1 = new Die(5);
         testDie2 = new Die(2);
-        testDie3 = new Die(3);
-        testDie3.setValueTest(1);
+        testDie3 = new Die(5);
+        testDie3.setValue(1);
         testDie4 = new Die(4);
-        testDie4.setValueTest(2);
+        testDie4.setValue(2);
         testDie5 = new Die(5);
-        testDie5.setValueTest(4);
+        testDie5.setValue(4);
         testDie6 = new Die(5);
-        testDie6.setValueTest(3);
+        testDie6.setValue(3);
         testDie7 = new Die(2);
         testDie8 = new Die(3);
 
@@ -53,6 +52,7 @@ public class ToolCardTwelveTest {
         dice.addDie(testDie2);
         trackTest.addRound(dice);
 
+        toolCardTwelveTest.setTempScheme(schemeTest);
     }
 
     @Test
@@ -61,11 +61,10 @@ public class ToolCardTwelveTest {
         boolean flag = false;
 
         schemeTest.setDie(testDie3,0,3);
-        schemeTest.setDie(testDie4,0,4);
-        schemeTest.setDie(testDie5,0,0);
-        schemeTest.setDie(testDie6,1,0);
+        schemeTest.setDie(testDie4,0,0);
 
-        flag = toolCardTwelveTest.checkToolCardTwelve(trackTest,0, 0,0,0,1,0,schemeTest,1,3,1,4);
+
+        flag = toolCardTwelveTest.checkToolCardTwelve1Die(trackTest,0,0,schemeTest,0,3,1,0);
 
         Assertions.assertEquals(true,flag);
 
@@ -82,7 +81,7 @@ public class ToolCardTwelveTest {
         schemeTest.setDie(testDie5,0,0);
         schemeTest.setDie(testDie6,1,0);
 
-        flag = toolCardTwelveTest.checkToolCardTwelve(trackTest,0, 1,0,0,1,0,schemeTest,1,3,1,4);
+        flag = toolCardTwelveTest.checkToolCardTwelve2Dice(trackTest,0,1,0,0,1,0,schemeTest,1,3,1,4);
 
         Assertions.assertEquals(false,flag);
 
@@ -98,7 +97,7 @@ public class ToolCardTwelveTest {
         schemeTest.setDie(testDie7,0,0);
         schemeTest.setDie(testDie8,1,0);
 
-        flag = toolCardTwelveTest.checkToolCardTwelve(trackTest,0, 1,0,0,1,0,schemeTest,1,3,1,4);
+        flag = toolCardTwelveTest.checkToolCardTwelve2Dice(trackTest,0,1,0,0,1,0,schemeTest,1,3,1,4);
 
         Assertions.assertEquals(false,flag);
 
@@ -117,16 +116,19 @@ public class ToolCardTwelveTest {
         schemeTest.setDie(testDie7,0,0);
         schemeTest.setDie(testDie8,1,0);
 
-        schemeTest = toolCardTwelveTest.applyModifies(0,0,1,0,schemeTest,1,3,1,4);
+        int value1 = testDie7.getValue();
+        int value2 = testDie8.getValue();
 
-        if(schemeTest.getDie(1,3).equals(testDie7) && schemeTest.getDie(1,4).equals(testDie8))
-            flag = true;
+        schemeTest = toolCardTwelveTest.applyModifies(0,0,1,0,1,3,1,4);
+
+        if(schemeTest.getDie(1,3).getColor()==testDie7.getColor())
+            if(schemeTest.getDie(1,3).getValue()==value1)
+                if(schemeTest.getDie(1,4).getColor()==testDie8.getColor())
+                    if(schemeTest.getDie(1,4).getValue()==value2)
+                        flag = true;
 
         Assertions.assertEquals(true,flag);
 
-
     }
-
-
 
 }

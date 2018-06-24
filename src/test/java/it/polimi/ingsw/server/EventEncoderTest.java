@@ -9,9 +9,7 @@ import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
-import it.polimi.ingsw.server.ModelComponent.PublicObjective;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ToolCards.ToolCardOne;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +38,7 @@ public class EventEncoderTest
     MoveEvent eventM;
     Event eventP;
 
-    FcknSimpleLogger logger;
+    SimpleLogger logger;
 
     @BeforeEach public void setUp() throws InvalidIntArgumentException
     {
@@ -66,7 +64,7 @@ public class EventEncoderTest
         eventP=new PassEvent();
 
 
-        logger=new FcknSimpleLogger(0, false);
+        logger=new SimpleLogger(0, false);
 
     }
 

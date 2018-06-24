@@ -5,6 +5,8 @@ public class ToolCardFiveEvent extends ToolCardEvent {
     int index;
     int turn;
     int pos;
+    int x;
+    int y;
 
     public ToolCardFiveEvent(int id) {
         super("ToolCardFiveEvent", id);
@@ -34,5 +36,19 @@ public class ToolCardFiveEvent extends ToolCardEvent {
         return turn;
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

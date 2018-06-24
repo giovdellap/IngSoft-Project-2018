@@ -6,6 +6,10 @@ public class SchemesDeck
 {
     private SchemeCard[] deck;
 
+    /**
+     * SchemesDeck Constructor
+     * @throws InvalidIntArgumentException
+     */
     public SchemesDeck() throws InvalidIntArgumentException
     {
 
@@ -667,7 +671,12 @@ public class SchemesDeck
 
     }
 
-
+    /**
+     * extract casual schemes
+     * @param n number of schemes to extract
+     * @return scheme card vector containing extracted schemes
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCard[] extractSchemes(int n) throws InvalidIntArgumentException {
 
         if (n<0 || n>8 || n%2!=0)
@@ -694,6 +703,12 @@ public class SchemesDeck
         return tempVett;
     }
 
+    /**
+     * extracts a precise scheme card by id
+     * @param id id of the scheme card to extract
+     * @return the extracted scheme card
+     * @throws InvalidIntArgumentException
+     */
 
     public SchemeCard extractSchemebyID (int id) throws InvalidIntArgumentException
     {

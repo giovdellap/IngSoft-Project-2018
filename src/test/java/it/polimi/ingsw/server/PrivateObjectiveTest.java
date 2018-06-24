@@ -58,9 +58,9 @@ public class PrivateObjectiveTest
     DieTest4 = new Die(4);
     DieTest5 = new Die(1);
 
-    DieTest1.setValueTest(4);
-    DieTest3.setValueTest(2);
-    DieTest5.setValueTest(5);
+    DieTest1.setValue(4);
+    DieTest3.setValue(2);
+    DieTest5.setValue(5);
 
     schemeTest.setDie(DieTest1,1,0);
     schemeTest.setDie(DieTest2,1,1);

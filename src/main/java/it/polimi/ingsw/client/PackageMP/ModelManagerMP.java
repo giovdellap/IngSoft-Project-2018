@@ -2,18 +2,15 @@ package it.polimi.ingsw.client.PackageMP;
 
 import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
-import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.util.ArrayList;
 
 public class ModelManagerMP
 {
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
     private int numPlayers=0;
     private DraftPoolMP draft;
@@ -32,7 +29,7 @@ public class ModelManagerMP
         pubObjs = new PublicObjectiveMP[3];
         track = new RoundTrackMP();
 
-        logger = new FcknSimpleLogger(0, false);
+        logger = new SimpleLogger(0, false);
     }
 
     public void setMyPrivObj(int id) throws InvalidIntArgumentException {

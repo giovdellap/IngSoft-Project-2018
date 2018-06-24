@@ -17,6 +17,7 @@ public class PublicObjectivesDeckTest {
     @BeforeEach
     public void setUp() throws InvalidIntArgumentException {
 
+        publicObjectivesDeckTemp = new PublicObjective[10];
         publicObjectivesDeckTest = new PublicObjectivesDeck();
         publicObjectivesDeckTemp = publicObjectivesDeckTest.extractPubObjs();
 

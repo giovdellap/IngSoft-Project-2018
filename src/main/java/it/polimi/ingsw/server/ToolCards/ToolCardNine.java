@@ -11,19 +11,41 @@ public class ToolCardNine extends ToolCard {
     DraftPool draft;
     SchemeCard scheme;
 
+    /**
+     * sets draft pool
+     * @param d draft
+     */
     public void setDraft(DraftPool d) {
         draft = d;
     }
 
+    /**
+     * sets scheme card
+     * @param s scheme
+     */
     public void setScheme(SchemeCard s) {
         scheme = s;
     }
 
+    /**
+     * ToolCardNine Constructor
+     */
     public ToolCardNine() {
         setToolCardName("Cork-backed Straightedge");
         setId(9);
     }
 
+    /**
+     * checks if the tool card can be used or not
+     * @param draft draft pool
+     * @param pos draft pool's index
+     * @param scheme scheme card
+     * @param x row where to place the die
+     * @param y column where to place the die
+     * @return true if the move can be executed, false if it can't
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public boolean checkToolCardNine(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
@@ -108,6 +130,14 @@ public class ToolCardNine extends ToolCard {
 
     }
 
+    /**
+     * applies the tool card effects to the scheme card
+     * @param pos draft pool's index
+     * @param x row where to place the die
+     * @param y column where to place the die
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public void applyModifies(int pos, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);

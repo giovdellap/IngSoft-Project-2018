@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ToolCards.ToolCardFive;
 import it.polimi.ingsw.server.ToolCards.ToolCardSix;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,9 +30,9 @@ public class ToolCardSixTest {
     public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException {
 
         testDie = new Die(1);
-        testDie.setValueTest(1);
+        testDie.setValue(1);
         testDie2 = new Die(2);
-        testDie2.setValueTest(2);
+        testDie2.setValue(2);
         testDie3 = new Die(3);
         testDie4 = new Die(4);
         toolCardSixTest = new ToolCardSix();
@@ -78,7 +77,7 @@ public class ToolCardSixTest {
     public void checkApplyModifiesToScheme() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         testDie = draftTest.returnDie(2);
-        testDie.setValueTest(3);
+        testDie.setValue(3);
         scheme.setDie(testDie2,0,4);
 
         toolCardSixTest.setScheme(scheme);
@@ -95,7 +94,7 @@ public class ToolCardSixTest {
     public void checkApplyModifiesToDraft() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         testDie = draftTest.returnDie(2);
-        testDie.setValueTest(3);
+        testDie.setValue(3);
 
         toolCardSixTest.setScheme(scheme);
         toolCardSixTest.setDraft(draftTest);

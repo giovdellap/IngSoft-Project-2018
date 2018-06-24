@@ -11,20 +11,39 @@ public class ToolCardTen extends ToolCard {
     DraftPool draft;
     SchemeCard scheme;
 
+    /**
+     * ToolCardTen Constructor
+     */
     public ToolCardTen() {
         setToolCardName("Grinding Stone");
         setId(10);
     }
 
+    /**
+     * sets draft pool to tool card
+     * @param d
+     */
     public void setDraft(DraftPool d) {
         draft = d;
     }
 
+    /**
+     * sets scheme card to tool card
+     * @param s
+     */
     public void setScheme(SchemeCard s) {
         scheme = s;
     }
 
-    public boolean checkToolCardTen(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    /**
+     * checks if the tool card can be used or not
+     * @param draft draft poolfrom which to take die
+     * @param pos draft pool's index
+     * @return Die with it's value modified
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
+    public Die checkToolCardTen(DraftPool draft, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
 
@@ -32,129 +51,36 @@ public class ToolCardTen extends ToolCard {
 
         if(toPlace.getValue()==1 && !changed)
         {
-            toPlace.setValueTest(6);
+            toPlace.setValue(6);
             changed=true;
         }
 
         if(toPlace.getValue()==2 && !changed) {
-            toPlace.setValueTest(5);
+            toPlace.setValue(5);
             changed=true;
         }
 
         if(toPlace.getValue()==3 && !changed) {
-            toPlace.setValueTest(4);
+            toPlace.setValue(4);
             changed=true;
         }
 
         if(toPlace.getValue()==4 && !changed) {
-            toPlace.setValueTest(3);
+            toPlace.setValue(3);
             changed=true;
         }
 
         if(toPlace.getValue()==5 && !changed) {
-            toPlace.setValueTest(2);
+            toPlace.setValue(2);
             changed=true;
         }
 
         if(toPlace.getValue()==6 && !changed) {
-            toPlace.setValueTest(1);
+            toPlace.setValue(1);
             changed=true;
         }
 
-
-
-        if (toPlace == null || scheme == null || draft.returnDie(pos).isDisabled())
-            throw new GenericInvalidArgumentException();
-
-        if (x < 0 || x > 3 || y < 0 || y > 4)
-            throw new InvalidIntArgumentException();
-
-        if (!scheme.getDie(x, y).isDisabled()) {
-            System.out.println("That position is already occupied");
-            return false;
-        }
-
-
-        boolean flag = false;
-
-        for (int i = -1; i < 2; i++)
-            for (int j = -1; j < 2; j++)
-                if ((x + i < 4) && (x + i > -1) && (y + j < 5) && (y + j > -1))
-                    if(!scheme.getDie(x + i, y + j).isDisabled())
-                        flag = true;
-
-
-        if (!flag) {
-            System.out.println("You must position your die orthogonally or diagonally adjacent to another die");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x, y) > 0 && scheme.getCell(scheme.getfb(), x, y) < 6 && toPlace.getColor() != scheme.getCell(scheme.getfb(), x, y)) {
-            System.out.println("You must position your die on the same color cell of your scheme");
-            return false;
-        }
-
-
-        if (scheme.getCell(scheme.getfb(), x, y) > 5 && scheme.getCell(scheme.getfb(), x, y) < 12 && toPlace.getValue() != (scheme.getCell(scheme.getfb(), x, y) - 5)) {
-            System.out.println("You must position your die on the same number cell of your scheme");
-            return false;
-        }
-
-
-        if (x + 1 < 4) {
-            if (!scheme.getDie(x + 1, y).isDisabled())
-                if (scheme.getDie(x + 1, y).getColor() == toPlace.getColor()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
-                    return false;
-                }
-            if (!scheme.getDie(x + 1, y).isDisabled())
-                if (scheme.getDie(x + 1, y).getValue() == toPlace.getValue()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same value");
-                    return false;
-                }
-        }
-
-        if (x - 1 > -1) {
-            if (!scheme.getDie(x - 1, y).isDisabled())
-                if (scheme.getDie(x - 1, y).getColor() == toPlace.getColor()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
-                    return false;
-                }
-            if (!scheme.getDie(x - 1, y).isDisabled())
-                if (scheme.getDie(x - 1, y).getValue() == toPlace.getValue()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same value");
-                    return false;
-                }
-        }
-
-        if (y + 1 < 5) {
-            if (!scheme.getDie(x, y + 1).isDisabled())
-                if (scheme.getDie(x, y + 1).getColor() == toPlace.getColor()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
-                    return false;
-                }
-            if (!scheme.getDie(x, y + 1).isDisabled())
-                if (scheme.getDie(x, y + 1).getValue() == toPlace.getValue()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same value");
-                    return false;
-                }
-        }
-
-        if (y - 1 > -1) {
-            if (!scheme.getDie(x, y - 1).isDisabled())
-                if (scheme.getDie(x, y - 1).getColor() == toPlace.getColor()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same color");
-                    return false;
-                }
-            if (!scheme.getDie(x, y - 1).isDisabled())
-                if (scheme.getDie(x, y - 1).getValue() == toPlace.getValue()) {
-                    System.out.println("You can't position your die orthogonally adjacent to another die of the same value");
-                    return false;
-                }
-        }
-
-        return true;
+        return toPlace;
 
     }
 
@@ -167,32 +93,32 @@ public class ToolCardTen extends ToolCard {
 
         if(toPlace.getValue()==1 && !changed)
         {
-            toPlace.setValueTest(6);
+            toPlace.setValue(6);
             changed=true;
         }
 
         if(toPlace.getValue()==2 && !changed) {
-            toPlace.setValueTest(5);
+            toPlace.setValue(5);
             changed=true;
         }
 
         if(toPlace.getValue()==3 && !changed) {
-            toPlace.setValueTest(4);
+            toPlace.setValue(4);
             changed=true;
         }
 
         if(toPlace.getValue()==4 && !changed) {
-            toPlace.setValueTest(3);
+            toPlace.setValue(3);
             changed=true;
         }
 
         if(toPlace.getValue()==5 && !changed) {
-            toPlace.setValueTest(2);
+            toPlace.setValue(2);
             changed=true;
         }
 
         if(toPlace.getValue()==6 && !changed) {
-            toPlace.setValueTest(1);
+            toPlace.setValue(1);
             changed=true;
         }
 
@@ -202,10 +128,19 @@ public class ToolCardTen extends ToolCard {
 
     }
 
+    /**
+     * gets draft pool
+     * @return draft pool
+     */
 
     public DraftPool getDraft() {
         return draft;
     }
+
+    /**
+     * gets scheme card
+     * @return scheme card
+     */
 
     public SchemeCard getScheme() {
         return scheme;

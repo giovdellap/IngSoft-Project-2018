@@ -12,10 +12,10 @@ import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.MoveEvent;
+import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
-import it.polimi.ingsw.server.ToolCards.ToolCardTwelve;
+import it.polimi.ingsw.commons.SimpleLogger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -48,7 +48,7 @@ public class MPExecute extends Application implements Observer {
     private boolean endMatch=false;
     private Event currentEvent;
     private Event toCheck;
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
 
     @Override
@@ -62,7 +62,7 @@ public class MPExecute extends Application implements Observer {
         //asking user for username and sending it to server while isn't correct
         firstFlag=false;
 
-        logger = new FcknSimpleLogger(0, false);
+        logger = new SimpleLogger(0, false);
 
         while(!firstFlag)
         {
@@ -115,30 +115,34 @@ public class MPExecute extends Application implements Observer {
 
         while(!endMatch)
             turn();
+        endMatch();
     }
 
     public void turn() throws IOException, InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
 
         //turn initialization
         connectionManager.getEvent();
-        matchManager.setRound(((TurnEvent)currentEvent).getRound());
-        if(!((TurnEvent)currentEvent).getNoDisconnected())
-            matchManager.setDisconnectedPlayers(((TurnEvent)currentEvent).getDisconnected());
+        if(!currentEvent.getType().equals("ScoreEvent")) {
+            matchManager.setRound(((TurnEvent) currentEvent).getRound());
+            if (!((TurnEvent) currentEvent).getNoDisconnected())
+                matchManager.setDisconnectedPlayers(((TurnEvent) currentEvent).getDisconnected());
 
-        matchManager.setActivePlayer(((TurnEvent) currentEvent).getActive());
-        modelManagerMP.setDraft(((TurnEvent) currentEvent).getDraft());
-        if(((TurnEvent) currentEvent).isNextRound())
-            modelManagerMP.addRound(((TurnEvent) currentEvent).getLastRound());
-        toolRecord.setTokens(((TurnEvent) currentEvent).getToolsUpdate());
+            matchManager.setActivePlayer(((TurnEvent) currentEvent).getActive());
+            modelManagerMP.setDraft(((TurnEvent) currentEvent).getDraft());
+            if (((TurnEvent) currentEvent).isNextRound())
+                modelManagerMP.addRound(((TurnEvent) currentEvent).getLastRound());
+            toolRecord.setTokens(((TurnEvent) currentEvent).getToolsUpdate());
 
-        updateGraphicsManager();
-        currentEvent.validate();
-        connectionManager.sendEvent(currentEvent);
-        if(((TurnEvent) currentEvent).itsMyTurn())
-            itsMyTurn();
+            updateGraphicsManager();
+            currentEvent.validate();
+            connectionManager.sendEvent(currentEvent);
+            if (((TurnEvent) currentEvent).itsMyTurn())
+                itsMyTurn();
+            else
+                notMyTurn();
+        }
         else
-            notMyTurn();
-
+            endMatch=true;
     }
 
     public void itsMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException {
@@ -161,6 +165,8 @@ public class MPExecute extends Application implements Observer {
 
                         if (((ToolCardEvent) currentEvent).getId() == 6)
                             toolCard6Part2();
+                        if(((ToolCardEvent) currentEvent).getId()==11)
+                            toolCard11Part2();
                         applyTool();
                         updateGraphicsManager();
                         graphicsManager.toolAccepted();
@@ -222,9 +228,9 @@ public class MPExecute extends Application implements Observer {
                 tempDraft.pickUpDie(((ToolCardOneEvent)currentEvent).getIndex());
                 int value = tempDie.getValue();
                 if(((ToolCardOneEvent)currentEvent).getAction()=='+')
-                    tempDie.setValueTest(value+1);
+                    tempDie.setValue(value+1);
                 else
-                    tempDie.setValueTest(value-1);
+                    tempDie.setValue(value-1);
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardOneEvent)currentEvent).getPlayer()).getPlayerScheme();
                 tempScheme.setDie(tempDie, ((ToolCardOneEvent)currentEvent).getX(), ((ToolCardOneEvent)currentEvent).getY());
                 matchManager.setPlayerScheme(((ToolCardOneEvent) currentEvent).getPlayer(), tempScheme);
@@ -256,29 +262,44 @@ public class MPExecute extends Application implements Observer {
             }
             case (5):
             {
-                RoundDiceMP tempRoundDice = modelManagerMP.getTrack().returnNTurnRoundDice(((ToolCardFiveEvent)currentEvent).getTurn());
-                Die tempRoundDie = tempRoundDice.getDie(((ToolCardFiveEvent)currentEvent).getPos());
+
+                //pick up die from Draftpool
+                ToolCardFiveEvent event = (ToolCardFiveEvent)currentEvent;
                 DraftPoolMP tempDraft = modelManagerMP.getDraft();
-                Die tempDraftDie = tempDraft.replaceDie(((ToolCardFiveEvent)currentEvent).getIndex(), tempRoundDie);
-                tempRoundDice.addDie(tempDraftDie);
-                modelManagerMP.setTrack(tempRoundDice.getDiceVector(),((ToolCardFiveEvent) currentEvent).getTurn() );
+                Die tempDie = new Die(tempDraft.returnDie(event.getIndex()).getColor());
+                tempDie.setValue(tempDraft.returnDie(event.getIndex()).getValue());
+                tempDraft.pickUpDie(event.getIndex());
+
+                //replacing the roundtrack die with that die
+                RoundDiceMP tempRD = modelManagerMP.getTrack().returnNTurnRoundDice(event.getTurn());
+                Die tempRDDie = modelManagerMP.getTrack().returnNTurnRoundDice(event.getTurn()).getDie(event.getPos());
+                tempRD.deleteDie(event.getPos());
+                tempRD.addPos(event.getPos(), tempDie);
+
+                //setting the die in the schemecard
+                SchemeCardMP tempScheme = matchManager.getPlayer(event.getPlayer()).getPlayerScheme();
+                tempScheme.setDie(tempRDDie, event.getX(), event.getY());
+
+                //updating everything
                 modelManagerMP.setDraft(tempDraft);
+                modelManagerMP.setTrack(tempRD.getDiceVector(), event.getTurn());
+                matchManager.setPlayerScheme(event.getPlayer(), tempScheme);
                 break;
+
             }
             case (6):
             {
                 DraftPoolMP tempDraft = modelManagerMP.getDraft();
-                Die tempDie = tempDraft.returnDie(((ToolCardSixEvent)currentEvent).getIndex());
+                Die tempDie = new Die(tempDraft.returnDie(((ToolCardSixEvent)currentEvent).getIndex()).getColor());
                 SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                tempDie.setValueTest(((ToolCardSixEvent)currentEvent).getNewValue());
-                if(((ToolCardSixEvent) currentEvent).isApplyOne()) {
+                tempDie.setValue(((ToolCardSixEvent)currentEvent).getNewValue());
+                if(((ToolCardSixEvent) currentEvent).isApplyTwo()) {
                     tempDraft.pickUpDie(((ToolCardSixEvent) currentEvent).getIndex());
                     tempScheme.setDie(tempDie,((ToolCardSixEvent) currentEvent).getX(),((ToolCardSixEvent) currentEvent).getY());
-                    matchManager.setPlayerScheme(((ToolCardTwoThreeEvent) currentEvent).getPlayer(),tempScheme);
+                    matchManager.setPlayerScheme(((ToolCardSixEvent) currentEvent).getPlayer(),tempScheme);
                     modelManagerMP.setDraft(tempDraft);
                 }
-
-                if(((ToolCardSixEvent) currentEvent).isApplyTwo()) {
+                else {
                     tempDraft.replaceDie(((ToolCardSixEvent) currentEvent).getIndex(),tempDie);
                     modelManagerMP.setDraft(tempDraft);
                 }
@@ -293,56 +314,127 @@ public class MPExecute extends Application implements Observer {
             }
 
             case (8): {
+                DraftPoolMP tempDraft = modelManagerMP.getDraft();
+                Die tempDie = tempDraft.returnDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
+                tempDraft.pickUpDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
+                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEightNineTenEvent) currentEvent).getPlayer()).getPlayerScheme();
+                tempScheme.setDie(tempDie, ((ToolCardEightNineTenEvent)currentEvent).getX(), ((ToolCardEightNineTenEvent)currentEvent).getY());
+                matchManager.setPlayerScheme(((ToolCardEightNineTenEvent) currentEvent).getPlayer(), tempScheme);
                 break;
             }
 
-            case(9): {
+            case (9): {
                 DraftPoolMP tempDraft = modelManagerMP.getDraft();
                 Die tempDie = tempDraft.returnDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
-                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent)currentEvent).getPlayer()).getPlayerScheme();
-                tempScheme.setDie(tempDie,((ToolCardEightNineTenEvent) currentEvent).getX(),((ToolCardEightNineTenEvent) currentEvent).getY());
-                tempDraft.pickUpDie(((ToolCardEightNineTenEvent) currentEvent).getIndex());
-                modelManagerMP.setDraft(tempDraft);
-                matchManager.setPlayerScheme(((ToolCardEightNineTenEvent) currentEvent).getPlayer(),tempScheme);
+                tempDraft.pickUpDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
+                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEightNineTenEvent) currentEvent).getPlayer()).getPlayerScheme();
+                tempScheme.setDie(tempDie, ((ToolCardEightNineTenEvent)currentEvent).getX(), ((ToolCardEightNineTenEvent)currentEvent).getY());
+                matchManager.setPlayerScheme(((ToolCardEightNineTenEvent) currentEvent).getPlayer(), tempScheme);
                 break;
-
             }
 
             case (10): {
                 DraftPoolMP tempDraft = modelManagerMP.getDraft();
                 Die tempDie = tempDraft.returnDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
-                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent)currentEvent).getPlayer()).getPlayerScheme();
-                tempScheme.setDie(tempDie,((ToolCardEightNineTenEvent) currentEvent).getX(),((ToolCardEightNineTenEvent) currentEvent).getY());
-                tempDraft.pickUpDie(((ToolCardEightNineTenEvent) currentEvent).getIndex());
-                modelManagerMP.setDraft(tempDraft);
-                matchManager.setPlayerScheme(((ToolCardEightNineTenEvent) currentEvent).getPlayer(),tempScheme);
-                break;
+                boolean changed = false;
 
+                if(tempDie.getValue()==1 && !changed)
+                {
+                    tempDie.setValue(6);
+                    changed=true;
+                }
+
+                if(tempDie.getValue()==2 && !changed) {
+                    tempDie.setValue(5);
+                    changed=true;
+                }
+
+                if(tempDie.getValue()==3 && !changed) {
+                    tempDie.setValue(4);
+                    changed=true;
+                }
+
+                if(tempDie.getValue()==4 && !changed) {
+                    tempDie.setValue(3);
+                    changed=true;
+                }
+
+                if(tempDie.getValue()==5 && !changed) {
+                    tempDie.setValue(2);
+                    changed=true;
+                }
+
+                if(tempDie.getValue()==6 && !changed) {
+                    tempDie.setValue(1);
+                    changed=true;
+                }
+
+                tempDraft.pickUpDie(((ToolCardEightNineTenEvent)currentEvent).getIndex());
+                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEightNineTenEvent) currentEvent).getPlayer()).getPlayerScheme();
+                tempScheme.setDie(tempDie, ((ToolCardEightNineTenEvent)currentEvent).getX(), ((ToolCardEightNineTenEvent)currentEvent).getY());
+                matchManager.setPlayerScheme(((ToolCardEightNineTenEvent) currentEvent).getPlayer(), tempScheme);
+                break;
             }
 
             case (11): {
+                DraftPoolMP tempDraft = modelManagerMP.getDraft();
+                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardElevenEvent) currentEvent).getPlayer()).getPlayerScheme();
+                Die tempDie = new Die(((ToolCardElevenEvent)currentEvent).getNewColor());
+                tempDie.setValue(((ToolCardElevenEvent) currentEvent).getNewValue());
 
+                if(((ToolCardElevenEvent)currentEvent).isApplyOne())
+                    tempDraft.replaceDie(((ToolCardElevenEvent) currentEvent).getIndex(), tempDie);
+
+                else {
+                    tempScheme.setDie(tempDie, ((ToolCardElevenEvent) currentEvent).getX(),((ToolCardElevenEvent) currentEvent).getY());
+                    tempDraft.pickUpDie(((ToolCardElevenEvent) currentEvent).getIndex());
+                }
+
+                modelManagerMP.setDraft(tempDraft);
+                if(((ToolCardElevenEvent) currentEvent).isApplyTwo())
+                    matchManager.setPlayerScheme(((ToolCardElevenEvent) currentEvent).getPlayer(), tempScheme);
                 break;
             }
 
             case (12): {
 
-                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                tempScheme.shiftDie(((ToolCardTwelveEvent)currentEvent).getX01(),((ToolCardTwelveEvent) currentEvent).getY01(),((ToolCardTwelveEvent) currentEvent).getX11(),((ToolCardTwelveEvent) currentEvent).getY11());
-                tempScheme.shiftDie(((ToolCardTwelveEvent) currentEvent).getX02(),((ToolCardTwelveEvent) currentEvent).getY02(),((ToolCardTwelveEvent) currentEvent).getX22(),((ToolCardTwelveEvent) currentEvent).getY22());
-                matchManager.setPlayerScheme(((ToolCardTwelveEvent) currentEvent).getPlayer(),tempScheme);
+                SchemeCardMP tempScheme = matchManager.getPlayer(((ToolCardTwelveEvent)currentEvent).getPlayer()).getPlayerScheme();
+                tempScheme.shiftDie(((ToolCardTwelveEvent) currentEvent).getX01(), ((ToolCardTwelveEvent) currentEvent).getY01(),((ToolCardTwelveEvent) currentEvent).getX11() ,((ToolCardTwelveEvent) currentEvent).getY11());
+
+                if(!((ToolCardTwelveEvent) currentEvent).isOnlyOne())
+                {
+                    tempScheme.shiftDie(((ToolCardTwelveEvent) currentEvent).getX02(),((ToolCardTwelveEvent) currentEvent).getY02() , ((ToolCardTwelveEvent) currentEvent).getX22(),((ToolCardTwelveEvent) currentEvent).getY22() );
+                }
+
+                matchManager.setPlayerScheme(((ToolCardTwelveEvent) currentEvent).getPlayer(), tempScheme);
                 break;
-
             }
-
 
         }
     }
 
-    public void toolCard6Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
-        graphicsManager.toolCard6Part2((ToolCardSixEvent)currentEvent);
-        connectionManager.sendEvent(currentEvent);
+    public void toolCard6Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException {
+        if(((ToolCardSixEvent)currentEvent).isApplyOne())
+        {
+            graphicsManager.toolCard6Part2((ToolCardSixEvent)currentEvent);
+            toCheck.resetValidation();
+            connectionManager.sendEvent(toCheck);
+            connectionManager.getEvent();
+        }
+
+    }
+
+    public void toolCard11Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException {
+        if(((ToolCardElevenEvent)currentEvent).isFirstCheck())
+            graphicsManager.toolCard11Part2((ToolCardElevenEvent)currentEvent);
+        toCheck.resetValidation();
+        connectionManager.sendEvent(toCheck);
         connectionManager.getEvent();
+    }
+
+    private void endMatch() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+        boolean winner = (((ScoreEvent)currentEvent).getPlayers().get(0).getName().equals(myUsername));
+        graphicsManager.showScores((ScoreEvent)currentEvent, winner);
     }
 
 

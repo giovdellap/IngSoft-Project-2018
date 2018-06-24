@@ -10,10 +10,11 @@ import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.PassEvent;
+import it.polimi.ingsw.commons.Events.ScoreEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardElevenEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardSixEvent;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
-import javafx.stage.Stage;
+import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class GraphicsManager extends Observable
     private int round;
     private ArrayList<Integer> disconnected;
 
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
 
 
@@ -49,10 +50,10 @@ public class GraphicsManager extends Observable
         gmLogger.minorLog("graphics operative");
         if(graphics==2)
         {
-            beautifulCLI = new BeautifulCLI();
+            beautifulCLI = new BeautifulCLI(1);
         }
         disconnected=new ArrayList<Integer>();
-        logger = new FcknSimpleLogger(2, true);
+        logger = new SimpleLogger(2, true);
     }
 
     public void askUsername() throws IOException, GenericInvalidArgumentException {
@@ -163,13 +164,17 @@ public class GraphicsManager extends Observable
         if(graphics==2)
             beautifulCLI.showTool(players, draft, track, toolsUsage, activePlayer, me, event);
     }
-    public void toolCard6Part2(ToolCardSixEvent currentEvent)
-    {
-        System.out.println("SCHERZONE!!!");
+    public void toolCard6Part2(ToolCardSixEvent currentEvent) throws InvalidIntArgumentException, IOException {
+        ToolCardSixEvent event = beautifulCLI.toolCardSixEventPartTwo(players, draft, track, toolsUsage, activePlayer, me, round, currentEvent);
+        setChanged();
+        notifyObservers(event);
     }
 
-
-
+    public void toolCard11Part2(ToolCardElevenEvent currentEvent) throws InvalidIntArgumentException, IOException {
+        ToolCardElevenEvent event = beautifulCLI.toolCardElevenEventPartTwo(players, draft, track, toolsUsage, activePlayer, me, round, currentEvent);
+        setChanged();
+        notifyObservers(event);
+    }
     //move
 
     public void cantMove()
@@ -184,8 +189,9 @@ public class GraphicsManager extends Observable
         beautifulCLI.setToolsID(tools);
     }
 
-
-
+    public void showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+        boolean flag = beautifulCLI.showScores(event, winner);
+    }
 
 
 }

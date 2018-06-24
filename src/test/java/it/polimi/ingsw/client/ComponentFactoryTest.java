@@ -105,14 +105,14 @@ public class ComponentFactoryTest
 
     @Test public void checkNComponent() throws InvalidIntArgumentException
     {
-        for(int i=0;i<5;i++)
+        for(int i=0;i<3;i++)
             System.out.println(componentFactory.selectionN(tempDraft)[i]);
         Assertions.assertEquals(true, true);
     }
 
     @Test public void checkMComponent() throws InvalidIntArgumentException
     {
-        for(int i=0;i<5;i++)
+        for(int i=0;i<componentFactory.selectionM(tempRound).length;i++)
             System.out.println(componentFactory.selectionM(tempRound)[i]);
         Assertions.assertEquals(true, true);
     }

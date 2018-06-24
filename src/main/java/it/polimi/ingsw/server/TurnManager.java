@@ -1,8 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.commons.FcknSimpleLogger;
-import it.polimi.ingsw.server.Loggers.MinorLogger;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.util.ArrayList;
 
@@ -17,20 +15,26 @@ public class TurnManager
 
     private boolean nextRound=false;
 
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
-    //PAY ATTENTION
-    //This class doesn't manage disconnections
 
-    public TurnManager(ArrayList<Player> temp) throws GenericInvalidArgumentException {
+    /**
+     * Class constructor
+     * @param temp ArrayList of players
+     */
+
+    public TurnManager(ArrayList<Player> temp) {
         players=temp;
         maxTurn=players.size()*2;
-        logger = new FcknSimpleLogger(0, false);
+        logger = new SimpleLogger(0, false);
     }
 
-    public int start() throws GenericInvalidArgumentException {
-        //starts first turn
-        //returns the index of first player
+    /**
+     * starts the game, initializing the variables and activating the first player
+     * @return active player
+     */
+
+    public int start() {
         round=0;
         turnIndex=0;
         players.get(0).activate();
@@ -38,7 +42,11 @@ public class TurnManager
         return activePlayer;
     }
 
-    public void endTurn() throws GenericInvalidArgumentException
+    /**
+     * deactivates a player who's turn ends, activates the next one using calculateNext();
+     */
+
+    public void endTurn()
     {
         //active player ends his turn
         players.get(activePlayer).deactivate();
@@ -51,13 +59,19 @@ public class TurnManager
 
     }
 
-    public int getActivePlayer() throws GenericInvalidArgumentException {
-        //returns active player index if connected, active player index+10 if not
+    /**
+     * @return player's who is currently playing
+     */
+
+    public int getActivePlayer() {
         return activePlayer;
 
     }
 
-    private void calculateNext() throws GenericInvalidArgumentException {
+    /**
+     * calculates the next player who has to play
+     */
+    private void calculateNext() {
 
         if(turnIndex==maxTurn-1) {
             round++;
@@ -80,8 +94,9 @@ public class TurnManager
         if(turnIndex<players.size()-1&&!nextRound) {
             turnIndex++;
             activePlayer=turnIndex;
-
         }
+        if(players.get(activePlayer).checkEight())
+            calculateNext();
 
         logger.log(" ");
         logger.log("ActivePlayer: "+Integer.toString(activePlayer));
@@ -89,34 +104,52 @@ public class TurnManager
         logger.log(" ");
     }
 
+    /**
+     * @return true if round reached 10 (end of the game)
+     */
+
     public boolean theEnd()
     {
-        return round==10;
+        return round==5;
     }
-
+    /**
+     *
+     * @return number of players
+     */
     public ArrayList<Player> getPlayers()
     {
         return players;
     }
+    /**
+     *
+     * @param toSet ArrayList of players to set
+     */
     public void setPlayers(ArrayList<Player> toSet)
     {
         players = toSet;
     }
+
+    /**
+     *
+     * @return number of game's round
+     */
     public int getRound()
     {
         return round;
     }
-    public boolean getFirst()
-    {
-        if(round==0&&turnIndex<players.size())
-            return true;
-        else
-            return false;
-    }
+
+    /**
+     *
+     * @return turn's index
+     */
     public int getTurnIndex() {
         return turnIndex;
     }
 
+    /**
+     *
+     * @return boolean if it's a new round
+     */
     public boolean isNextRound() {
 
         boolean toReturn=nextRound;
@@ -124,4 +157,15 @@ public class TurnManager
         return toReturn;
 
     }
+
+    /**
+     *
+     * @param player player who's using tool card 8
+     */
+
+    public void usedEight(int player)
+    {
+        players.get(player).useEight();
+    }
+
 }

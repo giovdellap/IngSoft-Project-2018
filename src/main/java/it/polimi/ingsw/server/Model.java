@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
@@ -19,15 +19,22 @@ public class Model
     private SchemeCard[] playerSchemes;
     private PrivateObjective[] playersPrObjs;
 
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
+    /**
+     * Model Constructor
+     * @param numPlayers number of players
+     */
     public Model(int numPlayers)
     {
             this.numPlayers=numPlayers;
-            logger = new FcknSimpleLogger(0, false);
+            logger = new SimpleLogger(0, false);
     }
 
-    //INITIALIZATION
+    /**
+     * initializes and extracts private objectives
+     * @throws InvalidIntArgumentException
+     */
     public void setPrivateObjectives() throws InvalidIntArgumentException
     {
         prDeck = new PrivateObjectivesDeck();
@@ -35,6 +42,10 @@ public class Model
         playersPrObjs = prDeck.extractPrObj(numPlayers);
     }
 
+    /**
+     * initializes and extracts schemes from deck
+     * @throws InvalidIntArgumentException
+     */
     public void setSchemesDeck() throws InvalidIntArgumentException
     {
         scDeck = new SchemesDeck();
@@ -42,18 +53,32 @@ public class Model
         playerSchemes = new SchemeCard[numPlayers];
     }
 
+    /**
+     * initializes and extracts public objectives
+     * @throws InvalidIntArgumentException
+     */
     public void setPubObjs() throws InvalidIntArgumentException
     {
         pubDeck = new PublicObjectivesDeck();
         pubObjs = pubDeck.extractPubObjs();
     }
 
+    /**
+     *
+     * @param index scheme's index
+     * @return temporary schemes before selection
+     */
     public SchemeCard getTempSchemes(int index)
     {
         return tempSchemes[index];
     }
 
-
+    /**
+     *
+     * @param index private objective's index
+     * @return private objectives at index
+     * @throws InvalidIntArgumentException
+     */
     public PrivateObjective getPrivateObjective(int index) throws InvalidIntArgumentException
     {
         if(index<0||index>=numPlayers)
@@ -62,33 +87,39 @@ public class Model
         return playersPrObjs[index];
     }
 
-    public void setSelectedScheme(int player, int id, int fb) throws InvalidIntArgumentException
-    {
-        if(player<0||player>=numPlayers)
-            throw new InvalidIntArgumentException();
-        else {
-            playerSchemes[player] = scDeck.extractSchemebyID(id);
-            playerSchemes[player].setfb(fb);
-        }
-    }
+    /**
+     * sets the final number of players
+     * @param numPlayers number of players
+     */
 
     public void setFinalNumPlayers(int numPlayers)
     {
         this.numPlayers=numPlayers;
     }
 
+    /**
+     * initializes draftpool
+     * @throws InvalidIntArgumentException
+     */
     public void draftPoolInitialization() throws InvalidIntArgumentException {
         draft = new DraftPool(numPlayers);
     }
 
+    /**
+     * initializes roundtrack
+     */
     public void roundTrackInitialization()
     {
         track = new RoundTrack();
     }
 
 
-    //GET METHODS
-
+    /**
+     *
+     * @param index public objective's index
+     * @return public objectives in index position
+     * @throws InvalidIntArgumentException
+     */
     public PublicObjective getPubObj(int index) throws InvalidIntArgumentException
     {
         if(index<0||index>=3)
@@ -96,6 +127,12 @@ public class Model
         return pubObjs[index];
     }
 
+    /**
+     *
+     * @param index scheme's index
+     * @return player's scheme in index's position
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCard getSchemebyIndex(int index) throws InvalidIntArgumentException
     {
         if(index<0||index>=numPlayers)
@@ -103,31 +140,58 @@ public class Model
         return playerSchemes[index];
     }
 
+    /**
+     *
+     * @return draftpool
+     */
     public DraftPool getDraft()
     {
         return draft;
     }
 
+    /**
+     *
+     * @return roundtrack
+     */
     public RoundTrack getTrack()
     {
         return track;
     }
 
 
-    //SET METHODS
+    /**
+     * sets roundtrack
+     * @param roundTrack
+     */
     public void setTrack(RoundTrack roundTrack)
     {
         track=roundTrack;
     }
+
+    /**
+     * sets draftpool
+     * @param draftPool
+     */
     public void setDraft(DraftPool draftPool)
     {
         draft=draftPool;
     }
+
+    /**
+     * sets players scheme
+     * @param id player's id
+     * @param scheme player's scheme
+     */
     public void setPlayerScheme(int id, SchemeCard scheme)
     {
         playerSchemes[id] = scheme;
     }
 
+    /**
+     * updates the roundtrack with dice remaining in the draft
+     * @throws InvalidIntArgumentException
+     * @throws FullDataStructureException
+     */
     public void roundEnd() throws InvalidIntArgumentException, FullDataStructureException {
         RoundDice tempRD = draft.updateDraftDice();
         track.addRound(tempRD);

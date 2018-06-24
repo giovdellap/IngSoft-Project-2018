@@ -1,17 +1,15 @@
 package it.polimi.ingsw.commons.Socket.EventHandling;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.commons.Events.Event;
+import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
-import it.polimi.ingsw.commons.Events.MoveEvent;
-import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
-import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 
@@ -26,8 +24,7 @@ public class EventEncoder
         transformer = new SocketProtocolTransformer();
     }
 
-    public ArrayList<String> encodeEvent(Event event)
-    {
+    public ArrayList<String> encodeEvent(Event event) throws InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
         temp.add(transformer.simpleEncode("event", event.getType()));
         temp.add(transformer.simpleEncode("validated", Boolean.toString(event.isValidated())));
@@ -82,6 +79,10 @@ public class EventEncoder
             temp.add(transformer.simpleEncode("end", "event"));
             return temp;
         }
+
+        if(event.getType().equals("ScoreEvent"))
+            temp.addAll(encodeScoreEvent((ScoreEvent) event));
+
 
         temp.add(transformer.simpleEncode("end", "event"));
 
@@ -200,6 +201,8 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("index",Integer.toString(toolCardFiveEvent.getIndex())));
         temp.add(transformer.simpleEncode("roundtrackturn",Integer.toString(toolCardFiveEvent.getTurn())));
         temp.add(transformer.simpleEncode("rounddicepos",Integer.toString(toolCardFiveEvent.getPos())));
+        temp.add(transformer.simpleEncode("x", Integer.toString(toolCardFiveEvent.getX())));
+        temp.add(transformer.simpleEncode("y", Integer.toString(toolCardFiveEvent.getY())));
         temp.add(transformer.simpleEncode("player",Integer.toString(toolCardFiveEvent.getPlayer())));
 
         return temp;
@@ -211,6 +214,7 @@ public class EventEncoder
 
         temp.add(transformer.simpleEncode("id",Integer.toString(toolCardSixEvent.getId())));
         temp.add(transformer.simpleEncode("index",Integer.toString(toolCardSixEvent.getIndex())));
+        temp.add(transformer.simpleEncode("newValue", Integer.toString(toolCardSixEvent.getNewValue())));
         temp.add(transformer.simpleEncode("x",Integer.toString(toolCardSixEvent.getX())));
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardSixEvent.getY())));
         temp.add(transformer.simpleEncode("booleanapplyone",Boolean.toString(toolCardSixEvent.isApplyOne())));
@@ -225,11 +229,12 @@ public class EventEncoder
         ArrayList<String> temp = new ArrayList<String>();
 
         temp.add(transformer.simpleEncode("id",Integer.toString(toolCardSevenEvent.getId())));
-
-        String[] tempVector = encoder.arrayListEncoder(toolCardSevenEvent.getDice());
-
-        for(int i=0;i<tempVector.length;i++)
-            temp.add(tempVector[i]);
+        if(toolCardSevenEvent.isValidated()) {
+            String[] tempVector = encoder.arrayListEncoder(toolCardSevenEvent.getDice());
+            for (int i = 0; i < tempVector.length; i++)
+                temp.add(tempVector[i]);
+            temp.add(transformer.simpleEncode("draft", "end"));
+        }
         temp.add(transformer.simpleEncode("player",Integer.toString(toolCardSevenEvent.getPlayer())));
 
 
@@ -259,8 +264,12 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("id",Integer.toString(toolCardElevenEvent.getId())));
         temp.add(transformer.simpleEncode("index",Integer.toString(toolCardElevenEvent.getIndex())));
         temp.add(transformer.simpleEncode("newvalue",Integer.toString(toolCardElevenEvent.getNewValue())));
+        temp.add(transformer.simpleEncode("newcolor",Integer.toString(toolCardElevenEvent.getNewColor())));
         temp.add(transformer.simpleEncode("x",Integer.toString(toolCardElevenEvent.getX())));
         temp.add(transformer.simpleEncode("y",Integer.toString(toolCardElevenEvent.getY())));
+        temp.add(transformer.simpleEncode("applyOne", Boolean.toString(toolCardElevenEvent.isApplyOne())));
+        temp.add(transformer.simpleEncode("applyTwo", Boolean.toString(toolCardElevenEvent.isApplyTwo())));
+        temp.add(transformer.simpleEncode("firstCheck", Boolean.toString(toolCardElevenEvent.isFirstCheck())));
         temp.add(transformer.simpleEncode("player",Integer.toString(toolCardElevenEvent.getPlayer())));
 
         return temp;
@@ -282,6 +291,7 @@ public class EventEncoder
         temp.add(transformer.simpleEncode("y11",Integer.toString(toolCardTwelveEvent.getY11())));
         temp.add(transformer.simpleEncode("x22",Integer.toString(toolCardTwelveEvent.getX22())));
         temp.add(transformer.simpleEncode("y22",Integer.toString(toolCardTwelveEvent.getY22())));
+        temp.add(transformer.simpleEncode("onlyOne", Boolean.toString(toolCardTwelveEvent.isOnlyOne())));
         temp.add(transformer.simpleEncode("player",Integer.toString(toolCardTwelveEvent.getPlayer())));
 
 
@@ -333,6 +343,24 @@ public class EventEncoder
 
         return temp;
 
+    }
+
+    public ArrayList<String> encodeScoreEvent(ScoreEvent event) throws InvalidIntArgumentException {
+        ArrayList<String> temp = new ArrayList<String>();
+
+        for(ScorePlayer player : event.getPlayers())
+        {
+            temp.add(transformer.simpleEncode("id", Integer.toString(player.getId())));
+            temp.add(transformer.simpleEncode("name", player.getName()));
+            temp.add(transformer.simpleEncode("privobj", Integer.toString(player.getPrivObj())));
+            temp.add(transformer.simpleEncode("pubobj0", Integer.toString(player.getPubObj(0))));
+            temp.add(transformer.simpleEncode("pubobj1", Integer.toString(player.getPubObj(1))));
+            temp.add(transformer.simpleEncode("pubobj2", Integer.toString(player.getPubObj(2))));
+            temp.add(transformer.simpleEncode("tokens", Integer.toString(player.getTokens())));
+            temp.add(transformer.simpleEncode("minus", Integer.toString(player.getMinus())));
+            temp.add(transformer.simpleEncode("tot", Integer.toString(player.getTot())));
+        }
+        return temp;
     }
 
 

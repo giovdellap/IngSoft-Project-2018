@@ -11,7 +11,13 @@ public class PublicObjective {
     private int bonus;
     private boolean isDisabled = false;
 
+    private SchemeCard temp;
 
+    /**
+     * PublicObjective
+     * @param id
+     * @throws InvalidIntArgumentException
+     */
     public PublicObjective(int id) throws InvalidIntArgumentException {
 
         if (id < 0 || id > 10)
@@ -22,17 +28,28 @@ public class PublicObjective {
 
     }
 
+    /**
+     * gets public objective id
+     * @return id
+     */
+
     public int getId() {
 
         return id;
     }
 
+    /**
+     * gets public objective bonus
+     * @return bonus
+     */
     public int getBonus() {
 
         return bonus;
     }
 
-
+    /**
+     * disables scheme
+     */
     public void disableScheme() {
 
         if (!isDisabled)
@@ -40,13 +57,31 @@ public class PublicObjective {
 
     }
 
+    /**
+     * checks if a scheme is disabled or not
+     * @return
+     */
     public boolean checkDisabled() {
 
         return isDisabled;
 
     }
 
+    /**
+     * sets a scheme card for tool card nine
+     * @param temp scheme
+     */
+    public void setTemp(SchemeCard temp) {
+        this.temp = temp;
+    }
 
+    /**
+     * sets bonus based on public objective's id
+     * @param scheme scheme on which to check the public objective's requirements
+     * @return integer representing the bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public int setBonus(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (id == 1) {
@@ -82,7 +117,7 @@ public class PublicObjective {
         }
 
         if (id == 9) {
-            bonus = calculateNine(scheme);
+            bonus = calculateNine();
         }
 
         if (id == 10) {
@@ -92,19 +127,13 @@ public class PublicObjective {
         return bonus;
     }
 
-    public String toString() {
-
-        int tempID = this.getId();
-        int tempBonus = this.getBonus();
-        String list = "";
-
-
-        list = "Id" + " " + tempID + " " + "Bonus" + " " + tempBonus;
-
-        return list;
-
-    }
-
+    /**
+     * calculates bonus for public objective one
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
 
     private int calculateOne(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -142,7 +171,13 @@ public class PublicObjective {
         return bonus;
     }
 
-
+    /**
+     * calculates bonus for public objective two
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     private int calculateTwo(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (scheme==null)
@@ -176,7 +211,13 @@ public class PublicObjective {
         return bonus;
     }
 
-
+    /**
+     * calculates bonus for public objective three
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     private int calculateThree(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (scheme==null)
@@ -200,7 +241,13 @@ public class PublicObjective {
         }
         return bonus;
     }
-
+    /**
+     * calculates bonus for public objective four
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     private int calculateFour(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (scheme==null)
@@ -226,7 +273,13 @@ public class PublicObjective {
         return bonus;
     }
 
-
+    /**
+     * calculates bonus for public objective five
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     private int calculateFive(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (scheme==null)
@@ -265,6 +318,13 @@ public class PublicObjective {
 
     }
 
+    /**
+     * calculates bonus for public objective six
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
 
     private int calculateSix(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -304,6 +364,13 @@ public class PublicObjective {
 
     }
 
+    /**
+     * calculates bonus for public objective seven
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
 
     private int calculateSeven(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -343,6 +410,13 @@ public class PublicObjective {
 
     }
 
+    /**
+     * calculates bonus for public objective eight
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
 
     private int calculateEight(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
@@ -377,14 +451,19 @@ public class PublicObjective {
         }
     }
 
+    /**
+     * calculates bonus for public objective one
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
 
-    private int calculateNine(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    private int calculateNine() throws GenericInvalidArgumentException, InvalidIntArgumentException {
         int bonus=0;
 
-        if (scheme==null)
+        if (temp==null)
             throw new GenericInvalidArgumentException();
 
-        SchemeCard temp = scheme;
 
         for(int x=0;x<4;x++)
             for(int y=0;y<5;y++)
@@ -419,7 +498,13 @@ public class PublicObjective {
         return bonus;
     }
 
-
+    /**
+     * calculates bonus for public objective ten
+     * @param scheme scheme card on which to check the public objective
+     * @return integer representing bonus to apply
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     private int calculateTen(SchemeCard scheme) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (scheme==null)
@@ -452,12 +537,7 @@ public class PublicObjective {
             return bonus;
         }
 
-
-
-
     }
-
-
 
 }
 

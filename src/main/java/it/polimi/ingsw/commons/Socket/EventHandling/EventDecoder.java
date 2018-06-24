@@ -1,24 +1,18 @@
 package it.polimi.ingsw.commons.Socket.EventHandling;
 
-import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.commons.Events.Event;
+import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 
-import it.polimi.ingsw.commons.Events.MoveEvent;
-import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
-import it.polimi.ingsw.commons.Events.TurnEvent;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 public class EventDecoder
 {
@@ -26,13 +20,13 @@ public class EventDecoder
 
     private SocketDecoder decoder;
 
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
     public EventDecoder()
     {
         transformer = new SocketProtocolTransformer();
         decoder = new SocketDecoder();
-        logger = new FcknSimpleLogger(0, false);
+        logger = new SimpleLogger(0, false);
     }
 
     public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException
@@ -86,6 +80,9 @@ public class EventDecoder
 
         if (transformer.getArg().equals("Initialization2Event"))
             return decodeInitialization2Event(toDecode);
+
+        if(transformer.getArg().equals("ScoreEvent"))
+            return decodeScoreEvent(toDecode);
 
         else
             return null;
@@ -459,6 +456,12 @@ public class EventDecoder
         event.setPos(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(6));
+        event.setX(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(7));
+        event.setY(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(8));
         event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
@@ -479,18 +482,21 @@ public class EventDecoder
         event.setIndex(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(4));
-        event.setX(Integer.parseInt(transformer.getArg()));
+        event.setNewValue(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(5));
-        event.setY(Integer.parseInt(transformer.getArg()));
+        event.setX(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(6));
-        event.setApplyOne(Boolean.parseBoolean((transformer.getArg())));
+        event.setY(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(7));
-        event.setApplyTwo(Boolean.parseBoolean((transformer.getArg())));
+        event.setApplyOne(Boolean.parseBoolean((transformer.getArg())));
 
         transformer.simpleDecode(toDecode.get(8));
+        event.setApplyTwo(Boolean.parseBoolean((transformer.getArg())));
+
+        transformer.simpleDecode(toDecode.get(9));
         event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
@@ -512,17 +518,18 @@ public class EventDecoder
         if(transformer.getArg().equals("true"))
             event.validate();
 
-        while (flag)
-        {
-            transformer.simpleDecode(toDecode.get(i));
-            vectTemp.add(toDecode.get(i));
-            transformer.simpleDecode(toDecode.get(i+1));
-            if (transformer.getCmd().equals("end")) flag=false;
-            i++;
+        if(event.isValidated()) {
+            while (flag) {
+                transformer.simpleDecode(toDecode.get(i));
+                vectTemp.add(toDecode.get(i));
+                transformer.simpleDecode(toDecode.get(i + 1));
+                if (transformer.getCmd().equals("draft"))
+                    flag = false;
+                i++;
+            }
+
+            event.setDice(decoder.arrayListDecoder(vectTemp));
         }
-
-        event.setDice(decoder.arrayListDecoder(vectTemp));
-
         return event;
     }
 
@@ -570,12 +577,24 @@ public class EventDecoder
         event.setNewValue(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(5));
-        event.setX(Integer.parseInt(transformer.getArg()));
+        event.setNewColor(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(6));
-        event.setY(Integer.parseInt(transformer.getArg()));
+        event.setX(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(7));
+        event.setY(Integer.parseInt(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(8));
+        event.setApplyOne(Boolean.parseBoolean(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(9));
+        event.setApplyTwo(Boolean.parseBoolean(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(10));
+        event.setFirstCheck(Boolean.parseBoolean(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(11));
         event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
@@ -624,6 +643,9 @@ public class EventDecoder
         event.setY22(Integer.parseInt(transformer.getArg()));
 
         transformer.simpleDecode(toDecode.get(13));
+        event.setOnlyOne(Boolean.parseBoolean(transformer.getArg()));
+
+        transformer.simpleDecode(toDecode.get(14));
         event.setPlayer(Integer.parseInt(transformer.getArg()));
 
         return event;
@@ -660,6 +682,61 @@ public class EventDecoder
             logger.log("validate false: "+Boolean.toString(event.isValidated()));
         }
         event.setId(id);
+
+        return event;
+    }
+
+    private ScoreEvent decodeScoreEvent(ArrayList<String> toDecode)
+    {
+        ScoreEvent event = new ScoreEvent();
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
+        int i=2;
+        while(i<toDecode.size()) {
+
+            transformer.simpleDecode(toDecode.get(i));
+            int id = Integer.parseInt(transformer.getArg());
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            String name = transformer.getArg();
+            i++;
+
+            ScorePlayer player = new ScorePlayer(id, name);
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setPrivObj(Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setPubObj(0, Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setPubObj(1, Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setPubObj(2, Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setTokens(Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setMinus(Integer.parseInt(transformer.getArg()));
+            i++;
+
+            transformer.simpleDecode(toDecode.get(i));
+            player.setTot(Integer.parseInt(transformer.getArg()));
+            i++;
+
+            event.addPlayer(player);
+        }
 
         return event;
     }

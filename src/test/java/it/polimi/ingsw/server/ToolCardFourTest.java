@@ -1,15 +1,11 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.server.ToolCards.ToolCardFour;
-import it.polimi.ingsw.server.ToolCards.ToolCardOne;
-import it.polimi.ingsw.server.ToolCards.ToolCardThree;
-import it.polimi.ingsw.server.ToolCards.ToolCardTwo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +36,7 @@ public class ToolCardFourTest {
         testDie4 = new Die(randomColor);
         toolCardFourTest = new ToolCardFour();
         testScheme.setfb(2);
-        System.out.println(testScheme.getName(2));
+        toolCardFourTest.setTempScheme(testScheme);
 
     }
 
@@ -104,10 +100,10 @@ public class ToolCardFourTest {
         testDie3 = new Die(3);
         testDie4 = new Die(5);
 
-        testDie.setValueTest(2);
-        testDie2.setValueTest(3);
-        testDie3.setValueTest(2);
-        testDie4.setValueTest(3);
+        testDie.setValue(2);
+        testDie2.setValue(3);
+        testDie3.setValue(2);
+        testDie4.setValue(3);
 
         testScheme.setDie(testDie,2,4);
         testScheme.setDie(testDie2,3,4);
@@ -122,28 +118,64 @@ public class ToolCardFourTest {
     }
 
     @Test
-    public void checkApplyModifies() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         testDie = new Die(2);
         testDie2 = new Die(4);
         testDie3 = new Die(3);
         testDie4 = new Die(5);
 
-        testDie.setValueTest(2);
-        testDie2.setValueTest(3);
-        testDie3.setValueTest(2);
-        testDie4.setValueTest(3);
+        testDie.setValue(2);
+        testDie2.setValue(3);
+        testDie3.setValue(2);
+        testDie4.setValue(3);
 
         testScheme.setDie(testDie,2,4);
         testScheme.setDie(testDie2,3,4);
         testScheme.setDie(testDie3,0,0);
         testScheme.setDie(testDie4,1,0);
 
-        testScheme = toolCardFourTest.applyModifies(0,0,1,0,testScheme,0,3,0,4);
+        testScheme = toolCardFourTest.applyModifies(0,0,1,0,0,3,0,4);
 
-        Assertions.assertEquals(true, (testScheme.getDie(0,3).equals(testDie3) && testScheme.getDie(0,4).equals(testDie4)));
+        Assertions.assertEquals(true, testScheme.getDie(0,0).isDisabled() && testScheme.getDie(1,0).isDisabled());
+
+    }
+
+    @Test
+    public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+
+        boolean flag = false;
+
+        testDie = new Die(2);
+        testDie2 = new Die(4);
+        testDie3 = new Die(3);
+        testDie4 = new Die(5);
+
+        testDie.setValue(2);
+        testDie2.setValue(3);
+        testDie3.setValue(2);
+        testDie4.setValue(3);
+
+        testScheme.setDie(testDie,2,4);
+        testScheme.setDie(testDie2,3,4);
+        testScheme.setDie(testDie3,0,0);
+        testScheme.setDie(testDie4,1,0);
+
+        int value1 = testDie3.getValue();
+        int value2 = testDie4.getValue();
+
+        toolCardFourTest.setTempScheme(testScheme);
+
+        testScheme = toolCardFourTest.applyModifies(0,0,1,0,0,3,0,4);
+
+        if(testScheme.getDie(0,3).getColor()==testDie3.getColor())
+            if(testScheme.getDie(0,3).getValue()==value1)
+                if(testScheme.getDie(0,4).getColor()==testDie4.getColor())
+                    if(testScheme.getDie(0,4).getValue()==value2)
+                        flag = true;
 
 
+        Assertions.assertEquals(true,flag);
     }
 
 }

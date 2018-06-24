@@ -24,105 +24,170 @@ public class Player extends Observable implements Observer
     //MANAGERS
     private ConnectionManager connectionManager;
 
-
+    /**
+     * Player Constructor
+     * @param socket socket to insert into connectionManager
+     * @throws IOException
+     * @throws GenericInvalidArgumentException
+     */
     public Player(Socket socket) throws IOException, GenericInvalidArgumentException {
         connectionManager = new ConnectionManager(socket);
         connectionManager.addObserver(this);
     }
+
+    /**
+     *
+     * @param names gets string vector of all usernames from connectionManager
+     * @throws IOException
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public void getUsername(String[] names) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
         name = connectionManager.getUsername(names);
     }
+
+    /**
+     * gets username from connectionManager
+     * @throws IOException
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public void getUsername() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
         name = connectionManager.getUsername();
     }
 
-    //EVENT HANDLING
-    public void handleEvent(Event event) throws IOException, InvalidIntArgumentException {
-        //send-get events
-        connectionManager.handleEvent(event);
-    }
+    /**
+     * gets event from connectionManager
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
     public void getEvent() throws IOException, InvalidIntArgumentException {
-        //gets events
         connectionManager.getEvent();
     }
-    public void sendEvent(Event event)
-    {
+
+    /**
+     *
+     * @param event event to send to connectionManager
+     * @throws InvalidIntArgumentException
+     */
+    public void sendEvent(Event event) throws InvalidIntArgumentException {
         connectionManager.sendEvent(event);
     }
 
 
-
-    //GET METHODS
+    /**
+     *
+     * @return player's name
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     *
+     * @return player's id
+     */
     public int getId()
     {
         return id;
     }
 
+    /**
+     *
+     * @return iPlayedFirst
+     */
     public boolean getIPlayedFirstMove() {
         return iPlayedFirstMove;
     }
 
+    /**
+     *
+     * @param iPlayedFirstMove sets a boolean if the player played his first move
+     */
     public void setIPlayedFirstMove(boolean iPlayedFirstMove) {
         this.iPlayedFirstMove = iPlayedFirstMove;
     }
 
-    //ACTIVATION
+    /**
+     * activates a player setting active to true
+     */
     public void activate()
     {
         active=true;
     }
 
+    /**
+     * deactivates a player setting active to false
+     */
     public void deactivate()
     {
         active=false;
     }
 
+    /**
+     *
+     * @return if the player is active or not
+     */
     public boolean isActive() {
         return active;
     }
 
 
-    //TOKENS
+    /**
+     *
+     * @return number of tokens
+     */
     public int getTokens() { return tokens; }
 
+    /**
+     *
+     * @param n number of tokens to set
+     */
     public void setTokens(int n)
     {
         tokens=n;
     }
 
+    /**
+     *
+     * @param num number of tokens used, decreased to total
+     */
     public void usedTokens(int num)
     {
         //player used num tokens
         tokens=tokens-num;
     }
 
-    public boolean canUse(int toDecrease)
-    {
-        //can player use those tokens?
-        if(tokens-toDecrease>=0)
-            return true;
-        else return false;
-    }
-
-    //TOKENS
+    /**
+     * sets boolean eightUsed to true, when you use ToolCard 8
+     */
     public void useEight() { eightUsed=true; }
 
+    /**
+     *
+     * @return eightUsed
+     */
     public boolean checkEight() { return eightUsed; }
 
+    /**
+     * sets boolean eightUsed to false, when the round ends
+     */
     public void roundReset() {
-        //resets eightUsed when round changes
         eightUsed=false;
     }
 
+    /**
+     * @return boolean if the player is disconnected or not
+     */
     public boolean isDisconnected() {
         return isDisconnected;
     }
 
+    /**
+     * @param o Observable
+     * @param arg Object
+     */
     public void update(Observable o, Object arg) {
         setChanged();
         notifyObservers(arg);

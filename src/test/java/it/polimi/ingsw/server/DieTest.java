@@ -43,14 +43,14 @@ public class DieTest
 
     @Test
     public void checksetValueTest() throws InvalidIntArgumentException {
-        die.setValueTest(5);
+        die.setValue(5);
         Assertions.assertEquals(5,die.getValue());
     }
 
     @Test
     public void checksetValueTestException(){
         try {
-            die.setValueTest(7);
+            die.setValue(7);
         } catch (InvalidIntArgumentException e) {
             Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
         }

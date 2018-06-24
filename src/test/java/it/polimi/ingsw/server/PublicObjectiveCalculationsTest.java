@@ -164,11 +164,11 @@ public class PublicObjectiveCalculationsTest {
         DieTest5 = new Die(5);
 
 
-        DieTest1.setValueTest(1);
-        DieTest2.setValueTest(3);
-        DieTest3.setValueTest(2);
-        DieTest4.setValueTest(6);
-        DieTest5.setValueTest(5);
+        DieTest1.setValue(1);
+        DieTest2.setValue(3);
+        DieTest3.setValue(2);
+        DieTest4.setValue(6);
+        DieTest5.setValue(5);
 
         schemeTest.setDie(DieTest1,1,0);
         schemeTest.setDie(DieTest2,1,1);
@@ -220,10 +220,10 @@ public class PublicObjectiveCalculationsTest {
         DieTest3 = new Die(3);
         DieTest4 = new Die(4);
 
-        DieTest1.setValueTest(1);
-        DieTest2.setValueTest(3);
-        DieTest3.setValueTest(2);
-        DieTest4.setValueTest(6);
+        DieTest1.setValue(1);
+        DieTest2.setValue(3);
+        DieTest3.setValue(2);
+        DieTest4.setValue(6);
 
         schemeTest.setDie(DieTest1,0,1);
         schemeTest.setDie(DieTest2,1,1);
@@ -273,11 +273,11 @@ public class PublicObjectiveCalculationsTest {
         DieTest4 = new Die(4);
         DieTest5 = new Die(4);
 
-        DieTest1.setValueTest(1);
-        DieTest2.setValueTest(1);
-        DieTest3.setValueTest(2);
-        DieTest4.setValueTest(2);
-        DieTest5.setValueTest(5);
+        DieTest1.setValue(1);
+        DieTest2.setValue(1);
+        DieTest3.setValue(2);
+        DieTest4.setValue(2);
+        DieTest5.setValue(5);
 
         schemeTest.setDie(DieTest1,0,1);
         schemeTest.setDie(DieTest2,3,3);
@@ -323,11 +323,11 @@ public class PublicObjectiveCalculationsTest {
         DieTest4 = new Die(4);
         DieTest5 = new Die(4);
 
-        DieTest1.setValueTest(3);
-        DieTest2.setValueTest(2);
-        DieTest3.setValueTest(3);
-        DieTest4.setValueTest(4);
-        DieTest5.setValueTest(4);
+        DieTest1.setValue(3);
+        DieTest2.setValue(2);
+        DieTest3.setValue(3);
+        DieTest4.setValue(4);
+        DieTest5.setValue(4);
 
         schemeTest.setDie(DieTest1,0,1);
         schemeTest.setDie(DieTest2,3,3);
@@ -344,7 +344,7 @@ public class PublicObjectiveCalculationsTest {
 
 
     @Test
-    public void checkCalculateSixException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void checkCalculateSixException() throws InvalidIntArgumentException {
 
         publicObjectiveTest = new PublicObjective(6);
         schemeTest = null;
@@ -372,11 +372,11 @@ public class PublicObjectiveCalculationsTest {
         DieTest4 = new Die(4);
         DieTest5 = new Die(4);
 
-        DieTest1.setValueTest(5);
-        DieTest2.setValueTest(6);
-        DieTest3.setValueTest(6);
-        DieTest4.setValueTest(6);
-        DieTest5.setValueTest(4);
+        DieTest1.setValue(5);
+        DieTest2.setValue(6);
+        DieTest3.setValue(6);
+        DieTest4.setValue(6);
+        DieTest5.setValue(4);
 
         schemeTest.setDie(DieTest1,0,1);
         schemeTest.setDie(DieTest2,3,3);
@@ -393,7 +393,7 @@ public class PublicObjectiveCalculationsTest {
 
 
     @Test
-    public void checkCalculateSevenException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void checkCalculateSevenException() throws InvalidIntArgumentException {
 
         publicObjectiveTest = new PublicObjective(7);
         schemeTest = null;
@@ -423,12 +423,12 @@ public class PublicObjectiveCalculationsTest {
         DieTest5 = new Die(4);
         DieTest6 = new Die(4);
 
-        DieTest1.setValueTest(1);
-        DieTest2.setValueTest(2);
-        DieTest3.setValueTest(3);
-        DieTest4.setValueTest(4);
-        DieTest5.setValueTest(5);
-        DieTest6.setValueTest(6);
+        DieTest1.setValue(1);
+        DieTest2.setValue(2);
+        DieTest3.setValue(3);
+        DieTest4.setValue(4);
+        DieTest5.setValue(5);
+        DieTest6.setValue(6);
 
         schemeTest.setDie(DieTest1,0,1);
         schemeTest.setDie(DieTest2,3,3);
@@ -446,7 +446,7 @@ public class PublicObjectiveCalculationsTest {
 
 
     @Test
-    public void checkCalculateEightException() throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void checkCalculateEightException() throws InvalidIntArgumentException {
 
         publicObjectiveTest = new PublicObjective(8);
         schemeTest = null;
@@ -518,6 +518,8 @@ public class PublicObjectiveCalculationsTest {
         schemeTest.setDie(DieTest19,3,4);
         schemeTest.setDie(DieTest20,3,3);
 
+
+        publicObjectiveTest.setTemp(schemeTest);
 
         bonusTest = publicObjectiveTest.setBonus(schemeTest);
 

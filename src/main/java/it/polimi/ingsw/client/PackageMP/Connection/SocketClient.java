@@ -1,13 +1,8 @@
 package it.polimi.ingsw.client.PackageMP.Connection;
 
 
-import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.Loggers.MinorLogger;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.Events.Event;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
@@ -29,7 +24,7 @@ public class SocketClient extends Observable {
     private Socket socket;
     private BufferedReader inSocket;
     private PrintWriter outSocket;
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
     private SocketProtocolTransformer transformer;
     private SocketDecoder decoder;
@@ -53,7 +48,7 @@ public class SocketClient extends Observable {
 
     public SocketClient(String ip) throws GenericInvalidArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
 
-        logger = new FcknSimpleLogger(1, true);
+        logger = new SimpleLogger(1, true);
         isConnected=false;
         serverIP = ip;
         notMyTurnMove = new int[4];
@@ -75,8 +70,7 @@ public class SocketClient extends Observable {
         isConnected=true;
     }
 
-    public void sendEvent(Event event)
-    {
+    public void sendEvent(Event event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
         logger.debugLog(event.getType());
         sendEncoded(eventEncoder.encodeEvent(event));
     }

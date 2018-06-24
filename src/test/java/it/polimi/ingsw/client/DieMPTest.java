@@ -46,14 +46,14 @@ public class DieMPTest
 
         @Test
         public void checksetValueTest() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
-                die.setValueTest(5);
+                die.setValue(5);
                 Assertions.assertEquals(5,die.getValue());
         }
 
         @Test
         public void checksetValueTestException(){
                 try {
-                        die.setValueTest(7);
+                        die.setValue(7);
                 } catch (it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException e) {
                         Assertions.assertEquals(e.getMessage(),"The int argument is invalid");
                 }

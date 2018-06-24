@@ -11,6 +11,11 @@ public class RoundDice
     private int index=0;
     private int dim=0;
 
+    /**
+     * RoundDice Constructor
+     * @param par round dice dimension
+     * @throws InvalidIntArgumentException
+     */
     public RoundDice(int par) throws InvalidIntArgumentException
     {
         if(par<0||par>9)
@@ -21,6 +26,11 @@ public class RoundDice
             diceVector[i]=new Die(0);
     }
 
+    /**
+     * adds a die to the round dice vector
+     * @param thisDie die to add
+     * @throws FullDataStructureException
+     */
     public void addDie(Die thisDie) throws FullDataStructureException
     {
         if(index<dim)
@@ -33,6 +43,12 @@ public class RoundDice
             throw new FullDataStructureException();
     }
 
+    /**
+     * gets die at parameter position
+     * @param pos position of round dice
+     * @return die to get
+     * @throws InvalidIntArgumentException
+     */
     public Die getDie(int pos) throws InvalidIntArgumentException
     {
         if(pos>index||pos<0||diceVector[pos].isDisabled())
@@ -40,18 +56,24 @@ public class RoundDice
         return diceVector[pos];
     }
 
-    public void deleteDie(int pos) throws InvalidIntArgumentException
-    {
-        if(pos>index||pos<0||diceVector[pos].isDisabled())
-            throw new InvalidIntArgumentException();
-        diceVector[pos].disableDie();
-    }
+    /**
+     * returns round dice dimension
+     * @return integer representing round dice dimension
+     */
 
     public int returnDim()
     {
         return dim;
     }
 
+    /**
+     * replaces a die
+     * @param toPlace die to replace
+     * @param pos round dice index
+     * @return old die
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public Die replaceDie(Die toPlace, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         if (pos>=dim||pos<0||diceVector[pos].isDisabled()) throw new InvalidIntArgumentException();

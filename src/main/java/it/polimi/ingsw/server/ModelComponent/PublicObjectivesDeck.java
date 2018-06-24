@@ -9,25 +9,27 @@ public class PublicObjectivesDeck {
     private PublicObjective[] fullDeck;
     int id;
 
+    /**
+     * PublicObjectivesDeck Constructor
+     * @throws InvalidIntArgumentException
+     */
 
     public PublicObjectivesDeck() throws InvalidIntArgumentException
     {
-
         fullDeck = new PublicObjective[10];
 
-        for (id=1;id<11;id++) {
+        for (id=1;id<11;id++)
             fullDeck[id-1] = new PublicObjective(id);
-        }
-
 
     }
 
-
+    /**
+     * extracts 3 random public objectives
+     * @return public objective array
+     */
     public PublicObjective[] extractPubObjs() {
 
         PublicObjective[] tempDeck = new PublicObjective[3];
-
-        int tempCounter = 0;
 
         for (int i = 0; i < 3; i++) {
             boolean exists = false;

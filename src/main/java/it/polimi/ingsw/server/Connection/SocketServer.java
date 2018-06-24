@@ -1,19 +1,15 @@
 package it.polimi.ingsw.server.Connection;
 
 import it.polimi.ingsw.commons.Events.Event;
-import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
-import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
-import it.polimi.ingsw.server.Loggers.MinorLogger;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ModelComponent.RoundTrack;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 
 import java.io.*;
 import java.net.Socket;
@@ -45,10 +41,13 @@ public class SocketServer extends Observable
 
     public Event currentEvent;
 
-    public FcknSimpleLogger logger;
+    public SimpleLogger logger;
 
-    //COSTRUCTOR
-
+    /**
+     * SocketServer Constructor
+     * @param s socket to assign to connection
+     * @throws IOException
+     */
     public SocketServer(Socket s) throws IOException
     {
 
@@ -62,33 +61,48 @@ public class SocketServer extends Observable
         eventDecoder = new EventDecoder();
 
         msg = new ArrayList<String>();
-        logger = new FcknSimpleLogger(1, true);
+        logger = new SimpleLogger(1, true);
     }
 
-    //USERNAME INSERTION
-
-    public void insertUsername() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException {
+    /**
+     * decodes an insertUsername event
+     * @throws GenericInvalidArgumentException
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
+    public void insertUsername() throws IOException, InvalidIntArgumentException {
             currentEvent = eventDecoder.decodeEvent(listenForEvent());
             setChanged();
             notifyObservers(currentEvent);
     }
 
-    //EVENT HANDLING
-    public void sendEvent(Event event)
-    {
+    /**
+     * send an event
+     * @param event event to send
+     * @throws InvalidIntArgumentException
+     */
+    public void sendEvent(Event event) throws InvalidIntArgumentException {
         sendArrayList(eventEncoder.encodeEvent(event));
     }
+
+    /**
+     * gets an event
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
     public void getEvent() throws IOException, InvalidIntArgumentException {
         currentEvent = eventDecoder.decodeEvent(listenForEvent());
         setChanged();
         notifyObservers(currentEvent);
     }
 
-
-    //TURN METHODS
-
-
-
+    /**
+     * sends a draft pool as an event
+     * @param draft draft pool to send
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     * @throws GenericInvalidArgumentException
+     */
     public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
     {
         String[] temp = socketEncoder.draftEncoder(draft);
@@ -109,7 +123,13 @@ public class SocketServer extends Observable
     }
 
 
-
+    /**
+     * sends a scheme card as an event
+     * @param scheme scheme card to send
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws IOException
+     */
     public void sendScheme(SchemeCard scheme) throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException
     {
         String[] temp = socketEncoder.schemeCardEncoder(scheme);
@@ -124,7 +144,12 @@ public class SocketServer extends Observable
         }
     }
 
-
+    /**
+     * gets tool's id
+     * @return integer representing the tool's id
+     * @throws IOException
+     * @throws GenericInvalidArgumentException
+     */
 
     public int getToolId() throws IOException, GenericInvalidArgumentException
     {
@@ -141,33 +166,22 @@ public class SocketServer extends Observable
         return temp;
     }
 
+    /**
+     * manages the disconnection
+     */
 
-
-
-    public void setPlayersNames(String[]usernames)
-    {
-        playerNames=usernames;
-    }
-
-
-
-
-    //CONNECTION LOST MANAGEMENT
-    private void disconnectionManager() throws GenericInvalidArgumentException
+    private void disconnectionManager()
     {
         connected = false;
     }
 
-    public boolean connectionCheck()
-    {
-        //returns true if connected
-        return connected;
-    }
 
-
-
-    //ENCODE/DECODE
-
+    /**
+     * encodes a message
+     * @param cmd message command
+     * @param arg message argument
+     * @return string of the decoded message
+     */
 
     public String simpleEncode(String cmd, String arg)
     {
@@ -175,51 +189,31 @@ public class SocketServer extends Observable
         return temp;
     }
 
-    private void simpleDecode(String tempStr)
-    {
-        //parts the message into command and argument
-        tempCmd="";
-        tempArg="";
-        int index=0;
-        if(tempStr.charAt(index)=='#')
-        {
-            index++;
-            while (tempStr.charAt(index) != '#')
-            {
-                tempCmd+=Character.toString(tempStr.charAt(index));
-                index++;
-            }
-            index++;
-            if(tempStr.charAt(index)=='$');
-            {
-                index++;
-                while(tempStr.charAt(index)!='$')
-                {
-                    tempArg+=Character.toString(tempStr.charAt(index));
-                    index++;
-                }
-            }
-        }
-    }
 
-    //RECEIVE/SEND
+    /**
+     * receives a message
+     * @throws IOException
+     */
     private void receiveMessage() throws IOException
     {
         transformer.simpleDecode(inSocket.readLine());
     }
 
-    private void sendMessage(String cmd, String arg)
-    {
-        outSocket.println(transformer.simpleEncode(cmd, arg));
-        outSocket.flush();;
-    }
-
+    /**
+     * sends a message with parameter string
+     * @param s string to be sent
+     */
     private void sendReadyMessage(String s)
     {
         outSocket.println(s);
         outSocket.flush();
     }
 
+    /**
+     * listens for an event, stays in reception
+     * @return ArrayList of strings with the event received
+     * @throws IOException
+     */
     private ArrayList<String> listenForEvent() throws IOException
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -237,13 +231,17 @@ public class SocketServer extends Observable
             temp.add(msgIN);
             msgIN=inSocket.readLine();
 
-            //DEBUG
             logger.debugLog(msgIN);
 
             transformer.simpleDecode(msgIN);
         }
         return temp;
     }
+
+    /**
+     * sends an ArrayList of strings
+     * @param toSend ArrayList of strings to send
+     */
     private void sendArrayList(ArrayList<String> toSend)
     {
         logger.debugLog(" ");

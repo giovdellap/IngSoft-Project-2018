@@ -46,4 +46,9 @@ public class RoundDiceMP {
 
         return diceVector;
     }
+
+    public void addPos(int pos, Die temp)
+    {
+        diceVector.add(pos, temp);
+    }
 }

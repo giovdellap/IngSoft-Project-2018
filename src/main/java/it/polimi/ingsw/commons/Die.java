@@ -47,7 +47,7 @@ public class Die
             return false;
     }
 
-    public void setValueTest(int n) throws InvalidIntArgumentException {
+    public void setValue(int n) throws InvalidIntArgumentException {
         if (n<0||n>6)throw new InvalidIntArgumentException();
         value=n;
     }

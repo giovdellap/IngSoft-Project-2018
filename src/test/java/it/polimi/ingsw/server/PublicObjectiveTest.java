@@ -64,15 +64,7 @@ public class PublicObjectiveTest {
 
         Assertions.assertEquals(true,publicObjectiveTest.getBonus()==bonusTest);
     }
-/*
-    @Test
-    public void checkSetBonus() {
 
-        int bonusTest2 = publicObjectiveTest.setBonus();
-        Assertions.assertEquals(true,bonusTest==bonusTest2);
-
-    }
-*/
     @Test
     public void checkDisabledPublicObjective() {
 
@@ -80,21 +72,6 @@ public class PublicObjectiveTest {
         Assertions.assertEquals(true,publicObjectiveTest.checkDisabled());
 
     }
-
-    @Test
-    public void checkToString() {
-
-        int tempID = publicObjectiveTest.getId();
-        int tempBonus = publicObjectiveTest.getBonus();
-        String tempList1 = "Id" + " " + tempID + " " + "Bonus" + " " + tempBonus;
-        String tempList2 = publicObjectiveTest.toString();
-
-        Assertions.assertEquals(true,tempList1.equals(tempList2));
-
-
-    }
-
-
 
 
 }

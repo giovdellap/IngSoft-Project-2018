@@ -1,10 +1,5 @@
 package it.polimi.ingsw.commons.Socket.SocketTools;
 
-import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
-import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.Die;
 
 import java.util.ArrayList;
@@ -40,7 +35,7 @@ public class SocketDecoder
             i++;
 
             transformer.simpleDecode(dice.get(i));
-            temp.get(index).setValueTest(Integer.parseInt(transformer.getArg()));
+            temp.get(index).setValue(Integer.parseInt(transformer.getArg()));
             i++;
 
         }

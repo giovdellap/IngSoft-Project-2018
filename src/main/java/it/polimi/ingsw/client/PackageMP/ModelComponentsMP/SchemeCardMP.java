@@ -203,7 +203,7 @@ public class SchemeCardMP
         int value = diceScheme[x0][y0].getValue();
 
         Die tempDie = new Die(color);
-        tempDie.setValueTest(value);
+        tempDie.setValue(value);
 
         diceScheme[x1][y1] = tempDie;
         diceScheme[x0][y0].disableDie();

@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ToolCards.ToolCardOne;
 import it.polimi.ingsw.server.ToolCards.ToolCardTwo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +32,7 @@ public class ToolCardTwoTest {
         testDie2 = new Die(randomColor);
         toolCardTwoTest = new ToolCardTwo();
         testScheme.setfb(2);
-        System.out.println(testScheme.getName(2));
+        toolCardTwoTest.setTempScheme(testScheme);
     }
 
 
@@ -42,7 +40,7 @@ public class ToolCardTwoTest {
     public void checkToolCardTwoTestOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         boolean flag = true;
-        testDie.setValueTest(3);
+        testDie.setValue(3);
 
         flag = toolCardTwoTest.checkToolCardTwo(2,3,testScheme,3,3);
 
@@ -55,8 +53,8 @@ public class ToolCardTwoTest {
     public void checkToolCardTwoTestTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         boolean flag = true;
-        testDie.setValueTest(3);
-        testDie2.setValueTest(4);
+        testDie.setValue(3);
+        testDie2.setValue(4);
 
         testScheme.setDie(testDie,2,3);
         testScheme.setDie(testDie2,1,4);
@@ -72,8 +70,8 @@ public class ToolCardTwoTest {
     public void checkToolCardTwoTestThree() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         boolean flag = true;
-        testDie.setValueTest(3);
-        testDie2.setValueTest(3);
+        testDie.setValue(3);
+        testDie2.setValue(3);
 
         testScheme.setDie(testDie,2,3);
         testScheme.setDie(testDie2,1,4);
@@ -91,8 +89,8 @@ public class ToolCardTwoTest {
         boolean flag = false;
         testDie = new Die(3);
         testDie2 = new Die(3);
-        testDie.setValueTest(4);
-        testDie2.setValueTest(5);
+        testDie.setValue(4);
+        testDie2.setValue(5);
 
         testScheme.setDie(testDie,2,3);
         testScheme.setDie(testDie2,1,4);
@@ -108,7 +106,7 @@ public class ToolCardTwoTest {
 
         boolean flag = false;
         testDie = new Die(3);
-        testDie.setValueTest(4);
+        testDie.setValue(4);
 
 
         testScheme.setDie(testDie,0,0);
@@ -126,7 +124,7 @@ public class ToolCardTwoTest {
 
         boolean flag = false;
         testDie = new Die(3);
-        testDie.setValueTest(2);
+        testDie.setValue(2);
 
 
         testScheme.setDie(testDie,0,0);
@@ -142,23 +140,33 @@ public class ToolCardTwoTest {
     @Test
     public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        testDie.setValueTest(4);
+        boolean flag = false;
+
+        testDie = new Die(2);
+        testDie.setValue(4);
         testScheme.setDie(testDie,2,3);
+        toolCardTwoTest.setTempScheme(testScheme);
 
-        testScheme = toolCardTwoTest.applyModifies(2,3,testScheme,2,1);
+        int value = testDie.getValue();
 
-        Assertions.assertEquals(true,testScheme.getDie(2,1).equals(testDie));
+        testScheme = toolCardTwoTest.applyModifies(2,3,2,1);
 
+        if(testScheme.getDie(2,1).getColor()==testDie.getColor())
+            if(testScheme.getDie(2,1).getValue()==value)
+                flag = true;
+
+        Assertions.assertEquals(true,flag);
 
     }
 
     @Test
     public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        testDie.setValueTest(2);
+        testDie.setValue(2);
         testScheme.setDie(testDie,3,3);
+        toolCardTwoTest.setTempScheme(testScheme);
 
-        testScheme = toolCardTwoTest.applyModifies(3,3,testScheme,1,1);
+        testScheme = toolCardTwoTest.applyModifies(3,3,1,1);
 
         Assertions.assertEquals(true,testScheme.getDie(3,3).isDisabled());
 

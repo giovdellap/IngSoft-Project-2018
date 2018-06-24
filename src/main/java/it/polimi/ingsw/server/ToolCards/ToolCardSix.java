@@ -7,7 +7,9 @@ import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class ToolCardSix extends ToolCard {
-
+    /**
+     * ToolCardSix Constructor
+     */
     public ToolCardSix() {
         setToolCardName("Flux Brush");
         setId(6);
@@ -16,14 +18,33 @@ public class ToolCardSix extends ToolCard {
     DraftPool draft;
     SchemeCard scheme;
 
+    /**
+     * sets draft pool to tool card
+     * @param draft
+     */
     public void setDraft(DraftPool draft) {
         this.draft = draft;
     }
 
+    /**
+     * sets scheme card to tool card
+     * @param scheme
+     */
     public void setScheme(SchemeCard scheme) {
         this.scheme = scheme;
     }
 
+    /**
+     * checks if the tool card can be used or not
+     * @param draft draft pool from which to take die
+     * @param pos draft pool's index
+     * @param scheme scheme on which to check the move
+     * @param x row where to place the die
+     * @param y column where to place the die
+     * @return true if the move can be executed, false if it can't
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public boolean checkToolCardSixSchemeCard(DraftPool draft, int pos, SchemeCard scheme, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
@@ -119,22 +140,44 @@ public class ToolCardSix extends ToolCard {
 
     }
 
+    /**
+     * apply modifies to scheme
+     * @param pos draft pool's index
+     * @param x row where to place die
+     * @param y column where to place die
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
+
     public void ApplyModifiesToScheme(int pos, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
         Die toPlace = draft.returnDie(pos);
         scheme.setDie(toPlace,x,y);
         draft.pickUpDie(pos);
     }
 
+    /**
+     * apply modifies to draft
+     * @param pos draft pool's index
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     */
     public void ApplyModifiesToDraft(int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
         Die toPlace = draft.returnDie(pos);
         draft.replaceDie(pos,toPlace);
     }
 
-
+    /**
+     * gets draft pool
+     * @return draft
+     */
     public DraftPool getDraft() {
         return draft;
     }
 
+    /**
+     * gets scheme card
+     * @return scheme
+     */
     public SchemeCard getScheme() {
         return scheme;
     }

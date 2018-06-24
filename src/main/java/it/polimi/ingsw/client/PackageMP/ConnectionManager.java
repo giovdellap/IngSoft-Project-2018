@@ -42,8 +42,7 @@ public class ConnectionManager extends Observable implements Observer
     }
 
     //EVENT HANDLING
-    public void sendEvent(Event event)
-    {
+    public void sendEvent(Event event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
         socketClient.sendEvent(event);
     }
     public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {

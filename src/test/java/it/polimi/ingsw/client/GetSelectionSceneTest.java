@@ -25,7 +25,7 @@ public class GetSelectionSceneTest
 
     public void setUp() throws InvalidIntArgumentException
     {
-        printerMakerTest=new PrinterMaker();
+        printerMakerTest=new PrinterMaker(1);
 
         schemesDeckMP = new SchemesDeckMP();
         testScheme = schemesDeckMP.extractSchemebyID(5);

@@ -108,9 +108,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(2);
-        dieTest1.setValueTest(3);
+        dieTest1.setValue(3);
         dieTest2 = new Die(5);
-        dieTest2.setValueTest(6);
+        dieTest2.setValue(6);
 
         schemeCardTest.setDie(dieTest1,3,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,3,1);
@@ -126,9 +126,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(2);
-        dieTest1.setValueTest(3);
+        dieTest1.setValue(3);
         dieTest2 = new Die(5);
-        dieTest2.setValueTest(4);
+        dieTest2.setValue(4);
 
         schemeCardTest.setDie(dieTest1,3,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,3,1);
@@ -145,9 +145,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(2);
-        dieTest1.setValueTest(3);
+        dieTest1.setValue(3);
         dieTest2 = new Die(2);
-        dieTest2.setValueTest(5);
+        dieTest2.setValue(5);
 
         schemeCardTest.setDie(dieTest1,3,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,3,3);
@@ -162,9 +162,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(1);
-        dieTest1.setValueTest(3);
+        dieTest1.setValue(3);
         dieTest2 = new Die(1);
-        dieTest2.setValueTest(4);
+        dieTest2.setValue(4);
 
         schemeCardTest.setDie(dieTest1,2,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,1,3);
@@ -179,9 +179,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(2);
-        dieTest1.setValueTest(5);
+        dieTest1.setValue(5);
         dieTest2 = new Die(1);
-        dieTest2.setValueTest(5);
+        dieTest2.setValue(5);
 
         schemeCardTest.setDie(dieTest1,3,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,2,2);
@@ -197,9 +197,9 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(2);
-        dieTest1.setValueTest(5);
+        dieTest1.setValue(5);
         dieTest2 = new Die(3);
-        dieTest2.setValueTest(5);
+        dieTest2.setValue(5);
 
         schemeCardTest.setDie(dieTest1,3,2);
         flag = checkingMethodsTest.checkMove(schemeCardTest,dieTest2,2,1);
@@ -264,7 +264,7 @@ public class CheckingMethodsTest {
 
         flag = checkingMethodsTest.checkFirstMove(schemeCardTest,dieTest1,3,2);
 
-        Assertions.assertEquals(true,flag);
+        Assertions.assertEquals(false,flag);
 
 
 
@@ -276,7 +276,7 @@ public class CheckingMethodsTest {
         boolean flag;
 
         dieTest1 = new Die(4);
-        dieTest1.throwDie();
+        dieTest1.setValue(3);
 
         flag = checkingMethodsTest.checkFirstMove(schemeCardTest,dieTest1,3,4);
 

@@ -10,9 +10,17 @@ import java.io.IOException;
 
 public class Main {
 
+    /**
+     * MAIN, starts a MATCH
+     * @param args
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     * @throws InvalidinSocketException
+     * @throws GenericInvalidArgumentException
+     * @throws FullDataStructureException
+     */
     public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
 
-        Match thisMatch = new Match();                              //START A MATCH
-
+        Match thisMatch = new Match();
     }
 }

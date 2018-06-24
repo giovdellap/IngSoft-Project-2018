@@ -65,62 +65,17 @@ public class RoundDiceTest
     @Test
     public void checkGetException() throws FullDataStructureException, GenericInvalidArgumentException {
         boolean flag = false;
-        try
-        {
+        try {
             testRD.addDie(testDie1);
             testRD.addDie(testDie2);
             testRD.getDie(10);
-        }
-        catch (InvalidIntArgumentException e)
-        {
+        } catch (InvalidIntArgumentException e) {
             if (e.getMessage().equals("The int argument is invalid"))
                 flag = true;
 
         }
 
-        Assertions.assertEquals(true,flag);
-
-    }
-
-    @Test
-    public void checkDelete() throws FullDataStructureException, InvalidIntArgumentException, GenericInvalidArgumentException {
-        boolean flag= false;
-
-        testRD.addDie(testDie1);
-        testRD.addDie(testDie2);
-        testRD.deleteDie(1);
-        try
-        {
-            testRD.getDie(1);
-        } catch(InvalidIntArgumentException e)
-        {
-            if (e.getMessage().equals("The int argument is invalid"))
-                flag = true;
-
-        }
-
-        Assertions.assertEquals(true,flag);
-
-    }
-
-    @Test
-    public void checkDeleteException() throws FullDataStructureException, GenericInvalidArgumentException {
-        boolean flag= false;
-        try
-        {
-            testRD.addDie(testDie1);
-            testRD.addDie(testDie2);
-            testRD.deleteDie(-3);
-        }
-
-        catch (InvalidIntArgumentException e)
-        {
-            if (e.getMessage().equals("The int argument is invalid"))
-                flag = true;
-
-        }
-
-        Assertions.assertEquals(true,flag);
+        Assertions.assertEquals(true, flag);
 
     }
 

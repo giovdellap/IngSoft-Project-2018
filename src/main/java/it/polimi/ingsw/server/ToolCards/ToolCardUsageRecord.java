@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
-import it.polimi.ingsw.commons.FcknSimpleLogger;
+import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 public class ToolCardUsageRecord
@@ -9,21 +9,21 @@ public class ToolCardUsageRecord
     private int[] tokens;
     private ToolCard[] cards;
 
-    private FcknSimpleLogger logger;
+    private SimpleLogger logger;
 
+    /**
+     * ToolCardUsageRecord Constructor
+     * @throws InvalidIntArgumentException
+     */
     public ToolCardUsageRecord() throws InvalidIntArgumentException {
-        logger = new FcknSimpleLogger(0, false);
+        logger = new SimpleLogger(0, false);
         tokens = new int[3];
         for (int i=0;i<3;i++)
             tokens[i]=0;
 
         int extracted=0;
         selectedId = new int[3];
-        selectedId[0] = 4;
-        selectedId[1] = 5;
-        selectedId[2] = 6;
 
-        /*
         while(extracted<3)
         {
             int i = (int)(Math.random()*12+1);
@@ -38,15 +38,19 @@ public class ToolCardUsageRecord
                 extracted++;
             }
         }
-        */
+
         cards = new ToolCard[3];
-        //toolCardConstructor();
-        testToolCardConstructor();
+        toolCardConstructor();
     }
 
+    /**
+     * checks if a particular tool card can be used or not
+     * @param playerTokens
+     * @param idTool
+     * @return 0 if player cannot use that tool, 1 or 2 if player can use it
+     */
     public int checkAndApplyUsage(int playerTokens, int idTool)
     {
-        //returns 0 if player cannot use that tool, 1 or 2 if player can use it
         int toolCard=0;
         for(int i=0;i<3;i++)
             if(selectedId[i]==idTool)
@@ -66,15 +70,27 @@ public class ToolCardUsageRecord
             return 0;
     }
 
+    /**
+     *
+     * @return tool card tokens
+     */
     public int[] getRecord()
     {
         return tokens;
     }
 
+    /**
+     *
+     * @return selectedId
+     */
     public int[] getSelectedId() {
         return selectedId;
     }
 
+    /**
+     * Constructs the selected tool card based on the selected id
+     * @throws InvalidIntArgumentException
+     */
     public void toolCardConstructor() throws InvalidIntArgumentException {
         for(int i=0;i<3;i++)
         {
@@ -142,6 +158,11 @@ public class ToolCardUsageRecord
         }
     }
 
+    /**
+     * gets selected tool card by id
+     * @param id tool card's id
+     * @return selected tool card
+     */
     public ToolCard getCard(int id)
     {
         for(int i=0;i<3;i++)
@@ -150,9 +171,4 @@ public class ToolCardUsageRecord
         return null;
     }
 
-    private void testToolCardConstructor() throws InvalidIntArgumentException {
-        cards[0] = new ToolCardFour();
-        cards[1] = new ToolCardFive();
-        cards[2] = new ToolCardSix();
-    }
 }

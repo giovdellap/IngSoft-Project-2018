@@ -45,7 +45,7 @@ public class ToolCardOneTest {
     public void checkDieOneToSix() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         boolean flag = true;
-        testDie.setValueTest(1);
+        testDie.setValue(1);
         draftTest.replaceDie(3,testDie);
         flag = toolCardOneTest.checkToolCardOne(3,2,testScheme,draftTest,2,4);
 
@@ -57,7 +57,7 @@ public class ToolCardOneTest {
     public void checkDieSixToOne() throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         boolean flag = true;
-        testDie.setValueTest(6);
+        testDie.setValue(6);
         draftTest.replaceDie(3,testDie);
         flag = toolCardOneTest.checkToolCardOne(3,1,testScheme,draftTest,2,4);
 
@@ -70,7 +70,7 @@ public class ToolCardOneTest {
 
         boolean flag = true;
 
-        testDie.setValueTest(4);
+        testDie.setValue(4);
         testScheme.setDie(testDie,2,4);
         draftTest.replaceDie(3,testDie2);
 
@@ -84,7 +84,7 @@ public class ToolCardOneTest {
     @Test
     public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        testDie.setValueTest(4);
+        testDie.setValue(4);
         draftTest.replaceDie(3,testDie);
 
         toolCardOneTest.applyModifies(3,2,2,4);
@@ -97,7 +97,7 @@ public class ToolCardOneTest {
     @Test
     public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        testDie.setValueTest(4);
+        testDie.setValue(4);
         draftTest.replaceDie(3,testDie);
 
         toolCardOneTest.applyModifies(3,1,2,4);
@@ -110,7 +110,7 @@ public class ToolCardOneTest {
     @Test
     public void checkApplyModifiesThree() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
-        testDie.setValueTest(4);
+        testDie.setValue(4);
         draftTest.replaceDie(3,testDie);
 
         toolCardOneTest.applyModifies(3,2,2,4);

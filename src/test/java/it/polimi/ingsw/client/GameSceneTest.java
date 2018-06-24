@@ -28,7 +28,7 @@ public class GameSceneTest {
 
     public void setUp() throws InvalidIntArgumentException, FullDataStructureException {
         DraftPoolMP tempDraft;
-        printerMaker=new PrinterMaker();
+        printerMaker=new PrinterMaker(1);
         players= new PlayerClient[2];
         players[0]=new PlayerClient(0,"pippo", true);
         SchemesDeckMP deck= new SchemesDeckMP();
@@ -105,7 +105,8 @@ public class GameSceneTest {
     @Test
     public void gameSceneTest() throws InvalidIntArgumentException
     {
-        for(int i=0;i<21;i++) {
+        int lenght = printerMaker.getGameScene(players, draft, tempRound, testPrivObj, tempPubObj, tempTools, 1, 1).length;
+        for(int i=0;i<lenght;i++) {
             System.out.println(printerMaker.getGameScene(players, draft, tempRound, testPrivObj, tempPubObj, tempTools, 1, 1)[i]);
         }
         Assertions.assertEquals(true, true);
