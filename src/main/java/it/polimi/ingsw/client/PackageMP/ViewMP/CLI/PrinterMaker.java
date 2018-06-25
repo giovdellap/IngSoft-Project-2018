@@ -20,6 +20,10 @@ public class PrinterMaker
 
     private final int width;
 
+    /**
+     * PrinterMaker Constructor
+     * @param z
+     */
     public PrinterMaker(int z)
     {
         modelGenerator = new ModelGenerator();
@@ -30,7 +34,10 @@ public class PrinterMaker
         else width=80;
     }
 
-    //USERNAME INSERTION
+    /**
+     * gets the username insertion
+     * @return
+     */
     public String[] getUsernameInsertion()
     {
         //returns a string[30] width width asking for username insertion
@@ -40,19 +47,18 @@ public class PrinterMaker
 
         return cliToolsManager.blankLinesEnder(temp, 11);
     }
-    public String[] getUsernameInsertionAgain(String badUsername)
-    {
-        //returns a string[width] 30 width claiming badUsername is wrong and asking to type another one
 
-        String[] temp = cliToolsManager.blankLinesInitializer(20, 16, width);
-        temp[16] = cliToolsManager.printSpaces(2)+"Username "+badUsername+" errato"+cliToolsManager.printSpacesEnder(temp[24], width);
-        temp[17] = cliToolsManager.printSpaces(width);
-        temp[18] = cliToolsManager.simpleQuestionsMaker("INSERISCI USERNAME", width, true);
-
-        return cliToolsManager.blankLinesEnder(temp, 19);
-    }
-
-
+    /**
+     * gets the beginning scheme selection scene
+     * @param scheme1
+     * @param scheme2
+     * @param username
+     * @param privObj
+     * @param pubObjs
+     * @param tools
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] getSelectionScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException
     {
         //returns the final selection scene string widthx21
@@ -101,6 +107,20 @@ public class PrinterMaker
 
         return temp;
     }
+
+    /**
+     * gets the game Scene from ComponentFactory
+     * @param players
+     * @param draft
+     * @param round
+     * @param privObj
+     * @param pubObjs
+     * @param toolsTokens
+     * @param activePlayers
+     * @param me
+     * @return
+     * @throws InvalidIntArgumentException
+     */
 
     public String[] getGameScene(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP round, PrivateObjectiveMP privObj, PublicObjectiveMP[]pubObjs, int[]toolsTokens, int activePlayers, int me) throws InvalidIntArgumentException
     {
@@ -170,6 +190,11 @@ public class PrinterMaker
         return temp;
     }
 
+    /**
+     * prints out string array of disconnected players
+     * @param username
+     * @return
+     */
     public String[] disconnectedPlayers(String[] username)
     {
         int i = 0;
@@ -188,6 +213,10 @@ public class PrinterMaker
             return tempVect;
     }
 
+    /**
+     * prints out the select action scene
+     * @return
+     */
     public String[] selectAction()
     {
         String[] tempVect = new String[2];
@@ -239,7 +268,14 @@ public class PrinterMaker
         return new String(cliToolsManager.centerThatString(("INSERIMENTO NON VALIDO"),width));
     }
 
-    //NOT MY TURN STRINGS
+    /**
+     * prints out the other players moves
+     * @param username
+     * @param index
+     * @param x
+     * @param y
+     * @return
+     */
     public String[] notMyTurnMove(String username, int index, int x, int y)
     {
         String[] temp = new String[3];
@@ -249,7 +285,10 @@ public class PrinterMaker
         return temp;
     }
 
-    //WAIT SCENES
+    /**
+     * prints out the waiting lobby scene
+     * @return
+     */
     public String[] waitingForPlayersScene()
     {
         String[] temp = cliToolsManager.blankLinesInitializer(20, 12, width);
@@ -257,6 +296,10 @@ public class PrinterMaker
         return cliToolsManager.blankLinesEnder(temp, 13);
     }
 
+    /**
+     * prints out the creation of the lobby scene
+     * @return
+     */
     public String[] waitingForLobbyScene()
     {
         String[] temp = cliToolsManager.blankLinesInitializer(20, 12, width);
@@ -316,6 +359,12 @@ public class PrinterMaker
         return null;
     }
 
+    /**
+     * shows all the players final scores at the end of the match
+     * @param event Score event
+     * @return array of strings
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     */
     public String[] showScores(ScoreEvent event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
         int pos=1;
@@ -337,5 +386,19 @@ public class PrinterMaker
 
         return vect;
 
+    }
+
+    public String[] printTitle()
+    {
+        String[] temp = new String[6];
+
+        temp[0]=cliToolsManager.centerThatString("██╗██╗███████╗ █████╗  ██████╗ ██████╗  █████╗ ██████╗  █████╗ ██╗██╗", 80);
+        temp[1]=cliToolsManager.centerThatString("██║██║██╔════╝██╔══██╗██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║██║",80);
+        temp[2]=cliToolsManager.centerThatString("██║██║███████╗███████║██║  ███╗██████╔╝███████║██║  ██║███████║██║██║",80);
+        temp[3]=cliToolsManager.centerThatString("╚═╝╚═╝╚════██║██╔══██║██║   ██║██╔══██╗██╔══██║██║  ██║██╔══██║╚═╝╚═╝", 80);
+        temp[4]=cliToolsManager.centerThatString("██╗██╗███████║██║  ██║╚██████╔╝██║  ██║██║  ██║██████╔╝██║  ██║██╗██╗",80);
+        temp[5]=cliToolsManager.centerThatString("╚═╝╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝", 80);
+
+        return temp;
     }
 }

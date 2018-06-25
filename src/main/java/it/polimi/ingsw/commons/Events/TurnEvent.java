@@ -18,34 +18,39 @@ public class TurnEvent extends Event
     private ArrayList<Die> lastRound;
     private boolean nextRound;
 
-
     public TurnEvent() {
         super("TurnEvent");
     }
 
 
-    //SET METHODS
     public void setRound(int round) {
         this.round = round;
     }
+
+
     public void setDisconnected(ArrayList<String> disconnected) {
         noDisconnected=false;
         this.disconnected = disconnected;
     }
+
     public void noDisconnected()
     {
         noDisconnected=true;
     }
+
     public void setActive(int active) {
         this.active = active;
     }
+
     public void setDraft(ArrayList<Die> draft) {
         this.draft = draft;
     }
+
     public void setToolsUpdate(int[] tools)
     {
         toolsUpdate=tools;
     }
+
     public void setMyTurn(boolean bool)
     {
         myTurn=bool;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Connection;
 
+import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
@@ -70,7 +71,7 @@ public class SocketServer extends Observable
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public void insertUsername() throws IOException, InvalidIntArgumentException {
+    public void insertUsername() throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
             currentEvent = eventDecoder.decodeEvent(listenForEvent());
             setChanged();
             notifyObservers(currentEvent);
@@ -81,8 +82,15 @@ public class SocketServer extends Observable
      * @param event event to send
      * @throws InvalidIntArgumentException
      */
-    public void sendEvent(Event event) throws InvalidIntArgumentException {
-        sendArrayList(eventEncoder.encodeEvent(event));
+    public void sendEvent(Event event) throws InvalidIntArgumentException, IOException {
+        try {
+            sendArrayList(eventEncoder.encodeEvent(event));
+        }catch (Exception e)
+        {
+            socket.close();
+            logger.log("Player disconnected");
+            disconnectionManager();
+        }
     }
 
     /**
@@ -91,9 +99,14 @@ public class SocketServer extends Observable
      * @throws InvalidIntArgumentException
      */
     public void getEvent() throws IOException, InvalidIntArgumentException {
-        currentEvent = eventDecoder.decodeEvent(listenForEvent());
-        setChanged();
-        notifyObservers(currentEvent);
+        try {
+            currentEvent = eventDecoder.decodeEvent(listenForEvent());
+            setChanged();
+            notifyObservers(currentEvent);
+        }catch(Exception e)
+        {
+            disconnectionManager();
+        }
     }
 
     /**
@@ -173,6 +186,9 @@ public class SocketServer extends Observable
     private void disconnectionManager()
     {
         connected = false;
+        DisconnectionEvent event = new DisconnectionEvent();
+        setChanged();
+        notifyObservers(event);
     }
 
 
@@ -205,6 +221,7 @@ public class SocketServer extends Observable
      */
     private void sendReadyMessage(String s)
     {
+
         outSocket.println(s);
         outSocket.flush();
     }
@@ -253,6 +270,13 @@ public class SocketServer extends Observable
             sendReadyMessage(go);
             logger.debugLog(go);
         }
+    }
+
+    public void changeSocket(Socket socket) throws IOException {
+        this.socket=socket;
+        inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
     }
 }
 

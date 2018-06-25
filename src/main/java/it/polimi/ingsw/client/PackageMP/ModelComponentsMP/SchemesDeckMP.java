@@ -6,6 +6,10 @@ public class SchemesDeckMP {
 
     private SchemeCardMP[] deck;
 
+    /**
+     * SchemesDeckMP Constructor
+     * @throws InvalidIntArgumentException
+     */
     public SchemesDeckMP() throws InvalidIntArgumentException
     {
         //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
@@ -664,6 +668,12 @@ public class SchemesDeckMP {
         deck[11].setCell(2,3,4,0);
     }
 
+    /**
+     * extract casual schemes
+     * @param n number of schemes to extract
+     * @return scheme card vector containing extracted schemes
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCardMP[] extractSchemes(int n) throws InvalidIntArgumentException
     {
 
@@ -690,6 +700,12 @@ public class SchemesDeckMP {
         return tempVett;
     }
 
+    /**
+     * extracts a precise scheme card by id
+     * @param id id of the scheme card to extract
+     * @return the extracted scheme card
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCardMP extractSchemebyID (int id) throws InvalidIntArgumentException
     {
         SchemeCardMP scheme;

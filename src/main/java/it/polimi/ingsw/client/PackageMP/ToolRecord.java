@@ -5,6 +5,10 @@ public class ToolRecord
     private int[] id;
     private int[] tokens;
 
+    /**
+     * ToolRecord constructor
+     * @param tools
+     */
     public ToolRecord(int[] tools)
     {
         id=tools;
@@ -18,6 +22,11 @@ public class ToolRecord
     public int[] getTokens() { return tokens; }
     public int[] getID() { return id; }
 
+    /**
+     * decreases number of tokens
+     * @param toolId toolsId
+     * @return 1 if tokens are finished, else 2
+     */
     public int getTokensDecrease(int toolId)
     {
         int c = getIndexbyId(toolId);
@@ -29,6 +38,11 @@ public class ToolRecord
 
     }
 
+    /**
+     * gets index by id
+     * @param id
+     * @return
+     */
     public int getIndexbyId(int id)
     {
         for(int i=0;i<3;i++)

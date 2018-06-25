@@ -2,9 +2,13 @@ package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
 public class CLIToolsManager
 {
+    /**
+     * prints a number of spaces equal to the parameter number
+     * @param num
+     * @return
+     */
     public String printSpaces(int num)
     {
-        //returns a string made of num spaces
         String temp = "";
         for(int i=0;i<num;i++)
         {
@@ -13,6 +17,12 @@ public class CLIToolsManager
         return temp;
     }
 
+    /**
+     * prints spaces in the end
+     * @param arg
+     * @param endIndex
+     * @return
+     */
     public String printSpacesEnder(String arg, int endIndex)
     {
         String temp = arg;
@@ -21,10 +31,15 @@ public class CLIToolsManager
 
     }
 
+    /**
+     * prints a string[finalRow] with the first blankrows strings made of " "
+     * @param finalRows
+     * @param blankRows
+     * @param width
+     * @return
+     */
     public String[] blankLinesInitializer(int finalRows, int blankRows, int width)
     {
-        //returns a string[finalRow] with the first #blankrows strings made of " "
-
         String[] temp = new String[finalRows];
         for(int i=0; i<blankRows;i++)
         {
@@ -33,21 +48,30 @@ public class CLIToolsManager
         return temp;
     }
 
+    /**
+     * returns the argument String[] filled with " "
+     * @param arg
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+
     public String[] printBlankLines(String[] arg, int startIndex, int endIndex)
     {
-        //returns the argument String[] filled with " "
-        //same width of temp[0]
-
         String[] temp = arg;
         for(int i=startIndex;i<endIndex;i++)
             temp[i] = printSpaces(arg[0].length()-1);
         return temp;
     }
 
+    /**
+     * returns the argument String[] filled with " "
+     * @param arg
+     * @param startIndex
+     * @return
+     */
     public String[] blankLinesEnder(String[] arg, int startIndex)
     {
-        //returns the argument String[] filled with " "
-        //same width of temp[0]
 
         String[] temp = arg;
         for(int i=startIndex;i<arg.length;i++)
@@ -55,9 +79,15 @@ public class CLIToolsManager
         return temp;
     }
 
+    /**
+     * prints out a question left-oriented
+     * @param question
+     * @param width
+     * @param starter
+     * @return
+     */
     public String simpleQuestionsMaker(String question, int width, boolean starter)
     {
-        //returns a left-oriented string
 
         if(starter)
 
@@ -72,6 +102,12 @@ public class CLIToolsManager
 
     }
 
+    /**
+     * centers a string
+     * @param temp
+     * @param width
+     * @return
+     */
     public String centerThatString(String temp, int width)
     {
         if((width-temp.length())%2==0)
@@ -86,28 +122,37 @@ public class CLIToolsManager
         }
     }
 
+    /**
+     * initializes the scene
+     * @param width
+     * @return 1 #s string and 2 blank strings
+     */
     public String[] sceneInitializer(int width)
     {
-        //initializes the scene
-        //returns 1 #s string and 2 blank strings
-
         String[] temp= new String[1];
         temp[0] = printHashtag(width);
 
         return temp;
     }
 
+    /**
+     * closes the scene
+     * @param width
+     * @return 5 blank strings and 1 # string
+     */
     public String[] sceneEnder(int width)
     {
-        //closes the scene
-        //returns 5 blank strings and 1 # string
-
         String[] temp = new String[2];
         temp[0] = printSpaces(width);
         temp[1] = printHashtag(width);
         return temp;
     }
 
+    /**
+     * prints out hashtags
+     * @param num
+     * @return
+     */
     public String printHashtag(int num)
     {
         String temp="";
@@ -115,6 +160,12 @@ public class CLIToolsManager
             temp+="#";
         return temp;
     }
+
+    /**
+     * parses a number representing a color into a string with the color name
+     * @param color number representing the color
+     * @return string with the color name
+     */
 
     public String getColor(int color)
     {

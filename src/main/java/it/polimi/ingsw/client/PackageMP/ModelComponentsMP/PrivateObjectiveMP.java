@@ -7,6 +7,11 @@ public class PrivateObjectiveMP implements ModelComponentMP {
 
     private int color;
 
+    /**
+     * PrivateObjectiveMP
+     * @param color
+     * @throws InvalidIntArgumentException
+     */
     public PrivateObjectiveMP(int color) throws InvalidIntArgumentException {
         if (color<0||color>5) throw new InvalidIntArgumentException();
         this.color = color;

@@ -19,7 +19,7 @@ public class Main {
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
-    public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
+    public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
 
         Match thisMatch = new Match();
     }

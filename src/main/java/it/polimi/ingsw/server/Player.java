@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.server.Connection.ConnectionManager;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
@@ -42,7 +43,7 @@ public class Player extends Observable implements Observer
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public void getUsername(String[] names) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void getUsername(String[] names) throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         name = connectionManager.getUsername(names);
     }
 
@@ -52,7 +53,7 @@ public class Player extends Observable implements Observer
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public void getUsername() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException {
+    public void getUsername() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         name = connectionManager.getUsername();
     }
 
@@ -70,7 +71,7 @@ public class Player extends Observable implements Observer
      * @param event event to send to connectionManager
      * @throws InvalidIntArgumentException
      */
-    public void sendEvent(Event event) throws InvalidIntArgumentException {
+    public void sendEvent(Event event) throws InvalidIntArgumentException, IOException {
         connectionManager.sendEvent(event);
     }
 
@@ -189,8 +190,27 @@ public class Player extends Observable implements Observer
      * @param arg Object
      */
     public void update(Observable o, Object arg) {
+        if(((Event)arg).getType().equals("DisconnectionEvent")) {
+            isDisconnected = true;
+            System.out.println("dio inchiappettato");
+            ((DisconnectionEvent)arg).setId(id);
+        }
         setChanged();
         notifyObservers(arg);
+    }
+
+    /**
+     * @param id
+     * sets id to param
+     */
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public void changeSocket(Socket socket) throws IOException {
+        connectionManager.changeSocket(socket);
+        isDisconnected=false;
     }
 
 

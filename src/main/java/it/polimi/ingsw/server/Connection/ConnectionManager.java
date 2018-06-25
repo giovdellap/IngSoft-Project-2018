@@ -47,7 +47,7 @@ public class ConnectionManager extends Observable implements Observer {
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public String getUsername(String[] names) throws IOException, InvalidIntArgumentException {
+    public String getUsername(String[] names) throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
 
         boolean accFlag=false;
         while(!accFlag) {
@@ -75,7 +75,7 @@ public class ConnectionManager extends Observable implements Observer {
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public String getUsername() throws IOException, InvalidIntArgumentException {
+    public String getUsername() throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
         socketServer.insertUsername();
         userName = ((UsernameEvent)currentEvent).getUserName();
         currentEvent.validate();
@@ -115,7 +115,7 @@ public class ConnectionManager extends Observable implements Observer {
      * @param event event to send
      * @throws InvalidIntArgumentException
      */
-    public void sendEvent(Event event) throws InvalidIntArgumentException {
+    public void sendEvent(Event event) throws InvalidIntArgumentException, IOException {
         socketServer.sendEvent(event);
     }
 
@@ -131,6 +131,10 @@ public class ConnectionManager extends Observable implements Observer {
             setChanged();
             notifyObservers(arg);
         }
+    }
+
+    public void changeSocket(Socket socket) throws IOException {
+        socketServer.changeSocket(socket);
     }
 
 }

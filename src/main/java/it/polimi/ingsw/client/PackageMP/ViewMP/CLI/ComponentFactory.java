@@ -13,20 +13,25 @@ public class ComponentFactory
     private CLIToolsManager cliToolsManager;
     private ModelGenerator modelGenerator;
 
-    //COSTRUCTOR
+    /**
+     * ComponentFactory Constructor
+     */
     public ComponentFactory()
     {
         cliToolsManager = new CLIToolsManager();
         modelGenerator = new ModelGenerator();
     }
 
-    //SCENE SELECTION
-
+    /**
+     * Scene selection generator
+     * @param scheme
+     * @param fb
+     * @param num
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] selectionG(SchemeCardMP scheme, int fb, int num) throws InvalidIntArgumentException
     {
-        //receives a schemecard, front/back parameter and the selection number
-        //returns a String[7] (String.lenght = 20) representing the schemecard(20x20)
-        //SELECTION G
 
         SchemeCardMP tempScheme = scheme;
         tempScheme.setfb(fb);
@@ -42,11 +47,13 @@ public class ComponentFactory
         return gComponent;
     }
 
+    /**
+     * public objective generator
+     * @param pubobj
+     * @return
+     */
     public String[] selectionD(PublicObjectiveMP pubobj)
     {
-        //receives a public objective
-        //returns a String[5] (string.lenght = 10) showing the public objective
-        //SELECTION D
 
         String[] dComponent = new String[5];
 
@@ -59,11 +66,15 @@ public class ComponentFactory
         return dComponent;
     }
 
+    /**
+     * private objective generator
+     * @param privobj
+     * @param user
+     * @param tokens
+     * @return
+     */
     public String[] selectionC(PrivateObjectiveMP privobj, String user, int tokens)
     {
-        //receives a private objective, an username and the tokens owned by the user
-        //returns a String[10] (string.lenght = 10) showing the private objective
-        //SELECTION C
 
         String[] cComponent = new String[10];
 
@@ -105,9 +116,9 @@ public class ComponentFactory
 
         if (privobj.getColor()==5) {
 
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.CYAN)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.CYAN)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.CYAN)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
+            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
+            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
+            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
         }
 
         cComponent[9]=cliToolsManager.printSpaces(20);
@@ -116,12 +127,12 @@ public class ComponentFactory
 
     }
 
+    /**
+     * generates the beginning scheme selection event
+     * @return
+     */
     public String[] selectionI()
     {
-        //returns the asking scheme strings below everything
-        //String[3] (string.lenght = 40)
-        //SELECTION I
-
         String[] iComponent = new String[3];
         iComponent[0]=cliToolsManager.printSpaces(80);
         iComponent[1]=cliToolsManager.simpleQuestionsMaker("SCEGLI LO SCHEMA..", 40, true);
@@ -130,11 +141,17 @@ public class ComponentFactory
         return iComponent;
     }
 
+    /**
+     * shows the selected scheme card, ready for the game
+     * @param scheme
+     * @param username
+     * @param tokens
+     * @return
+     * @throws InvalidIntArgumentException
+     */
+
     public String[] selectionA(SchemeCardMP scheme, String username, int tokens) throws InvalidIntArgumentException
     {
-        //receives a scheme and the f/b selection
-        //returns a String[6] (string.lenght = 20) showing the scheme card
-        //SELECTION A
 
         String[] aComponent = new String[7];
 
@@ -150,12 +167,14 @@ public class ComponentFactory
 
     }
 
+    /**
+     * generates a draftpool with all of its unicoded dice
+     * @param draft
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] selectionN(DraftPoolMP draft) throws InvalidIntArgumentException
     {
-        //receives a draft
-        //returns a String[5] (string.lenght = 20) showing the draftpool
-        //SELECTION N
-
         String[] nComponent = new String[3];
 
         DraftPoolMP tempdraft = draft;
@@ -177,19 +196,26 @@ public class ComponentFactory
 
     }
 
+    /**
+     * generates the empty (at the beginning) round track
+     * @param trackMP
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] selectionM(RoundTrackMP trackMP) throws InvalidIntArgumentException {
         return modelGenerator.getRoundTrack(trackMP);
     }
 
-
-
-
+    /**
+     * generates the extracted tool cards
+     * @param id
+     * @param token
+     * @return
+     * @throws InvalidIntArgumentException
+     */
 
     public String[] selectionT(int id, int token) throws InvalidIntArgumentException
     {
-        //receives the tool id and the tokens needed
-        //returns a String[5] (string.lenght = 10) showing the tool
-        //SELECTION T
 
         String[] tComponent = new String[5];
 
@@ -203,19 +229,4 @@ public class ComponentFactory
 
     }
 
-    //CALCULATE SCORE COMPONENTS
-    public String[] calculateZ(String username)
-    {
-        //returns String[5] 12width containing username
-        //CALCULATE Z
-        return null;
-    }
-
-    public String[] calculateW(int[] specs)
-    {
-        //returns String[5] 28width containing specs
-        //specs.lenght=7
-        //CALCULATE W
-        return null;
-    }
 }

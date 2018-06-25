@@ -24,10 +24,17 @@ public class TurnManager
      */
 
     public TurnManager(ArrayList<Player> temp) {
-        players=temp;
+        players= new ArrayList<Player>();
+        for(int i=0;i<temp.size();i++)
+            players.add(temp.get(i));
+
         maxTurn=players.size()*2;
         logger = new SimpleLogger(0, false);
+        for(int i=0;i<temp.size();i++)
+            players.get(i).setId(i);
     }
+
+
 
     /**
      * starts the game, initializing the variables and activating the first player
@@ -64,8 +71,7 @@ public class TurnManager
      */
 
     public int getActivePlayer() {
-        return activePlayer;
-
+        return players.get(activePlayer).getId();
     }
 
     /**
@@ -81,6 +87,8 @@ public class TurnManager
             turnIndex=0;
             activePlayer=0;
             nextRound=true;
+            players.add(players.get(0));
+            players.remove(0);
         }
         if(turnIndex>=players.size()&&turnIndex!=maxTurn-1)
         {

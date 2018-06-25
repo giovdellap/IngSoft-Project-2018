@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.PackageMP.Connection;
 
 
+import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
@@ -36,17 +37,18 @@ public class SocketClient extends Observable {
     private String msgOUT;
     private ArrayList<String> msg;
     private Event currentEvent;
-    private boolean isConfirmed;
     private boolean isConnected;
 
-    private int playerID=0;
-    private int numPlayers=0;
     private String serverIP;
 
     private int[] notMyTurnMove;
 
-
-    public SocketClient(String ip) throws GenericInvalidArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
+    /**
+     * SocketClient Constructor
+     * @param ip
+     * @throws IOException
+     */
+    public SocketClient(String ip) throws IOException {
 
         logger = new SimpleLogger(1, true);
         isConnected=false;
@@ -61,7 +63,11 @@ public class SocketClient extends Observable {
         connect();
     }
 
-    private void connect() throws IOException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
+    /**
+     * connects to socket
+     * @throws IOException
+     */
+    private void connect() throws IOException {
         socket = new Socket(serverIP, PORT);
         this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
@@ -70,12 +76,22 @@ public class SocketClient extends Observable {
         isConnected=true;
     }
 
+    /**
+     * sends an event
+     * @param event event to send
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     */
     public void sendEvent(Event event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
         logger.debugLog(event.getType());
         sendEncoded(eventEncoder.encodeEvent(event));
     }
 
-    public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+    /**
+     * gets an event
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     */
+    public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, InvalidIntArgumentException, GenericInvalidArgumentException {
         msg = new ArrayList<String>();
         receiveEvent();
         currentEvent = eventDecoder.decodeEvent(msg);
@@ -85,19 +101,33 @@ public class SocketClient extends Observable {
 
     }
 
-
-    //RECEPTION
-    private void receiveMessage() throws IOException {
-        transformer.simpleDecode(inSocket.readLine());
-    }
+    /**
+     * receives a message in socket
+     * @throws IOException
+     */
     private void simpleReceive() throws IOException {
         msgIN = inSocket.readLine();
 
+        if(msgIN==null) {
+            logger.debugLog("bound: " + Boolean.toString(socket.isBound()));
+            logger.debugLog("closed: " + Boolean.toString(socket.isClosed()));
+            logger.debugLog("connected: " + Boolean.toString(socket.isConnected()));
+            logger.debugLog("input: " + Boolean.toString(socket.isInputShutdown()));
+            logger.debugLog("output: " + Boolean.toString(socket.isOutputShutdown()));
+
+        }
         logger.debugLog("msgIN : "+msgIN);
 
     }
+
+    /**
+     * receives an event
+     * @throws IOException
+     */
     private void receiveEvent() throws IOException
     {
+        logger.debugLog("NEW EVENT");
+
         simpleReceive();
         transformer.simpleDecode(msgIN);
         while (!(transformer.getCmd().equals("end")&&transformer.getArg().equals("event")))
@@ -110,12 +140,10 @@ public class SocketClient extends Observable {
 
     }
 
-    //SENDING
-    private void sendMessage(String cmd, String arg)
-    {
-        outSocket.println(transformer.simpleEncode(cmd, arg));
-        outSocket.flush();
-    }
+    /**
+     * sends an encoded ArrayList of strings
+     * @param arg ArrayList of encoded strings
+     */
     private void sendEncoded(ArrayList<String> arg)
     {
         //DEBUG
@@ -133,13 +161,5 @@ public class SocketClient extends Observable {
         }
     }
 
-
-    //PLAYER'S DISCONNECTION MANAGEMENT
-
-
-    public boolean connectionCheck()
-    {
-        return isConnected;
-    }
 
 }

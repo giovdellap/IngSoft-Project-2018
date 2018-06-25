@@ -5,6 +5,8 @@ import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
+import java.util.ArrayList;
+
 public class Model
 {
     private int numPlayers=0;
@@ -16,8 +18,8 @@ public class Model
     private PublicObjective[] pubObjs;
 
     private SchemeCard[] tempSchemes;
-    private SchemeCard[] playerSchemes;
-    private PrivateObjective[] playersPrObjs;
+    private ArrayList<SchemeCard> playerSchemes;
+    private ArrayList<PrivateObjective> playersPrObjs;
 
     private SimpleLogger logger;
 
@@ -38,8 +40,10 @@ public class Model
     public void setPrivateObjectives() throws InvalidIntArgumentException
     {
         prDeck = new PrivateObjectivesDeck();
-        playersPrObjs = new PrivateObjective[numPlayers];
-        playersPrObjs = prDeck.extractPrObj(numPlayers);
+        playersPrObjs = new ArrayList<PrivateObjective>();
+        PrivateObjective[] tempPr = prDeck.extractPrObj(numPlayers);
+        for(int i=0;i<tempPr.length;i++)
+            playersPrObjs.add(tempPr[i]);
     }
 
     /**
@@ -50,7 +54,7 @@ public class Model
     {
         scDeck = new SchemesDeck();
         tempSchemes = scDeck.extractSchemes(numPlayers*2);
-        playerSchemes = new SchemeCard[numPlayers];
+        playerSchemes = new ArrayList<SchemeCard>();
     }
 
     /**
@@ -84,7 +88,7 @@ public class Model
         if(index<0||index>=numPlayers)
             throw new InvalidIntArgumentException();
 
-        return playersPrObjs[index];
+        return playersPrObjs.get(index);
     }
 
     /**
@@ -137,7 +141,7 @@ public class Model
     {
         if(index<0||index>=numPlayers)
             throw  new InvalidIntArgumentException();
-        return playerSchemes[index];
+        return playerSchemes.get(index);
     }
 
     /**
@@ -182,9 +186,11 @@ public class Model
      * @param id player's id
      * @param scheme player's scheme
      */
-    public void setPlayerScheme(int id, SchemeCard scheme)
-    {
-        playerSchemes[id] = scheme;
+    public void setPlayerScheme(int id, SchemeCard scheme) throws InvalidIntArgumentException {
+        if(id<playerSchemes.size())
+            playerSchemes.set(id, scheme);
+        else
+            playerSchemes.add(scheme);
     }
 
     /**
@@ -195,6 +201,16 @@ public class Model
     public void roundEnd() throws InvalidIntArgumentException, FullDataStructureException {
         RoundDice tempRD = draft.updateDraftDice();
         track.addRound(tempRD);
+
+    }
+
+    public void firstRoundCleaner(ArrayList<Integer> ids)
+    {
+        for(Integer id : ids)
+        {
+            playersPrObjs.remove(id);
+            playerSchemes.remove(id);
         }
+    }
 
 }

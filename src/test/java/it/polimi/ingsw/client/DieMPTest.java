@@ -59,31 +59,5 @@ public class DieMPTest
                 }
         }
 
-        @Test
-        public void checkToString() {
-
-                int tempColor = die.getColor();
-                int tempValue = die.getValue();
-                String tempString1 = die.toString();
-
-                if (tempColor==1)
-                        Assertions.assertEquals(true,tempString1.equals("Die color: yellow , Die value: " + Integer.toString(tempValue)));
-
-                if (tempColor==2)
-                        Assertions.assertEquals(true,tempString1.equals("Die color: red , Die value: " + Integer.toString(tempValue)));
-
-                if (tempColor==3)
-                        Assertions.assertEquals(true,tempString1.equals("Die color: green , Die value: " + Integer.toString(tempValue)));
-
-                if (tempColor==4)
-                        Assertions.assertEquals(true,tempString1.equals("Die color: blue , Die value: " + Integer.toString(tempValue)));
-
-                if (tempColor==5)
-                        Assertions.assertEquals(true,tempString1.equals("Die color: violet , Die value: " + Integer.toString(tempValue)));
-
-        }
-
-
-
 }
 

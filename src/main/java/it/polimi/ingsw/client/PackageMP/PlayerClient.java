@@ -14,6 +14,12 @@ public class PlayerClient
 
     private boolean me;
 
+    /**
+     * PlayerClient Constructor
+     * @param index id to assign
+     * @param username name of the player
+     * @param flag true if it's me, false if its not
+     */
     public PlayerClient(int index, String username, boolean flag)
     {
         id=index;
@@ -21,7 +27,7 @@ public class PlayerClient
         me = flag;
     }
 
-    public void setPlayerScheme(SchemeCardMP temp) throws it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException {
+    public void setPlayerScheme(SchemeCardMP temp) {
         playerScheme = temp;
     }
 

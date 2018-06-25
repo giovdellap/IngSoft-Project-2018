@@ -12,33 +12,54 @@ public class Die
     private int value;
     private int color;
 
+    /**
+     * Die Constructor
+     * @param n color to assign to die
+     */
     public Die(int n)
     {
         color=n;
         value=1;
     }
 
-
+    /**
+     * rolls a die
+     */
     public void throwDie()
     {
         value = ((int)(Math.random()*6+1));
     }
 
+    /**
+     * disables a die setting its value to 0
+     */
     public void disableDie()
     {
         value=0;
     }
 
+    /**
+     * gets the die color
+     * @return color
+     */
     public int getColor()
     {
         return color;
     }
 
+    /**
+     * gets the die value
+     * @return
+     */
     public int getValue()
     {
         return value;
     }
 
+    /**
+     * it tells us if the the die is disabled or not
+     * @return
+     */
     public boolean isDisabled()
     {
         if(getValue()==0)
@@ -47,32 +68,15 @@ public class Die
             return false;
     }
 
+    /**
+     * sets a precise value to the die, used in most of the tool cards
+     * @param n value to set to the die
+     * @throws InvalidIntArgumentException
+     */
     public void setValue(int n) throws InvalidIntArgumentException {
         if (n<0||n>6)throw new InvalidIntArgumentException();
         value=n;
     }
 
-    public String toString() {
-
-        String tempString = "";
-
-        if (this.color==1)
-            tempString = "Die color: yellow , Die value: " + Integer.toString(this.getValue());
-
-        if (this.color==2)
-            tempString = "Die color: red , Die value: " + Integer.toString(this.getValue());
-
-        if (this.color==3)
-            tempString = "Die color: green , Die value: " + Integer.toString(this.getValue());
-
-        if (this.color==4)
-            tempString = "Die color: blue , Die value: " + Integer.toString(this.getValue());
-
-        if (this.color==5)
-            tempString = "Die color: violet , Die value: " + Integer.toString(this.getValue());
-
-        return tempString;
-
-    }
 
 }

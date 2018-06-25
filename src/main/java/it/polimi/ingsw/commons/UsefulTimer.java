@@ -22,8 +22,6 @@ public class UsefulTimer implements Observer {
 
     private ExecutorService executorService;
 
-
-
     public void tryConnection(String name) throws IOException {
         timer = new TimerThread();
         connection = new ConnectionThread();

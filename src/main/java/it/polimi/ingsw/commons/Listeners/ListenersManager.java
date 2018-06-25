@@ -12,20 +12,19 @@ public class ListenersManager
 
     private SimpleLogger logger;
 
+    /**
+     * ListenersManager Constructor
+     */
     public ListenersManager()
     {
         listeners = new ArrayList<EventListener>();
         logger = new SimpleLogger(0, false);
     }
 
-    public void registerListener(EventListener listener)
-    {
-        listeners.add(listener);
-    }
-    public void unRegisterListener(EventListener listener)
-    {
-        listeners.remove(listener);
-    }
+    /**
+     * notifies an event to listeners
+     * @param event event to notify
+     */
     public void notify(Event event)
     {
         for(EventListener listener: listeners)

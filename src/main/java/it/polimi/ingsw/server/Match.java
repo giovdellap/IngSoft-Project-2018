@@ -1,11 +1,16 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.MoveEvent;
+import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.SimpleLogger;
@@ -18,6 +23,7 @@ import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
 import it.polimi.ingsw.server.ToolCards.*;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,10 +41,11 @@ public class Match implements Observer
     //datas
     private ArrayList<Player> players;
     private Event currentEvent;
+    private boolean endInitialization=false;
 
-    //score
-    private String[] ranking;
-    private int[][] rankingSpecs;
+
+    private int oldSize;
+    private ArrayList<Integer> disconnectedPlayersInitializationPhase;
 
     private SimpleLogger logger;
 
@@ -51,7 +58,7 @@ public class Match implements Observer
      * @throws FullDataStructureException
      */
 
-    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
+    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
 
         logger = new SimpleLogger(3, true);
 
@@ -62,7 +69,12 @@ public class Match implements Observer
             player.addObserver(this);
         logger.log("lobby created successfully");
 
+        for(int i=0;i<players.size();i++)
+            players.get(i).setId(i);
+
         modelInstance = new Model(players.size());
+        oldSize = players.size();
+        disconnectedPlayersInitializationPhase = new ArrayList<Integer>();
 
 
         //INITIALIZATION 2
@@ -90,11 +102,9 @@ public class Match implements Observer
         }
         //private objectives
         modelInstance.setPrivateObjectives();
-        updatePlayersInit();
 
         //schemes
         modelInstance.setSchemesDeck();
-        updatePlayersInit();
 
         //public objectives
         modelInstance.setPubObjs();
@@ -106,12 +116,9 @@ public class Match implements Observer
         logger.log("Public objective 1: "+Integer.toString(modelInstance.getPubObj(0).getId()));
         pubObjs[2] = modelInstance.getPubObj(2).getId();
         logger.log("Public objective 2: "+Integer.toString(modelInstance.getPubObj(0).getId()));
-        updatePlayersInit();
 
         //tools
         toolRecord = new ToolCardUsageRecord();
-        updatePlayersInit();
-
         for(int i=0;i<players.size();i++)
         {
             logger.printNBlankLines(1);
@@ -124,36 +131,47 @@ public class Match implements Observer
             modelEvents[i].setToolIds(toolRecord.getSelectedId());
             players.get(i).sendEvent(modelEvents[i]);
         }
-        for(int i=0;i<players.size();i++)
+        for(Player pl : players)
         {
+            logger.debugLog("PLAYER :"+Integer.toString(pl.getId()));
             boolean flag=false;
-            while(!flag)
-            {
-                players.get(i).getEvent();
-                logger.debugLog("event.getid = "+Integer.toString(((SchemeSelectionEvent)currentEvent).getId()));
-                logger.debugLog("event.getfb = "+Integer.toString(((SchemeSelectionEvent)currentEvent).getFb()));
-
-                if(((SchemeSelectionEvent)currentEvent).getId()==modelInstance.getTempSchemes(i).getID())
+            while(!flag) {
+                pl.getEvent();
+                if (!currentEvent.getType().equals("DisconnectionEvent"))
                 {
-                    SchemeCard scheme = modelInstance.getTempSchemes(i);
-                    scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
-                    modelInstance.setPlayerScheme(i, scheme);
-                    currentEvent.validate();
-                    flag=true;
-                    players.get(i).setTokens(modelInstance.getSchemebyIndex(i).getDiff(modelInstance.getSchemebyIndex(i).getfb()));
+                    for(Integer n : disconnectedPlayersInitializationPhase)
+                        if(pl.getId()>n)
+                            modelInstance.setPlayerScheme(n, null);
+                    if (((SchemeSelectionEvent) currentEvent).getId() == modelInstance.getTempSchemes(pl.getId()).getID()) {
+                        SchemeCard scheme = modelInstance.getTempSchemes(pl.getId());
+                        scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
+                        modelInstance.setPlayerScheme(pl.getId(), scheme);
+                        currentEvent.validate();
+                        flag = true;
+                        pl.setTokens(modelInstance.getSchemebyIndex(pl.getId()).getDiff(modelInstance.getSchemebyIndex(pl.getId()).getfb()));
+                    }
+                    if (((SchemeSelectionEvent) currentEvent).getId() == modelInstance.getTempSchemes(pl.getId() + oldSize).getID()) {
+                        SchemeCard scheme = modelInstance.getTempSchemes(pl.getId() + oldSize);
+                        scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
+                        modelInstance.setPlayerScheme(pl.getId(), scheme);
+                        currentEvent.validate();
+                        flag = true;
+                        pl.setTokens(modelInstance.getSchemebyIndex(pl.getId()).getDiff(modelInstance.getSchemebyIndex(pl.getId()).getfb()));
+                    }
+                    pl.sendEvent(currentEvent);
                 }
-                if(((SchemeSelectionEvent)currentEvent).getId()==modelInstance.getTempSchemes(i+players.size()).getID())
-                {
-                    SchemeCard scheme = modelInstance.getTempSchemes(i+players.size());
-                    scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
-                    modelInstance.setPlayerScheme(i, scheme);
-                    currentEvent.validate();
+                else
                     flag=true;
-                    players.get(i).setTokens(modelInstance.getSchemebyIndex(i).getDiff(modelInstance.getSchemebyIndex(i).getfb()));
-                }
-                players.get(i).sendEvent(currentEvent);
             }
         }
+
+        endInitialization=true;
+        if(players.size()<oldSize)
+            modelInstance.firstRoundCleaner(disconnectedPlayersInitializationPhase);
+        for(int i : disconnectedPlayersInitializationPhase)
+            players.remove(i);
+        for(int i=0;i<players.size();i++)
+            players.get(i).setId(i);
 
         //PHASE 2
 
@@ -164,9 +182,12 @@ public class Match implements Observer
             initEvent.addEventPlayer(i, players.get(i).getName(), modelInstance.getSchemebyIndex(i).getID(), modelInstance.getSchemebyIndex(i).getfb(), players.get(i).getTokens());
             System.out.println(modelInstance.getSchemebyIndex(i).getfb());
         }
-            for(int i=0;i<players.size();i++)
-            players.get(i).sendEvent(initEvent);
-
+        for(int i=0;i<players.size();i++) {
+            if(!players.get(i).isDisconnected())
+                players.get(i).sendEvent(initEvent);
+            else
+                waitForReconnection();
+        }
         startMatch();
     }
 
@@ -180,6 +201,8 @@ public class Match implements Observer
 
     private void startMatch() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException, FullDataStructureException
     {
+        generalServer = new GeneralServer(20);
+
         //initializing turn manager
         turnManager = new TurnManager(players);
         //Initializing draftPool
@@ -195,6 +218,14 @@ public class Match implements Observer
         {
             turn();
             turnManager.endTurn();
+            int disconnected =0;
+            for(Player pl: players)
+                if(pl.isDisconnected())
+                    disconnected++;
+            if(players.size()-disconnected==1)
+                for(Player pl : players)
+                    if(!pl.isDisconnected())
+                        pl.sendEvent(new ForfaitEvent());
             if(turnManager.isNextRound())
                 modelInstance.roundEnd();
         }
@@ -202,7 +233,8 @@ public class Match implements Observer
         ScoreCalculator scoreCalculator = new ScoreCalculator(modelInstance, players);
         currentEvent=scoreCalculator.calculateScore();
         for(Player pl:players)
-            pl.sendEvent(currentEvent);
+            if(!pl.isDisconnected())
+                pl.sendEvent(currentEvent);
 
     }
 
@@ -215,40 +247,54 @@ public class Match implements Observer
      */
     private void turn() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException, FullDataStructureException
     {
-        //manages turn progress
-        boolean toolUsed=false;
-        boolean moveUsed=false;
-        boolean endTurn=false;
-
         sendTurnEvent();
-        while(!endTurn)
-        {
-            players.get(turnManager.getActivePlayer()).getEvent();
 
-            if((currentEvent.getType().equals("MoveEvent")&&moveUsed)||(currentEvent.getType().equals("ToolEvent")&&toolUsed))
-                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-            if(currentEvent.getType().equals("PassEvent"))
-            {
-                endTurn=true;
-                for(int i=0;i<players.size();i++)
-                    if(i!=turnManager.getActivePlayer())
-                        players.get(i).sendEvent(currentEvent);
-            }
-            if(currentEvent.getType().equals("MoveEvent")&&!moveUsed)
-                moveUsed=move();
-            logger.debugLog(currentEvent.getType());
-            if(currentEvent instanceof ToolCardEvent) {
-                if(toolUsed)
-                    players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                else {
-                    if ((moveUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent)currentEvent).getId()==7 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11))||(!moveUsed &&((ToolCardEvent) currentEvent).getId()==8))
+        if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+            //manages turn progress
+            boolean toolUsed = false;
+            boolean moveUsed = false;
+            boolean endTurn = false;
+
+            while (!endTurn) {
+                players.get(turnManager.getActivePlayer()).getEvent();
+                if(!players.get(turnManager.getActivePlayer()).isDisconnected())
+                {
+                    if ((currentEvent.getType().equals("MoveEvent") && moveUsed) || (currentEvent.getType().equals("ToolEvent") && toolUsed))
                         players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                    else {
-                        toolUsed = tool();
-                        if (toolUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11))
-                            moveUsed = true;
-
+                    if (currentEvent.getType().equals("PassEvent")) {
+                        endTurn = true;
+                        for (int i = 0; i < players.size(); i++)
+                            if (i != turnManager.getActivePlayer())
+                                players.get(i).sendEvent(currentEvent);
                     }
+                    if (currentEvent.getType().equals("MoveEvent") && !moveUsed)
+                        moveUsed = move();
+                    logger.debugLog(currentEvent.getType());
+                    if (currentEvent instanceof ToolCardEvent) {
+                        if (toolUsed)
+                            players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
+                        else {
+                            if ((moveUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 7 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11)) || (!moveUsed && ((ToolCardEvent) currentEvent).getId() == 8))
+                                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
+                            else {
+                                toolUsed = tool();
+                                if (toolUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11))
+                                    moveUsed = true;
+
+                            }
+                        }
+                    }
+                    if(players.get(turnManager.getActivePlayer()).isDisconnected()) {
+                        endTurn = true;
+                        System.out.println("check 1");
+                        activePlayerDisconnected();
+                    }
+                }
+                else
+                {
+                    System.out.println("check 2");
+                    activePlayerDisconnected();
+                    endTurn=true;
                 }
             }
         }
@@ -294,22 +340,30 @@ public class Match implements Observer
             event.setNextRound(false);
         for(int i=0;i<players.size();i++)
         {
-
-            if(i==turnManager.getActivePlayer())
-            {
-                logger.debugLog("active");
-                TurnEvent playerEvent = event;
-                playerEvent.setMyTurn(true);
-                players.get(i).sendEvent(playerEvent);
-                players.get(i).getEvent();
-            }
+            System.out.println("sono nel for i:"+Integer.toString(i));
+            if(players.get(i).isDisconnected())
+                waitForReconnection();
             else
             {
-                logger.debugLog("not active");
-                TurnEvent playerEvent = event;
-                playerEvent.setMyTurn(false);
-                players.get(i).sendEvent(playerEvent);
-                players.get(i).getEvent();
+                System.out.println("sono nell'else");
+                if(i==turnManager.getActivePlayer())
+                {
+                    logger.debugLog("active");
+                    TurnEvent playerEvent = event;
+                    playerEvent.setMyTurn(true);
+                    players.get(i).sendEvent(playerEvent);
+                    if(!players.get(i).isDisconnected())
+                        players.get(i).getEvent();
+                }
+                else
+                {
+                    logger.debugLog("not active");
+                    TurnEvent playerEvent = event;
+                    playerEvent.setMyTurn(false);
+                    players.get(i).sendEvent(playerEvent);
+                    if(!players.get(i).isDisconnected())
+                        players.get(i).getEvent();
+                }
             }
         }
     }
@@ -351,14 +405,16 @@ public class Match implements Observer
             ((MoveEvent) currentEvent).setId(turnManager.getActivePlayer());
             for(int i=0;i<players.size();i++) {
                 logger.debugLog("Move event send player "+Integer.toString(i));
-                players.get(i).sendEvent(currentEvent);
+                if(!players.get(i).isDisconnected())
+                    players.get(i).sendEvent(currentEvent);
 
             }return true;
         }
         else
         {
             logger.debugLog("move return false");
-            players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
+            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
+                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
             return false;
         }
     }
@@ -398,11 +454,13 @@ public class Match implements Observer
             currentEvent.validate();
             ((ToolCardEvent) currentEvent).setPlayer(turnManager.getActivePlayer());
             for(Player pl: players)
-                pl.sendEvent(currentEvent);
+                if(!pl.isDisconnected())
+                    pl.sendEvent(currentEvent);
             return true;
         }
         else {
-            players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
+            if(players.get(turnManager.getActivePlayer()).isDisconnected())
+                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
             return false;
         }
 
@@ -513,32 +571,36 @@ public class Match implements Observer
                 ((ToolCardSixEvent) event).setNewValue(modelInstance.getDraft().returnDie(((ToolCardSixEvent)event).getIndex()).getValue());
                 event.validate();
                 ((ToolCardSixEvent) event).setApplyOne(true);
-                players.get(turnManager.getActivePlayer()).sendEvent(event);
-                players.get(turnManager.getActivePlayer()).getEvent();
-                event = (ToolCardSixEvent)currentEvent;
-                Boolean check=afterDraftingCheck(modelInstance.getDraft().returnDie(((ToolCardSixEvent) event).getIndex()), ((ToolCardSixEvent) event).getX(), ((ToolCardSixEvent) event).getY());
-                logger.log("Secondo check: "+Boolean.toString(check));
-                ((ToolCardSixEvent) event).setApplyTwo(check);
-                if(check)
-                {
-                    ((ToolCardSix) card).setDraft(modelInstance.getDraft());
-                    ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardSix) card).ApplyModifiesToScheme(((ToolCardSixEvent) event).getIndex(),((ToolCardSixEvent) event).getX(),((ToolCardSixEvent) event).getY());
-                    modelInstance.setDraft(((ToolCardSix) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardSix) card).getScheme());
+                if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+                    players.get(turnManager.getActivePlayer()).sendEvent(event);
+                    if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+                        players.get(turnManager.getActivePlayer()).getEvent();
+                        event = (ToolCardSixEvent) currentEvent;
+                        Boolean check = afterDraftingCheck(modelInstance.getDraft().returnDie(((ToolCardSixEvent) event).getIndex()), ((ToolCardSixEvent) event).getX(), ((ToolCardSixEvent) event).getY());
+                        logger.log("Secondo check: " + Boolean.toString(check));
+                        ((ToolCardSixEvent) event).setApplyTwo(check);
+                        if (check) {
+                            ((ToolCardSix) card).setDraft(modelInstance.getDraft());
+                            ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
+                            ((ToolCardSix) card).ApplyModifiesToScheme(((ToolCardSixEvent) event).getIndex(), ((ToolCardSixEvent) event).getX(), ((ToolCardSixEvent) event).getY());
+                            modelInstance.setDraft(((ToolCardSix) card).getDraft());
+                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
+                        } else {
+                            ((ToolCardSix) card).setDraft(modelInstance.getDraft());
+                            ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
+                            ((ToolCardSix) card).ApplyModifiesToDraft(((ToolCardSixEvent) event).getIndex());
+                            modelInstance.setDraft(((ToolCardSix) card).getDraft());
+                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
+                        }
+
+                        currentEvent = event;
+                        return check;
+                    }
+                    else
+                        return false;
                 }
-
-                else {
-                    ((ToolCardSix) card).setDraft(modelInstance.getDraft());
-                    ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardSix) card).ApplyModifiesToDraft(((ToolCardSixEvent) event).getIndex());
-                    modelInstance.setDraft(((ToolCardSix) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardSix) card).getScheme());
-                }
-
-                currentEvent=event;
-                return check;
-
+                else
+                    return false;
             }
             case 7:
             {
@@ -614,30 +676,36 @@ public class Match implements Observer
                 ((ToolCardElevenEvent) event).setNewColor(tempDie.getColor());
                 ((ToolCardElevenEvent) event).setFirstCheck(true);
                 event.validate();
-                players.get(turnManager.getActivePlayer()).sendEvent(event);
-                players.get(turnManager.getActivePlayer()).getEvent();
-                event = (ToolCardElevenEvent)currentEvent;
-                tempDie.setValue(((ToolCardElevenEvent) event).getNewValue());
-                logger.log(Integer.toString(tempDraft.returnDie(0).getColor()));
-                logger.log(card.getToolCardName());
-                ((ToolCardEleven)card).setDraft(tempDraft);
-                ((ToolCardEleven)card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
+                if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+                    players.get(turnManager.getActivePlayer()).sendEvent(event);
+                    if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+                        players.get(turnManager.getActivePlayer()).getEvent();
+                        event = (ToolCardElevenEvent) currentEvent;
+                        tempDie.setValue(((ToolCardElevenEvent) event).getNewValue());
+                        logger.log(Integer.toString(tempDraft.returnDie(0).getColor()));
+                        logger.log(card.getToolCardName());
+                        ((ToolCardEleven) card).setDraft(tempDraft);
+                        ((ToolCardEleven) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
 
 
-                boolean check = afterDraftingCheck(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY());
-                if(check)
-                {
-                    ((ToolCardEleven)card).applyModifiesTwo(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY(), ((ToolCardElevenEvent) event).getIndex());
-                    ((ToolCardElevenEvent) event).setApplyTwo(true);
-                    modelInstance.setDraft(((ToolCardEleven) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardEleven) card).getScheme());
+                        boolean check = afterDraftingCheck(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY());
+                        if (check) {
+                            ((ToolCardEleven) card).applyModifiesTwo(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY(), ((ToolCardElevenEvent) event).getIndex());
+                            ((ToolCardElevenEvent) event).setApplyTwo(true);
+                            modelInstance.setDraft(((ToolCardEleven) card).getDraft());
+                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardEleven) card).getScheme());
+                        } else {
+                            ((ToolCardEleven) card).applyModifiesOne(tempDie, ((ToolCardElevenEvent) event).getIndex());
+                            ((ToolCardElevenEvent) event).setApplyOne(true);
+                            modelInstance.setDraft(((ToolCardEleven) card).getDraft());
+                        }
+                        return true;
+                    }
+                    else
+                        return false;
                 }
-                else {
-                    ((ToolCardEleven) card).applyModifiesOne(tempDie, ((ToolCardElevenEvent) event).getIndex());
-                    ((ToolCardElevenEvent) event).setApplyOne(true);
-                    modelInstance.setDraft(((ToolCardEleven) card).getDraft());
-                }
-                return true;
+                else
+                    return false;
             }
             case 12:
             {
@@ -687,19 +755,64 @@ public class Match implements Observer
 
     }
 
+
+    //DISCONNECTION MANAGEMENT
+
     /**
      *
      */
 
-    //DISCONNECTION MANAGEMENT
-    public void updatePlayersInit()
-    {
+    public void waitForReconnection() throws IOException, InvalidIntArgumentException {
+        logger.log("Waiting for reconnection");
+        ArrayList<String> geppetto = new ArrayList<String>();
+        for(Player pl:players)
+            if(pl.isDisconnected())
+                geppetto.add(pl.getName());
+        Socket thisSocket = generalServer.reconnection(geppetto);
+        if(thisSocket!=null)
+        {
+            logger.log("Player "+generalServer.getUsername()+" reconnected");
+            for(Player pl:players)
+                if(pl.getName().equals(generalServer.getUsername())) {
+                    pl.changeSocket(thisSocket);
+                    pl.sendEvent(createReconnectionEvent(pl.getId()));
+                }
+        }
 
     }
 
+    public void activePlayerDisconnected() throws InvalidIntArgumentException, IOException {
+        for(Player pl : players)
+            if(!pl.isDisconnected())
+                pl.sendEvent(new PassEvent());
+    }
+
+    public ReconnectionEvent createReconnectionEvent(int playerId) throws InvalidIntArgumentException {
+        ReconnectionEvent event = new ReconnectionEvent();
+        for(int i=0;i<players.size();i++)
+            event.addPlayer(players.get(i).getName(), players.get(i).getTokens(), modelInstance.getSchemebyIndex(i));
+        event.addPrivObj(modelInstance.getPrivateObjective(playerId).getColor());
+
+        int[] temp = new int[3];
+        temp[0] = modelInstance.getPubObj(0).getId();
+        temp[1] = modelInstance.getPubObj(1).getId();
+        temp[2] = modelInstance.getPubObj(2).getId();
+        event.addPubObjs(temp);
+
+        event.addToolsIds(toolRecord.getSelectedId());
+        event.addToolsTokens(toolRecord.getRecord());
+
+        event.addTrack(modelInstance.getTrack());
+
+        return event;
+    }
+
+
+
+
     /**
      *
-     * @return if a player is disconnected or not
+     * @return if ther aren't disconnected players
      */
 
     public boolean getNoDisconnected()
@@ -731,6 +844,12 @@ public class Match implements Observer
      */
 
     public void update(Observable o, Object arg) {
+        if(((Event)arg).getType().equals("DisconnectionEvent"))
+        {
+            logger.log("Player "+Integer.toString(((DisconnectionEvent)arg).getId())+" disconnected");
+            if(!endInitialization)
+                disconnectedPlayersInitializationPhase.add(((DisconnectionEvent)arg).getId());
+        }
         currentEvent = (Event)arg;
     }
 

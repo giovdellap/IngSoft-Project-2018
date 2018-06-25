@@ -1,22 +1,28 @@
 package it.polimi.ingsw.commons.Socket.SocketTools;
 
 import it.polimi.ingsw.commons.Die;
-
+import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 import java.util.ArrayList;
 
 public class SocketDecoder
 {
     private SocketProtocolTransformer transformer;
-    private String[] names;
-    private int[][] scoresPlayers;
 
+    /**
+     * SocketDecoder Constructor
+     */
     public SocketDecoder()
     {
         transformer = new SocketProtocolTransformer();
     }
 
+    /**
+     * decodes an ArrayList of strings containing dice information into an ArrayList of dice
+     * @param dice strings to decode
+     * @return ArrayList of dice decoded as said above
+     */
 
-    public ArrayList<Die> arrayListDecoder(ArrayList<String> dice) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
+    public ArrayList<Die> arrayListDecoder(ArrayList<String> dice) throws InvalidIntArgumentException {
 
         ArrayList<Die> temp = new ArrayList<Die>();
 
@@ -42,15 +48,6 @@ public class SocketDecoder
 
         return temp;
 
-    }
-    public String[] getNames()
-    {
-        return names;
-    }
-
-    public int[][] getScoresPlayers()
-    {
-        return scoresPlayers;
     }
 
 }

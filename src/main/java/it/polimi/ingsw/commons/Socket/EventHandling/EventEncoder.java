@@ -2,6 +2,8 @@ package it.polimi.ingsw.commons.Socket.EventHandling;
 
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.*;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
@@ -18,12 +20,21 @@ public class EventEncoder
     private SocketEncoder encoder;
     private SocketProtocolTransformer transformer;
 
+    /**
+     * EventEncoder Constructor
+     */
     public EventEncoder()
     {
         encoder = new SocketEncoder();
         transformer = new SocketProtocolTransformer();
     }
 
+    /**
+     * encodes an event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     * @throws InvalidIntArgumentException
+     */
     public ArrayList<String> encodeEvent(Event event) throws InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
         temp.add(transformer.simpleEncode("event", event.getType()));
@@ -74,14 +85,11 @@ public class EventEncoder
         if(event.getType().equals("MoveEvent"))
             temp.addAll(encodeMoveEvent((MoveEvent)event));
 
-        if(event.getType().equals("PassEvent"))
-        {
-            temp.add(transformer.simpleEncode("end", "event"));
-            return temp;
-        }
-
         if(event.getType().equals("ScoreEvent"))
             temp.addAll(encodeScoreEvent((ScoreEvent) event));
+
+        if(event.getType().equals("ReconnectionEvent"))
+            temp.addAll(encodeReconnectionEvent((ReconnectionEvent)event));
 
 
         temp.add(transformer.simpleEncode("end", "event"));
@@ -89,13 +97,21 @@ public class EventEncoder
         return temp;
     }
 
-
+    /**
+     * encodes an username event
+     * @param event event to encode
+     * @return string containing information about the encoded event
+     */
     public String encodeUsernameEvent(UsernameEvent event)
     {
-        ArrayList<String> temp = new ArrayList<String>();
         return transformer.simpleEncode("username", event.getUserName());
     }
 
+    /**
+     * encodes a scheme selection event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeSchemeSelectionEvent(SchemeSelectionEvent event)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -107,6 +123,11 @@ public class EventEncoder
         return temp;
     }
 
+    /**
+     * encodes a model initialization event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeModelInitializationEvent(ModelInitializationEvent event)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -127,7 +148,11 @@ public class EventEncoder
         return temp;
     }
 
-
+    /**
+     * encodes an initialization 2 event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeInitialization2Event(Initialization2Event event)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -145,6 +170,11 @@ public class EventEncoder
 
     }
 
+    /**
+     * encodes a tool card one event
+     * @param toolCardOneEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardOneEvent(ToolCardOneEvent toolCardOneEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -159,6 +189,11 @@ public class EventEncoder
         return temp;
     }
 
+    /**
+     * encodes a tool card two / tool card three event
+     * @param toolCardTwoThreeEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardTwoThreeEvent(ToolCardTwoThreeEvent toolCardTwoThreeEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -174,6 +209,11 @@ public class EventEncoder
         return temp;
     }
 
+    /**
+     * encodes a tool card four event
+     * @param toolCardFourEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardFourEvent(ToolCardFourEvent toolCardFourEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -193,6 +233,11 @@ public class EventEncoder
         return temp;
     }
 
+    /**
+     * encodes a tool card five event
+     * @param toolCardFiveEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardFiveEvent(ToolCardFiveEvent toolCardFiveEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -207,6 +252,12 @@ public class EventEncoder
 
         return temp;
     }
+
+    /**
+     * encodes a tool card six event
+     * @param toolCardSixEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
 
     public ArrayList<String> encodeToolCardSixEvent(ToolCardSixEvent toolCardSixEvent)
     {
@@ -224,6 +275,11 @@ public class EventEncoder
         return temp;
     }
 
+    /**
+     * encodes a tool card seven event
+     * @param toolCardSevenEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardSevenEvent(ToolCardSevenEvent toolCardSevenEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -237,11 +293,14 @@ public class EventEncoder
         }
         temp.add(transformer.simpleEncode("player",Integer.toString(toolCardSevenEvent.getPlayer())));
 
-
         return temp;
-
     }
 
+    /**
+     * encodes a tool card eight / tool card nine / tool card ten event
+     * @param toolCardEightNineTenEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardEightNineTenEvent(ToolCardEightNineTenEvent toolCardEightNineTenEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -257,6 +316,11 @@ public class EventEncoder
 
     }
 
+    /**
+     * encodes a tool card eleven event
+     * @param toolCardElevenEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardElevenEvent(ToolCardElevenEvent toolCardElevenEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -276,6 +340,11 @@ public class EventEncoder
 
     }
 
+    /**
+     * encodes a tool card twelve event
+     * @param toolCardTwelveEvent event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeToolCardTwelveEvent(ToolCardTwelveEvent toolCardTwelveEvent)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -299,6 +368,11 @@ public class EventEncoder
 
     }
 
+    /**
+     * encodes a turn event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeTurnEvent(TurnEvent event)
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -332,6 +406,11 @@ public class EventEncoder
 
     }
 
+    /**
+     * encodes a move event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
     public ArrayList<String> encodeMoveEvent(MoveEvent event)          
     {
         ArrayList<String> temp = new ArrayList<String>();
@@ -344,6 +423,12 @@ public class EventEncoder
         return temp;
 
     }
+
+    /**
+     * encodes a score event
+     * @param event event to encode
+     * @return ArrayList of strings containing information about the encoded event
+     */
 
     public ArrayList<String> encodeScoreEvent(ScoreEvent event) throws InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
@@ -363,8 +448,47 @@ public class EventEncoder
         return temp;
     }
 
+    public ArrayList<String> encodeReconnectionEvent(ReconnectionEvent event)
+    {
+        ArrayList<String> temp = new ArrayList<String>();
+        for(int i=0;i<event.getPlayers().size();i++)
+        {
+            ReconnectionPlayer player = event.getPlayers().get(i);
+            temp.add(transformer.simpleEncode("player", Integer.toString(i)));
+            temp.add(transformer.simpleEncode("name", player.getName()));
+            temp.add(transformer.simpleEncode("tokens", Integer.toString(player.getTokens())));
+            temp.add(transformer.simpleEncode("id", Integer.toString(player.getSchemeId())));
+            temp.add(transformer.simpleEncode("fb", Integer.toString(player.getFb())));
+            ArrayList<ReconnectionPlayer.ReconnectionSchemeDie> tempArr = player.getSchemeDice();
+            for(int j=0;j<player.getSchemeDice().size();j++)
+            {
+                temp.add(transformer.simpleEncode("x", Integer.toString(tempArr.get(j).getX())));
+                temp.add(transformer.simpleEncode("y", Integer.toString(tempArr.get(j).getY())));
+                temp.add(transformer.simpleEncode("color", Integer.toString(tempArr.get(j).getColor())));
+                temp.add(transformer.simpleEncode("value", Integer.toString(tempArr.get(j).getValue())));
+            }
+        }
 
+        temp.add(transformer.simpleEncode("privobj", Integer.toString(event.getPrivObj())));
+        temp.add(transformer.simpleEncode("pubobj0", Integer.toString(event.getPubObjs()[0])));
+        temp.add(transformer.simpleEncode("pubobj1", Integer.toString(event.getPubObjs()[1])));
+        temp.add(transformer.simpleEncode("pubobj2", Integer.toString(event.getPubObjs()[2])));
+        temp.add(transformer.simpleEncode("toolid0", Integer.toString(event.getToolsIds()[0])));
+        temp.add(transformer.simpleEncode("toolid1", Integer.toString(event.getToolsIds()[1])));
+        temp.add(transformer.simpleEncode("toolid2", Integer.toString(event.getToolsIds()[2])));
+        temp.add(transformer.simpleEncode("tokenstool0", Integer.toString(event.getToolsTokens()[0])));
+        temp.add(transformer.simpleEncode("tokenstool1", Integer.toString(event.getToolsTokens()[1])));
+        temp.add(transformer.simpleEncode("tokenstool2", Integer.toString(event.getToolsTokens()[2])));
 
+        ArrayList<ReconnectionEvent.ReconnectionRoundDice> tempRD = event.getReconnectionTrack();
+        for(int z=0;z<tempRD.size();z++)
+        {
+            temp.add(transformer.simpleEncode("round", Integer.toString(z)));
+            for(int h=0;h<tempRD.get(z).getRd().size();h++)
+                temp.add(encoder.arrayListEncoder(tempRD.get(z).getRd())[h]);
+        }
 
+        return temp;
+    }
 
 }

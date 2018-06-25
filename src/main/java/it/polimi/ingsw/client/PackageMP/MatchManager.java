@@ -15,7 +15,12 @@ public class MatchManager
     private ArrayList<Integer> disconnectedPlayers;
     private int activePlayer;
 
-    //PLAYERS
+    /**
+     * MatchManager Constructor, sets scheme to newly initialized players
+     * @param event initialization 2 event
+     * @param me
+     * @throws InvalidIntArgumentException
+     */
     public MatchManager(Initialization2Event event, String me) throws InvalidIntArgumentException {
         SchemesDeckMP deck = new SchemesDeckMP();
         players = new PlayerClient[event.getPlayerSize()];
@@ -50,6 +55,10 @@ public class MatchManager
 
     //DISCONNECTED PLAYERS
 
+    /**
+     * sets disconnected players to an ArrayList of strings
+     * @param temp
+     */
     public void setDisconnectedPlayers(ArrayList<String> temp)
     {
         for(String str: temp)

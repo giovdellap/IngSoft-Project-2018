@@ -24,6 +24,10 @@ public class ModelManagerMP
 
     private SchemeCardMP[] tempSchemes;
 
+    /**
+     * ModelManagerMP Constructor
+     * @throws InvalidIntArgumentException
+     */
     public ModelManagerMP() throws InvalidIntArgumentException {
         scDeck = new SchemesDeckMP();
         pubObjs = new PublicObjectiveMP[3];

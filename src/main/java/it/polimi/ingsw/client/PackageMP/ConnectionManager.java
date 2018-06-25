@@ -26,26 +26,49 @@ public class ConnectionManager extends Observable implements Observer
     private RMIClient rmiClient;
     private String username;
 
-
+    /**
+     * ConnectionManager Constructor
+     * @param ip ip to set
+     * @param connection type of connection
+     * @throws IOException
+     * @throws it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException
+     */
     public ConnectionManager(String ip, int connection) throws IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
 
         this.ip=ip;
         this.connection=connection;
-        enstablishConnection();
+        establishConnection();
     }
 
-    public void enstablishConnection() throws IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    /**
+     * establishes a connection and adds observer
+     * @throws IOException
+     * @throws it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException
+     */
+    public void establishConnection() throws IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         if(connection==1) {
             socketClient = new SocketClient(ip);
             socketClient.addObserver(this);
         }
     }
 
-    //EVENT HANDLING
+    /**
+     * sends event to socketClient
+     * @param event
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     */
     public void sendEvent(Event event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
         socketClient.sendEvent(event);
     }
-    public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+
+    /**
+     * gets event from socketClient
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     */
+    public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, GenericInvalidArgumentException, InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         socketClient.getEvent();
     }
 

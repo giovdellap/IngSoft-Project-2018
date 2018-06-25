@@ -50,7 +50,11 @@ public class MPExecute extends Application implements Observer {
     private Event toCheck;
     private SimpleLogger logger;
 
-
+    /**
+     * Starts the CLI
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         //starting managers
@@ -118,7 +122,16 @@ public class MPExecute extends Application implements Observer {
         endMatch();
     }
 
-    public void turn() throws IOException, InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
+    /**
+     * manages the turn
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     * @throws FullDataStructureException
+     * @throws GenericInvalidArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     */
+
+    public void turn() throws IOException, InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
 
         //turn initialization
         connectionManager.getEvent();
@@ -145,7 +158,15 @@ public class MPExecute extends Application implements Observer {
             endMatch=true;
     }
 
-    public void itsMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException {
+    /**
+     * manages my turn
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws FullDataStructureException
+     */
+    public void itsMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         boolean end = false;
         while(!end)
         {
@@ -180,7 +201,16 @@ public class MPExecute extends Application implements Observer {
                 end=true;
         }
     }
-    public void notMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException {
+
+    /**
+     * manages the other player's turns
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws FullDataStructureException
+     */
+    public void notMyTurn() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         updateGraphicsManager();
         graphicsManager.notMyTurn();
         connectionManager.getEvent();
@@ -202,7 +232,12 @@ public class MPExecute extends Application implements Observer {
         }
     }
 
-    //event application in model
+    /**
+     * applies the move event in the model
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     */
+
     public void applyMove() throws InvalidIntArgumentException, GenericInvalidArgumentException {
         DraftPoolMP tempDraft = modelManagerMP.getDraft();
         Die tempDie = tempDraft.returnDie(((MoveEvent)currentEvent).getIndex());
@@ -213,6 +248,13 @@ public class MPExecute extends Application implements Observer {
         logger.log("ApplyMove scheme: "+Integer.toString(matchManager.getGraphicsUpdate()[((MoveEvent) currentEvent).getId()].getPlayerScheme().getDie(((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY()).getColor()));
     }
 
+    /**
+     * applies the tool event in the model
+     * @throws InvalidIntArgumentException
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws FullDataStructureException
+     */
     public void applyTool() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
         int minus = toolRecord.getTokensDecrease(((ToolCardEvent)currentEvent).getId());
         int tokens = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getTokens()-minus;
@@ -413,7 +455,13 @@ public class MPExecute extends Application implements Observer {
         }
     }
 
-    public void toolCard6Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException {
+    /**
+     * manages the second part of the tool card six event
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
+    public void toolCard6Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         if(((ToolCardSixEvent)currentEvent).isApplyOne())
         {
             graphicsManager.toolCard6Part2((ToolCardSixEvent)currentEvent);
@@ -424,7 +472,14 @@ public class MPExecute extends Application implements Observer {
 
     }
 
-    public void toolCard11Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException {
+    /**
+     * manages the second part of the tool card eleven event
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
+
+    public void toolCard11Part2() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         if(((ToolCardElevenEvent)currentEvent).isFirstCheck())
             graphicsManager.toolCard11Part2((ToolCardElevenEvent)currentEvent);
         toCheck.resetValidation();
@@ -432,12 +487,22 @@ public class MPExecute extends Application implements Observer {
         connectionManager.getEvent();
     }
 
+    /**
+     * manages the end of the match
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     */
     private void endMatch() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
         boolean winner = (((ScoreEvent)currentEvent).getPlayers().get(0).getName().equals(myUsername));
         graphicsManager.showScores((ScoreEvent)currentEvent, winner);
     }
 
-
+    /**
+     * MPExecute Constructor
+     * @param ip ip address to set
+     * @param toSet parameters for mode, connection and graphics information
+     * @throws GenericInvalidArgumentException
+     */
 
     public MPExecute(String ip, int[] toSet) throws GenericInvalidArgumentException {
         //constructor
@@ -451,6 +516,11 @@ public class MPExecute extends Application implements Observer {
         mpLogger.majorLog("MPExecute Logger started");
     }
 
+    /**
+     * updates the GraphicsManager, passing by parameters all the updated elements of the current model
+     * @throws InvalidIntArgumentException
+     */
+
     private void updateGraphicsManager() throws InvalidIntArgumentException {
         int me=0;
         for(int i=0;i<matchManager.getGraphicsUpdate().length;i++)
@@ -459,7 +529,11 @@ public class MPExecute extends Application implements Observer {
         graphicsManager.gmUpdate(matchManager.getGraphicsUpdate(), modelManagerMP.getDraft(), modelManagerMP.getTrack(), toolRecord.getTokens(), matchManager.getActivePlayer(), me, matchManager.getRound(), matchManager.getDisconnectedPlayers());
     }
 
-
+    /**
+     * updates listeners
+     * @param o observable
+     * @param arg object
+     */
 
     public void update(Observable o, Object arg) {
 

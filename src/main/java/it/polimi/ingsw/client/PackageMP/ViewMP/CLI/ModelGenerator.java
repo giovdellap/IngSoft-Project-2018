@@ -18,6 +18,12 @@ public class ModelGenerator
         clito= new CLIToolsManager();
     }
 
+    /**
+     * uses the JANSI library to get and print the dice scheme of the parameter schemecard with colors, grey dice values and white cells
+     * @param scheme
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] getScheme(SchemeCardMP scheme) throws InvalidIntArgumentException
     {
         //returns a String[5] representing the schemecard
@@ -82,9 +88,15 @@ public class ModelGenerator
         return schemeCard;
     }
 
+    /**
+     *  generates a string representing the draft pool
+     * @param draft
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String getDraft(DraftPoolMP draft) throws InvalidIntArgumentException
     {
-        //returns a string representing the draftpool
+
 
         int i=0;
         String diceDraft = "";
@@ -98,10 +110,14 @@ public class ModelGenerator
         return diceDraft;
     }
 
+    /**
+     * generates a string representing the round track
+     * @param roundtrack
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public String[] getRoundTrack(RoundTrackMP roundtrack) throws InvalidIntArgumentException
     {
-        //returns a string representing the roundtrack
-
         CLIToolsManager clito = new CLIToolsManager();
         String[] track;
         ArrayList<String> temp = new ArrayList<String>();
@@ -129,10 +145,13 @@ public class ModelGenerator
         return track;
     }
 
-    //TOOLS
+    /**
+     * generates a string made of num spaces
+     * @param num
+     * @return
+     */
     private String printSpaces(int num)
     {
-        //returns a string made of num spaces
         String temp = "";
         for(int i=0;i<num;i++)
             temp+=" ";
@@ -140,7 +159,12 @@ public class ModelGenerator
         return temp;
     }
 
-    public String toUnicode(Die tempDie)                  //encode die to unicode die
+    /**
+     * encodes a die (using it's information: value and color) to an unicode die
+     * @param tempDie
+     * @return
+     */
+    public String toUnicode(Die tempDie)
     {
         String temp="";
 
@@ -245,6 +269,12 @@ public class ModelGenerator
 
     }
 
+    /**
+     * calculates the actual dimension of the round track
+     * @param round
+     * @return integer representing the round track's dimension
+     * @throws InvalidIntArgumentException
+     */
     public int calculateDim(RoundTrackMP round) throws InvalidIntArgumentException
     {
         int max=0;

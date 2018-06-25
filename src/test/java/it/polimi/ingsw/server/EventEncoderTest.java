@@ -1,5 +1,6 @@
 package it.polimi.ingsw.commons;
 
+import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
@@ -69,8 +70,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkUsernameEvent() throws InvalidIntArgumentException
-    {
+    public void checkUsernameEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(event);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -80,8 +80,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException
-    {
+    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(event1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -91,8 +90,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkModelInitializationEvent() throws InvalidIntArgumentException
-    {
+    public void checkModelInitializationEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         int [] pubObjs = {2, 3, 4, 5};
         int [] toolsIds = {2, 3, 4, 5};
 
@@ -108,8 +106,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkTurnEvent() throws InvalidIntArgumentException
-    {
+    public void checkTurnEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         // create tempDisc
         ArrayList<String> tempDisc= new ArrayList<String>();
 
@@ -156,8 +153,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardOneEvents() throws InvalidIntArgumentException
-    {
+    public void checkToolCardOneEvents() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -168,8 +164,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT23);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -180,8 +175,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFourEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardFourEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT4);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -192,8 +186,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFiveEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardFiveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT5);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -204,8 +197,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSixEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardSixEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT6);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -216,8 +208,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSevenEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardSevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         //create tempdraft
 
         ArrayList<Die> tempDraft=new ArrayList<Die>();
@@ -243,8 +234,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT8910);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -255,8 +245,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardElevenEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardElevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT11);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -267,8 +256,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException
-    {
+    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT12);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -279,8 +267,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkMoveEvent() throws InvalidIntArgumentException
-    {
+    public void checkMoveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventM);
         logger.log(tempArray.get(1));
         Event tempEvent = decoder.decodeEvent(tempArray);
@@ -293,8 +280,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkPassEvent() throws InvalidIntArgumentException
-    {
+    public void checkPassEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventP);
         Event tempEvent = decoder.decodeEvent(tempArray);
 

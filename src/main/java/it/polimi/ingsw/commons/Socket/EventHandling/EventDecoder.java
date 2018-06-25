@@ -1,6 +1,12 @@
 package it.polimi.ingsw.commons.Socket.EventHandling;
 
+import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.*;
+import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
@@ -10,6 +16,8 @@ import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
+import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
@@ -22,6 +30,9 @@ public class EventDecoder
 
     private SimpleLogger logger;
 
+    /**
+     * EventDecoder Constructor
+     */
     public EventDecoder()
     {
         transformer = new SocketProtocolTransformer();
@@ -29,8 +40,13 @@ public class EventDecoder
         logger = new SimpleLogger(0, false);
     }
 
-    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException
-    {
+    /**
+     * decodes an ArrayList of strings into an event
+     * @param toDecode ArrayList of strings to decode
+     * @return event decoded
+     * @throws InvalidIntArgumentException
+     */
+    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
         transformer.simpleDecode(toDecode.get(0));
 
         if(transformer.getArg().equals("UsernameEvent"))
@@ -78,17 +94,29 @@ public class EventDecoder
         if(transformer.getArg().equals("PassEvent"))
             return new PassEvent();
 
+        if(transformer.getArg().equals("ForfaitEvent"))
+            return new ForfaitEvent();
+
         if (transformer.getArg().equals("Initialization2Event"))
             return decodeInitialization2Event(toDecode);
 
         if(transformer.getArg().equals("ScoreEvent"))
             return decodeScoreEvent(toDecode);
 
+        if(transformer.getArg().equals("ReconnectionEvent"))
+            return decodeReconnectionEvent(toDecode);
+
         else
             return null;
 
     }
 
+    /**
+     * decodes an ArrayList of strings into an scheme selection event
+     * @param toDecode ArrayList of strings to decode
+     * @return scheme selection event decoded
+     * @throws InvalidIntArgumentException
+     */
     private SchemeSelectionEvent decodeSchemeSelectionEvent(ArrayList<String> toDecode)
     {
         SchemeSelectionEvent event;
@@ -111,6 +139,12 @@ public class EventDecoder
 
     }
 
+    /**
+     * decodes an ArrayList of strings into an username event
+     * @param toDecode ArrayList of strings to decode
+     * @return username event decoded
+     * @throws InvalidIntArgumentException
+     */
 
     private UsernameEvent decodeUsernameEvent(ArrayList<String> toDecode)
     {
@@ -125,6 +159,12 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into an initialization 2 event
+     * @param toDecode ArrayList of strings to decode
+     * @return initialization 2 event decoded
+     * @throws InvalidIntArgumentException
+     */
     private Initialization2Event decodeInitialization2Event(ArrayList<String> toDecode)
     {
         Initialization2Event event;
@@ -132,7 +172,6 @@ public class EventDecoder
         event = new Initialization2Event();
 
         int i=1;
-
 
         while (i<toDecode.size()-1)
         {
@@ -163,6 +202,11 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into an model initialization event
+     * @param toDecode ArrayList of strings to decode
+     * @return model initialization event decoded
+     */
     private ModelInitializationEvent decodeModelInitializatonEvent(ArrayList<String> toDecode)
     {
         ModelInitializationEvent event;
@@ -214,6 +258,12 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into a turn event
+     * @param toDecode ArrayList of strings to decode
+     * @return turn event decoded
+     * @throws InvalidIntArgumentException
+     */
     private TurnEvent decodeTurnEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException
     {
         TurnEvent event;
@@ -267,7 +317,7 @@ public class EventDecoder
 
         flag=true;
 
-        transformer.simpleDecode(toDecode.get(i));          //legge primo dado
+        transformer.simpleDecode(toDecode.get(i));
 
         while (flag)
         {
@@ -334,6 +384,12 @@ public class EventDecoder
 
     }
 
+    /**
+     * decodes an ArrayList of strings into a tool card one event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card one event decoded
+     */
+
     private ToolCardOneEvent decodeToolCardOneEvent(ArrayList<String> toDecode)
     {
         ToolCardOneEvent event;
@@ -364,6 +420,12 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into a tool card two / tool card three event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card two / tool card three event decoded
+     */
+
     private ToolCardTwoThreeEvent decodeToolCardTwoThreeEvent(ArrayList<String> toDecode)
     {
         ToolCardTwoThreeEvent event;
@@ -393,6 +455,12 @@ public class EventDecoder
 
         return event;
     }
+
+    /**
+     * decodes an ArrayList of strings into a tool card four event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card four event decoded
+     */
 
     private ToolCardFourEvent decodeToolCardFourEvent(ArrayList<String> toDecode)
     {
@@ -435,6 +503,12 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into a tool card five event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card five event decoded
+     */
+
     private ToolCardFiveEvent decodeToolCardFiveEvent(ArrayList<String> toDecode)
     {
         ToolCardFiveEvent event;
@@ -466,6 +540,12 @@ public class EventDecoder
 
         return event;
     }
+
+    /**
+     * decodes an ArrayList of strings into a tool card six event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card six event decoded
+     */
 
     private ToolCardSixEvent decodeToolCardSixEvent(ArrayList<String> toDecode)
     {
@@ -502,6 +582,12 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into a tool card seven event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card seven event decoded
+     */
+
     private ToolCardSevenEvent decodeToolCardSevenEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException
     {
         ToolCardSevenEvent event;
@@ -533,6 +619,11 @@ public class EventDecoder
         return event;
     }
 
+    /**
+     * decodes an ArrayList of strings into a tool card eight / tool card nine / tool card ten event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card eight / tool card nine / tool card ten event decoded
+     */
     private ToolCardEightNineTenEvent decodeToolCardEightNineTenEvent(ArrayList<String> toDecode)
     {
         ToolCardEightNineTenEvent event;
@@ -558,6 +649,12 @@ public class EventDecoder
 
         return event;
     }
+
+    /**
+     * decodes an ArrayList of strings into a tool card eleven event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card eleven event decoded
+     */
 
     private ToolCardElevenEvent decodeToolCardElevenEvent(ArrayList<String> toDecode)
     {
@@ -600,6 +697,12 @@ public class EventDecoder
         return event;
 
     }
+
+    /**
+     * decodes an ArrayList of strings into a tool card twelve event
+     * @param toDecode ArrayList of strings to decode
+     * @return tool card twelve event decoded
+     */
 
     private ToolCardTwelveEvent decodeToolCardTwelveEvent(ArrayList<String> toDecode)
     {
@@ -650,6 +753,11 @@ public class EventDecoder
 
         return event;
     }
+    /**
+     * decodes an ArrayList of strings into a move event
+     * @param toDecode ArrayList of strings to decode
+     * @return move event decoded
+     */
 
     private MoveEvent decodeMoveEvent(ArrayList<String> toDecode)
     {
@@ -685,6 +793,12 @@ public class EventDecoder
 
         return event;
     }
+
+    /**
+     * decodes an ArrayList of strings into a score event
+     * @param toDecode ArrayList of strings to decode
+     * @return score event decoded
+     */
 
     private ScoreEvent decodeScoreEvent(ArrayList<String> toDecode)
     {
@@ -741,6 +855,127 @@ public class EventDecoder
         return event;
     }
 
+    private ReconnectionEvent decodeReconnectionEvent(ArrayList<String> toDecode) throws it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+        ReconnectionEvent event = new ReconnectionEvent();
 
+        int j =2;
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
+        transformer.simpleDecode(toDecode.get(j));
+
+        while(!transformer.getCmd().equals("privobj"))
+        {
+            transformer.simpleDecode(toDecode.get(j));
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            String name = transformer.getArg();
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            int tokens = Integer.parseInt(transformer.getArg());
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            int id= Integer.parseInt(transformer.getArg());
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            int fb= Integer.parseInt(transformer.getArg());
+            j++;
+
+            SchemesDeck tempDeck = new SchemesDeck();
+            SchemeCard tempScheme= tempDeck.extractSchemebyID(id);
+            tempScheme.setfb(fb);
+
+            transformer.simpleDecode(toDecode.get(j));
+            while(!transformer.getCmd().equals("x"))
+            {
+                int x = Integer.parseInt(transformer.getArg());
+                j++;
+
+                transformer.simpleDecode(toDecode.get(j));
+                int y= Integer.parseInt(transformer.getArg());
+                j++;
+
+                transformer.simpleDecode(toDecode.get(j));
+                Die tempDie= new Die(Integer.parseInt(transformer.getArg()));
+                j++;
+
+                transformer.simpleDecode(toDecode.get(j));
+                tempDie.setValue(Integer.parseInt(transformer.getArg()));
+
+                tempScheme.setDie(tempDie,x ,y );
+                j++;
+
+                transformer.simpleDecode(toDecode.get(j));
+
+            }
+            event.addPlayer(name,tokens ,tempScheme );
+            transformer.simpleDecode(toDecode.get(j));
+        }
+
+        event.addPrivObj(Integer.parseInt(transformer.getArg()));
+        j++;
+
+        int[] pubObjs=new int[3];
+
+        transformer.simpleDecode(toDecode.get(j));
+        pubObjs[0]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        pubObjs[1]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        pubObjs[2]= Integer.parseInt(transformer.getArg());
+        j++;
+
+        event.addPubObjs(pubObjs);
+
+        int[] toolsIds= new int[3];
+        transformer.simpleDecode(toDecode.get(j));
+        toolsIds[0]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        toolsIds[1]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        toolsIds[2]= Integer.parseInt(transformer.getArg());
+        j++;
+
+        event.addToolsIds(toolsIds);
+
+        int[] tokensTools= new int[3];
+        transformer.simpleDecode(toDecode.get(j));
+        tokensTools[0]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        tokensTools[1]= Integer.parseInt(transformer.getArg());
+        j++;
+        transformer.simpleDecode(toDecode.get(j));
+        tokensTools[2]= Integer.parseInt(transformer.getArg());
+        j++;
+
+        event.addToolsTokens(tokensTools);
+
+        while(j<toDecode.size())
+        {
+            j++;
+            transformer.simpleDecode(toDecode.get(j));
+            ArrayList<String> tempRdStr = new ArrayList<String>();
+            while(!transformer.getCmd().equals("round"))
+            {
+                tempRdStr.add(toDecode.get(j));
+                j++;
+                transformer.simpleDecode(toDecode.get(j));
+            }
+
+            event.addReconnectionRD(decoder.arrayListDecoder(tempRdStr));
+        }
+        return event;
+    }
 
 }

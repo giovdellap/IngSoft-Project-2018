@@ -31,6 +31,10 @@ public class BeautifulCLI
     private int[] toolsID;
     private int width;
 
+    /**
+     * BeautifulCLI Constructor
+     * @param settings
+     */
     public BeautifulCLI(int settings)
     {
         this.inKeyboard = new BufferedReader(new InputStreamReader(System.in));
@@ -45,9 +49,13 @@ public class BeautifulCLI
             width=80;
     }
 
+    /**
+     * asks for Username
+     * @return
+     * @throws IOException
+     */
     public String askUsername() throws IOException
     {
-        //asks for username
 
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getUsernameInsertion());
@@ -58,13 +66,29 @@ public class BeautifulCLI
 
     }
 
+    /**
+     * sets waiting scene from CLIToolsManager
+     */
     public void setWaitScene()
     {
+        printOut(printerMaker.printTitle());
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.waitingForPlayersScene());
         printOut(cliToolsManager.sceneEnder(width));
     }
 
+    /**
+     * sets initialization scene with all the model's components
+     * @param scheme1
+     * @param scheme2
+     * @param username
+     * @param privObj
+     * @param pubObjs
+     * @param tools
+     * @return
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
     {
         privateObjective = privObj;
@@ -101,6 +125,9 @@ public class BeautifulCLI
         return temp;
     }
 
+    /**
+     * Sets the second waiting scene
+     */
     public void setWaitScene2()
     {
         printOut(cliToolsManager.sceneInitializer(width));
@@ -110,6 +137,19 @@ public class BeautifulCLI
 
     //TURN SCENES
 
+    /**
+     * asks the player what action does he want to take
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @return
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public int askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException {
         //asks user what to do
         //0 = pass, 1 = move, 2 = tool
@@ -125,6 +165,20 @@ public class BeautifulCLI
         return Integer.parseInt(msgIN);
     }
 
+    /**
+     * override
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @param disconnected
+     * @return
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public int askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
     {
         //asks user what to do
@@ -148,6 +202,12 @@ public class BeautifulCLI
         return Integer.parseInt(msgIN);
     }
 
+    /**
+     * asks for moving positions and executes them
+     * @param draftDim
+     * @return
+     * @throws IOException
+     */
     public int[] move(int draftDim) throws IOException
     {
         int[] temp = new int[3];
@@ -165,22 +225,35 @@ public class BeautifulCLI
         return temp;
     }
 
-    public void cantMove()
-    {
-        printOut(printerMaker.cantMove());
-    }
+    /**
+     * prints out a move accepted message
+     */
     public void moveAccepted()
     {
         printOut(printerMaker.moveAccepted());
     }
+
+    /**
+     * prints out a move refused message
+     */
     public void moveRefused()
     {
         printOut(printerMaker.moveRefused());
     }
 
-
-    //NOT MY TURN
-
+    /**
+     * shows the other players turns and actions
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @param disconnected
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
     {
         //asks user what to do
@@ -202,11 +275,20 @@ public class BeautifulCLI
         printOut(cliToolsManager.sceneEnder(width));
     }
 
+    /**
+     * override
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException
     {
-        //asks user what to do
-        //0 = pass, 1 = move, 2 = tool
-
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
@@ -217,7 +299,17 @@ public class BeautifulCLI
         printOut(cliToolsManager.sceneEnder(width));
     }
 
-
+    /**
+     * shows the move
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param event
+     * @throws InvalidIntArgumentException
+     */
     public void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException
     {
         printOut(cliToolsManager.sceneInitializer(width));
@@ -225,12 +317,29 @@ public class BeautifulCLI
         printOut(printerMaker.notMyTurnMove(players[activePlayer].getName(), event.getIndex(), event.getX(), event.getY()));
     }
 
+    /**
+     * shows the tool
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param event
+     * @throws InvalidIntArgumentException
+     */
     public void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException {
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
     }
 
+    /**
+     * uses a tool, asking to the player what actions does he want to take
+     * @param draftDim
+     * @return
+     * @throws IOException
+     */
 
 
     public ToolCardEvent useTool(int draftDim) throws IOException {
@@ -498,6 +607,20 @@ public class BeautifulCLI
         return null;
     }
 
+    /**
+     * manages and uses the tool card six event part two, asking the player where does he want to place the die
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @param previousEvent
+     * @return
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public ToolCardSixEvent toolCardSixEventPartTwo(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ToolCardSixEvent previousEvent) throws InvalidIntArgumentException, IOException {
 
         ToolCardSixEvent event = previousEvent;
@@ -515,6 +638,20 @@ public class BeautifulCLI
         return event;
     }
 
+    /**
+     * manages and uses the tool card eleven event part two, asking the player where does he want to place the die
+     * @param players
+     * @param draft
+     * @param track
+     * @param tools
+     * @param activePlayer
+     * @param me
+     * @param round
+     * @param previousEvent
+     * @return
+     * @throws InvalidIntArgumentException
+     * @throws IOException
+     */
     public ToolCardElevenEvent toolCardElevenEventPartTwo(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ToolCardElevenEvent previousEvent) throws InvalidIntArgumentException, IOException {
 
         ToolCardElevenEvent event = previousEvent;
@@ -534,13 +671,22 @@ public class BeautifulCLI
         return event;
     }
 
-
-
+    /**
+     * prints out a tool accepted message
+     */
     public void toolAccepted()
     {
         printOut(cliToolsManager.simpleQuestionsMaker("Strumento accettato", 40, true));
     }
 
+    /**
+     * shows the final scores and prints out a winner message if the player won
+     * @param event
+     * @param winner
+     * @return
+     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws IOException
+     */
     public boolean showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
         printOut(printerMaker.showScores(event));
         if(winner) {
@@ -552,8 +698,10 @@ public class BeautifulCLI
         return true;
     }
 
-
-    //UTILS
+    /**
+     * our print out method
+     * @param printerMakerResult
+     */
     private void printOut(String[] printerMakerResult)
     {
         //shows user the printerMaker result
@@ -565,12 +713,20 @@ public class BeautifulCLI
         }
     }
 
+    /**
+     * our print out method
+     * @param s
+     */
     private void printOut(String s)
     {
         outVideo.println(s);
         outVideo.flush();
     }
 
+    /**
+     * our read from keyboard method
+     * @throws IOException
+     */
     private void readIt() throws IOException
     {
         //resets the buffer and reads from it
@@ -580,10 +736,10 @@ public class BeautifulCLI
         //System.out.println(msgIN);
     }
 
-    public void setToolsID(int[] toolsID)
-    {
-        printerMaker.setToolsID(toolsID);
-    }
+    /**
+     * our read from keyboard method with exceptions for the tools
+     * @throws IOException
+     */
 
     public void readWithExceptionsToolsEdition() throws IOException {
 
@@ -597,6 +753,13 @@ public class BeautifulCLI
             readWithExceptionsToolsEdition();
 
     }
+
+    /**
+     * our read from keyboard message with NumberFormat Exceptions and recursive call if integer is out of bounds
+     * @param leftBound
+     * @param rightBound
+     * @throws IOException
+     */
 
     public void readWithExceptions(int leftBound, int rightBound) throws IOException {
 

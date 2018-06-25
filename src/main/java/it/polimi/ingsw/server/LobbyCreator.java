@@ -19,7 +19,7 @@ public class LobbyCreator
      * @throws IOException
      */
     public LobbyCreator() throws IOException {
-        generalServer = new GeneralServer();
+        generalServer = new GeneralServer(25);
         logger=new SimpleLogger(0, false);
     }
 
@@ -30,8 +30,7 @@ public class LobbyCreator
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public ArrayList<Player> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException
-    {
+    public ArrayList<Player> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
         logger.log("Lobby creation started");
         ArrayList<Player> temp = new ArrayList<Player>();
         ArrayList<String> tempStrings = new ArrayList<String>();
@@ -92,6 +91,7 @@ public class LobbyCreator
                 }
             }
         }
+        generalServer.close();
         return temp;
     }
 
