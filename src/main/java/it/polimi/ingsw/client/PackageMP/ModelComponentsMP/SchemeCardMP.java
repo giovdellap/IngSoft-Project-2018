@@ -260,7 +260,7 @@ public class SchemeCardMP
             throw new InvalidIntArgumentException();
 
 
-        if (toPlace == null || toPlace.isDisabled() || !diceScheme[x][y].isDisabled())
+        if (toPlace == null || toPlace.isDisabled())
             throw new GenericInvalidArgumentException();
 
         diceScheme[x][y] = toPlace;

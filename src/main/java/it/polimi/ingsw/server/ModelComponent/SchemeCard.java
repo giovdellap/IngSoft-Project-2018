@@ -289,7 +289,7 @@ public class SchemeCard
         if (x < 0 || x > 3 || y < 0 || y > 4)
             throw new InvalidIntArgumentException();
 
-        if (toPlace == null || toPlace.isDisabled() || !diceScheme[x][y].isDisabled())
+        if (toPlace == null || toPlace.isDisabled())
             throw new GenericInvalidArgumentException();
 
 

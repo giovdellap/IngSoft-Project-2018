@@ -164,7 +164,7 @@ public class GraphicsManager extends Observable
             }
             if(whatToDo==2)
             {
-               currentEvent = beautifulCLI.useTool(draft.getSize());
+               currentEvent = beautifulCLI.useTool(draft.getSize(),track.returnActualTurn(),round);
                setChanged();
                notifyObservers(currentEvent);
 

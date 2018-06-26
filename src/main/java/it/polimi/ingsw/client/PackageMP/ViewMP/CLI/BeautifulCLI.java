@@ -336,10 +336,15 @@ public class BeautifulCLI
      */
 
 
-    public ToolCardEvent useTool(int draftDim) throws IOException {
+    public ToolCardEvent useTool(int draftDim, int roundTrackDim, int round) throws IOException {
 
         printOut(cliToolsManager.simpleQuestionsMaker("Che tool vuoi usare?",40,true));
         readWithExceptionsToolsEdition();
+
+        if((Integer.parseInt(msgIN)==5 || Integer.parseInt(msgIN)==12) && round==0) {
+            printOut(cliToolsManager.simpleQuestionsMaker("Non puoi usare questo tool al primo round essendo la round track vuota",40,false));
+            readWithExceptionsToolsEdition();
+        }
 
         switch (Integer.parseInt(msgIN)) {
 
@@ -452,7 +457,7 @@ public class BeautifulCLI
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Con quale dado lo vuoi sostituire?",40,true));
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round dove è presente il dado che ti serve",40,true));
-                readWithExceptions(1,10);
+                readWithExceptions(1,roundTrackDim);
                 event.setTurn(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado che ti serve",40,true));
                 readWithExceptions(1,9);
@@ -489,8 +494,9 @@ public class BeautifulCLI
             case 8: {
 
                 ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(8);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado che ti serve",40,true));
-                readWithExceptions(1,9);
+                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
+                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado che ti serve",40,true));
+                readWithExceptions(1,draftDim);
                 event.setIndex(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove piazzare il dado", 40, true));
                 readWithExceptions(1,4 );
@@ -554,7 +560,7 @@ public class BeautifulCLI
                 ToolCardTwelveEvent event = new ToolCardTwelveEvent(12);
 
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round dell dado di cui vuoi prendere il colore",40,true));
-                readWithExceptions(1,10);
+                readWithExceptions(1,roundTrackDim);
                 event.setTurn(Integer.parseInt(msgIN)-1);
                 printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado di cui vuoi prendere il colore",40,true));
                 readWithExceptions(1,9);
@@ -621,14 +627,13 @@ public class BeautifulCLI
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
         printOut(cliToolsManager.printSpaces(40));
-        printOut(cliToolsManager.simpleQuestionsMaker("Il dado in posizione "+Integer.toString(previousEvent.getIndex())+" è stato tirato, nuovo valore " + event.getNewValue(),40,false));
+        printOut(cliToolsManager.simpleQuestionsMaker("Il dado in posizione "+Integer.toString(previousEvent.getIndex()+1)+" è stato tirato, nuovo valore " + event.getNewValue(),40,false));
         printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
         readWithExceptions(1,4);
         event.setX(Integer.parseInt(msgIN)-1);
         printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
         readWithExceptions(1,5);
         event.setY(Integer.parseInt(msgIN)-1);
-        event.resetValidation();
         return event;
     }
 
@@ -743,8 +748,10 @@ public class BeautifulCLI
             if(Integer.parseInt(msgIN)==toolsID[i])
                 flag=true;
 
-        if(!flag)
+        if(!flag) {
+            printOut(cliToolsManager.simpleQuestionsMaker("Che tool vuoi usare?",40,true));
             readWithExceptionsToolsEdition();
+        }
 
     }
 

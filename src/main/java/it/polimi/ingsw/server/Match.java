@@ -597,7 +597,6 @@ public class Match implements Observer
                             modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
                         }
 
-                        currentEvent = event;
                         return check;
                     }
                     else
