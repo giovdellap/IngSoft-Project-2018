@@ -49,7 +49,7 @@ public class ToolCardUsageRecord
      * @param idTool
      * @return 0 if player cannot use that tool, 1 or 2 if player can use it
      */
-    public int checkAndApplyUsage(int playerTokens, int idTool)
+    public int checkUsage(int playerTokens, int idTool)
     {
         int toolCard=0;
         for(int i=0;i<3;i++)
@@ -57,17 +57,26 @@ public class ToolCardUsageRecord
                 toolCard=i;
 
         if (tokens[toolCard]==0&&playerTokens>0)
-        {
-            tokens[toolCard]=1;
             return 1;
-        }
         if(tokens[toolCard]>0&&playerTokens>1)
-        {
-            tokens[toolCard]=tokens[toolCard]+2;
             return 2;
-        }
         else
             return 0;
+    }
+
+    public void applyUsage(int idTool)
+    {
+        int toolCard=0;
+        for(int i=0;i<3;i++)
+            if(selectedId[i]==idTool)
+                toolCard=i;
+        if(tokens[toolCard]==0)
+            tokens[toolCard]=1;
+        else
+        {
+            int prevoiusTokens = tokens[toolCard];
+            tokens[toolCard]=prevoiusTokens+2;
+        }
     }
 
     /**

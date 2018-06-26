@@ -6,15 +6,9 @@ import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
-import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ToolCards.ToolCardEight;
-import it.polimi.ingsw.server.ToolCards.ToolCardEleven;
-import it.polimi.ingsw.server.TurnManager;
-import javafx.scene.input.InputMethodTextRun;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 public class BeautifulCLI
 {

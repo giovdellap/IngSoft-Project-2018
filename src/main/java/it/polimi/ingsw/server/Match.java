@@ -442,14 +442,18 @@ public class Match implements Observer
         if(!flag)
             return false;
         //check tokens
-        int tokens = toolRecord.checkAndApplyUsage(players.get(turnManager.getActivePlayer()).getTokens(), toolId);
+        int tokens = toolRecord.checkUsage(players.get(turnManager.getActivePlayer()).getTokens(), toolId);
         logger.debugLog("tokens: "+Integer.toString(tokens));
-        if(tokens==0)
+        if(tokens==0) {
+            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
+                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
             return false;
-
+        }
         boolean applied = checkAndApplyToolCardModifies();
+        logger.debugLog("check and apply: "+Boolean.toString(applied));
         if(applied)
         {
+            toolRecord.applyUsage(toolId);
             players.get(turnManager.getActivePlayer()).usedTokens(tokens);
             currentEvent.validate();
             ((ToolCardEvent) currentEvent).setPlayer(turnManager.getActivePlayer());
@@ -459,7 +463,7 @@ public class Match implements Observer
             return true;
         }
         else {
-            if(players.get(turnManager.getActivePlayer()).isDisconnected())
+            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
                 players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
             return false;
         }

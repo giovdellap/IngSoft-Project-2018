@@ -1,12 +1,10 @@
-package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
+package it.polimi.ingsw.client.PackageMP.ViewMP;
 
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
+import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
 import org.fusesource.jansi.Ansi;
-
-import java.util.ArrayList;
 
 public class ComponentFactory
 {

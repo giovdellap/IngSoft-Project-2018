@@ -492,7 +492,7 @@ public class PublicObjective {
                         flag=true;
                         bonus++;
                     }
-                    temp.getDie(x,y).disableDie();
+                    //temp.getDie(x,y).disableDie();
                 }
             }
         return bonus;

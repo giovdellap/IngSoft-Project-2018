@@ -192,7 +192,6 @@ public class Player extends Observable implements Observer
     public void update(Observable o, Object arg) {
         if(((Event)arg).getType().equals("DisconnectionEvent")) {
             isDisconnected = true;
-            System.out.println("dio inchiappettato");
             ((DisconnectionEvent)arg).setId(id);
         }
         setChanged();

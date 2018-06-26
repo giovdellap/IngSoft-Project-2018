@@ -7,6 +7,8 @@ import it.polimi.ingsw.server.ModelComponent.SchemeCard;
 import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
 
+import java.util.ArrayList;
+
 public class ToolCardEleven extends ToolCard {
 
     DraftPool draft;
@@ -49,7 +51,7 @@ public class ToolCardEleven extends ToolCard {
 
     public void applyModifiesTwo(Die tempDie, int x, int y, int index) throws InvalidIntArgumentException, GenericInvalidArgumentException {
         scheme.setDie(tempDie, x, y);
-        draft.pickUpDie(index);
+        //draft.pickUpDie(index);
     }
 
     /**
@@ -60,7 +62,9 @@ public class ToolCardEleven extends ToolCard {
      * @throws GenericInvalidArgumentException
      */
     public void applyModifiesOne(Die tempDie, int index) throws InvalidIntArgumentException, GenericInvalidArgumentException {
-        draft.replaceDie(index, tempDie);
+        //draft.replaceDie(index, tempDie);
+        ArrayList<Die> temp = draft.getDraft();
+        temp.add(index, tempDie);
     }
 
     /**

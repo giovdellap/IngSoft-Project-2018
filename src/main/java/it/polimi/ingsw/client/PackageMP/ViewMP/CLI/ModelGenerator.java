@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
 import it.polimi.ingsw.commons.Die;
 import org.fusesource.jansi.Ansi;
 

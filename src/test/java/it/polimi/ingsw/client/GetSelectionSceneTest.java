@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -11,6 +11,5 @@ public class TimerTest
     @Test
     public void testTimer() throws IOException {
         UsefulTimer timer = new UsefulTimer();
-        timer.tryConnection("dioporco");
     }
 }

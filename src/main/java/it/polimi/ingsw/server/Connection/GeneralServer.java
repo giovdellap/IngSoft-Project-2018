@@ -55,7 +55,7 @@ public class GeneralServer
         catch (SocketTimeoutException e){
             generalSocket.close();
             System.out.println("Connection timed out\n");
-            return generalSocket;
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         }

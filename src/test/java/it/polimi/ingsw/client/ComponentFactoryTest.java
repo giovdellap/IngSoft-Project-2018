@@ -3,7 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
 import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ComponentFactory;
+import it.polimi.ingsw.client.PackageMP.ViewMP.ComponentFactory;
 import it.polimi.ingsw.commons.Die;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -87,7 +87,8 @@ public class SocketServer extends Observable
             sendArrayList(eventEncoder.encodeEvent(event));
         }catch (Exception e)
         {
-            socket.close();
+
+            //socket.close();
             logger.log("Player disconnected");
             disconnectionManager();
         }
