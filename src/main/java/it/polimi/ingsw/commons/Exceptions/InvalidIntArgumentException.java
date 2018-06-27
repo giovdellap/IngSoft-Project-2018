@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.ServerExceptions;
+package it.polimi.ingsw.commons.Exceptions;
 
 public class InvalidIntArgumentException extends Exception
 {

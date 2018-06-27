@@ -1,7 +1,7 @@
 package it.polimi.ingsw.commons.Events.Disconnection;
 
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 

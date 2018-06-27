@@ -4,8 +4,8 @@ import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Listeners.ListenersManager;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 
 import java.io.*;
@@ -47,7 +47,7 @@ public class ConnectionManager extends Observable implements Observer {
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public String getUsername(String[] names) throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
+    public String getUsername(String[] names) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
 
         boolean accFlag=false;
         while(!accFlag) {
@@ -75,7 +75,7 @@ public class ConnectionManager extends Observable implements Observer {
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public String getUsername() throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
+    public String getUsername() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
         socketServer.insertUsername();
         userName = ((UsernameEvent)currentEvent).getUserName();
         currentEvent.validate();

@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>it.polimi.ingsw.server.ModelComponent.SchemeCard</li>
+<li>it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard</li>
 </ul>
 </li>
 </ul>
@@ -283,13 +283,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>SchemeCard</h4>
 <pre>public&nbsp;SchemeCard(int&nbsp;i)
-           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">SchemeCard Constructor</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>i</code> - </dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -309,14 +309,14 @@ extends java.lang.Object</pre>
 <h4>setName</h4>
 <pre>public&nbsp;void&nbsp;setName(int&nbsp;fb,
                     java.lang.String&nbsp;name)
-             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">sets scheme's name</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fb</code> - 1 for front, 2 for back</dd>
 <dd><code>name</code> - scheme card's name</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -327,7 +327,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getName</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getName(int&nbsp;fb)
-                         throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                         throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">gets scheme's name</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -335,7 +335,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>string with scheme's name</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -346,13 +346,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setfb</h4>
 <pre>public&nbsp;void&nbsp;setfb(int&nbsp;fb)
-           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">sets front / back</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fb</code> - 1 for front, 2 for back</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -375,7 +375,7 @@ extends java.lang.Object</pre>
                     int&nbsp;x,
                     int&nbsp;y,
                     int&nbsp;toInsert)
-             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">sets a cell into the dice scheme</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -384,7 +384,7 @@ extends java.lang.Object</pre>
 <dd><code>y</code> - column where to set the cell</dd>
 <dd><code>toInsert</code> - integer representing the number / color on the dice scheme</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -397,7 +397,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;int&nbsp;getCell(int&nbsp;fb,
                    int&nbsp;x,
                    int&nbsp;y)
-            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">gets cell</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -407,7 +407,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>integer representing the number / color on the dice scheme</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -452,14 +452,14 @@ extends java.lang.Object</pre>
 <h4>setDiff</h4>
 <pre>public&nbsp;void&nbsp;setDiff(int&nbsp;fb,
                     int&nbsp;diff)
-             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+             throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">sets difficulty to the scheme card</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fb</code> - 1 for front, 2 for back</dd>
 <dd><code>diff</code> - difficulty to set</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -470,7 +470,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getDiff</h4>
 <pre>public&nbsp;int&nbsp;getDiff(int&nbsp;fb)
-            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">gets the scheme card's difficulty</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -478,7 +478,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>integer representing the scheme card's difficulty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -490,7 +490,7 @@ extends java.lang.Object</pre>
 <h4>getDie</h4>
 <pre>public&nbsp;<a href="../../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;getDie(int&nbsp;x,
                   int&nbsp;y)
-           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">gets selected Die</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -499,7 +499,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the selected die</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -512,8 +512,8 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;void&nbsp;setDie(<a href="../../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;toPlace,
                    int&nbsp;x,
                    int&nbsp;y)
-            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
-                   <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+            throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
+                   <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">sets a precise die</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -521,8 +521,8 @@ extends java.lang.Object</pre>
 <dd><code>x</code> - row where to place the die</dd>
 <dd><code>y</code> - column where to place the die</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -535,8 +535,8 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;replaceDie(<a href="../../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;toReplace,
                       int&nbsp;x,
                       int&nbsp;y)
-               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
-                      <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
+                      <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">replaces a die with another one</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -546,8 +546,8 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the old die</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -574,7 +574,7 @@ extends java.lang.Object</pre>
                      int&nbsp;y0,
                      int&nbsp;x1,
                      int&nbsp;y1)
-              throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+              throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">shifts a die from one position of the dice scheme to another</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -583,7 +583,7 @@ extends java.lang.Object</pre>
 <dd><code>x1</code> - row where to place the die</dd>
 <dd><code>y1</code> - column where to place the die</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>

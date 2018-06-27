@@ -1,11 +1,14 @@
 package it.polimi.ingsw.client.PackageMP;
 
-import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import it.polimi.ingsw.commons.SimpleLogger;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ModelManagerMP
@@ -16,20 +19,20 @@ public class ModelManagerMP
     private DraftPoolMP draft;
     private RoundTrackMP track;
 
-    private SchemesDeckMP scDeck;
+    private SchemesDeck scDeck;
     private PublicObjectiveMP[] pubObjs;
 
-    private SchemeCardMP myScheme;
+    private SchemeCard myScheme;
     private PrivateObjectiveMP myPrObj;
 
-    private SchemeCardMP[] tempSchemes;
+    private SchemeCard[] tempSchemes;
 
     /**
      * ModelManagerMP Constructor
      * @throws InvalidIntArgumentException
      */
     public ModelManagerMP() throws InvalidIntArgumentException {
-        scDeck = new SchemesDeckMP();
+        scDeck = new SchemesDeck();
         pubObjs = new PublicObjectiveMP[3];
         track = new RoundTrackMP();
 
@@ -56,8 +59,8 @@ public class ModelManagerMP
     }
 
 
-    public void setTempSchemes(int id1, int id2) throws InvalidIntArgumentException {
-        tempSchemes = new SchemeCardMP[2];
+    public void setTempSchemes(int id1, int id2) throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+        tempSchemes = new SchemeCard[2];
         tempSchemes[0] = scDeck.extractSchemebyID(id1);
         tempSchemes[1] = scDeck.extractSchemebyID(id2);
     }
@@ -67,7 +70,7 @@ public class ModelManagerMP
         return myPrObj;
     }
 
-    public SchemeCardMP getTempScheme(int index)
+    public SchemeCard getTempScheme(int index)
     {
         return tempSchemes[index];
     }

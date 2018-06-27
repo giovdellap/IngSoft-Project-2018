@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 
 public class ToolCardThree extends ToolCard {

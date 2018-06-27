@@ -1,5 +1,5 @@
 package it.polimi.ingsw.server.ModelComponent;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class PrivateObjectivesDeck
 {

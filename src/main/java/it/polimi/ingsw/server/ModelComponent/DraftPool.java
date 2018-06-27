@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.ModelComponent;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 

@@ -1,24 +1,25 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 public class ModelGeneratorTest
 {
-    private SchemesDeckMP schemesDeckMP;
-    private SchemeCardMP emptyScheme;
-    private SchemeCardMP testScheme;
+    private SchemesDeck schemesDeckMP;
+    private SchemeCard emptyScheme;
+    private SchemeCard testScheme;
     private ModelGenerator modelGenerator;
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException
-    {
-        schemesDeckMP = new SchemesDeckMP();
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+        schemesDeckMP = new SchemesDeck();
         emptyScheme = schemesDeckMP.extractSchemebyID(5);
         emptyScheme.setfb(1);
         testScheme = schemesDeckMP.extractSchemebyID(7);

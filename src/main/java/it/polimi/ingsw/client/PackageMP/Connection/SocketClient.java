@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.PackageMP.Connection;
 
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
@@ -9,7 +9,7 @@ import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 
 import java.io.*;
 import java.net.Socket;
@@ -79,19 +79,19 @@ public class SocketClient extends Observable {
     /**
      * sends an event
      * @param event event to send
-     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
      */
-    public void sendEvent(Event event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
+    public void sendEvent(Event event) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         logger.debugLog(event.getType());
         sendEncoded(eventEncoder.encodeEvent(event));
     }
 
     /**
      * gets an event
-     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
      * @throws IOException
      */
-    public void getEvent() throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void getEvent() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
         msg = new ArrayList<String>();
         receiveEvent();
         currentEvent = eventDecoder.decodeEvent(msg);

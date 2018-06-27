@@ -1,7 +1,7 @@
 package it.polimi.ingsw.commons.Socket.SocketTools;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import java.util.ArrayList;
 
 public class SocketDecoder

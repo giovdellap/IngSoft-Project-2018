@@ -22,4 +22,9 @@ public class ScoreEvent extends Event
         return players;
     }
 
+    public void setPlayer(int index, ScorePlayer player)
+    {
+        players.set(index,player);
+    }
+
 }

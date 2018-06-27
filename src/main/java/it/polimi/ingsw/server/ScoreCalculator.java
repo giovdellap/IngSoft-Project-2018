@@ -4,8 +4,8 @@ import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ScorePlayer;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.PublicObjective;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 
@@ -29,6 +29,24 @@ public class ScoreCalculator
     }
 
     public ScoreEvent calculateScore() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        int[] tieVector = new int[players.size()];
+
+        if(players.size()==4)
+            for(int i=0;i<4;i++)
+                tieVector[i] = i;
+
+        if(players.size()==3) {
+            tieVector[0] = 2;
+            tieVector[1] = 0;
+            tieVector[2] = 1;
+        }
+
+        if(players.size()==2) {
+            tieVector[0] = 0;
+            tieVector[1] = 1;
+        }
+
+
         for (int i = 0; i < players.size(); i++) {
 
             ScorePlayer tempPlayer = new ScorePlayer(players.get(i).getId(), players.get(i).getName());
@@ -76,7 +94,7 @@ public class ScoreCalculator
             scorePlayers.add(tempPlayer);
         }
 
-
+        ArrayList<ScorePlayer> tempPlayers = new ArrayList<ScorePlayer>();
         for (int i = 0; i < scorePlayers.size(); i++) {
             int max = -1000;
             int index = 0;
@@ -96,13 +114,65 @@ public class ScoreCalculator
                     }
                 }
             }
-            event.addPlayer(scorePlayers.get(index));
+            tempPlayers.add(scorePlayers.get(index));
 
             logger.log(Integer.toString(i + 1) + "  Player " + event.getPlayers().get(i).getName() + " points: " + Integer.toString(event.getPlayers().get(i).getTot()));
 
         }
-        logger.log("VINCITORE: "+scorePlayers.get(0).getName());
-
+        while (tempPlayers.size()!=1)
+        {
+            if(tempPlayers.get(0).getTot()>tempPlayers.get(1).getTot())
+            {
+                event.addPlayer(tempPlayers.get(0));
+                tempPlayers.remove(0);
+            }
+            else
+            {
+                if (tempPlayers.get(0).getPrivObj() < tempPlayers.get(1).getPrivObj()) {
+                    event.addPlayer(tempPlayers.get(1));
+                    tempPlayers.remove(1);
+                }
+                if(tempPlayers.get(0).getPrivObj() > tempPlayers.get(1).getPrivObj())
+                {
+                    event.addPlayer(tempPlayers.get(0));
+                    tempPlayers.remove(0);
+                }
+                else {
+                    if (tempPlayers.get(0).getTokens() < tempPlayers.get(1).getTokens()) {
+                        event.addPlayer(tempPlayers.get(1));
+                        tempPlayers.remove(1);
+                    }
+                    if(tempPlayers.get(0).getTokens() > tempPlayers.get(1).getTokens())
+                    {
+                        event.addPlayer(tempPlayers.get(0));
+                        tempPlayers.remove(0);
+                    }
+                    else
+                    {
+                        boolean flag = false;
+                        int i =0;
+                        while(!flag)
+                        {
+                            if(tieVector[i]==tempPlayers.get(0).getId())
+                            {
+                                event.addPlayer(tempPlayers.get(0));
+                                tempPlayers.remove(0);
+                                flag=true;
+                            }
+                            if(tieVector[i]==tempPlayers.get(1).getId())
+                            {
+                                event.addPlayer(tempPlayers.get(1));
+                                tempPlayers.remove(1);
+                                flag=true;
+                            }
+                            else
+                                i++;
+                        }
+                    }
+                }
+            }
+        }
+        event.addPlayer(tempPlayers.get(0));
         return event;
     }
 }

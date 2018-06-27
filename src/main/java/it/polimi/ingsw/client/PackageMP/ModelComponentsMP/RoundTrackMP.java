@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
-import it.polimi.ingsw.client.ClientExceptions.*;
+
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class RoundTrackMP {
 

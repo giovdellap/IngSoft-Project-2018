@@ -17,5 +17,5 @@ it.polimi.ingsw.server
 it.polimi.ingsw.server.Connection
 it.polimi.ingsw.server.Loggers
 it.polimi.ingsw.server.ModelComponent
-it.polimi.ingsw.server.ServerExceptions
+it.polimi.ingsw.commons.Exceptions
 it.polimi.ingsw.server.ToolCards

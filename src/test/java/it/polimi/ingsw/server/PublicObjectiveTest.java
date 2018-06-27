@@ -1,12 +1,14 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.ModelComponent.PublicObjective;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
 
 
 public class PublicObjectiveTest {
@@ -22,7 +24,7 @@ public class PublicObjectiveTest {
 
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException {
 
         publicObjectiveTest = new PublicObjective(idTest);
         bonusTest = publicObjectiveTest.getBonus();

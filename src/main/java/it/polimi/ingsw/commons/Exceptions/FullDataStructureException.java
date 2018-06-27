@@ -1,11 +1,10 @@
-package it.polimi.ingsw.client.ClientExceptions;
+package it.polimi.ingsw.commons.Exceptions;
 
 public class FullDataStructureException extends Exception
 {
     /**
      * FullDataStructureException Constructor
      */
-
     public FullDataStructureException()
     {
         super();

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.commons;
 
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-
-import java.util.*;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class Die
 {

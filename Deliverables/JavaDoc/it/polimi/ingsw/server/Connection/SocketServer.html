@@ -207,7 +207,7 @@ extends java.util.Observable</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/Connection/SocketServer.html#sendScheme-it.polimi.ingsw.server.ModelComponent.SchemeCard-">sendScheme</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/Connection/SocketServer.html#sendScheme-it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard-">sendScheme</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme)</code>
 <div class="block">sends a scheme card as an event</div>
 </td>
 </tr>
@@ -306,13 +306,13 @@ extends java.util.Observable</pre>
 <h4>insertUsername</h4>
 <pre>public&nbsp;void&nbsp;insertUsername()
                     throws java.io.IOException,
-                           <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                           <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">decodes an insertUsername event</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -323,13 +323,13 @@ extends java.util.Observable</pre>
 <li class="blockList">
 <h4>sendEvent</h4>
 <pre>public&nbsp;void&nbsp;sendEvent(<a href="../../../../../it/polimi/ingsw/commons/Events/Event.html" title="class in it.polimi.ingsw.commons.Events">Event</a>&nbsp;event)
-               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">send an event</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>event</code> - event to send</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -341,12 +341,12 @@ extends java.util.Observable</pre>
 <h4>getEvent</h4>
 <pre>public&nbsp;void&nbsp;getEvent()
               throws java.io.IOException,
-                     <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                     <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">gets an event</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -357,17 +357,17 @@ extends java.util.Observable</pre>
 <li class="blockList">
 <h4>sendDraft</h4>
 <pre>public&nbsp;void&nbsp;sendDraft(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/DraftPool.html" title="class in it.polimi.ingsw.server.ModelComponent">DraftPool</a>&nbsp;draft)
-               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
+               throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
                       java.io.IOException,
-                      <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+                      <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">sends a draft pool as an event</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>draft</code> - draft pool to send</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -378,16 +378,16 @@ extends java.util.Observable</pre>
 <li class="blockList">
 <h4>sendScheme</h4>
 <pre>public&nbsp;void&nbsp;sendScheme(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme)
-                throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
-                       <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a>,
+                throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
+                       <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a>,
                        java.io.IOException</pre>
 <div class="block">sends a scheme card as an event</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>scheme</code> - scheme card to send</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 <dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
@@ -400,14 +400,14 @@ extends java.util.Observable</pre>
 <h4>getToolId</h4>
 <pre>public&nbsp;int&nbsp;getToolId()
               throws java.io.IOException,
-                     <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+                     <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">gets tool's id</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>integer representing the tool's id</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>

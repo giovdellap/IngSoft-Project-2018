@@ -1,11 +1,12 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class BeautifulCLI
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public SchemeCardMP setInitializationScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
+    public SchemeCard setInitializationScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
     {
         privateObjective = privObj;
         this.pubObjs = pubObjs;
@@ -93,7 +94,7 @@ public class BeautifulCLI
 
         readWithExceptions(1,4);
 
-        SchemeCardMP temp = new SchemeCardMP(1);
+        SchemeCard temp = new SchemeCard(1);
         if(Integer.parseInt(msgIN)==1)
         {
             temp=scheme1;
@@ -186,7 +187,7 @@ public class BeautifulCLI
 
         //disconnected Players
         String[] tempNames = new String[disconnected.size()];
-        for(int i=0;i<players.length;i++)
+        for(int i=0;i<disconnected.size();i++)
             tempNames[i] = players[disconnected.get(i)].getName();
         printOut(printerMaker.disconnectedPlayers(tempNames));
 
@@ -262,7 +263,7 @@ public class BeautifulCLI
 
         //disconnected Players
         String[] tempNames = new String[disconnected.size()];
-        for(int i=0;i<players.length;i++)
+        for(int i=0;i<disconnected.size();i++)
             tempNames[i] = players[disconnected.get(i)].getName();
         printOut(printerMaker.disconnectedPlayers(tempNames));
 
@@ -683,10 +684,10 @@ public class BeautifulCLI
      * @param event
      * @param winner
      * @return
-     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
      * @throws IOException
      */
-    public boolean showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+    public boolean showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, IOException {
         printOut(printerMaker.showScores(event));
         if(winner) {
             printOut(cliToolsManager.centerThatString("HAI VINTO!!!", 80));

@@ -1,28 +1,31 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.ViewMP.ComponentFactory;
+import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ComponentFactory;
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ComponentFactoryTest
 {
     ComponentFactory componentFactory;
-    SchemeCardMP schemeCardMP;
+    SchemeCard schemeCardMP;
     PublicObjectiveMP publicObjectiveMP;
     String username="ciccio";
     DraftPoolMP tempDraft;
     RoundTrackMP tempRound;
 
-    @BeforeEach public void setUp() throws InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, FullDataStructureException {
+    @BeforeEach public void setUp() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, FullDataStructureException, FileNotFoundException {
         componentFactory = new ComponentFactory();
-        SchemesDeckMP schemesDeckMP = new SchemesDeckMP();
+        SchemesDeck schemesDeckMP = new SchemesDeck();
         schemeCardMP = schemesDeckMP.extractSchemebyID(6);
         schemeCardMP.setfb(2);
         publicObjectiveMP = new PublicObjectiveMP(3);

@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.Connection;
 
 import it.polimi.ingsw.server.ConnectionServer;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 public class RMI implements ConnectionServer
 {

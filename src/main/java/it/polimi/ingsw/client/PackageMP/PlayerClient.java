@@ -1,15 +1,14 @@
 package it.polimi.ingsw.client.PackageMP;
 
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 public class PlayerClient
 {
     private int id;
     private String name;
 
-    private SchemeCardMP playerScheme;
+    private SchemeCard playerScheme;
     private int tokens;
 
     private boolean me;
@@ -27,7 +26,7 @@ public class PlayerClient
         me = flag;
     }
 
-    public void setPlayerScheme(SchemeCardMP temp) {
+    public void setPlayerScheme(SchemeCard temp) {
         playerScheme = temp;
     }
 
@@ -51,7 +50,7 @@ public class PlayerClient
         return tokens;
     }
 
-    public SchemeCardMP getPlayerScheme() {
+    public SchemeCard getPlayerScheme() {
         return playerScheme;
     }
 

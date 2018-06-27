@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.SimpleLogger;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ToolCardUsageRecord
 {

@@ -4,7 +4,6 @@ import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
-import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
@@ -13,13 +12,14 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.Connection.GeneralServer;
 import it.polimi.ingsw.server.ModelComponent.*;
-import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidinSocketException;
 import it.polimi.ingsw.server.ToolCards.*;
 
 import java.io.IOException;
@@ -58,12 +58,12 @@ public class Match implements Observer
      * @throws FullDataStructureException
      */
 
-    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
-
+    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
+        generalServer = new GeneralServer(50);
         logger = new SimpleLogger(3, true);
 
         //lobby creation
-        lobbyCreator = new LobbyCreator();
+        lobbyCreator = new LobbyCreator(generalServer);
         players = lobbyCreator.createThatLobby();
         for(Player player: players)
             player.addObserver(this);
@@ -97,9 +97,8 @@ public class Match implements Observer
         //event initialization
         ModelInitializationEvent[] modelEvents = new ModelInitializationEvent[players.size()];
         for(int i=0;i<players.size();i++)
-        {
             modelEvents[i] = new ModelInitializationEvent();
-        }
+
         //private objectives
         modelInstance.setPrivateObjectives();
 
@@ -201,7 +200,6 @@ public class Match implements Observer
 
     private void startMatch() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException, FullDataStructureException
     {
-        generalServer = new GeneralServer(20);
 
         //initializing turn manager
         turnManager = new TurnManager(players);
@@ -286,13 +284,11 @@ public class Match implements Observer
                     }
                     if(players.get(turnManager.getActivePlayer()).isDisconnected()) {
                         endTurn = true;
-                        System.out.println("check 1");
                         activePlayerDisconnected();
                     }
                 }
                 else
                 {
-                    System.out.println("check 2");
                     activePlayerDisconnected();
                     endTurn=true;
                 }
@@ -597,7 +593,7 @@ public class Match implements Observer
                             modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
                         }
 
-                        return check;
+                        return true;
                     }
                     else
                         return false;
@@ -837,7 +833,7 @@ public class Match implements Observer
         for(Player pl: players)
             if(pl.isDisconnected())
                 temp.add(pl.getName());
-        return null;
+        return temp;
     }
 
     /**

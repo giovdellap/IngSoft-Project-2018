@@ -1,14 +1,12 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
-import it.polimi.ingsw.client.PackageMP.ViewMP.ComponentFactory;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ScorePlayer;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 import java.util.ArrayList;
 
@@ -62,7 +60,7 @@ public class PrinterMaker
      * @return
      * @throws InvalidIntArgumentException
      */
-    public String[] getSelectionScene(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException
+    public String[] getSelectionScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException
     {
         //returns the final selection scene string widthx21
         String[] temp = new String[21];
@@ -202,9 +200,11 @@ public class PrinterMaker
     {
         int i = 0;
 
-        String[] tempVect = new String[username.length];
+        String[] tempVect = new String[username.length+1];
 
-        tempVect[0]=new String("GIOCATORI SCONNESSI: ");
+        tempVect[i]=new String("GIOCATORI DISCONNESSI: ");
+
+        i++;
 
         while (i<username.length)
         {
@@ -366,9 +366,9 @@ public class PrinterMaker
      * shows all the players final scores at the end of the match
      * @param event Score event
      * @return array of strings
-     * @throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException
+     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
      */
-    public String[] showScores(ScoreEvent event) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException {
+    public String[] showScores(ScoreEvent event) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
         int pos=1;
         for(ScorePlayer player : event.getPlayers())

@@ -2,7 +2,8 @@ package it.polimi.ingsw.client.PackageMP.Connection;
 
 
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+
 
 public class RMIClient
 {
@@ -54,12 +55,12 @@ public class RMIClient
         return null;
     }
 
-    public void sendScheme(SchemeCardMP sc)
+    public void sendScheme(SchemeCard sc)
     {
 
     }
 
-    public SchemeCardMP receiveOppScheme()
+    public SchemeCard receiveOppScheme()
     {
         return null;
     }

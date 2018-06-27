@@ -1,8 +1,5 @@
 package it.polimi.ingsw.commons.Socket.EventHandling;
 
-import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
@@ -16,10 +13,11 @@ import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class EventDecoder
@@ -46,7 +44,7 @@ public class EventDecoder
      * @return event decoded
      * @throws InvalidIntArgumentException
      */
-    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException,  it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         transformer.simpleDecode(toDecode.get(0));
 
         if(transformer.getArg().equals("UsernameEvent"))
@@ -855,7 +853,7 @@ public class EventDecoder
         return event;
     }
 
-    private ReconnectionEvent decodeReconnectionEvent(ArrayList<String> toDecode) throws it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    private ReconnectionEvent decodeReconnectionEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ReconnectionEvent event = new ReconnectionEvent();
 
         int j =2;

@@ -1,15 +1,18 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ClientExceptions.FullDataStructureException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.PlayerClient;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GameSceneTest {
@@ -26,13 +29,13 @@ public class GameSceneTest {
 
     @BeforeEach
 
-    public void setUp() throws InvalidIntArgumentException, FullDataStructureException {
+    public void setUp() throws InvalidIntArgumentException, FullDataStructureException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         DraftPoolMP tempDraft;
         printerMaker=new PrinterMaker(1);
         players= new PlayerClient[2];
         players[0]=new PlayerClient(0,"pippo", true);
-        SchemesDeckMP deck= new SchemesDeckMP();
-        SchemeCardMP temp= deck.extractSchemebyID(3);
+        SchemesDeck deck= new SchemesDeck();
+        SchemeCard temp= deck.extractSchemebyID(3);
         temp.setfb(2);
         players[0].setPlayerScheme(temp);
         players[0].setTokens(3);

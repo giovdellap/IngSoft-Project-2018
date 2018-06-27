@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 
-import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentMP;
 import it.polimi.ingsw.commons.Die;
 

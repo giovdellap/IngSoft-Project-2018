@@ -5,7 +5,6 @@ import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ public class GeneralServer
      * @throws IOException
      */
     public GeneralServer(int sec) throws IOException {
-        generalSocket = new Socket();
+        //generalSocket = new Socket();
 
         serverSocket = new ServerSocket(7777);
         serverSocket.setSoTimeout(sec*1000);
@@ -35,6 +34,7 @@ public class GeneralServer
         try {
             generalSocket=new Socket();
             System.out.println("Waiting for clients..\n");
+            System.out.println(serverSocket.isClosed()+" accept");
             generalSocket = serverSocket.accept();
         }
         catch (SocketTimeoutException e){
@@ -49,13 +49,16 @@ public class GeneralServer
     public Socket reconnection(ArrayList<String> usernames) throws IOException {
         try {
             generalSocket=new Socket();
-            System.out.println("Waiting for clients..\n");
+            System.out.println("Waiting for clients..(rec)\n");
+            System.out.println(serverSocket.isClosed()+" reconn");
+            System.out.println(serverSocket.toString());
             generalSocket = serverSocket.accept();
         }
         catch (SocketTimeoutException e){
+            System.out.println("server chiuso(rec)");
             generalSocket.close();
-            System.out.println("Connection timed out\n");
-            return null;
+            System.out.println("Connection timed out(rec)\n");
+            return generalSocket;
         } catch (IOException e) {
             e.printStackTrace();
         }

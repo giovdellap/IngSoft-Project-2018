@@ -1,6 +1,6 @@
 package it.polimi.ingsw.commons;
 
-import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
@@ -10,12 +10,13 @@ import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class EventEncoderTest
@@ -70,7 +71,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkUsernameEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkUsernameEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(event);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -80,7 +81,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(event1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -90,7 +91,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkModelInitializationEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkModelInitializationEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         int [] pubObjs = {2, 3, 4, 5};
         int [] toolsIds = {2, 3, 4, 5};
 
@@ -106,7 +107,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkTurnEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkTurnEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         // create tempDisc
         ArrayList<String> tempDisc= new ArrayList<String>();
 
@@ -153,7 +154,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardOneEvents() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardOneEvents() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -164,7 +165,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT23);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -175,7 +176,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFourEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardFourEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT4);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -186,7 +187,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFiveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardFiveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT5);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -197,7 +198,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSixEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardSixEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT6);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -208,7 +209,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardSevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         //create tempdraft
 
         ArrayList<Die> tempDraft=new ArrayList<Die>();
@@ -234,7 +235,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT8910);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -245,7 +246,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardElevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardElevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT11);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -256,7 +257,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT12);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -267,7 +268,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkMoveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkMoveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventM);
         logger.log(tempArray.get(1));
         Event tempEvent = decoder.decodeEvent(tempArray);
@@ -280,7 +281,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkPassEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException {
+    public void checkPassEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventP);
         Event tempEvent = decoder.decodeEvent(tempArray);
 

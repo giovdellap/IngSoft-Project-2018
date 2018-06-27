@@ -168,7 +168,7 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCardSix.html#checkToolCardSixSchemeCard-it.polimi.ingsw.server.ModelComponent.DraftPool-int-it.polimi.ingsw.server.ModelComponent.SchemeCard-int-int-">checkToolCardSixSchemeCard</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/DraftPool.html" title="class in it.polimi.ingsw.server.ModelComponent">DraftPool</a>&nbsp;draft,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCardSix.html#checkToolCardSixSchemeCard-it.polimi.ingsw.server.ModelComponent.DraftPool-int-it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard-int-int-">checkToolCardSixSchemeCard</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/DraftPool.html" title="class in it.polimi.ingsw.server.ModelComponent">DraftPool</a>&nbsp;draft,
                           int&nbsp;pos,
                           <a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
                           int&nbsp;x,
@@ -196,7 +196,7 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCardSix.html#setScheme-it.polimi.ingsw.server.ModelComponent.SchemeCard-">setScheme</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCardSix.html#setScheme-it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard-">setScheme</a></span>(<a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme)</code>
 <div class="block">sets scheme card to tool card</div>
 </td>
 </tr>
@@ -286,8 +286,8 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
                                           <a href="../../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
                                           int&nbsp;x,
                                           int&nbsp;y)
-                                   throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a>,
-                                          <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                                   throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a>,
+                                          <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">checks if the tool card can be used or not</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -299,8 +299,8 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the move can be executed, false if it can't</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -313,8 +313,8 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 <pre>public&nbsp;void&nbsp;ApplyModifiesToScheme(int&nbsp;pos,
                                   int&nbsp;x,
                                   int&nbsp;y)
-                           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a>,
-                                  <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                           throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a>,
+                                  <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">apply modifies to scheme</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -322,8 +322,8 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 <dd><code>x</code> - row where to place die</dd>
 <dd><code>y</code> - column where to place die</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -334,15 +334,15 @@ extends <a href="../../../../../it/polimi/ingsw/server/ToolCards/ToolCard.html" 
 <li class="blockList">
 <h4>ApplyModifiesToDraft</h4>
 <pre>public&nbsp;void&nbsp;ApplyModifiesToDraft(int&nbsp;pos)
-                          throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a>,
-                                 <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></pre>
+                          throws <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a>,
+                                 <a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></pre>
 <div class="block">apply modifies to draft</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>pos</code> - draft pool's index</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
-<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>

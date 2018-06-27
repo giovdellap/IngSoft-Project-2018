@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
 
 public class SchemesDeckTest {
 
@@ -26,7 +28,7 @@ public class SchemesDeckTest {
 
 
     @Test
-    public void checkForDifferentID() throws InvalidIntArgumentException {
+    public void checkForDifferentID() throws InvalidIntArgumentException, FileNotFoundException {
 
             boolean flag=true;
             testTempDeck = testDeck.extractSchemes(6);
@@ -57,6 +59,8 @@ public class SchemesDeckTest {
 
             if (e.getMessage().equals("The int argument is invalid"))
                 flag = true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
         Assertions.assertEquals(true,flag);
@@ -64,7 +68,7 @@ public class SchemesDeckTest {
 
 
     @Test
-    public void checkExtractSchemesID() throws InvalidIntArgumentException {
+    public void checkExtractSchemesID() throws InvalidIntArgumentException, FileNotFoundException {
 
             boolean flag = true;
             testTempDeck = testDeck.extractSchemes(6);
@@ -94,9 +98,11 @@ public class SchemesDeckTest {
                 if (e.getMessage().equals("The int argument is invalid"))
                     flag = true;
 
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
 
-            Assertions.assertEquals(true,flag);
+        Assertions.assertEquals(true,flag);
 
     }
 

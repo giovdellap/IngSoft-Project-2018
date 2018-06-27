@@ -4,8 +4,8 @@ import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 

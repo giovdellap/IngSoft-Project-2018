@@ -149,7 +149,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../it/polimi/ingsw/server/CheckingMethods.html#checkFirstMove-it.polimi.ingsw.server.ModelComponent.SchemeCard-it.polimi.ingsw.commons.Die-int-int-">checkFirstMove</a></span>(<a href="../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../it/polimi/ingsw/server/CheckingMethods.html#checkFirstMove-it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard-it.polimi.ingsw.commons.Die-int-int-">checkFirstMove</a></span>(<a href="../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
               <a href="../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;dieToPlace,
               int&nbsp;x,
               int&nbsp;y)</code>
@@ -158,7 +158,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../it/polimi/ingsw/server/CheckingMethods.html#checkMove-it.polimi.ingsw.server.ModelComponent.SchemeCard-it.polimi.ingsw.commons.Die-int-int-">checkMove</a></span>(<a href="../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../it/polimi/ingsw/server/CheckingMethods.html#checkMove-it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard-it.polimi.ingsw.commons.Die-int-int-">checkMove</a></span>(<a href="../../../../it/polimi/ingsw/server/ModelComponent/SchemeCard.html" title="class in it.polimi.ingsw.server.ModelComponent">SchemeCard</a>&nbsp;scheme,
          <a href="../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;dieToPlace,
          int&nbsp;x,
          int&nbsp;y)</code>
@@ -215,8 +215,8 @@ extends java.lang.Object</pre>
                          <a href="../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;dieToPlace,
                          int&nbsp;x,
                          int&nbsp;y)
-                  throws <a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
-                         <a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+                  throws <a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
+                         <a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">method which check if a move can be executed</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -227,8 +227,8 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if move can be executed, false if it can't</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
-<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -242,8 +242,8 @@ extends java.lang.Object</pre>
                               <a href="../../../../it/polimi/ingsw/commons/Die.html" title="class in it.polimi.ingsw.commons">Die</a>&nbsp;dieToPlace,
                               int&nbsp;x,
                               int&nbsp;y)
-                       throws <a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a>,
-                              <a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></pre>
+                       throws <a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a>,
+                              <a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></pre>
 <div class="block">method which check if the first move of a player's match can be executed</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -254,8 +254,8 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the move can be executed, false if it can't</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">InvalidIntArgumentException</a></code></dd>
-<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.server.ServerExceptions">GenericInvalidArgumentException</a></code></dd>
+<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/InvalidIntArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">InvalidIntArgumentException</a></code></dd>
+<dd><code><a href="../../../../it/polimi/ingsw/server/ServerExceptions/GenericInvalidArgumentException.html" title="class in it.polimi.ingsw.commons.Exceptions">GenericInvalidArgumentException</a></code></dd>
 </dl>
 </li>
 </ul>

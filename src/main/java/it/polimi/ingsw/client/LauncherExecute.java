@@ -41,20 +41,26 @@ public class LauncherExecute extends Application
             mpExecute.start(stage);
         }
         else {
-
-            outVideo.println();
-            outVideo.println();
-            outVideo.println(cliToolsManager.simpleQuestionsMaker("PREMI S PER GIOCATORE SINGOLO, M PER MULTIGIOCATORE", 40, true));
-            outVideo.flush();
-            String msgIN = inKeyboard.readLine();
-            if (msgIN.charAt(0) == 'M') {
-                settings[0] = 2;
-                outVideo.println(cliToolsManager.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 40, true));
+            boolean flag=false;
+            while (!flag) {
+                outVideo.println();
+                outVideo.println();
+                outVideo.println(cliToolsManager.simpleQuestionsMaker("PREMI 1 PER INIZIARE UNA PARTITA, 2 PER CREARE UNO SCHEMA PERSONALIZZATO", 40, true));
                 outVideo.flush();
-                ip = inKeyboard.readLine();
+                String msgIN = inKeyboard.readLine();
+                if (msgIN.charAt(0) == '1') {
+                    settings[0] = 2;
+                    outVideo.println(cliToolsManager.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 40, true));
+                    outVideo.flush();
+                    ip = inKeyboard.readLine();
 
-                MPExecute mpExecute = new MPExecute(ip, settings);
-                mpExecute.start(stage);
+                    MPExecute mpExecute = new MPExecute(ip, settings);
+                    mpExecute.start(stage);
+                }
+                if (msgIN.charAt(0)=='2')
+                {
+
+                }
             }
         }
     }

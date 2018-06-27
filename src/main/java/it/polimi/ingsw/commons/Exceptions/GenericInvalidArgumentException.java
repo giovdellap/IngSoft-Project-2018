@@ -1,12 +1,10 @@
-package it.polimi.ingsw.client.ClientExceptions;
+package it.polimi.ingsw.commons.Exceptions;
 
 public class GenericInvalidArgumentException extends Exception
 {
-
     /**
      * GenericInvalidArgumentException Constructor
      */
-
     public GenericInvalidArgumentException()
     {
         super();

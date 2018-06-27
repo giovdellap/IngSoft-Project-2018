@@ -1,11 +1,12 @@
 package it.polimi.ingsw.client.PackageMP;
 
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MatchManager
@@ -21,17 +22,18 @@ public class MatchManager
      * @param me
      * @throws InvalidIntArgumentException
      */
-    public MatchManager(Initialization2Event event, String me) throws InvalidIntArgumentException {
-        SchemesDeckMP deck = new SchemesDeckMP();
+    public MatchManager(Initialization2Event event, String me) throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+        SchemesDeck deck = new SchemesDeck();
         players = new PlayerClient[event.getPlayerSize()];
         for(int i=0;i<players.length;i++)
         {
             players[i] = new PlayerClient(i, event.getEventPlayer(i).getName(), me.equals(event.getEventPlayer(i).getName()));
-            SchemeCardMP scheme = deck.extractSchemebyID(event.getEventPlayer(i).getSchemeId());
+            SchemeCard scheme = deck.extractSchemebyID(event.getEventPlayer(i).getSchemeId());
             scheme.setfb(event.getEventPlayer(i).getFb());
             players[i].setPlayerScheme(scheme);
             players[i].setTokens(event.getEventPlayer(i).getTokens());
         }
+        disconnectedPlayers = new ArrayList<Integer>();
     }
 
     public PlayerClient getPlayer(int index)
@@ -61,6 +63,7 @@ public class MatchManager
      */
     public void setDisconnectedPlayers(ArrayList<String> temp)
     {
+        disconnectedPlayers = new ArrayList<Integer>();
         for(String str: temp)
             for(int i=0;i<players.length;i++)
                 if(players[i].getName().equals(str))
@@ -88,7 +91,7 @@ public class MatchManager
         return players;
     }
 
-    public void setPlayerScheme(int id, SchemeCardMP scheme) throws InvalidIntArgumentException {
+    public void setPlayerScheme(int id, SchemeCard scheme) throws InvalidIntArgumentException {
         players[id].setPlayerScheme(scheme);
     }
 }

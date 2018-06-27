@@ -1,10 +1,9 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Loggers.MajorLogger;
-import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidinSocketException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidinSocketException;
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class Main {
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
-    public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
+    public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
 
         Match thisMatch = new Match();
     }

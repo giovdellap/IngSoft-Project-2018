@@ -1,9 +1,9 @@
-package it.polimi.ingsw.client.PackageMP.ViewMP;
+package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
+
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import org.fusesource.jansi.Ansi;
 
 public class ComponentFactory
@@ -28,10 +28,10 @@ public class ComponentFactory
      * @return
      * @throws InvalidIntArgumentException
      */
-    public String[] selectionG(SchemeCardMP scheme, int fb, int num) throws InvalidIntArgumentException
+    public String[] selectionG(SchemeCard scheme, int fb, int num) throws InvalidIntArgumentException
     {
 
-        SchemeCardMP tempScheme = scheme;
+        SchemeCard tempScheme = scheme;
         tempScheme.setfb(fb);
         String[] gComponent = new String[7];
 
@@ -148,12 +148,12 @@ public class ComponentFactory
      * @throws InvalidIntArgumentException
      */
 
-    public String[] selectionA(SchemeCardMP scheme, String username, int tokens) throws InvalidIntArgumentException
+    public String[] selectionA(SchemeCard scheme, String username, int tokens) throws InvalidIntArgumentException
     {
 
         String[] aComponent = new String[7];
 
-        SchemeCardMP tempScheme = scheme;
+        SchemeCard tempScheme = scheme;
         aComponent[0]="";
         aComponent[0]=cliToolsManager.centerThatString(modelGenerator.getScheme(tempScheme)[0], 20);
         for(int i=1;i<5;i++)

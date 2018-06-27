@@ -8,9 +8,9 @@ import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.io.*;
 import java.net.Socket;
@@ -71,7 +71,7 @@ public class SocketServer extends Observable
      * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    public void insertUsername() throws IOException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void insertUsername() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
             currentEvent = eventDecoder.decodeEvent(listenForEvent());
             setChanged();
             notifyObservers(currentEvent);
@@ -87,8 +87,7 @@ public class SocketServer extends Observable
             sendArrayList(eventEncoder.encodeEvent(event));
         }catch (Exception e)
         {
-
-            //socket.close();
+            socket.close();
             logger.log("Player disconnected");
             disconnectionManager();
         }

@@ -2,8 +2,8 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.Connection.GeneralServer;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -18,8 +18,8 @@ public class LobbyCreator
      * LobbyCreator Constructor
      * @throws IOException
      */
-    public LobbyCreator() throws IOException {
-        generalServer = new GeneralServer(25);
+    public LobbyCreator(GeneralServer gs) throws IOException {
+        generalServer = gs;
         logger=new SimpleLogger(0, false);
     }
 
@@ -30,7 +30,8 @@ public class LobbyCreator
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public ArrayList<Player> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException, it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException {
+    public ArrayList<Player> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException
+    {
         logger.log("Lobby creation started");
         ArrayList<Player> temp = new ArrayList<Player>();
         ArrayList<String> tempStrings = new ArrayList<String>();
@@ -91,7 +92,8 @@ public class LobbyCreator
                 }
             }
         }
-        generalServer.close();
+        System.out.println("server chiuso");
+        //generalServer.close();
         return temp;
     }
 

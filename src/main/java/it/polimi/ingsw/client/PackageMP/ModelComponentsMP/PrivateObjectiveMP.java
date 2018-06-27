@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.PackageMP.ModelComponentsMP;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentMP;
 
 public class PrivateObjectiveMP implements ModelComponentMP {

@@ -1,32 +1,34 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemesDeckMP;
+
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 public class GetSelectionSceneTest
 {
     private PrinterMaker printerMakerTest;
-    private SchemesDeckMP schemesDeckMP;
-    private SchemeCardMP testScheme;
-    private SchemeCardMP testScheme1;
+    private SchemesDeck schemesDeckMP;
+    private SchemeCard testScheme;
+    private SchemeCard testScheme1;
     private PrivateObjectiveMP testPrivObj;
     private int [] tempTools;
     private PublicObjectiveMP [] tempPubObj;
 
     @BeforeEach
 
-    public void setUp() throws InvalidIntArgumentException
-    {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         printerMakerTest=new PrinterMaker(1);
 
-        schemesDeckMP = new SchemesDeckMP();
+        schemesDeckMP = new SchemesDeck();
         testScheme = schemesDeckMP.extractSchemebyID(5);
         testScheme1 = schemesDeckMP.extractSchemebyID(7);
 

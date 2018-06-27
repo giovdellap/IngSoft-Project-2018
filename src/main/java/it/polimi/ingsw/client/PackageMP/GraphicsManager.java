@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.PackageMP;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Loggers.MinorLogger;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.BeautifulCLI;
-import it.polimi.ingsw.client.ClientExceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
@@ -14,6 +14,7 @@ import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardElevenEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardSixEvent;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.io.IOException;
@@ -95,9 +96,9 @@ public class GraphicsManager extends Observable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public void getSelectedScheme(SchemeCardMP scheme1, SchemeCardMP scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException {
+    public void getSelectedScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException {
         if(graphics==2) {
-            SchemeCardMP temp = beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
+            SchemeCard temp = beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
             currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
             setChanged();
             notifyObservers(currentEvent);
@@ -145,7 +146,7 @@ public class GraphicsManager extends Observable
     public void myTurn() throws InvalidIntArgumentException, IOException {
         int whatToDo;
         if(graphics==2) {
-            if (disconnected!=null)
+            if (!disconnected.isEmpty())
                 whatToDo = beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
             else
                 whatToDo = beautifulCLI.askForWhat(players, draft, track, toolsUsage, activePlayer, me, round);
@@ -179,7 +180,7 @@ public class GraphicsManager extends Observable
      * @throws IOException
      */
     public void notMyTurn() throws InvalidIntArgumentException, IOException {
-        if (disconnected!=null)
+        if (!disconnected.isEmpty())
             beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
         else
             beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round);
@@ -257,7 +258,7 @@ public class GraphicsManager extends Observable
     }
 
 
-    public void showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException, IOException {
+    public void showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, IOException {
         beautifulCLI.showScores(event, winner);
     }
 

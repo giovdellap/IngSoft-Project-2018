@@ -1,10 +1,13 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.*;
-import it.polimi.ingsw.server.ServerExceptions.FullDataStructureException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Model
@@ -50,8 +53,7 @@ public class Model
      * initializes and extracts schemes from deck
      * @throws InvalidIntArgumentException
      */
-    public void setSchemesDeck() throws InvalidIntArgumentException
-    {
+    public void setSchemesDeck() throws InvalidIntArgumentException, FileNotFoundException {
         scDeck = new SchemesDeck();
         tempSchemes = scDeck.extractSchemes(numPlayers*2);
         playerSchemes = new ArrayList<SchemeCard>();

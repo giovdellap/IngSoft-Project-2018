@@ -1,8 +1,6 @@
 package it.polimi.ingsw.commons.Events;
 
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
-
-import java.util.ArrayList;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ScorePlayer
 {

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.commons.Socket.EventHandling;
 
-import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
@@ -11,7 +10,7 @@ import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.util.ArrayList;
 

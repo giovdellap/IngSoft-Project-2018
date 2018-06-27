@@ -1,13 +1,15 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
-import it.polimi.ingsw.server.ModelComponent.SchemeCard;
-import it.polimi.ingsw.server.ModelComponent.SchemesDeck;
-import it.polimi.ingsw.server.ServerExceptions.GenericInvalidArgumentException;
-import it.polimi.ingsw.server.ServerExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
 
 public class CheckingMethodsTest {
 
@@ -21,7 +23,7 @@ public class CheckingMethodsTest {
     //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException {
 
         checkingMethodsTest = new CheckingMethods();
         schemesDeckTest = new SchemesDeck();

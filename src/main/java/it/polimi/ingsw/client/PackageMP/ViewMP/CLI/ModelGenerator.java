@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.PackageMP.ViewMP.CLI;
 
-import it.polimi.ingsw.client.ClientExceptions.InvalidIntArgumentException;
+import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.RoundTrackMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.SchemeCardMP;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
+
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import org.fusesource.jansi.Ansi;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class ModelGenerator
      * @return
      * @throws InvalidIntArgumentException
      */
-    public String[] getScheme(SchemeCardMP scheme) throws InvalidIntArgumentException
+    public String[] getScheme(SchemeCard scheme) throws InvalidIntArgumentException
     {
         //returns a String[5] representing the schemecard
         //1 vector's element = 1 row
