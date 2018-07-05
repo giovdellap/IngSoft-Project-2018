@@ -19,7 +19,8 @@ public class SchemeCardReader {
         if (index==1)
         {
             //read from json and instantiate a SchemeCard to set
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard1.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard1.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -30,7 +31,8 @@ public class SchemeCardReader {
 
         if (index==2)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard2.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard2.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -40,7 +42,8 @@ public class SchemeCardReader {
 
         if (index==3)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard3.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard3.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -50,7 +53,8 @@ public class SchemeCardReader {
 
         if (index==4)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard4.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard4.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -60,7 +64,8 @@ public class SchemeCardReader {
 
         if (index==5)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard5.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard5.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -70,7 +75,8 @@ public class SchemeCardReader {
 
         if (index==6)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard6.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard6.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -80,7 +86,8 @@ public class SchemeCardReader {
 
         if (index==7)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard7.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard7.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -90,7 +97,8 @@ public class SchemeCardReader {
 
         if (index==8)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard8.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard8.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -100,7 +108,8 @@ public class SchemeCardReader {
 
         if (index==9)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard9.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard9.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -110,7 +119,8 @@ public class SchemeCardReader {
 
         if (index==10)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard10.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard10.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -120,7 +130,8 @@ public class SchemeCardReader {
 
         if (index==11)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard11.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard11.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);
@@ -130,7 +141,8 @@ public class SchemeCardReader {
 
         if (index==12)
         {
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\SchemeCards\\SchemeCard12.json")));
+            ClassLoader classLoader = getClass().getClassLoader();
+            br = new BufferedReader(new FileReader(new File(classLoader.getResource("./JsonPackage/SchemeCards/SchemeCard12.json").getFile())));
             card = gson.fromJson(br, SchemeCardObj.class);
 
             SchemeCard tempScheme=new SchemeCard(index);

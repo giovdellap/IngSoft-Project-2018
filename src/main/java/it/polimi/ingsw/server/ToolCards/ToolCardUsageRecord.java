@@ -37,6 +37,9 @@ public class ToolCardUsageRecord
             }
         }
 
+        selectedId[0] = 1;
+        selectedId[1] = 2;
+        selectedId[2] = 3;
 
         cards = new ToolCard[3];
         toolCardConstructor();

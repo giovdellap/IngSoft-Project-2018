@@ -136,6 +136,12 @@ public class BeautifulCLI implements ViewInterface, Runnable
         return move;
     }
     public ToolCardEvent getUseTool() {
+        if(useTool==null)
+        {
+            System.out.println("dio null");
+        }
+        else
+            System.out.println("puttana la madonna");
         return useTool;
     }
 
@@ -290,7 +296,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
         printOut(printerMaker.selectAction());
 
         readWithExceptions(0,2);
-        System.out.println("askForWhat msgIn: "+msgIN);
 
         askForWhat = Integer.parseInt(msgIN);
     }
@@ -720,7 +725,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
 
             }
         }
-        useTool = null;
     }
 
     /**
