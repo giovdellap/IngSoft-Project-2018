@@ -227,7 +227,7 @@ public class Match extends Observable implements Observer {
             executor.execute(graphicsManager);
 
             executor.shutdown();
-            executor.awaitTermination(70, SECONDS);
+            executor.awaitTermination(180, SECONDS);
 
             logger.debugLog("itsMyTurn while 2");
 
@@ -316,9 +316,8 @@ public class Match extends Observable implements Observer {
             }
             case (2):
             {
-                SchemeCard tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
-                tempScheme.shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1() );
-                matchManager.setPlayerScheme(((ToolCardTwoThreeEvent) currentEvent).getPlayer(),tempScheme);
+                matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme().shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1());
+                System.out.println(matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme().getDie(((ToolCardTwoThreeEvent) currentEvent).getX1(),((ToolCardTwoThreeEvent) currentEvent).getY1()).getValue());
                 break;
 
             }

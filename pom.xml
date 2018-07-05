@@ -27,59 +27,8 @@
         </plugins>
         <resources>
             <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Launcher</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-                </includes>
+                <directory>src/main/resources</directory>
             </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/DemoMode</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/Initialization/ModelInitialization</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/Initialization/UsernameInsertion</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-
-                </includes>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/WaitScenes</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.jpg</include>
-
-                </includes>
-            </resource>
-
         </resources>
     </build>
     <packaging>jar</packaging>
