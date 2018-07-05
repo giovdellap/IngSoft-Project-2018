@@ -3,10 +3,7 @@ package it.polimi.ingsw.commons.Socket.EventHandling;
 import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
-import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
-import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
-import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
-import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
+import it.polimi.ingsw.commons.Events.Initialization.*;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
@@ -375,9 +372,9 @@ public class EventEncoder
     public ArrayList<String> encodeTurnEvent(TurnEvent event)
     {
         ArrayList<String> temp = new ArrayList<String>();
-        int i;
-
         int j;
+
+        System.out.println("My turn encoder: "+event.itsMyTurn());
 
         temp.add(transformer.simpleEncode("round",Integer.toString(event.getRound())));
 
@@ -487,6 +484,25 @@ public class EventEncoder
                 temp.add(encoder.arrayListEncoder(tempRD.get(z).getRd())[h]);
         }
 
+        return temp;
+    }
+
+    public ArrayList<String> encodePersonalSchemeEvent(PersonalSchemeEvent event) throws InvalidIntArgumentException {
+        ArrayList<String> temp = new ArrayList<String>();
+        temp.add(transformer.simpleEncode("playerId", Integer.toString(event.getPlayer())));
+
+        for(int x=0;x<4;x++)
+        {
+            for(int y=0;y<5;y++)
+            {
+                if(event.getScheme().getCell(1, x, y)!=0)
+                {
+                    temp.add(transformer.simpleEncode("x", Integer.toString(x)));
+                    temp.add(transformer.simpleEncode("y", Integer.toString(y)));
+                    temp.add(transformer.simpleEncode("cell", Integer.toString(event.getScheme().getCell(1, x, y))));
+                }
+            }
+        }
         return temp;
     }
 

@@ -2,9 +2,9 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardEightNineTenEvent extends ToolCardEvent {
 
-    int index;
-    int x;
-    int y;
+    private int index;
+    private int x;
+    private int y;
 
     public ToolCardEightNineTenEvent(int id) {
         super("ToolCardEightNineTenEvent", id);

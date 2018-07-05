@@ -2,9 +2,6 @@ package it.polimi.ingsw.commons;
 
 public class SimpleLogger
 {
-    private boolean connectionDebug = false; //1
-    private boolean graphicsDebug=false; //2
-    private boolean serverMatchDebug=false; //3
 
     private boolean debugMode;
 
@@ -16,19 +13,16 @@ public class SimpleLogger
 
         switch (i){
             case (1): {
-                connectionDebug = true;
                 debugType="CONNECTION";
                 break;
             }
             case(2):
             {
-                graphicsDebug=true;
                 debugType="GRAPHICS";
                 break;
             }
             case(3):
             {
-                serverMatchDebug=true;
                 debugType="MATCH";
                 break;
             }
@@ -47,21 +41,6 @@ public class SimpleLogger
 
     }
 
-    public void printDebugType()
-    {
-        if(debugMode)
-            System.out.println(debugType);
-    }
-
-    public void printDebugStarter(String s)
-    {
-        if(debugMode)
-        {
-            System.out.println();
-            System.out.println(debugType+" "+s);
-            System.out.println();
-        }
-    }
 
     public void printNBlankLines(int n)
     {

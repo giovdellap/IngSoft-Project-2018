@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ToolCardSevenEvent extends ToolCardEvent {
 
-    ArrayList<Die> dice;
+    private ArrayList<Die> dice;
 
     public ToolCardSevenEvent(int id) {
         super("ToolCardSevenEvent", id);

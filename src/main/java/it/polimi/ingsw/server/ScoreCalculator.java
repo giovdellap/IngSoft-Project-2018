@@ -15,11 +15,11 @@ public class ScoreCalculator
     private ArrayList<ScorePlayer> scorePlayers;
 
     private Model finalModel;
-    private ArrayList<Player> players;
+    private ArrayList<PlayerThread> players;
 
     private SimpleLogger logger;
 
-    public ScoreCalculator(Model model, ArrayList<Player> players)
+    public ScoreCalculator(Model model, ArrayList<PlayerThread> players)
     {
         finalModel=model;
         this.players=players;
@@ -116,7 +116,6 @@ public class ScoreCalculator
             }
             tempPlayers.add(scorePlayers.get(index));
 
-            logger.log(Integer.toString(i + 1) + "  Player " + event.getPlayers().get(i).getName() + " points: " + Integer.toString(event.getPlayers().get(i).getTot()));
 
         }
         while (tempPlayers.size()!=1)

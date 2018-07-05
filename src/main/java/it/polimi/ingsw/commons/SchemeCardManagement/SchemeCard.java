@@ -5,7 +5,7 @@ import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
-//NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+//NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
 public class SchemeCard
 {
@@ -16,10 +16,10 @@ public class SchemeCard
     private int backDiff;
     private int fb;
     private boolean isDisabled = false;
-    private int front[][];
-    private int back[][];
+    private int[][] front;
+    private int[][] back;
 
-    private Die diceScheme[][];
+    private Die[][] diceScheme;
 
     /**
      * SchemeCard Constructor

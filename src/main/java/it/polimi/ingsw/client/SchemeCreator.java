@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
+import it.polimi.ingsw.client.Graphics.CLI.CLIToolsManager;
+import it.polimi.ingsw.client.Graphics.CLI.ModelGenerator;
+import it.polimi.ingsw.client.Graphics.CLI.PrinterMaker;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
@@ -32,6 +32,10 @@ public class SchemeCreator
     public void createScheme() throws IOException, InvalidIntArgumentException {
         printOut(clito.simpleQuestionsMaker("BENVENUTO NELLA CREAZIONE SCHEMA", 80, false));
         boolean end=false;
+        printOut(clito.simpleQuestionsMaker("Seleziona un nome per il tuo nuovo schema personalizzato", 80, true));
+        readIt();
+        newScheme.setName(1, msgIN);
+
         while(!end)
         {
             printOut(clito.simpleQuestionsMaker("Questo è il tuo schema", 80, false));
@@ -74,8 +78,11 @@ public class SchemeCreator
                     newScheme.setCell(1, x, y, toInsert);
             }
 
+            printOut(clito.simpleQuestionsMaker("Premere 1 per uscire e salvare, 2 per contnuare", 80, false));
+            readWithExceptions(1, 2);
 
-
+            if(msgIN=="1")
+                end = true;
         }
 
     }
@@ -89,18 +96,16 @@ public class SchemeCreator
      * @throws IOException
      */
 
-    public void readWithExceptions(int leftBound, int rightBound) throws IOException {
-
+    public void readWithExceptions(int leftBound, int rightBound) throws IOException
+    {
         try {
-
             readIt();
-
-            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound) {
+            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound)
+            {
                 printOut(printerMaker.wrongInsertion());
                 readWithExceptions(leftBound, rightBound);
             }
         }
-
         catch (NumberFormatException e) {
             printOut(printerMaker.wrongInsertion());
             readWithExceptions(leftBound, rightBound);
@@ -139,6 +144,5 @@ public class SchemeCreator
         outVideo.println("==>");
         outVideo.flush();
         msgIN = inKeyboard.readLine();
-        //System.out.println(msgIN);
     }
 }

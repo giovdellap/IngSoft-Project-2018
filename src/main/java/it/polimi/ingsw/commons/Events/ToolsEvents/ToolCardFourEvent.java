@@ -2,14 +2,14 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardFourEvent extends ToolCardEvent {
 
-    int x01;
-    int y01;
-    int x02;
-    int y02;
-    int x11;
-    int y11;
-    int x22;
-    int y22;
+    private int x01;
+    private int y01;
+    private int x02;
+    private int y02;
+    private int x11;
+    private int y11;
+    private int x22;
+    private int y22;
 
     public ToolCardFourEvent(int id) {
         super("ToolCardFourEvent", id);

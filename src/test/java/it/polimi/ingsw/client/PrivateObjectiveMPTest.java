@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
+import it.polimi.ingsw.client.ModelComponentsMP.PrivateObjectiveMP;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;

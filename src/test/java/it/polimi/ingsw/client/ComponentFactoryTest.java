@@ -2,8 +2,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ComponentFactory;
+import it.polimi.ingsw.client.ModelComponentsMP.*;
+import it.polimi.ingsw.client.Graphics.CLI.ComponentFactory;
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
@@ -50,9 +50,9 @@ public class ComponentFactoryTest
 
         tempDraft=new DraftPoolMP(tempVectDie);
 
-        RoundDiceMP tempRoundDice= new RoundDiceMP(1);
+        RoundDiceMP tempRoundDice= new RoundDiceMP();
 
-        RoundDiceMP tempRoundDice1= new RoundDiceMP(2);
+        RoundDiceMP tempRoundDice1= new RoundDiceMP();
 
         tempRoundDice.addDie(tempVectDie.get(0));
 

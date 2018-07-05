@@ -5,7 +5,7 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 public class Die
 {
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
-    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+    //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     private int value;
     private int color;

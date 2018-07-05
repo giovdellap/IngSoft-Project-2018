@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardTwoThreeEvent;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
@@ -16,6 +18,21 @@ public class ToolCardThree extends ToolCard {
     public ToolCardThree() {
         setToolCardName("Copper Foil Burnisher");
         setId(3);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        ToolCardTwoThreeEvent event = ((ToolCardTwoThreeEvent)currentEvent);
+
+        setTempScheme(modelInstance.getSchemebyIndex(player.getId()));
+        boolean check = checkToolCardThree( event.getX0(), event.getY0(),modelInstance.getSchemebyIndex(player.getId()),event.getX1(), event.getY1());
+        if(check) {
+            modelInstance.setPlayerScheme(player.getId(),applyModifies(event.getX0(),  event.getY0(), event.getX1() , event.getY1()));
+            event.validate();
+            return event;
+        }
+
+        event.resetValidation();
+        return event;
     }
 
     /**

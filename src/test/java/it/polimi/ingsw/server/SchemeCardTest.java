@@ -184,31 +184,9 @@ public class SchemeCardTest {
 
     }
 
-    @Test
-    public void checkSetDieException3() throws InvalidIntArgumentException, GenericInvalidArgumentException {
-
-        boolean flag = false;
-
-        try {
-
-            testScheme.setDie(testDie,2,3);
-            testDie.throwDie();
-            testScheme.setDie(testDie,2,3);
-        }
-
-        catch (GenericInvalidArgumentException e) {
-
-            if (e.getMessage().equals("Generic invalid argument"))
-                flag = true;
-
-        }
-
-        Assertions.assertEquals(true,flag);
-
-    }
 
     @Test
-    public void checkGetDieException() throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public void checkGetDieException() {
 
         boolean flag = false;
 

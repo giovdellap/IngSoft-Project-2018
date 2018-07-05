@@ -2,8 +2,7 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 import it.polimi.ingsw.commons.Events.Event;
 
-public abstract class ToolCardEvent extends Event
-{
+public abstract class ToolCardEvent extends Event {
     private int id;
     private int player;
 

@@ -2,10 +2,10 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardTwoThreeEvent extends ToolCardEvent {
 
-    int x0;
-    int y0;
-    int x1;
-    int y1;
+    private int x0;
+    private int y0;
+    private int x1;
+    private int y1;
 
     public ToolCardTwoThreeEvent(int id) {
         super("ToolCardTwoThreeEvent", id);

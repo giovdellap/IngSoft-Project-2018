@@ -23,7 +23,7 @@ public class Initialization2Event extends Event {
         int fb;
         int tokens;
 
-        //COSTRUCTOR
+        //CONSTRUCTOR
         public EventPlayer(int id, String name, int schemeId, int fb, int tokens)
         {
             this.id=id;

@@ -171,16 +171,6 @@ public class SchemeCardReader {
         return tempSchemeBuild;
     }
 
-    public void printSchemeCard()
-    {
-        if (card != null)
-            for (FrontOrBackObj t : card.getResult())
-                System.out.println(t.getName() + " - " + t.getDiff() + " - " + t.getCells());
-        else System.out.println("The card is null");
-
-    }
-
-
 
 }
 

@@ -11,14 +11,6 @@ public class CheckingMethods {
     //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     /**
-     * CheckingMethods Constructor
-     */
-
-    public CheckingMethods() {
-
-    }
-
-    /**
      * method which check if a move can be executed
      * @param scheme scheme to check move on
      * @param dieToPlace Die to place on scheme
@@ -26,9 +18,8 @@ public class CheckingMethods {
      * @param y column
      * @return true if move can be executed, false if it can't
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
      */
-    public boolean checkMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public boolean checkMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException {
 
         boolean flag = false;
 
@@ -127,9 +118,8 @@ public class CheckingMethods {
      * @param y column
      * @return true if the move can be executed, false if it can't
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
      */
-    public boolean checkFirstMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public boolean checkFirstMove(SchemeCard scheme, Die dieToPlace, int x, int y) throws InvalidIntArgumentException {
 
         if(x!=0 && x!=3 && y!=0 && y!=4)
             return false;

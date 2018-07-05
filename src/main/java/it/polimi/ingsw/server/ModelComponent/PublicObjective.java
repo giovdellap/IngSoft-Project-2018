@@ -6,7 +6,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 public class PublicObjective {
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
-    //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
+    //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     private int id;
     private int bonus;
@@ -231,7 +231,7 @@ public class PublicObjective {
             for (int j = 0; j < 6; j++)
                 temp[j] = 1;
             for (int j = 0; j < 5; j++)
-                if (scheme.getDie(i, j).getColor() != 0)
+                if (!scheme.getDie(i, j).isDisabled())
                     temp[scheme.getDie(i, j).getValue() - 1] = 0;
             int test = 2;
             for (int j = 0; j < 6; j++)

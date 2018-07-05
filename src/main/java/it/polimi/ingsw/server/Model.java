@@ -2,7 +2,6 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
-import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
@@ -24,8 +23,6 @@ public class Model
     private ArrayList<SchemeCard> playerSchemes;
     private ArrayList<PrivateObjective> playersPrObjs;
 
-    private SimpleLogger logger;
-
     /**
      * Model Constructor
      * @param numPlayers number of players
@@ -33,7 +30,6 @@ public class Model
     public Model(int numPlayers)
     {
             this.numPlayers=numPlayers;
-            logger = new SimpleLogger(0, false);
     }
 
     /**
@@ -188,11 +184,23 @@ public class Model
      * @param id player's id
      * @param scheme player's scheme
      */
-    public void setPlayerScheme(int id, SchemeCard scheme) throws InvalidIntArgumentException {
-        if(id<playerSchemes.size())
-            playerSchemes.set(id, scheme);
-        else
-            playerSchemes.add(scheme);
+    public void setPlayerScheme(int id, SchemeCard scheme) {
+        playerSchemes.set(id, scheme);
+
+    }
+
+    public void setPlayerSchemeFirstTime(int id, int schemeID, int fb) throws InvalidIntArgumentException {
+        if(tempSchemes[id+(tempSchemes.length/2)].getID()==schemeID)
+            tempSchemes[id]=tempSchemes[id+(tempSchemes.length/2)];
+        tempSchemes[id].setfb(fb);
+
+    }
+
+    public void initializationEnd()
+    {
+        playerSchemes=new ArrayList<SchemeCard>();
+        for(int i=0;i<(tempSchemes.length/2);i++)
+            playerSchemes.add(tempSchemes[i]);
     }
 
     /**
@@ -209,10 +217,8 @@ public class Model
     public void firstRoundCleaner(ArrayList<Integer> ids)
     {
         for(Integer id : ids)
-        {
             playersPrObjs.remove(id);
-            playerSchemes.remove(id);
-        }
+
     }
 
 }

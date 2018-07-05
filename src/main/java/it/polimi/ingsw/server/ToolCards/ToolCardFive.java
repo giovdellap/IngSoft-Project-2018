@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardFiveEvent;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
@@ -11,17 +13,40 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ToolCardFive extends ToolCard {
 
-    RoundTrack roundTrack;
-    DraftPool draft;
+    private RoundTrack roundTrack;
+    private DraftPool draft;
     SchemeCard scheme;
 
     /**
      * ToolCardFive Constructor
-     * @throws InvalidIntArgumentException
      */
     public ToolCardFive() {
         setToolCardName("Lens Cutter");
         setId(5);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+
+        ToolCardFiveEvent event = ((ToolCardFiveEvent)currentEvent);
+
+        boolean check = checkToolCardFive(modelInstance.getDraft(),event.getIndex(),modelInstance.getTrack(),event.getTurn(),event.getPos());
+        if(check)
+            check=afterDraftingCheck(modelInstance.getDraft().returnDie(event.getIndex()), event.getX(),event.getY());
+        if(check)
+        {
+            setRoundTrack(modelInstance.getTrack());
+            setDraft(modelInstance.getDraft());
+            setScheme(modelInstance.getSchemebyIndex(player.getId()));
+            applyModifies(event.getIndex(),event.getTurn(),event.getPos(),event.getX(),event.getY());
+            modelInstance.setDraft(getDraft());
+            modelInstance.setTrack(getTrack());
+            modelInstance.setPlayerScheme(player.getId(),getScheme());
+            event.validate();
+            return event;
+        }
+
+        event.resetValidation();
+        return event;
     }
 
     /**
@@ -113,7 +138,7 @@ public class ToolCardFive extends ToolCard {
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
-    public void applyModifies(int posDraft, int turn, int pos, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+    public void applyModifies(int posDraft, int turn, int pos, int x, int y) throws InvalidIntArgumentException, GenericInvalidArgumentException {
 
         RoundDice temp = roundTrack.returnNTurnRoundDice(turn);
         Die toPlace2 = temp.getDie(pos);

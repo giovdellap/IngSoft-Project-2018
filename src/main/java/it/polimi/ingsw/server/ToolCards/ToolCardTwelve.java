@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardTwelveEvent;
 import it.polimi.ingsw.server.CheckingMethods;
 import it.polimi.ingsw.server.ModelComponent.RoundDice;
 import it.polimi.ingsw.server.ModelComponent.RoundTrack;
@@ -18,6 +20,33 @@ public class ToolCardTwelve extends ToolCard {
     public ToolCardTwelve() {
         setToolCardName("Tap Wheel");
         setId(12);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        ToolCardTwelveEvent event = (ToolCardTwelveEvent)currentEvent;
+        if(event.isOnlyOne())
+        {
+            setTempScheme(modelInstance.getSchemebyIndex(player.getId()));
+            if(checkToolCardTwelve1Die(modelInstance.getTrack(), event.getTurn(), event.getPos(), modelInstance.getSchemebyIndex(player.getId()), event.getX01(), event.getY01(), event.getX11(), event.getY11()))
+            {
+                modelInstance.setPlayerScheme(player.getId(), applyModifies(event.getX01(), event.getY01(), event.getX11(),event.getY11()));
+                event.validate();
+                return event;
+            }
+        }
+        else
+        {
+            setTempScheme(modelInstance.getSchemebyIndex(player.getId()));
+            if(checkToolCardTwelve2Dice(modelInstance.getTrack(), event.getTurn(), event.getPos(), event.getX01(), event.getY01(), event.getX02(), event.getY02(), modelInstance.getSchemebyIndex(player.getId()), event.getX11(),event.getY11(), event.getX22(), event.getY22()));
+            {
+                modelInstance.setPlayerScheme(player.getId(),applyModifies(event.getX01(), event.getY01(), event.getX02(), event.getY02(), event.getX11(), event.getY11(), event.getX22(), event.getY22()));
+                event.validate();
+                return event;
+            }
+        }
+        event.resetValidation();
+        return event;
     }
 
     /**
@@ -172,10 +201,9 @@ public class ToolCardTwelve extends ToolCard {
      * @param y22 column where to place the second die
      * @return modified scheme card
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
      */
 
-    public SchemeCard applyModifies(int x01, int y01, int x02, int y02, int x11, int y11, int x22, int y22) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public SchemeCard applyModifies(int x01, int y01, int x02, int y02, int x11, int y11, int x22, int y22) throws InvalidIntArgumentException {
 
         tempScheme.shiftDie(x01, y01, x11, y11);
         tempScheme.shiftDie(x02, y02, x22, y22);
@@ -191,10 +219,9 @@ public class ToolCardTwelve extends ToolCard {
      * @param y1 column where to place the die
      * @return modified scheme card
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
      */
 
-    public SchemeCard applyModifies(int x0, int y0, int x1, int y1) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+    public SchemeCard applyModifies(int x0, int y0, int x1, int y1) throws InvalidIntArgumentException {
 
         tempScheme.shiftDie(x0,y0,x1, y1);
         return tempScheme;

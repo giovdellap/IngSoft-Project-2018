@@ -1,6 +1,7 @@
 package it.polimi.ingsw.commons.Events;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.util.ArrayList;
 
@@ -9,17 +10,20 @@ public class TurnEvent extends Event
     private int round;
     private boolean noDisconnected;
     private ArrayList<String> disconnected;
-    int active;
+    private int active;
 
     private ArrayList<Die> draft;
     private int[] toolsUpdate;
 
-    private boolean myTurn;
+    private boolean myTurn=false;
     private ArrayList<Die> lastRound;
     private boolean nextRound;
 
+    private SimpleLogger logger;
+
     public TurnEvent() {
         super("TurnEvent");
+        logger=new SimpleLogger(0, false);
     }
 
 
@@ -54,6 +58,7 @@ public class TurnEvent extends Event
     public void setMyTurn(boolean bool)
     {
         myTurn=bool;
+        logger.log("Turn event turn setted to "+bool);
     }
     public void setLastRound(ArrayList<Die> lastRound) {
         this.lastRound = lastRound;

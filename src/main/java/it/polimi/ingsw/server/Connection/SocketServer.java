@@ -23,22 +23,12 @@ public class SocketServer extends Observable
     private Socket socket;
     private BufferedReader inSocket;
     private PrintWriter outSocket;
-    private String ip;
 
     //TOOLS
     private SocketProtocolTransformer transformer;
     private SocketEncoder socketEncoder;
     private EventEncoder eventEncoder;
     private EventDecoder eventDecoder;
-
-    private String tempCmd="";
-    private String tempArg="";
-    private int numPlayers;
-
-    private ArrayList<String> msg;
-    private String[] tempNames;
-    private String[] playerNames;
-    private boolean connected = true;
 
     public Event currentEvent;
 
@@ -51,7 +41,6 @@ public class SocketServer extends Observable
      */
     public SocketServer(Socket s) throws IOException
     {
-
         socket = s;
         inSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
@@ -61,8 +50,7 @@ public class SocketServer extends Observable
         eventEncoder = new EventEncoder();
         eventDecoder = new EventDecoder();
 
-        msg = new ArrayList<String>();
-        logger = new SimpleLogger(1, true);
+        logger = new SimpleLogger(1, false);
     }
 
     /**
@@ -80,31 +68,29 @@ public class SocketServer extends Observable
     /**
      * send an event
      * @param event event to send
-     * @throws InvalidIntArgumentException
      */
-    public void sendEvent(Event event) throws InvalidIntArgumentException, IOException {
+    public void sendEvent(Event event) throws IOException {
         try {
             sendArrayList(eventEncoder.encodeEvent(event));
         }catch (Exception e)
         {
             socket.close();
-            logger.log("Player disconnected");
+            logger.log("Player disconnected send");
             disconnectionManager();
         }
     }
 
     /**
      * gets an event
-     * @throws IOException
-     * @throws InvalidIntArgumentException
      */
-    public void getEvent() throws IOException, InvalidIntArgumentException {
+    public void getEvent() {
         try {
             currentEvent = eventDecoder.decodeEvent(listenForEvent());
             setChanged();
             notifyObservers(currentEvent);
         }catch(Exception e)
         {
+            System.out.println("player disconnected receive");
             disconnectionManager();
         }
     }
@@ -114,9 +100,8 @@ public class SocketServer extends Observable
      * @param draft draft pool to send
      * @throws InvalidIntArgumentException
      * @throws IOException
-     * @throws GenericInvalidArgumentException
      */
-    public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException
+    public void sendDraft(DraftPool draft) throws InvalidIntArgumentException, IOException
     {
         String[] temp = socketEncoder.draftEncoder(draft);
 
@@ -140,10 +125,9 @@ public class SocketServer extends Observable
      * sends a scheme card as an event
      * @param scheme scheme card to send
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
      * @throws IOException
      */
-    public void sendScheme(SchemeCard scheme) throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException
+    public void sendScheme(SchemeCard scheme) throws InvalidIntArgumentException, IOException
     {
         String[] temp = socketEncoder.schemeCardEncoder(scheme);
         try
@@ -164,7 +148,7 @@ public class SocketServer extends Observable
      * @throws GenericInvalidArgumentException
      */
 
-    public int getToolId() throws IOException, GenericInvalidArgumentException
+    public int getToolId() throws IOException
     {
         int temp;
         try
@@ -185,7 +169,6 @@ public class SocketServer extends Observable
 
     private void disconnectionManager()
     {
-        connected = false;
         DisconnectionEvent event = new DisconnectionEvent();
         setChanged();
         notifyObservers(event);

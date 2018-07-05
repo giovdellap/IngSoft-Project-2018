@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PrivateObjectiveMP;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
+import it.polimi.ingsw.client.ModelComponentsMP.PrivateObjectiveMP;
+import it.polimi.ingsw.client.ModelComponentsMP.PublicObjectiveMP;
 
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
+import it.polimi.ingsw.client.Graphics.CLI.PrinterMaker;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;

@@ -74,9 +74,9 @@ public class SchemesDeckTest {
             testTempDeck = testDeck.extractSchemes(6);
 
             for(int i=0;i<6;i++) {
-
-                if(testTempDeck[i]!=testDeck.extractSchemebyID(testTempDeck[i].getID()))
+                if(testTempDeck[i].getID()!=testDeck.extractSchemebyID(testTempDeck[i].getID()).getID()) {
                     flag = false;
+                }
             }
 
             Assertions.assertEquals(true,flag);

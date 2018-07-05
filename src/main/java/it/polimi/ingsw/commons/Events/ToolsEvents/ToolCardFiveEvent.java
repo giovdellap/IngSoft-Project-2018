@@ -2,11 +2,11 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardFiveEvent extends ToolCardEvent {
 
-    int index;
-    int turn;
-    int pos;
-    int x;
-    int y;
+    private int index;
+    private int turn;
+    private int pos;
+    private int x;
+    private int y;
 
     public ToolCardFiveEvent(int id) {
         super("ToolCardFiveEvent", id);

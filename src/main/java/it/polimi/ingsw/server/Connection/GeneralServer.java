@@ -18,11 +18,8 @@ public class GeneralServer
      * GeneralServer Constructor
      * @throws IOException
      */
-    public GeneralServer(int sec) throws IOException {
-        //generalSocket = new Socket();
-
+    public GeneralServer() throws IOException {
         serverSocket = new ServerSocket(7777);
-        serverSocket.setSoTimeout(sec*1000);
     }
 
     /**
@@ -30,7 +27,8 @@ public class GeneralServer
      * @return a connected socket
      * @throws IOException
      */
-    public Socket accept() throws IOException {
+    public Socket accept(int seconds) throws IOException {
+        serverSocket.setSoTimeout(seconds*1000);
         try {
             generalSocket=new Socket();
             System.out.println("Waiting for clients..\n");

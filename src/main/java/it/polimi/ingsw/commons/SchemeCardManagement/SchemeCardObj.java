@@ -11,8 +11,6 @@ public class SchemeCardObj {
     //get and set
     public List<FrontOrBackObj> getResult() {return schemeCard;}
 
-    public void setResult(List<FrontOrBackObj> schemeCard1) {this.schemeCard = schemeCard1;}
-
 
 
 }

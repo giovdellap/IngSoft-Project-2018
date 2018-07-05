@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEightNineTenEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
@@ -17,6 +20,23 @@ public class ToolCardTen extends ToolCard {
     public ToolCardTen() {
         setToolCardName("Grinding Stone");
         setId(10);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException {
+        ToolCardEightNineTenEvent event = (ToolCardEightNineTenEvent)currentEvent;
+        boolean check = (afterDraftingCheck(checkToolCardTen(modelInstance.getDraft(),  event.getIndex()), event.getX(),event.getY()));
+        if(check)
+        {
+            setDraft(modelInstance.getDraft());
+            setScheme(modelInstance.getSchemebyIndex(player.getId()));
+            applyModifies(event.getIndex(), event.getX(), event.getY());
+            modelInstance.setDraft(getDraft());
+            modelInstance.setPlayerScheme(player.getId(),getScheme());
+            event.validate();
+            return event;
+        }
+        event.resetValidation();
+        return event;
     }
 
     /**
@@ -43,7 +63,7 @@ public class ToolCardTen extends ToolCard {
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public Die checkToolCardTen(DraftPool draft, int pos) throws GenericInvalidArgumentException, InvalidIntArgumentException {
+    public Die checkToolCardTen(DraftPool draft, int pos) throws InvalidIntArgumentException {
 
         Die toPlace = draft.returnDie(pos);
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.CLIToolsManager;
+import it.polimi.ingsw.client.Graphics.CLI.CLIToolsManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

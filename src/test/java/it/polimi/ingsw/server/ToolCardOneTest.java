@@ -23,6 +23,7 @@ public class ToolCardOneTest {
     ToolCardOne toolCardOneTest;
     DraftPool draftTest;
     SchemesDeck schemesDeckTest;
+    Model model;
 
     //COLORS 0 WHITE/1 YELLOW/2 RED/3 GREEN/4 BLUE/5 VIOLET
     //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
@@ -40,6 +41,7 @@ public class ToolCardOneTest {
         System.out.println(testScheme.getName(2));
         toolCardOneTest.setDraft(draftTest);
         toolCardOneTest.setScheme(testScheme);
+        model = new Model(2);
 
     }
 
@@ -80,44 +82,6 @@ public class ToolCardOneTest {
 
         Assertions.assertEquals(false, flag);
 
-
-    }
-
-    @Test
-    public void checkApplyModifiesOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
-
-        testDie.setValue(4);
-        draftTest.replaceDie(3,testDie);
-
-        toolCardOneTest.applyModifies(3,2,2,4);
-
-
-        Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==3);
-
-    }
-
-    @Test
-    public void checkApplyModifiesTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
-
-        testDie.setValue(4);
-        draftTest.replaceDie(3,testDie);
-
-        toolCardOneTest.applyModifies(3,1,2,4);
-
-
-        Assertions.assertEquals(true,toolCardOneTest.getScheme().getDie(2,4).getValue()==5);
-
-    }
-
-    @Test
-    public void checkApplyModifiesThree() throws GenericInvalidArgumentException, InvalidIntArgumentException {
-
-        testDie.setValue(4);
-        draftTest.replaceDie(3,testDie);
-
-        toolCardOneTest.applyModifies(3,2,2,4);
-
-        Assertions.assertEquals(true,testDie.equals(toolCardOneTest.getScheme().getDie(2,4)));
 
     }
 

@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.util.ArrayList;
 
 public class TurnManager
 {
-    private ArrayList<Player> players;
+    private ArrayList<TurnPlayer> players;
     private int turnIndex;
-    private int playerIndex;
     private int maxTurn;
     private int round;
     private int activePlayer;
@@ -23,15 +23,14 @@ public class TurnManager
      * @param temp ArrayList of players
      */
 
-    public TurnManager(ArrayList<Player> temp) {
-        players= new ArrayList<Player>();
+    public TurnManager(ArrayList<PlayerThread> temp) {
+        players= new ArrayList<TurnPlayer>();
         for(int i=0;i<temp.size();i++)
-            players.add(temp.get(i));
+            players.add(new TurnPlayer(temp.get(i)));
 
         maxTurn=players.size()*2;
         logger = new SimpleLogger(0, false);
-        for(int i=0;i<temp.size();i++)
-            players.get(i).setId(i);
+
     }
 
 
@@ -44,7 +43,6 @@ public class TurnManager
     public int start() {
         round=0;
         turnIndex=0;
-        players.get(0).activate();
         activePlayer=0;
         return activePlayer;
     }
@@ -56,11 +54,8 @@ public class TurnManager
     public void endTurn()
     {
         //active player ends his turn
-        players.get(activePlayer).deactivate();
-        logger.log("prima: "+Boolean.toString(players.get(activePlayer).isActive()));
+
         calculateNext();
-        players.get(activePlayer).activate();
-        logger.log("Dopo: "+Boolean.toString(players.get(activePlayer).isActive()));
 
         logger.log("END ENDTURN - activePlayer = "+Integer.toString(activePlayer));
 
@@ -82,8 +77,7 @@ public class TurnManager
         if(turnIndex==maxTurn-1) {
             round++;
             for (int i = 0; i < players.size(); i++)
-                if (players.get(i).checkEight())
-                    players.get(i).roundReset();
+                players.get(i).setEightUsed(false);
             turnIndex=0;
             activePlayer=0;
             nextRound=true;
@@ -103,7 +97,7 @@ public class TurnManager
             turnIndex++;
             activePlayer=turnIndex;
         }
-        if(players.get(activePlayer).checkEight())
+        if(players.get(activePlayer).isEightUsed())
             calculateNext();
 
         logger.log(" ");
@@ -120,22 +114,7 @@ public class TurnManager
     {
         return round==5;
     }
-    /**
-     *
-     * @return number of players
-     */
-    public ArrayList<Player> getPlayers()
-    {
-        return players;
-    }
-    /**
-     *
-     * @param toSet ArrayList of players to set
-     */
-    public void setPlayers(ArrayList<Player> toSet)
-    {
-        players = toSet;
-    }
+
 
     /**
      *
@@ -173,7 +152,24 @@ public class TurnManager
 
     public void usedEight(int player)
     {
-        players.get(player).useEight();
+        players.get(player).setEightUsed(true);
+    }
+
+    public boolean canUseSevenOrCantUseEight() {
+        return turnIndex>players.size()-1;
+    }
+
+    public int previousActive() throws GenericInvalidArgumentException {
+        if(turnIndex==players.size())
+            return (players.size()-1);
+        if(turnIndex==0)
+            return players.size()-1;
+        if(turnIndex<players.size())
+            return turnIndex-1;
+        if(turnIndex>players.size())
+            return activePlayer+1;
+        else
+            throw new GenericInvalidArgumentException();
     }
 
 }

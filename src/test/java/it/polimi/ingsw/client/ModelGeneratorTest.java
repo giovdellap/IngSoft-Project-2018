@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.ModelGenerator;
+import it.polimi.ingsw.client.Graphics.CLI.ModelGenerator;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import org.junit.jupiter.api.Assertions;

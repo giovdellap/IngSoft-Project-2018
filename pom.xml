@@ -45,7 +45,7 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX</directory>
+                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX</directory>
                 <includes>
                     <include>**/*.fxml</include>
                     <include>**/*.jpg</include>
@@ -54,7 +54,7 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/ModelInitialization</directory>
+                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/Initialization/ModelInitialization</directory>
                 <includes>
                     <include>**/*.fxml</include>
                     <include>**/*.jpg</include>
@@ -63,7 +63,7 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/Initialization/UsernameInsertion</directory>
+                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/Initialization/UsernameInsertion</directory>
                 <includes>
                     <include>**/*.fxml</include>
                     <include>**/*.jpg</include>
@@ -72,7 +72,7 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/java/it/polimi/ingsw/client/PackageMP/ViewMP/JavaFX/WaitScenes</directory>
+                <directory>src/main/java/it/polimi/ingsw/client/Graphics/JavaFX/WaitScenes</directory>
                 <includes>
                     <include>**/*.fxml</include>
                     <include>**/*.jpg</include>
@@ -131,6 +131,11 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.lanterna</groupId>
+            <artifactId>lanterna</artifactId>
+            <version>3.0.1</version>
         </dependency>
     </dependencies>
 

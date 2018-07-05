@@ -3,15 +3,6 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class PrivateObjectivesDeck
 {
-    /**
-     * PrivateObjectivesDeck Constructor
-     */
-    public PrivateObjectivesDeck()
-    {
-        PrivateObjective[] deck = new PrivateObjective[5];
-        for(int i=0;i<5;i++)
-            deck[i] = new PrivateObjective(i+1);
-    }
 
     /**
      * extracts four casual private objectives

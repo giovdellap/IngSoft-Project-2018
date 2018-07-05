@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.SimpleLogger;
-import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ToolCardUsageRecord
 {
@@ -13,9 +12,8 @@ public class ToolCardUsageRecord
 
     /**
      * ToolCardUsageRecord Constructor
-     * @throws InvalidIntArgumentException
      */
-    public ToolCardUsageRecord() throws InvalidIntArgumentException {
+    public ToolCardUsageRecord() {
         logger = new SimpleLogger(0, false);
         tokens = new int[3];
         for (int i=0;i<3;i++)
@@ -31,7 +29,7 @@ public class ToolCardUsageRecord
             for(int n=0;n<extracted;n++)
                 if(selectedId[n]==i)
                     flag=true;
-            if(flag==false)
+            if(!flag)
             {
                 selectedId[extracted]=i;
                 logger.log("Tool extracted - ID: "+Integer.toString(i));
@@ -39,9 +37,13 @@ public class ToolCardUsageRecord
             }
         }
 
+
         cards = new ToolCard[3];
         toolCardConstructor();
+
+
     }
+
 
     /**
      * checks if a particular tool card can be used or not
@@ -74,8 +76,8 @@ public class ToolCardUsageRecord
             tokens[toolCard]=1;
         else
         {
-            int prevoiusTokens = tokens[toolCard];
-            tokens[toolCard]=prevoiusTokens+2;
+            int previousTokens = tokens[toolCard];
+            tokens[toolCard]=previousTokens+2;
         }
     }
 
@@ -98,9 +100,8 @@ public class ToolCardUsageRecord
 
     /**
      * Constructs the selected tool card based on the selected id
-     * @throws InvalidIntArgumentException
      */
-    public void toolCardConstructor() throws InvalidIntArgumentException {
+    public void toolCardConstructor() {
         for(int i=0;i<3;i++)
         {
             switch (selectedId[i]){

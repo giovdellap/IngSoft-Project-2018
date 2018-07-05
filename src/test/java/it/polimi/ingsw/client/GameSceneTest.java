@@ -2,9 +2,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.*;
-import it.polimi.ingsw.client.PackageMP.PlayerClient;
-import it.polimi.ingsw.client.PackageMP.ViewMP.CLI.PrinterMaker;
+import it.polimi.ingsw.client.ModelComponentsMP.*;
+import it.polimi.ingsw.client.Graphics.CLI.PrinterMaker;
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
@@ -29,18 +28,18 @@ public class GameSceneTest {
 
     @BeforeEach
 
-    public void setUp() throws InvalidIntArgumentException, FullDataStructureException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+    public void setUp() throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         DraftPoolMP tempDraft;
         printerMaker=new PrinterMaker(1);
         players= new PlayerClient[2];
-        players[0]=new PlayerClient(0,"pippo", true);
+        players[0]=new PlayerClient("pippo", true);
         SchemesDeck deck= new SchemesDeck();
         SchemeCard temp= deck.extractSchemebyID(3);
         temp.setfb(2);
         players[0].setPlayerScheme(temp);
         players[0].setTokens(3);
 
-        players[1]=new PlayerClient(1,"guido", false);
+        players[1]=new PlayerClient("guido", false);
         temp= deck.extractSchemebyID(7);
         temp.setfb(2);
         players[1].setPlayerScheme(temp);
@@ -70,9 +69,9 @@ public class GameSceneTest {
         tempVectDie[2].throwDie();
 
 
-        RoundDiceMP tempRoundDice= new RoundDiceMP(1);
+        RoundDiceMP tempRoundDice= new RoundDiceMP();
 
-        RoundDiceMP tempRoundDice1= new RoundDiceMP(2);
+        RoundDiceMP tempRoundDice1= new RoundDiceMP();
 
         tempRoundDice.addDie(tempVectDie[0]);
 

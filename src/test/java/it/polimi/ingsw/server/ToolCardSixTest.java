@@ -52,32 +52,6 @@ public class ToolCardSixTest {
 
 
     @Test
-    public void checkToolCardSixTestOne() throws GenericInvalidArgumentException, InvalidIntArgumentException {
-
-        boolean flag = false;
-
-        scheme.setDie(testDie2,0,3);
-
-        flag = toolCardSixTest.checkToolCardSixSchemeCard(draftTest,1,scheme,0,4);
-
-        Assertions.assertEquals(true,flag);
-
-    }
-
-    @Test
-    public void checkToolCardSixTestTwo() throws GenericInvalidArgumentException, InvalidIntArgumentException {
-
-        boolean flag = true;
-
-        scheme.setDie(testDie2,0,4);
-
-        flag = toolCardSixTest.checkToolCardSixSchemeCard(draftTest,1,scheme,1,3);
-
-        Assertions.assertEquals(false,flag);
-
-    }
-
-    @Test
     public void checkApplyModifiesToScheme() throws GenericInvalidArgumentException, InvalidIntArgumentException {
 
         testDie = draftTest.returnDie(2);
@@ -87,7 +61,7 @@ public class ToolCardSixTest {
         toolCardSixTest.setScheme(scheme);
         toolCardSixTest.setDraft(draftTest);
 
-        toolCardSixTest.ApplyModifiesToScheme(2,0,3);
+        toolCardSixTest.applyModifiesToScheme(2,0,3);
 
         Assertions.assertEquals(true,toolCardSixTest.getScheme().getDie(0,3).equals(testDie));
 
@@ -103,7 +77,7 @@ public class ToolCardSixTest {
         toolCardSixTest.setScheme(scheme);
         toolCardSixTest.setDraft(draftTest);
 
-        toolCardSixTest.ApplyModifiesToDraft(2);
+        toolCardSixTest.applyModifiesToDraft(2);
 
         Assertions.assertEquals(true,toolCardSixTest.getDraft().returnDie(2).equals(testDie));
 

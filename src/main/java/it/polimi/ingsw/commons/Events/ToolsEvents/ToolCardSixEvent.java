@@ -2,11 +2,11 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardSixEvent extends ToolCardEvent {
 
-    int index;
-    int x;
-    int y;
-    boolean ApplyOne;
-    boolean ApplyTwo;
+    private int index;
+    private int x;
+    private int y;
+    private boolean ApplyOne;
+    private boolean ApplyTwo;
     private int newValue;
 
     public ToolCardSixEvent(int id) {

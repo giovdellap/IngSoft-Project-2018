@@ -1,17 +1,14 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
-import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
-import it.polimi.ingsw.commons.Events.MoveEvent;
-import it.polimi.ingsw.commons.Events.PassEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
-import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.Connection.GeneralServer;
@@ -19,14 +16,16 @@ import it.polimi.ingsw.server.ModelComponent.*;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.commons.Exceptions.InvalidinSocketException;
 import it.polimi.ingsw.server.ToolCards.*;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.server.PlayerThread.State.*;
 
 public class Match implements Observer
 {
@@ -36,15 +35,15 @@ public class Match implements Observer
     private TurnManager turnManager;
     private ToolCardUsageRecord toolRecord;
     private CheckingMethods checkingMethods;
-    private LobbyCreator lobbyCreator;
+    private ExecutorService executor;
+    private TurnActionHandler turnActionHandler;
 
     //datas
-    private ArrayList<Player> players;
-    private Event currentEvent;
+    private ArrayList<PlayerThread> players;
+    private ArrayList<Event> currentEvent;
     private boolean endInitialization=false;
+    private boolean timeExpired;
 
-
-    private int oldSize;
     private ArrayList<Integer> disconnectedPlayersInitializationPhase;
 
     private SimpleLogger logger;
@@ -53,29 +52,38 @@ public class Match implements Observer
      * Match Constructor
      * @throws IOException
      * @throws InvalidIntArgumentException
-     * @throws InvalidinSocketException
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
 
-    public Match() throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
-        generalServer = new GeneralServer(50);
+    public Match() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException
+    {
+        LobbyCreator lobbyCreator;
+        disconnectedPlayersInitializationPhase = new ArrayList<Integer>();
+
+        generalServer = new GeneralServer();
         logger = new SimpleLogger(3, true);
 
         //lobby creation
         lobbyCreator = new LobbyCreator(generalServer);
         players = lobbyCreator.createThatLobby();
-        for(Player player: players)
+
+        for(PlayerThread player: players)
             player.addObserver(this);
+
         logger.log("lobby created successfully");
 
         for(int i=0;i<players.size();i++)
             players.get(i).setId(i);
 
         modelInstance = new Model(players.size());
-        oldSize = players.size();
-        disconnectedPlayersInitializationPhase = new ArrayList<Integer>();
 
+        currentEvent= new ArrayList<Event>();
+
+        for (int i=0; i<players.size();i++)
+            currentEvent.add(new PassEvent());
+
+        executor = Executors.newFixedThreadPool(players.size());
 
         //INITIALIZATION 2
         initialization2();
@@ -90,14 +98,10 @@ public class Match implements Observer
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
-    public void initialization2() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException, FullDataStructureException {
+    public void initialization2() throws InvalidIntArgumentException, IOException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException
+    {
         //INITIALIZATION 2: PHASE 1
         logger.log("START INITIALIZATION 2 PHASE 1");
-
-        //event initialization
-        ModelInitializationEvent[] modelEvents = new ModelInitializationEvent[players.size()];
-        for(int i=0;i<players.size();i++)
-            modelEvents[i] = new ModelInitializationEvent();
 
         //private objectives
         modelInstance.setPrivateObjectives();
@@ -110,84 +114,115 @@ public class Match implements Observer
         logger.printNBlankLines(1);
         int[] pubObjs = new int[3];
         pubObjs[0] = modelInstance.getPubObj(0).getId();
-        logger.log("Public objective 0: "+Integer.toString(modelInstance.getPubObj(0).getId()));
+        logger.log("Public objective 0: " + Integer.toString(modelInstance.getPubObj(0).getId()));
         pubObjs[1] = modelInstance.getPubObj(1).getId();
-        logger.log("Public objective 1: "+Integer.toString(modelInstance.getPubObj(0).getId()));
+        logger.log("Public objective 1: " + Integer.toString(modelInstance.getPubObj(0).getId()));
         pubObjs[2] = modelInstance.getPubObj(2).getId();
-        logger.log("Public objective 2: "+Integer.toString(modelInstance.getPubObj(0).getId()));
+        logger.log("Public objective 2: " + Integer.toString(modelInstance.getPubObj(0).getId()));
 
         //tools
         toolRecord = new ToolCardUsageRecord();
-        for(int i=0;i<players.size();i++)
+
+        for (PlayerThread player : players)
         {
+            ModelInitializationEvent modelEvent = new ModelInitializationEvent();
+            int i = player.getId();
+
             logger.printNBlankLines(1);
-            logger.log("PLAYER "+Integer.toString(i));
-            modelEvents[i].setPrivateObjective(modelInstance.getPrivateObjective(i).getColor());
-            logger.log("Private Objective: "+Integer.toString(modelInstance.getPrivateObjective(i).getColor()));
-            modelEvents[i].setSchemes(modelInstance.getTempSchemes(i).getID(), modelInstance.getTempSchemes(i+players.size()).getID());
-            logger.log("Schemes "+Integer.toString(modelInstance.getTempSchemes(i).getID())+", "+Integer.toString(modelInstance.getTempSchemes(i+players.size()).getID()));
-            modelEvents[i].setPublicObjectives(pubObjs);
-            modelEvents[i].setToolIds(toolRecord.getSelectedId());
-            players.get(i).sendEvent(modelEvents[i]);
-        }
-        for(Player pl : players)
-        {
-            logger.debugLog("PLAYER :"+Integer.toString(pl.getId()));
-            boolean flag=false;
-            while(!flag) {
-                pl.getEvent();
-                if (!currentEvent.getType().equals("DisconnectionEvent"))
-                {
-                    for(Integer n : disconnectedPlayersInitializationPhase)
-                        if(pl.getId()>n)
-                            modelInstance.setPlayerScheme(n, null);
-                    if (((SchemeSelectionEvent) currentEvent).getId() == modelInstance.getTempSchemes(pl.getId()).getID()) {
-                        SchemeCard scheme = modelInstance.getTempSchemes(pl.getId());
-                        scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
-                        modelInstance.setPlayerScheme(pl.getId(), scheme);
-                        currentEvent.validate();
-                        flag = true;
-                        pl.setTokens(modelInstance.getSchemebyIndex(pl.getId()).getDiff(modelInstance.getSchemebyIndex(pl.getId()).getfb()));
-                    }
-                    if (((SchemeSelectionEvent) currentEvent).getId() == modelInstance.getTempSchemes(pl.getId() + oldSize).getID()) {
-                        SchemeCard scheme = modelInstance.getTempSchemes(pl.getId() + oldSize);
-                        scheme.setfb(((SchemeSelectionEvent) currentEvent).getFb());
-                        modelInstance.setPlayerScheme(pl.getId(), scheme);
-                        currentEvent.validate();
-                        flag = true;
-                        pl.setTokens(modelInstance.getSchemebyIndex(pl.getId()).getDiff(modelInstance.getSchemebyIndex(pl.getId()).getfb()));
-                    }
-                    pl.sendEvent(currentEvent);
-                }
-                else
-                    flag=true;
-            }
+            logger.log("PLAYER " + Integer.toString(i)+" model init. event");
+
+            modelEvent.setPrivateObjective(modelInstance.getPrivateObjective(i).getColor());
+
+            logger.log("Private Objective: " + Integer.toString(modelInstance.getPrivateObjective(i).getColor()));
+
+            modelEvent.setSchemes(modelInstance.getTempSchemes(i).getID(), modelInstance.getTempSchemes(i + players.size()).getID());
+
+            logger.log("Schemes " + Integer.toString(modelInstance.getTempSchemes(i).getID()) + ", " + Integer.toString(modelInstance.getTempSchemes(i + players.size()).getID()));
+
+            modelEvent.setPublicObjectives(pubObjs);
+            modelEvent.setToolIds(toolRecord.getSelectedId());
+
+            player.setEvent(modelEvent);
+            player.setState(SEND);
+
         }
 
+        logger.log("Sending modelEvents...");
+
+        for(PlayerThread player : players)
+            executor.execute(player);
+
+        executor.shutdown();
+        executor.awaitTermination(5, TimeUnit.SECONDS);
+
+        logger.log("ModelEvents sent");
+        executor=Executors.newFixedThreadPool(players.size());
+
+        logger.log("Sending schemes");
+        for(PlayerThread player : players)
+        {
+            player.setState(SCHEMESELECTION);
+            player.setTempSchemes(modelInstance.getTempSchemes(player.getId()).getID(), modelInstance.getTempSchemes(player.getId()+players.size()).getID());
+            executor.execute(player);
+        }
+        executor.shutdown();
+        executor.awaitTermination(30, TimeUnit.SECONDS);
+
+        modelInstance.initializationEnd();
         endInitialization=true;
-        if(players.size()<oldSize)
-            modelInstance.firstRoundCleaner(disconnectedPlayersInitializationPhase);
-        for(int i : disconnectedPlayersInitializationPhase)
+
+        modelInstance.firstRoundCleaner(disconnectedPlayersInitializationPhase);
+        for(Integer i : disconnectedPlayersInitializationPhase)
+        {
+            currentEvent.remove(0);
             players.remove(i);
-        for(int i=0;i<players.size();i++)
+        }
+
+        for(int i=0;i<players.size();i++) {
+            logger.log("old player id: "+players.get(i).getId());
             players.get(i).setId(i);
+            logger.log("new player id: "+players.get(i).getId());
+        }
 
         //PHASE 2
 
         //event construction
         Initialization2Event initEvent = new Initialization2Event();
+
+        for(int i=0;i<players.size();i++)
+            logger.log("Player id "+Integer.toString(i)+" scheme id: "+Integer.toString(modelInstance.getSchemebyIndex(i).getID()));
+
         for(int i=0;i<players.size();i++)
         {
+            logger.log("fb "+Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
+            players.get(i).setTokens(modelInstance.getSchemebyIndex(players.get(i).getId()).getDiff(modelInstance.getSchemebyIndex(players.get(i).getId()).getfb()));
             initEvent.addEventPlayer(i, players.get(i).getName(), modelInstance.getSchemebyIndex(i).getID(), modelInstance.getSchemebyIndex(i).getfb(), players.get(i).getTokens());
-            System.out.println(modelInstance.getSchemebyIndex(i).getfb());
+            logger.log("final model fb: "+modelInstance.getSchemebyIndex(i).getfb());
         }
-        for(int i=0;i<players.size();i++) {
-            if(!players.get(i).isDisconnected())
-                players.get(i).sendEvent(initEvent);
-            else
-                waitForReconnection();
+        executor=Executors.newFixedThreadPool(players.size());
+
+        logger.log("Sending initialization2Events to players...");
+
+        for(PlayerThread player: players)
+        {
+            player.setState(SEND);
+            player.setEvent(initEvent);
+            executor.execute(player);
+            logger.log("Player"+Integer.toString(player.getId())+" sending...");
         }
+
+        executor.shutdown();
+        executor.awaitTermination(20, TimeUnit.SECONDS);
+        logger.log("All events sent");
+
         startMatch();
+    }
+
+    public void setScheme(PlayerThread player) throws InvalidIntArgumentException
+    {
+        int id = ((SchemeSelectionEvent)currentEvent.get(player.getId())).getId();
+        int fb = ((SchemeSelectionEvent)currentEvent.get(player.getId())).getFb();
+        modelInstance.setPlayerSchemeFirstTime(player.getId(), id, fb);
     }
 
     /**
@@ -198,9 +233,8 @@ public class Match implements Observer
      * @throws FullDataStructureException
      */
 
-    private void startMatch() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException, FullDataStructureException
+    private void startMatch() throws InvalidIntArgumentException, GenericInvalidArgumentException, IOException, FullDataStructureException, InterruptedException
     {
-
         //initializing turn manager
         turnManager = new TurnManager(players);
         //Initializing draftPool
@@ -210,29 +244,34 @@ public class Match implements Observer
         modelInstance.roundTrackInitialization();
         //initializing checkingMethods
         checkingMethods = new CheckingMethods();
+        //initializing TurnActionHandler
+        turnActionHandler = new TurnActionHandler();
+
         //START MATCH
         turnManager.start();
+
         while(!turnManager.theEnd())
         {
             turn();
             turnManager.endTurn();
             int disconnected =0;
-            for(Player pl: players)
+            for(PlayerThread pl: players)
                 if(pl.isDisconnected())
                     disconnected++;
             if(players.size()-disconnected==1)
-                for(Player pl : players)
+                for(PlayerThread pl : players)
                     if(!pl.isDisconnected())
                         pl.sendEvent(new ForfaitEvent());
+
             if(turnManager.isNextRound())
                 modelInstance.roundEnd();
         }
 
         ScoreCalculator scoreCalculator = new ScoreCalculator(modelInstance, players);
-        currentEvent=scoreCalculator.calculateScore();
-        for(Player pl:players)
+        ScoreEvent event =scoreCalculator.calculateScore();
+        for(PlayerThread pl:players)
             if(!pl.isDisconnected())
-                pl.sendEvent(currentEvent);
+                pl.sendEvent(event);
 
     }
 
@@ -243,54 +282,111 @@ public class Match implements Observer
      * @throws InvalidIntArgumentException
      * @throws FullDataStructureException
      */
-    private void turn() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException, FullDataStructureException
+    private void turn() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException, FullDataStructureException, InterruptedException
     {
-        sendTurnEvent();
 
-        if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
+        if(!players.get(turnManager.getActivePlayer()).isDisconnected())
+        {
+            sendTurnEvent();
+
             //manages turn progress
             boolean toolUsed = false;
             boolean moveUsed = false;
             boolean endTurn = false;
+            long longDate = System.currentTimeMillis();
+            timeExpired=false;
 
-            while (!endTurn) {
-                players.get(turnManager.getActivePlayer()).getEvent();
-                if(!players.get(turnManager.getActivePlayer()).isDisconnected())
-                {
-                    if ((currentEvent.getType().equals("MoveEvent") && moveUsed) || (currentEvent.getType().equals("ToolEvent") && toolUsed))
-                        players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                    if (currentEvent.getType().equals("PassEvent")) {
-                        endTurn = true;
-                        for (int i = 0; i < players.size(); i++)
-                            if (i != turnManager.getActivePlayer())
-                                players.get(i).sendEvent(currentEvent);
+            while (!endTurn&&(System.currentTimeMillis()-longDate<(60*1000)))
+            {
+                boolean sendToAll=false;
+                logger.log("turn loop started");
+
+                executor=Executors.newFixedThreadPool(1);
+                players.get(turnManager.getActivePlayer()).setState(RECEIVE);
+                executor.execute(players.get(turnManager.getActivePlayer()));
+                executor.shutdown();
+                boolean timeExpired=!executor.awaitTermination(longDate+60*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                logger.log("turn time expired: "+ Boolean.toString(timeExpired));
+                logger.log("receive phase ended");
+
+
+                Event actualEvent = currentEvent.get(turnManager.getActivePlayer());
+                actualEvent.resetValidation();
+                logger.log("Event received: "+actualEvent.getType());
+
+                //PassEvent
+                if(actualEvent.getType().equals("PassEvent"))
+                    endTurn = true;
+                else {
+                    boolean alreadyChecked = false;
+
+                    if ((actualEvent.getType().equals("MoveEvent") && moveUsed) || (actualEvent.getType().equals("ToolEvent") && toolUsed)) {
+                        actualEvent.resetValidation();
+                        alreadyChecked = true;
+                        logger.log("Player has already moved or used a toolcard");
+                        sendToAll = false;
                     }
-                    if (currentEvent.getType().equals("MoveEvent") && !moveUsed)
-                        moveUsed = move();
-                    logger.debugLog(currentEvent.getType());
-                    if (currentEvent instanceof ToolCardEvent) {
-                        if (toolUsed)
-                            players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                        else {
-                            if ((moveUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 7 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11)) || (!moveUsed && ((ToolCardEvent) currentEvent).getId() == 8))
-                                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-                            else {
-                                toolUsed = tool();
-                                if (toolUsed && (((ToolCardEvent) currentEvent).getId() == 1 || ((ToolCardEvent) currentEvent).getId() == 5 || ((ToolCardEvent) currentEvent).getId() == 6 || ((ToolCardEvent) currentEvent).getId() == 9 || ((ToolCardEvent) currentEvent).getId() == 10 || ((ToolCardEvent) currentEvent).getId() == 11))
-                                    moveUsed = true;
 
+                    //MoveEvent
+                    if (actualEvent.getType().equals("MoveEvent") && !alreadyChecked) {
+                        alreadyChecked = true;
+                        moveUsed = move();
+                        if (moveUsed) {
+                            logger.log("Move Accepted: " + Boolean.toString(moveUsed));
+                            actualEvent.validate();
+                            sendToAll = true;
+                        }
+
+
+                    }
+
+                    //ToolCardEvent
+                    if (actualEvent instanceof ToolCardEvent && !alreadyChecked) {
+                        alreadyChecked = true;
+                        int currEvent = ((ToolCardEvent) currentEvent.get(turnManager.getActivePlayer())).getId();
+
+                        if ((moveUsed && (currEvent == 1 || currEvent == 5 || currEvent == 6 || currEvent == 7 || currEvent == 9 || currEvent == 10 || currEvent == 11 || currEvent == 8))) {
+                            logger.log("After drafting toolcard unusable because player already moved");
+                            actualEvent.resetValidation();
+                            sendToAll = false;
+                        } else {
+                            toolUsed = tool();
+                            if (toolUsed) {
+                                sendToAll = true;
+                                actualEvent = currentEvent.get(turnManager.getActivePlayer());
+                                logger.log("toolcard accepted");
+                                actualEvent.validate();
                             }
+                            if ((toolUsed && (currEvent == 1 || currEvent == 5 || currEvent == 6 || currEvent == 7 || currEvent == 9 || currEvent == 10 || currEvent == 11 || currEvent == 8)))
+                                moveUsed = true;
                         }
                     }
-                    if(players.get(turnManager.getActivePlayer()).isDisconnected()) {
-                        endTurn = true;
-                        activePlayerDisconnected();
+
+                    logger.log("actualEvent: " + actualEvent.getType());
+
+                    if (!timeExpired)
+                    {
+                        if (sendToAll)
+                        {
+                            executor = Executors.newFixedThreadPool(players.size());
+                            for (PlayerThread player : players)
+                            {
+                                player.setState(SEND);
+                                player.setEvent(actualEvent);
+                                System.out.println("Sending event " + actualEvent.getType() + " to player " + Integer.toString(player.getId()));
+                                executor.execute(player);
+                            }
+                        }
+                        else {
+                            executor = Executors.newFixedThreadPool(1);
+                            players.get(turnManager.getActivePlayer()).setEvent(actualEvent);
+                            players.get(turnManager.getActivePlayer()).setState(SEND);
+                            executor.execute(players.get(turnManager.getActivePlayer()));
+                            logger.log("Event sent to player " + Integer.toString(turnManager.getActivePlayer()));
+                        }
+                        executor.shutdown();
+                        executor.awaitTermination(8, TimeUnit.SECONDS);
                     }
-                }
-                else
-                {
-                    activePlayerDisconnected();
-                    endTurn=true;
                 }
             }
         }
@@ -298,119 +394,121 @@ public class Match implements Observer
 
     /**
      * sends turn event to client
-     * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
-     * @throws IOException
      */
 
-    public void sendTurnEvent() throws GenericInvalidArgumentException, InvalidIntArgumentException, IOException
+    public void sendTurnEvent() throws InvalidIntArgumentException, InterruptedException
     {
-        TurnEvent event = new TurnEvent();
-        event.setRound(turnManager.getRound());
+        TurnEvent activeEvent = new TurnEvent();
+        TurnEvent notActiveEvent = new TurnEvent();
+        activeEvent.setRound(turnManager.getRound());
+        notActiveEvent.setRound(turnManager.getRound());
 
         if(getNoDisconnected())
-            event.noDisconnected();
+        {
+            activeEvent.noDisconnected();
+            notActiveEvent.noDisconnected();
+        }
         else
-            event.setDisconnected(getDisconnected());
+        {
+            activeEvent.setDisconnected(getDisconnected());
+            activeEvent.setDisconnected(getDisconnected());
+        }
+        activeEvent.setActive(turnManager.getActivePlayer());
+        notActiveEvent.setActive(turnManager.getActivePlayer());
 
-        event.setActive(turnManager.getActivePlayer());
+        activeEvent.setDraft(modelInstance.getDraft().getDraft());
+        notActiveEvent.setDraft(modelInstance.getDraft().getDraft());
 
-        event.setDraft(modelInstance.getDraft().getDraft());
-
-        event.setToolsUpdate(toolRecord.getRecord());
+        activeEvent.setToolsUpdate(toolRecord.getRecord());
+        notActiveEvent.setToolsUpdate(toolRecord.getRecord());
 
         if(turnManager.getTurnIndex()==0&&turnManager.getRound()!=0)
         {
-            event.setNextRound(true);
-            ArrayList<Die> temp = new ArrayList<Die>();
-            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).returnDim();i++) {
-                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn() - 1).getDie(i));
-                logger.debugLog("Index: "+Integer.toString(i));
-                logger.debugLog("Value: "+Integer.toString(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i).getValue()));
-                logger.debugLog("Color: "+Integer.toString(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).getDie(i).getColor()));
+            activeEvent.setNextRound(true);
+            notActiveEvent.setNextRound(true);
 
-            }
-            event.setLastRound(temp);
+            ArrayList<Die> temp = new ArrayList<Die>();
+            for(int i=0;i<modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn()-1).returnDim();i++)
+                temp.add(modelInstance.getTrack().returnNTurnRoundDice(modelInstance.getTrack().returnActualTurn() - 1).getDie(i));
+
+            activeEvent.setLastRound(temp);
+            notActiveEvent.setLastRound(temp);
         }
-        else
-            event.setNextRound(false);
-        for(int i=0;i<players.size();i++)
+        else {
+            activeEvent.setNextRound(false);
+            notActiveEvent.setNextRound(false);
+        }
+
+        activeEvent.setMyTurn(true);
+
+        executor=Executors.newFixedThreadPool(players.size());
+
+        for(PlayerThread player : players)
         {
-            System.out.println("sono nel for i:"+Integer.toString(i));
-            if(players.get(i).isDisconnected())
-                waitForReconnection();
+            if(player.getId()==turnManager.getActivePlayer())
+            {
+                logger.log("Setting up active player");
+                player.setEvent(activeEvent);
+                player.setState(HANDLE);
+                logger.log("Player itsMyTurn: "+((TurnEvent)player.getLastEventSent()).itsMyTurn());
+            }
             else
             {
-                System.out.println("sono nell'else");
-                if(i==turnManager.getActivePlayer())
-                {
-                    logger.debugLog("active");
-                    TurnEvent playerEvent = event;
-                    playerEvent.setMyTurn(true);
-                    players.get(i).sendEvent(playerEvent);
-                    if(!players.get(i).isDisconnected())
-                        players.get(i).getEvent();
-                }
-                else
-                {
-                    logger.debugLog("not active");
-                    TurnEvent playerEvent = event;
-                    playerEvent.setMyTurn(false);
-                    players.get(i).sendEvent(playerEvent);
-                    if(!players.get(i).isDisconnected())
-                        players.get(i).getEvent();
-                }
+                logger.debugLog("Setting up unactive player id: "+Integer.toString(player.getId()));
+                currentEvent.set(player.getId(), notActiveEvent);
+                player.setEvent(notActiveEvent);
+                player.setState(HANDLE);
             }
+            executor.execute(player);
         }
+        executor.shutdown();
+        executor.awaitTermination(20, TimeUnit.SECONDS);
+
+        logger.log("Turn events sent");
     }
 
     /**
      * manages the use and validation of a move event
      * @return true if the move event can be validated, false if it can't
      * @throws GenericInvalidArgumentException
-     * @throws IOException
      * @throws InvalidIntArgumentException
      */
-    private boolean move() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException
+    private boolean move() throws GenericInvalidArgumentException, InvalidIntArgumentException
     {
         //checks modifies
         SchemeCard tempSC = modelInstance.getSchemebyIndex(turnManager.getActivePlayer());
         DraftPool tempDP = modelInstance.getDraft();
-        Die tempDie = tempDP.returnDie(((MoveEvent)currentEvent).getIndex());
+        Die tempDie = tempDP.returnDie(((MoveEvent)currentEvent.get(turnManager.getActivePlayer())).getIndex());
         boolean flag;
-        if(!players.get(turnManager.getActivePlayer()).getIPlayedFirstMove()) {
-            flag = checkingMethods.checkFirstMove(tempSC, tempDie, ((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY());
+
+        if(!players.get(turnManager.getActivePlayer()).getIPlayedFirstMove())
+        {
+            flag = checkingMethods.checkFirstMove(tempSC, tempDie, ((MoveEvent) currentEvent.get(turnManager.getActivePlayer())).getX(), ((MoveEvent) currentEvent.get(turnManager.getActivePlayer())).getY());
             if(flag)
                 players.get(turnManager.getActivePlayer()).setIPlayedFirstMove(true);
         }
         else
-            flag = checkingMethods.checkMove(tempSC, tempDie, ((MoveEvent)currentEvent).getX(), ((MoveEvent)currentEvent).getY());
+            flag = checkingMethods.checkMove(tempSC, tempDie, ((MoveEvent)currentEvent.get(turnManager.getActivePlayer())).getX(), ((MoveEvent)currentEvent.get(turnManager.getActivePlayer())).getY());
 
-        logger.debugLog("return checkingMethods "+Boolean.toString(flag));
+        logger.log("move accepted: "+Boolean.toString(flag));
 
         //eventually applies modifies
         if(flag)
         {
-            logger.debugLog("move return true");
-            tempDie = tempDP.returnDie(((MoveEvent)currentEvent).getIndex());
-            tempDP.pickUpDie(((MoveEvent)currentEvent).getIndex());
-            tempSC.setDie(tempDie, ((MoveEvent) currentEvent).getX(), ((MoveEvent) currentEvent).getY());
+            logger.log("applying move modifies...");
+            tempDie = tempDP.returnDie(((MoveEvent)currentEvent.get(turnManager.getActivePlayer())).getIndex());
+            tempDP.pickUpDie(((MoveEvent)currentEvent.get(turnManager.getActivePlayer())).getIndex());
+            tempSC.setDie(tempDie, ((MoveEvent) currentEvent.get(turnManager.getActivePlayer())).getX(), ((MoveEvent) currentEvent.get(turnManager.getActivePlayer())).getY());
             modelInstance.setPlayerScheme(turnManager.getActivePlayer(), tempSC);
             modelInstance.setDraft(tempDP);
-            currentEvent.validate();
-            ((MoveEvent) currentEvent).setId(turnManager.getActivePlayer());
-            for(int i=0;i<players.size();i++) {
-                logger.debugLog("Move event send player "+Integer.toString(i));
-                if(!players.get(i).isDisconnected())
-                    players.get(i).sendEvent(currentEvent);
-
-            }return true;
+            currentEvent.get(turnManager.getActivePlayer()).validate();
+            ((MoveEvent) currentEvent.get(turnManager.getActivePlayer())).setId(turnManager.getActivePlayer());
+            return true;
         }
         else
         {
-            logger.debugLog("move return false");
-            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
-                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
+            logger.debugLog("move not accepted");
             return false;
         }
     }
@@ -426,7 +524,7 @@ public class Match implements Observer
      */
     private boolean tool() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException, FullDataStructureException
     {
-        int toolId = ((ToolCardEvent)currentEvent).getId();
+        int toolId = ((ToolCardEvent)currentEvent.get(turnManager.getActivePlayer())).getId();
 
         //checks player can use that tool
         //check id
@@ -434,323 +532,22 @@ public class Match implements Observer
         for(int i=0;i<3;i++)
             if(toolRecord.getSelectedId()[i]==toolId)
                 flag=true;
-        logger.debugLog("flag: "+Boolean.toString(flag));
         if(!flag)
             return false;
-        //check tokens
-        int tokens = toolRecord.checkUsage(players.get(turnManager.getActivePlayer()).getTokens(), toolId);
-        logger.debugLog("tokens: "+Integer.toString(tokens));
-        if(tokens==0) {
-            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
-                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-            return false;
-        }
-        boolean applied = checkAndApplyToolCardModifies();
-        logger.debugLog("check and apply: "+Boolean.toString(applied));
-        if(applied)
-        {
-            toolRecord.applyUsage(toolId);
-            players.get(turnManager.getActivePlayer()).usedTokens(tokens);
-            currentEvent.validate();
-            ((ToolCardEvent) currentEvent).setPlayer(turnManager.getActivePlayer());
-            for(Player pl: players)
-                if(!pl.isDisconnected())
-                    pl.sendEvent(currentEvent);
-            return true;
-        }
-        else {
-            if(!players.get(turnManager.getActivePlayer()).isDisconnected())
-                players.get(turnManager.getActivePlayer()).sendEvent(currentEvent);
-            return false;
-        }
 
-    }
+        turnActionHandler.setModel(modelInstance);
+        turnActionHandler.setPlayer(players.get(turnManager.getActivePlayer()));
+        turnActionHandler.setToolRecord(toolRecord);
+        turnActionHandler.setTurnManager(turnManager);
 
-    /**
-     *
-     * @return true if the chosen tool card can be used, false if it can't
-     * @throws GenericInvalidArgumentException
-     * @throws InvalidIntArgumentException
-     * @throws IOException
-     * @throws FullDataStructureException
-     */
+        ToolCardEvent tempEvent = turnActionHandler.useTool((ToolCardEvent)currentEvent.get(turnManager.getActivePlayer()));
+        currentEvent.set(turnManager.getActivePlayer(), tempEvent);
+        modelInstance = turnActionHandler.getModel();
+        players.set(turnManager.getActivePlayer(),turnActionHandler.getPlayer());
+        toolRecord = turnActionHandler.getToolRecord();
+        turnManager = turnActionHandler.getTurnManager();
 
-    public boolean checkAndApplyToolCardModifies() throws GenericInvalidArgumentException, InvalidIntArgumentException, IOException, FullDataStructureException
-    {
-        ToolCard card;
-        ToolCardEvent event;
-        switch (((ToolCardEvent)currentEvent).getId())
-        {
-            case 1:
-            {
-                logger.debugLog("dentro checkandapply");
-                card = toolRecord.getCard(1);
-                event = (ToolCardOneEvent)currentEvent;
-                int modify;
-                if(((ToolCardOneEvent) event).getAction()=='+')
-                    modify=1;
-                else
-                    modify=2;
-                boolean check = ((ToolCardOne)card).checkToolCardOne(((ToolCardOneEvent) event).getIndex(), modify, modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), modelInstance.getDraft(), ((ToolCardOneEvent) event).getX(), ((ToolCardOneEvent) event).getY());
-                Die dieTemp = modelInstance.getDraft().returnDie(((ToolCardOneEvent) event).getIndex());
-                if(modify==1)
-                    dieTemp.setValue(modelInstance.getDraft().returnDie(((ToolCardOneEvent) event).getIndex()).getValue()+1);
-                else
-                    dieTemp.setValue(modelInstance.getDraft().returnDie(((ToolCardOneEvent) event).getIndex()).getValue()-1);
-
-
-                if(check)
-                    check=afterDraftingCheck(dieTemp, ((ToolCardOneEvent) event).getX(), ((ToolCardOneEvent) event).getY());
-                if(check)
-                {
-                    ((ToolCardOne) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardOne) card).setDraft(modelInstance.getDraft());
-                    ((ToolCardOne) card).applyModifies(((ToolCardOneEvent) event).getIndex(), modify, ((ToolCardOneEvent) event).getX(), ((ToolCardOneEvent) event).getY());
-                    modelInstance.setDraft(((ToolCardOne) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardOne) card).getScheme());
-                }
-                return check;
-            }
-            case 2:
-            {
-                card = toolRecord.getCard(2);
-                event = (ToolCardTwoThreeEvent)currentEvent;
-                ((ToolCardTwo)card).setTempScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                boolean check = ((ToolCardTwo)card).checkToolCardTwo(((ToolCardTwoThreeEvent) event).getX0(), ((ToolCardTwoThreeEvent) event).getY0(), modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), ((ToolCardTwoThreeEvent) event).getX1(), ((ToolCardTwoThreeEvent) event).getY1());
-                if(check)
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardTwo)card).applyModifies(((ToolCardTwoThreeEvent) event).getX0(), ((ToolCardTwoThreeEvent) event).getY0(), ((ToolCardTwoThreeEvent) event).getX1(), ((ToolCardTwoThreeEvent) event).getY1()));
-
-                return check;
-            }
-            case 3:
-            {
-                card = toolRecord.getCard(3);
-                event = (ToolCardTwoThreeEvent)currentEvent;
-                ((ToolCardThree)card).setTempScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                boolean check = ((ToolCardThree)card).checkToolCardThree(((ToolCardTwoThreeEvent) event).getX0(), ((ToolCardTwoThreeEvent) event).getY0(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), ((ToolCardTwoThreeEvent) event).getX1(), ((ToolCardTwoThreeEvent) event).getY1());
-                if(check)
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardThree)card).applyModifies(((ToolCardTwoThreeEvent) event).getX0(), ((ToolCardTwoThreeEvent) event).getY0(),((ToolCardTwoThreeEvent) event).getX1() ,((ToolCardTwoThreeEvent) event).getY1()));
-
-                return check;
-            }
-            case 4:
-            {
-                card = toolRecord.getCard(4);
-                event = (ToolCardFourEvent)currentEvent;
-                ((ToolCardFour)card).setTempScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                boolean check = ((ToolCardFour) card).checkToolCardFour(((ToolCardFourEvent)event).getX01(),((ToolCardFourEvent) event).getY01(),((ToolCardFourEvent) event).getX02(),((ToolCardFourEvent) event).getY02(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),((ToolCardFourEvent) event).getX22(),((ToolCardFourEvent) event).getY22());
-                if(check)
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardFour) card).applyModifies(((ToolCardFourEvent) event).getX01(),((ToolCardFourEvent) event).getY01(),((ToolCardFourEvent) event).getX02(),((ToolCardFourEvent) event).getY02(),((ToolCardFourEvent) event).getX11(),((ToolCardFourEvent) event).getY11(),((ToolCardFourEvent) event).getX22(),((ToolCardFourEvent) event).getY22()));
-
-                return check;
-            }
-            case 5:
-            {
-                card = toolRecord.getCard(5);
-                event = (ToolCardFiveEvent)currentEvent;
-                boolean check = ((ToolCardFive)card).checkToolCardFive(modelInstance.getDraft(),((ToolCardFiveEvent)event).getIndex(),modelInstance.getTrack(),((ToolCardFiveEvent)event).getTurn(),((ToolCardFiveEvent)event).getPos());
-                if(check)
-                    check=afterDraftingCheck(modelInstance.getDraft().returnDie(((ToolCardFiveEvent) event).getIndex()), ((ToolCardFiveEvent) event).getX(), ((ToolCardFiveEvent) event).getY());
-                if(check)
-                {
-                    ((ToolCardFive)card).setRoundTrack(modelInstance.getTrack());
-                    ((ToolCardFive)card).setDraft(modelInstance.getDraft());
-                    ((ToolCardFive)card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardFive)card).applyModifies(((ToolCardFiveEvent)event).getIndex(),((ToolCardFiveEvent)event).getTurn(),((ToolCardFiveEvent)event).getPos(),((ToolCardFiveEvent) currentEvent).getX(),((ToolCardFiveEvent) currentEvent).getY());
-                    modelInstance.setDraft(((ToolCardFive)card).getDraft());
-                    modelInstance.setTrack(((ToolCardFive)card).getTrack());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardFive) card).getScheme());
-                }
-                return check;
-            }
-            case 6:
-            {
-                card = toolRecord.getCard(6);
-                event = (ToolCardSixEvent)currentEvent;
-                modelInstance.getDraft().returnDie(((ToolCardSixEvent)event).getIndex()).throwDie();
-                ((ToolCardSixEvent) event).setNewValue(modelInstance.getDraft().returnDie(((ToolCardSixEvent)event).getIndex()).getValue());
-                event.validate();
-                ((ToolCardSixEvent) event).setApplyOne(true);
-                if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
-                    players.get(turnManager.getActivePlayer()).sendEvent(event);
-                    if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
-                        players.get(turnManager.getActivePlayer()).getEvent();
-                        event = (ToolCardSixEvent) currentEvent;
-                        Boolean check = afterDraftingCheck(modelInstance.getDraft().returnDie(((ToolCardSixEvent) event).getIndex()), ((ToolCardSixEvent) event).getX(), ((ToolCardSixEvent) event).getY());
-                        logger.log("Secondo check: " + Boolean.toString(check));
-                        ((ToolCardSixEvent) event).setApplyTwo(check);
-                        if (check) {
-                            ((ToolCardSix) card).setDraft(modelInstance.getDraft());
-                            ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                            ((ToolCardSix) card).ApplyModifiesToScheme(((ToolCardSixEvent) event).getIndex(), ((ToolCardSixEvent) event).getX(), ((ToolCardSixEvent) event).getY());
-                            modelInstance.setDraft(((ToolCardSix) card).getDraft());
-                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
-                        } else {
-                            ((ToolCardSix) card).setDraft(modelInstance.getDraft());
-                            ((ToolCardSix) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                            ((ToolCardSix) card).ApplyModifiesToDraft(((ToolCardSixEvent) event).getIndex());
-                            modelInstance.setDraft(((ToolCardSix) card).getDraft());
-                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardSix) card).getScheme());
-                        }
-
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-                else
-                    return false;
-            }
-            case 7:
-            {
-                card = toolRecord.getCard(7);
-                event = (ToolCardSevenEvent)currentEvent;
-                if(turnManager.getTurnIndex()>=players.size())
-                {
-                    DraftPool tempDraft = (((ToolCardSeven) card).applyModifies(modelInstance.getDraft()));
-                    modelInstance.setDraft(tempDraft);
-                    ((ToolCardSevenEvent) event).setDice(modelInstance.getDraft().getDraft());
-                    currentEvent = event;
-                    return true;
-                }
-
-                return false;
-            }
-            case 8:
-            {
-                card = toolRecord.getCard(8);
-                event = (ToolCardEightNineTenEvent)currentEvent;
-                boolean check = (turnManager.getTurnIndex()<players.size());
-                if(check)
-                    check = checkingMethods.checkMove(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), modelInstance.getDraft().returnDie(((ToolCardEightNineTenEvent) currentEvent).getIndex()), ((ToolCardEightNineTenEvent) currentEvent).getX(), ((ToolCardEightNineTenEvent) currentEvent).getY());
-                if(check)
-                {
-                    turnManager.usedEight(turnManager.getActivePlayer());
-                    ToolCardEight toolCardEight = new ToolCardEight();
-                    toolCardEight.setDraft(modelInstance.getDraft());
-                    toolCardEight.setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    toolCardEight.applyModifies(((ToolCardEightNineTenEvent) currentEvent).getIndex(), ((ToolCardEightNineTenEvent) currentEvent).getX(), ((ToolCardEightNineTenEvent) currentEvent).getY());
-                    modelInstance.setDraft(toolCardEight.getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(), toolCardEight.getScheme());
-                }
-                return check;
-
-            }
-            case 9:
-            {
-                card = toolRecord.getCard(9);
-                event = (ToolCardEightNineTenEvent)currentEvent;
-                boolean check = ((ToolCardNine)card).checkToolCardNine(modelInstance.getDraft(),((ToolCardEightNineTenEvent)event).getIndex(),modelInstance.getSchemebyIndex(turnManager.getActivePlayer()),((ToolCardEightNineTenEvent) event).getX(),((ToolCardEightNineTenEvent) event).getY());
-                if(check)
-                {
-                    ((ToolCardNine) card).setDraft(modelInstance.getDraft());
-                    ((ToolCardNine) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardNine) card).applyModifies(((ToolCardEightNineTenEvent) event).getIndex(),((ToolCardEightNineTenEvent) event).getX(),((ToolCardEightNineTenEvent) event).getY());
-                    modelInstance.setDraft(((ToolCardNine) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardNine) card).getScheme());
-                }
-                return check;
-            }
-            case 10:
-            {
-                card = toolRecord.getCard(10);
-                event = (ToolCardEightNineTenEvent)currentEvent;
-                boolean check = (afterDraftingCheck(((ToolCardTen)card).checkToolCardTen(modelInstance.getDraft(), ((ToolCardEightNineTenEvent) event).getIndex()), ((ToolCardEightNineTenEvent) event).getX(), ((ToolCardEightNineTenEvent) event).getY()));
-                if(check)
-                {
-                    ((ToolCardTen) card).setDraft(modelInstance.getDraft());
-                    ((ToolCardTen) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    ((ToolCardTen) card).applyModifies(((ToolCardEightNineTenEvent) event).getIndex(),((ToolCardEightNineTenEvent) event).getX(),((ToolCardEightNineTenEvent) event).getY());
-                    modelInstance.setDraft(((ToolCardTen) card).getDraft());
-                    modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardTen) card).getScheme());
-                }
-                return check;
-            }
-            case 11:
-            {
-                card = toolRecord.getCard(11);
-                event = (ToolCardElevenEvent)currentEvent;
-                DraftPool tempDraft = modelInstance.getDraft();
-                Die tempDie = tempDraft.toolCardElevenReplacement(((ToolCardElevenEvent) event).getIndex());
-                ((ToolCardElevenEvent) event).setNewColor(tempDie.getColor());
-                ((ToolCardElevenEvent) event).setFirstCheck(true);
-                event.validate();
-                if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
-                    players.get(turnManager.getActivePlayer()).sendEvent(event);
-                    if(!players.get(turnManager.getActivePlayer()).isDisconnected()) {
-                        players.get(turnManager.getActivePlayer()).getEvent();
-                        event = (ToolCardElevenEvent) currentEvent;
-                        tempDie.setValue(((ToolCardElevenEvent) event).getNewValue());
-                        logger.log(Integer.toString(tempDraft.returnDie(0).getColor()));
-                        logger.log(card.getToolCardName());
-                        ((ToolCardEleven) card).setDraft(tempDraft);
-                        ((ToolCardEleven) card).setScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-
-
-                        boolean check = afterDraftingCheck(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY());
-                        if (check) {
-                            ((ToolCardEleven) card).applyModifiesTwo(tempDie, ((ToolCardElevenEvent) event).getX(), ((ToolCardElevenEvent) event).getY(), ((ToolCardElevenEvent) event).getIndex());
-                            ((ToolCardElevenEvent) event).setApplyTwo(true);
-                            modelInstance.setDraft(((ToolCardEleven) card).getDraft());
-                            modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardEleven) card).getScheme());
-                        } else {
-                            ((ToolCardEleven) card).applyModifiesOne(tempDie, ((ToolCardElevenEvent) event).getIndex());
-                            ((ToolCardElevenEvent) event).setApplyOne(true);
-                            modelInstance.setDraft(((ToolCardEleven) card).getDraft());
-                        }
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-                else
-                    return false;
-            }
-            case 12:
-            {
-                card = toolRecord.getCard(12);
-                event = (ToolCardTwelveEvent)currentEvent;
-                if(((ToolCardTwelveEvent) event).isOnlyOne())
-                {
-                    ((ToolCardTwelve)card).setTempScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    if(((ToolCardTwelve)card).checkToolCardTwelve1Die(modelInstance.getTrack(), ((ToolCardTwelveEvent) event).getTurn(), ((ToolCardTwelveEvent) event).getPos(), modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), ((ToolCardTwelveEvent) event).getX01(), ((ToolCardTwelveEvent) event).getY01(), ((ToolCardTwelveEvent) event).getX11(), ((ToolCardTwelveEvent) event).getY11()))
-                    {
-                        modelInstance.setPlayerScheme(turnManager.getActivePlayer(), ((ToolCardTwelve) card).applyModifies(((ToolCardTwelveEvent) currentEvent).getX01(), ((ToolCardTwelveEvent) currentEvent).getY01(), ((ToolCardTwelveEvent) currentEvent).getX11(),((ToolCardTwelveEvent) currentEvent).getY11() ));
-                        return true;
-                    }
-                }
-                else
-                {
-                    ((ToolCardTwelve)card).setTempScheme(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()));
-                    if(((ToolCardTwelve)card).checkToolCardTwelve2Dice(modelInstance.getTrack(), ((ToolCardTwelveEvent) event).getTurn(), ((ToolCardTwelveEvent) event).getPos(), ((ToolCardTwelveEvent) event).getX01(), ((ToolCardTwelveEvent) event).getY01(), ((ToolCardTwelveEvent) event).getX02(), ((ToolCardTwelveEvent) event).getY02(), modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), ((ToolCardTwelveEvent) event).getX11(), ((ToolCardTwelveEvent) event).getY11(), ((ToolCardTwelveEvent) event).getX22(), ((ToolCardTwelveEvent) event).getY22()));
-                    {
-                        modelInstance.setPlayerScheme(turnManager.getActivePlayer(),((ToolCardTwelve)card).applyModifies(((ToolCardTwelveEvent) event).getX01(), ((ToolCardTwelveEvent) event).getY01(), ((ToolCardTwelveEvent) event).getX02(), ((ToolCardTwelveEvent) event).getY02(),((ToolCardTwelveEvent) event).getX11(), ((ToolCardTwelveEvent) event).getY11(), ((ToolCardTwelveEvent) event).getX22(), ((ToolCardTwelveEvent) event).getY22()));
-                        return true;
-                    }
-                }
-                return false;
-
-
-            }
-        }
-        return false;
-    }
-
-    /**
-     * checks placement for the After Drafting tool cards
-     * @param toPlace die to check placement
-     * @param x row
-     * @param y column
-     * @return true if the die can be position there, false if it can't
-     * @throws GenericInvalidArgumentException
-     * @throws InvalidIntArgumentException
-     */
-
-    private boolean afterDraftingCheck(Die toPlace, int x, int y) throws GenericInvalidArgumentException, InvalidIntArgumentException {
-        if(!players.get(turnManager.getActivePlayer()).getIPlayedFirstMove())
-            return checkingMethods.checkFirstMove(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), toPlace, x, y);
-        else
-            return checkingMethods.checkMove(modelInstance.getSchemebyIndex(turnManager.getActivePlayer()), toPlace, x, y);
+        return tempEvent.isValidated();
 
     }
 
@@ -761,18 +558,20 @@ public class Match implements Observer
      *
      */
 
-    public void waitForReconnection() throws IOException, InvalidIntArgumentException {
+    public void waitForReconnection() throws IOException, InvalidIntArgumentException
+    {
         logger.log("Waiting for reconnection");
         ArrayList<String> geppetto = new ArrayList<String>();
-        for(Player pl:players)
+        for(PlayerThread pl:players)
             if(pl.isDisconnected())
                 geppetto.add(pl.getName());
         Socket thisSocket = generalServer.reconnection(geppetto);
         if(thisSocket!=null)
         {
             logger.log("Player "+generalServer.getUsername()+" reconnected");
-            for(Player pl:players)
-                if(pl.getName().equals(generalServer.getUsername())) {
+            for(PlayerThread pl:players)
+                if(pl.getName().equals(generalServer.getUsername()))
+                {
                     pl.changeSocket(thisSocket);
                     pl.sendEvent(createReconnectionEvent(pl.getId()));
                 }
@@ -780,13 +579,14 @@ public class Match implements Observer
 
     }
 
-    public void activePlayerDisconnected() throws InvalidIntArgumentException, IOException {
-        for(Player pl : players)
+    public void activePlayerDisconnected() throws IOException {
+        for(PlayerThread pl : players)
             if(!pl.isDisconnected())
                 pl.sendEvent(new PassEvent());
     }
 
-    public ReconnectionEvent createReconnectionEvent(int playerId) throws InvalidIntArgumentException {
+    public ReconnectionEvent createReconnectionEvent(int playerId) throws InvalidIntArgumentException
+    {
         ReconnectionEvent event = new ReconnectionEvent();
         for(int i=0;i<players.size();i++)
             event.addPlayer(players.get(i).getName(), players.get(i).getTokens(), modelInstance.getSchemebyIndex(i));
@@ -807,17 +607,15 @@ public class Match implements Observer
     }
 
 
-
-
     /**
      *
-     * @return if ther aren't disconnected players
+     * @return if there aren't disconnected players
      */
 
     public boolean getNoDisconnected()
     {
         boolean flag = true;
-        for(Player pl:players)
+        for(PlayerThread pl:players)
             if(pl.isDisconnected())
                 flag=false;
         return flag;
@@ -830,7 +628,7 @@ public class Match implements Observer
     public ArrayList<String> getDisconnected()
     {
         ArrayList<String> temp = new ArrayList<String>();
-        for(Player pl: players)
+        for(PlayerThread pl: players)
             if(pl.isDisconnected())
                 temp.add(pl.getName());
         return temp;
@@ -843,13 +641,31 @@ public class Match implements Observer
      */
 
     public void update(Observable o, Object arg) {
-        if(((Event)arg).getType().equals("DisconnectionEvent"))
-        {
-            logger.log("Player "+Integer.toString(((DisconnectionEvent)arg).getId())+" disconnected");
-            if(!endInitialization)
-                disconnectedPlayersInitializationPhase.add(((DisconnectionEvent)arg).getId());
+
+        currentEvent.set(((PlayerThread)o).getId(), (Event)arg);
+        System.out.println(((Event)arg).getType()+" player "+((PlayerThread) o).getId());
+
+        try {
+            if(arg instanceof DisconnectionEvent&&!timeExpired&&(((PlayerThread)o).getId()!=turnManager.previousActive())) {
+                System.out.println("Disconnected: " + ((PlayerThread) o).getId());
+                if (!endInitialization) {
+                    disconnectedPlayersInitializationPhase.add(((PlayerThread) o).getId());
+                }
+                else
+                    players.get(((PlayerThread) o).getId()).setGeneralServer(generalServer);
+            }
+            if(((Event) arg).getType().equals("DisconnectionEvent")&&timeExpired&&(((PlayerThread)o).getId()!=turnManager.previousActive()))
+                ((PlayerThread)o).resetDisconnected();
+        } catch (GenericInvalidArgumentException e) {
+            e.printStackTrace();
         }
-        currentEvent = (Event)arg;
+        if(((Event)arg).getType().equals("SchemeSelectionEvent")) {
+            try {
+                setScheme((PlayerThread)o);
+            } catch (InvalidIntArgumentException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

@@ -3,8 +3,6 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import it.polimi.ingsw.commons.Exceptions.InvalidinSocketException;
-
 import java.io.IOException;
 
 public class Main {
@@ -14,11 +12,10 @@ public class Main {
      * @param args
      * @throws IOException
      * @throws InvalidIntArgumentException
-     * @throws InvalidinSocketException
      * @throws GenericInvalidArgumentException
      * @throws FullDataStructureException
      */
-    public static void main(String[] args) throws IOException, InvalidIntArgumentException, InvalidinSocketException, GenericInvalidArgumentException, FullDataStructureException {
+    public static void main(String[] args) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException {
 
         Match thisMatch = new Match();
     }

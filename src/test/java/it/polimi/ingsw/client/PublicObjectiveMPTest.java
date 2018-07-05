@@ -2,7 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
-import it.polimi.ingsw.client.PackageMP.ModelComponentsMP.PublicObjectiveMP;
+import it.polimi.ingsw.client.ModelComponentsMP.PublicObjectiveMP;
 
 
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;

@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.Connection;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.SimpleLogger;
-import it.polimi.ingsw.commons.Listeners.ListenersManager;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
@@ -16,12 +15,9 @@ import java.util.Observer;
 
 public class ConnectionManager extends Observable implements Observer {
 
-    private Socket socket;
     private SocketServer socketServer;
-
     private SimpleLogger logger;
     private String userName="";
-    private ListenersManager listenersManager;
     private Event currentEvent;
 
     /**
@@ -32,11 +28,9 @@ public class ConnectionManager extends Observable implements Observer {
     public ConnectionManager(Socket s) throws IOException
     {
         logger = new SimpleLogger(0, false);
-        socket=s;
         socketServer = new SocketServer(s);
         socketServer.addObserver(this);
         logger.log("Connection Manager initialized");
-        listenersManager = new ListenersManager();
 
     }
 
@@ -102,20 +96,18 @@ public class ConnectionManager extends Observable implements Observer {
     }
 
     /**
-     * gets an event
-     * @throws IOException
-     * @throws InvalidIntArgumentException
+     * gets an event from the socket server
      */
-    public void getEvent() throws IOException, InvalidIntArgumentException {
+    public void getEvent() {
         socketServer.getEvent();
     }
 
     /**
-     * sends an event
-     * @param event event to send
-     * @throws InvalidIntArgumentException
+     * sends an event to socket server
+     * @param event event to send to socket server
      */
-    public void sendEvent(Event event) throws InvalidIntArgumentException, IOException {
+    public void sendEvent(Event event) throws IOException {
+
         socketServer.sendEvent(event);
     }
 

@@ -1,12 +1,11 @@
 package it.polimi.ingsw.commons.Events.ToolsEvents;
-import it.polimi.ingsw.server.ToolCards.ToolCardOne;
 
-public class ToolCardOneEvent extends ToolCardEvent {
+public class ToolCardOneEvent extends ToolCardEvent  {
 
-    int index;
-    int x;
-    int y;
-    char action;
+    private int index;
+    private int x;
+    private int y;
+    private char action;
 
     public ToolCardOneEvent(int id) {
         super("ToolCardOneEvent",id);

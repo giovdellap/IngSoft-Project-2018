@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardFourEvent;
 import it.polimi.ingsw.server.CheckingMethods;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
@@ -8,7 +10,7 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ToolCardFour extends ToolCard {
 
-    SchemeCard tempScheme;
+    private SchemeCard tempScheme;
 
     /**
      * ToolCardFour Constructor
@@ -16,6 +18,23 @@ public class ToolCardFour extends ToolCard {
     public ToolCardFour() {
         setToolCardName("Lathekin");
         setId(4);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+
+        ToolCardFourEvent event = ((ToolCardFourEvent)currentEvent);
+
+        setTempScheme(modelInstance.getSchemebyIndex(player.getId()));
+        boolean check = checkToolCardFour(event.getX01(), event.getY01(), event.getX02(), event.getY02(),modelInstance.getSchemebyIndex(player.getId()), event.getX11(), event.getY11(), event.getX22(), event.getY22());
+        if(check) {
+            modelInstance.setPlayerScheme(player.getId(),applyModifies( event.getX01(), event.getY01(), event.getX02(), event.getY02(),event.getX11(), event.getY11(), event.getX22(),event.getY22()));
+            event.validate();
+            return event;
+        }
+
+        event.resetValidation();
+        return event;
+
     }
 
     /**

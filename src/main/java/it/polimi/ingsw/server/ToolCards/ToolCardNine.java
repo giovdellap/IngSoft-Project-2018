@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.ToolCards;
 
 import it.polimi.ingsw.commons.Die;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEightNineTenEvent;
+import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
+import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.server.ModelComponent.DraftPool;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
@@ -8,7 +11,7 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 public class ToolCardNine extends ToolCard {
 
-    DraftPool draft;
+    private DraftPool draft;
     SchemeCard scheme;
 
     /**
@@ -33,6 +36,29 @@ public class ToolCardNine extends ToolCard {
     public ToolCardNine() {
         setToolCardName("Cork-backed Straightedge");
         setId(9);
+    }
+
+    public ToolCardEvent useTool(ToolCardEvent currentEvent) throws InvalidIntArgumentException, GenericInvalidArgumentException {
+        ToolCardEightNineTenEvent event = (ToolCardEightNineTenEvent)currentEvent;
+
+        boolean check = checkToolCardNine(modelInstance.getDraft(),event.getIndex(),modelInstance.getSchemebyIndex(player.getId()), event.getX(),event.getY());
+
+        if(check)
+            if(!player.getIPlayedFirstMove())
+                check = checkingMethods.checkFirstMove(modelInstance.getSchemebyIndex(player.getId()), modelInstance.getDraft().returnDie(event.getIndex()), event.getX(), event.getY());
+
+        if(check)
+        {
+            setDraft(modelInstance.getDraft());
+            setScheme(modelInstance.getSchemebyIndex(player.getId()));
+            applyModifies( event.getIndex(),event.getX(),event.getY());
+            modelInstance.setDraft(getDraft());
+            modelInstance.setPlayerScheme(player.getId(),getScheme());
+            event.validate();
+            return event;
+        }
+        event.resetValidation();
+        return event;
     }
 
     /**

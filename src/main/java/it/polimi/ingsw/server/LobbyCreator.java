@@ -16,9 +16,8 @@ public class LobbyCreator
 
     /**
      * LobbyCreator Constructor
-     * @throws IOException
      */
-    public LobbyCreator(GeneralServer gs) throws IOException {
+    public LobbyCreator(GeneralServer gs) {
         generalServer = gs;
         logger=new SimpleLogger(0, false);
     }
@@ -30,10 +29,10 @@ public class LobbyCreator
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
      */
-    public ArrayList<Player> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException
+    public ArrayList<PlayerThread> createThatLobby() throws IOException, GenericInvalidArgumentException, InvalidIntArgumentException
     {
         logger.log("Lobby creation started");
-        ArrayList<Player> temp = new ArrayList<Player>();
+        ArrayList<PlayerThread> temp = new ArrayList<PlayerThread>();
         ArrayList<String> tempStrings = new ArrayList<String>();
 
         int maxPlayers=4;
@@ -43,11 +42,11 @@ public class LobbyCreator
         //adding first player to lobby
         while (flag)
         {
-            tempgs = generalServer.accept();
+            tempgs = generalServer.accept(30);
             if (tempgs== null) logger.log("0 client connected\n");
             else {
                 flag=false;
-                temp.add(new Player(tempgs));
+                temp.add(new PlayerThread(tempgs));
                 temp.get(temp.size() - 1).getUsername();
                 tempStrings.add(temp.get(temp.size() - 1).getName());
                 logger.log("First player connected: " + tempStrings.get(tempStrings.size() - 1) + " added to lobby");
@@ -57,15 +56,15 @@ public class LobbyCreator
         //adding others player
         while (temp.size()<maxPlayers && maxPlayers!=2)
         {
-            tempgs = generalServer.accept();
+            tempgs = generalServer.accept(30);
             if (tempgs==null)
             {
                 maxPlayers--;
-                logger.log("Lobby size setted to: "+maxPlayers+"\n");
+                logger.log("Lobby size set to: "+maxPlayers+"\n");
             }
 
             else {
-                temp.add(new Player(tempgs));
+                temp.add(new PlayerThread(tempgs));
                 temp.get(temp.size() - 1).getUsername(makeThatVector(tempStrings));
                 tempStrings.add(temp.get(temp.size() - 1).getName());
                 logger.log("player " + tempStrings.get(tempStrings.size() - 1) + " added to lobby");
@@ -81,19 +80,18 @@ public class LobbyCreator
             flag=true;
             while (flag)
             {
-                tempgs = generalServer.accept();
+                tempgs = generalServer.accept(30);
                 if (tempgs!= null)
                 {
                     flag = false;
-                    temp.add(new Player(tempgs));
+                    temp.add(new PlayerThread(tempgs));
                     temp.get(temp.size() - 1).getUsername();
                     tempStrings.add(temp.get(temp.size() - 1).getName());
                     logger.log("First player connected: " + tempStrings.get(tempStrings.size() - 1) + " added to lobby");
                 }
             }
         }
-        System.out.println("server chiuso");
-        //generalServer.close();
+
         return temp;
     }
 
