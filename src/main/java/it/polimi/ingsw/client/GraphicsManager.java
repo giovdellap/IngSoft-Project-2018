@@ -396,7 +396,6 @@ public class GraphicsManager extends Observable implements Runnable
 
     public void stopView()
     {
-        System.out.println("W IL FUHRER");
         beautifulCLI.stopCLI();
     }
 
