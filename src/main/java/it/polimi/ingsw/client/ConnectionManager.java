@@ -69,7 +69,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
 
                     }
                     else {
-                        logger.debugLog("Socket client not ready to receive");
                         Thread.sleep(1000);
                     }
                 } catch (InterruptedException e) {
@@ -108,7 +107,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
                         stopSleeping=true;
                     }
                     else {
-                        logger.debugLog("Socket client not ready to receive");
                         Thread.sleep(2000);
                     }
                 } catch (InterruptedException e) {
@@ -138,7 +136,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
                         stopSleeping=true;
                     }
                     else {
-                        logger.debugLog("Socket client not ready to receive");
                         Thread.sleep(400);
                     }
                 } catch (InterruptedException e) {
@@ -162,7 +159,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
             stopSleeping=false;
             while(!stopSleeping)
             {
-                logger.debugLog("Trying to receive...");
                 try {
                     if(socketClient.ready())
                     {
@@ -174,7 +170,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
                         stopSleeping=true;
                     }
                     else {
-                        logger.debugLog("Socket client not ready to receive");
                         Thread.sleep(2000);
                     }
                 } catch (InterruptedException e) {

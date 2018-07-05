@@ -73,7 +73,7 @@ public class GraphicsManager extends Observable implements Runnable
                 if(secondaryState==SecondaryState.TOOLACCEPTED)
                     toolAccepted();
                 if(secondaryState==SecondaryState.TOOLREFUSED)
-                    System.out.println("DIOCANE");
+                    System.out.println("missing");
             }
             try {
                 myTurn();

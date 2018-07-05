@@ -68,7 +68,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
             if (secondaryState==GraphicsManager.SecondaryState.TOOLACCEPTED)
                 toolAccepted();
             if (secondaryState==GraphicsManager.SecondaryState.TOOLREFUSED)
-                System.out.println("manga roba borgo dio");
+                System.out.println("missing");
             if (threadUpdater.disconnected==null) {
                 try {
                     askForWhat(threadUpdater.players,threadUpdater.draft ,threadUpdater.track ,threadUpdater.tools , threadUpdater.activePlayer, threadUpdater.me, threadUpdater.round);
