@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.Graphics.CLI;
 
+import it.polimi.ingsw.client.Graphics.StringCreator;
 import it.polimi.ingsw.client.Graphics.ViewInterface;
 import it.polimi.ingsw.client.GraphicsManager;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
@@ -32,6 +33,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
     private GraphicsManager.SecondaryState secondaryState;
 
     private ThreadUpdater threadUpdater;
+    private StringCreator stringCreator;
     private boolean initializationMode=true;
 
     private int askForWhat=0;
@@ -49,6 +51,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
         this.outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
         printerMaker = new PrinterMaker(1);
         cliToolsManager = new CLIToolsManager();
+        stringCreator=new StringCreator();
 
         msgIN = "";
 
@@ -59,8 +62,12 @@ public class BeautifulCLI implements ViewInterface, Runnable
     }
 
     public void run() {
+        stopCLI=false;
         if (state==GraphicsManager.State.ASKMAIN)
         {
+            askForWhat=4;
+            move=null;
+            useTool=null;
             if (secondaryState==GraphicsManager.SecondaryState.MOVEACCEPTED)
                 moveAccepted();
             if (secondaryState==GraphicsManager.SecondaryState.MOVEREFUSED)
@@ -68,33 +75,64 @@ public class BeautifulCLI implements ViewInterface, Runnable
             if (secondaryState==GraphicsManager.SecondaryState.TOOLACCEPTED)
                 toolAccepted();
             if (secondaryState==GraphicsManager.SecondaryState.TOOLREFUSED)
-                System.out.println("missing");
-            if (threadUpdater.disconnected==null) {
-                try {
-                    askForWhat(threadUpdater.players,threadUpdater.draft ,threadUpdater.track ,threadUpdater.tools , threadUpdater.activePlayer, threadUpdater.me, threadUpdater.round);
-                } catch (InvalidIntArgumentException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (threadUpdater.disconnected!=null) {
-                try {
-                    askForWhat(threadUpdater.players,threadUpdater.draft ,threadUpdater.track ,threadUpdater.tools , threadUpdater.activePlayer, threadUpdater.me, threadUpdater.round,threadUpdater.disconnected);
-                } catch (InvalidIntArgumentException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if(state==GraphicsManager.State.CLIMOVE)
-        {
+                System.out.println("MISSING");
+
             try {
-                move(threadUpdater.draft.getSize());
+                printOut(cliToolsManager.sceneInitializer(width));
+                printOut(printerMaker.getGameScene(threadUpdater.players, threadUpdater.draft, threadUpdater.track, privateObjective, pubObjs, threadUpdater.tools, threadUpdater.activePlayer, threadUpdater.me));
+                printOut(cliToolsManager.printSpaces(width));
+                printOut(printerMaker.round(threadUpdater.round, threadUpdater.players[threadUpdater.me].getName()));
+
+                if (threadUpdater.disconnected!=null)
+                {
+                    //disconnected Players
+                    String[] tempNames = new String[threadUpdater.disconnected.size()];
+                    for(int i=0;i<threadUpdater.disconnected.size();i++)
+                        tempNames[i] = threadUpdater.players[threadUpdater.disconnected.get(i)].getName();
+                    printOut(printerMaker.disconnectedPlayers(tempNames));
+                }
+                readWithExceptions(0,2 );
+
+            } catch (InvalidIntArgumentException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            askForWhat=Integer.parseInt(msgIN);
+        }
+        if(state==GraphicsManager.State.CLIMOVE)
+        {
+            move = new int[3];
+            try {
+                System.out.println();
+                printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                readWithExceptions(1, threadUpdater.draft.getSize());
+                move[0]=Integer.parseInt(msgIN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(!stopCLI)
+            {
+                try{
+                    printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                    readWithExceptions(1, 4);
+                    move[1]=Integer.parseInt(msgIN);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!stopCLI)
+            {
+                try{
+                    printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                    readWithExceptions(1, 5);
+                    move[2]=Integer.parseInt(msgIN);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
         if(state==GraphicsManager.State.CLITOOL)
         {
@@ -106,11 +144,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
                 e.printStackTrace();
             }
         }
-    }
-
-    public void initializationEnd()
-    {
-        initializationMode=false;
     }
 
     public void updateThatShit(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
@@ -136,12 +169,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
         return move;
     }
     public ToolCardEvent getUseTool() {
-        if(useTool==null)
-        {
-            System.out.println("dio null");
-        }
-        else
-            System.out.println("puttana la madonna");
         return useTool;
     }
 
@@ -245,83 +272,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public void askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException
-    {
-        //asks user what to do
-        //0 = pass, 1 = move, 2 = tool
-        printOut(cliToolsManager.sceneInitializer(width));
-        printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
-        printOut(cliToolsManager.printSpaces(width));
-
-        printOut(printerMaker.round(round, players[me].getName()));
-        printOut(printerMaker.selectAction());
-
-        readWithExceptions(0,2);
-        System.out.println("askForWhat msgIn: "+msgIN);
-        askForWhat = Integer.parseInt(msgIN);
-    }
-
-    /**
-     * override
-     * @param players
-     * @param draft
-     * @param track
-     * @param tools
-     * @param activePlayer
-     * @param me
-     * @param round
-     * @param disconnected
-     * @return
-     * @throws InvalidIntArgumentException
-     * @throws IOException
-     */
-    public void askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
-    {
-        //asks user what to do
-        //0 = pass, 1 = move, 2 = tool
-        printOut(cliToolsManager.sceneInitializer(width));
-        printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
-
-        printOut(cliToolsManager.printSpaces(width));
-
-        printOut(printerMaker.round(round, players[me].getName()));
-
-        //disconnected Players
-        String[] tempNames = new String[disconnected.size()];
-        for(int i=0;i<disconnected.size();i++)
-            tempNames[i] = players[disconnected.get(i)].getName();
-        printOut(printerMaker.disconnectedPlayers(tempNames));
-
-        printOut(printerMaker.selectAction());
-
-        readWithExceptions(0,2);
-
-        askForWhat = Integer.parseInt(msgIN);
-    }
-
-    /**
-     * asks for moving positions and executes them
-     * @param draftDim
-     * @return
-     * @throws IOException
-     */
-    public void move(int draftDim) throws IOException
-    {
-        int[] temp = new int[3];
-        printOut(printerMaker.canMove());
-        printOut(printerMaker.insertDraftIndex());
-        readWithExceptions(1,draftDim);
-        temp[0] = Integer.parseInt(msgIN)-1;
-        printOut(printerMaker.insertX());
-        readWithExceptions(1,4);
-        temp[1] = Integer.parseInt(msgIN)-1;
-        printOut(printerMaker.insertY());
-        readWithExceptions(1,5);
-        temp[2] = Integer.parseInt(msgIN)-1;
-
-        move = temp;
-    }
 
     /**
      * prints out a move accepted message
@@ -440,8 +391,8 @@ public class BeautifulCLI implements ViewInterface, Runnable
      */
 
 
-    public void useTool(int draftDim, int roundTrackDim, int round) throws IOException, InterruptedException {
-
+    public void useTool(int draftDim, int roundTrackDim, int round) throws IOException, InterruptedException
+    {
         printOut(cliToolsManager.simpleQuestionsMaker("Che tool vuoi usare?",40,true));
         readWithExceptionsToolsEdition();
 
@@ -725,6 +676,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
 
             }
         }
+        useTool = null;
     }
 
     /**
@@ -846,20 +798,21 @@ public class BeautifulCLI implements ViewInterface, Runnable
      * our read from keyboard method
      * @throws IOException
      */
-    private void readIt() throws IOException, InterruptedException {
+    private void readIt() throws IOException, InterruptedException
+    {
         //resets the buffer and reads from it
         outVideo.println("==>");
         outVideo.flush();
         if(!initializationMode)
-        {
-
-            while (!inKeyboard.ready()) {
+            while (!inKeyboard.ready())
+            {
                 if(stopCLI)
+                {
                     Thread.currentThread().stop();
+                    Thread.currentThread().interrupt();
+                }
                 Thread.sleep(50);
             }
-        }
-
         msgIN = inKeyboard.readLine();
     }
 
@@ -892,25 +845,27 @@ public class BeautifulCLI implements ViewInterface, Runnable
      * @throws IOException
      */
 
-    public void readWithExceptions(int leftBound, int rightBound) throws IOException {
-
+    public void readWithExceptions(int leftBound, int rightBound) throws IOException
+    {
         try {
-
             readIt();
-
-            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound) {
+            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound)
+            {
                 printOut(printerMaker.wrongInsertion());
                 readWithExceptions(leftBound, rightBound);
             }
         }
-
         catch (NumberFormatException e) {
             printOut(printerMaker.wrongInsertion());
             readWithExceptions(leftBound, rightBound);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+    }
+    public void printOut(ArrayList<String> temp)
+    {
+        for(String str : temp)
+            printOut(str);
     }
 
     public class ThreadUpdater
@@ -936,10 +891,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
             this.disconnected = disconnected;
         }
 
-        public void stop()
-        {
-            stopCLI=true;
-        }
     }
 
 }

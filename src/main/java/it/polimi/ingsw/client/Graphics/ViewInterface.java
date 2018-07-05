@@ -23,8 +23,6 @@ public interface ViewInterface
     String askUsername() throws IOException, InterruptedException;
     void setWaitScene();
     void setWaitScene2();
-    void askForWhat(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException;
-    void move(int draftDim) throws IOException;
     void moveAccepted();
     void moveRefused();
     void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException;

@@ -38,6 +38,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
     private State state;
     private Event currentEventSend;
     private Event currentEventReceive;
+    private Boolean stop;
 
     private SimpleLogger logger;
 
@@ -57,6 +58,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
     {
         System.out.println("Player "+Integer.toString(id)+" "+state);
 
+        stop=false;
+
         if(!isDisconnected) {
             if (state == SEND) {
                 try {
@@ -70,7 +73,16 @@ public class PlayerThread extends Observable implements Observer, Runnable
             }
 
             if (state == RECEIVE) {
-                connectionManager.getEvent();
+                try {
+                    while (!stop && !connectionManager.isReady())
+                        Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(!stop)
+                    connectionManager.getEvent();
                 logger.log("Player "+Integer.toString(id)+" receiving event "+currentEventSend.getType());
                 if (currentEventSend.getType().equals("TurnEvent"))
                     logger.log("TurnEvent receive active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));
@@ -84,7 +96,16 @@ public class PlayerThread extends Observable implements Observer, Runnable
                         logger.log("TurnEvent send active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));
                     connectionManager.sendEvent(currentEventSend);
 
-                    connectionManager.getEvent();
+                    try {
+                        while (!stop && !connectionManager.isReady())
+                            Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(!stop)
+                        connectionManager.getEvent();
                     logger.log("Player "+Integer.toString(id)+" receiving event "+currentEventSend.getType());
                     if (currentEventSend.getType().equals("TurnEvent"))
                         logger.log("TurnEvent receive active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));
@@ -127,6 +148,11 @@ public class PlayerThread extends Observable implements Observer, Runnable
         }
         System.out.println("Fine run thread");
 
+    }
+
+    public void stops()
+    {
+        stop=true;
     }
 
 
@@ -266,9 +292,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
         else {
 
             if (((Event) arg).getType().equals("DisconnectionEvent")) {
-                System.out.println("/n DISCONNECTED");
+                System.out.println("\nDISCONNECTED");
                 System.out.println("Disconnected thread: " + Integer.toString(id));
-                System.out.println("/n DISCONNECTED /n");
                 isDisconnected = true;
                 ((DisconnectionEvent) arg).setId(id);
             }

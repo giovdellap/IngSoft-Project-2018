@@ -60,9 +60,9 @@ public class SocketServer extends Observable
      * @throws InvalidIntArgumentException
      */
     public void insertUsername() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException {
-            currentEvent = eventDecoder.decodeEvent(listenForEvent());
-            setChanged();
-            notifyObservers(currentEvent);
+        currentEvent = eventDecoder.decodeEvent(listenForEvent());
+        setChanged();
+        notifyObservers(currentEvent);
     }
 
     /**
@@ -90,7 +90,7 @@ public class SocketServer extends Observable
             notifyObservers(currentEvent);
         }catch(Exception e)
         {
-            System.out.println("player disconnected receive");
+            System.out.println("player disconnected receive (getevent socketserver)");
             disconnectionManager();
         }
     }
@@ -118,6 +118,10 @@ public class SocketServer extends Observable
             }
         }
 
+    }
+
+    public boolean isReady() throws IOException {
+        return inSocket.ready();
     }
 
 

@@ -73,7 +73,7 @@ public class GraphicsManager extends Observable implements Runnable
                 if(secondaryState==SecondaryState.TOOLACCEPTED)
                     toolAccepted();
                 if(secondaryState==SecondaryState.TOOLREFUSED)
-                    System.out.println("missing");
+                    System.out.println("MISSING");
             }
             try {
                 myTurn();
@@ -345,10 +345,10 @@ public class GraphicsManager extends Observable implements Runnable
      * @throws IOException
      */
     public void askUsername() throws IOException, InterruptedException {
-            String username = beautifulCLI.askUsername();
-            currentEvent = new UsernameEvent(username);
-            setChanged();
-            notifyObservers(currentEvent);
+        String username = beautifulCLI.askUsername();
+        currentEvent = new UsernameEvent(username);
+        setChanged();
+        notifyObservers(currentEvent);
     }
 
     /**
@@ -356,7 +356,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     public void waitForPlayers()
     {
-            beautifulCLI.setWaitScene();
+        beautifulCLI.setWaitScene();
     }
 
     /**
@@ -372,10 +372,10 @@ public class GraphicsManager extends Observable implements Runnable
      */
     public void getSelectedScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
     {
-            SchemeCard temp = beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
-            currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
-            setChanged();
-            notifyObservers(currentEvent);
+        SchemeCard temp = beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
+        currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
+        setChanged();
+        notifyObservers(currentEvent);
     }
 
 
@@ -396,6 +396,7 @@ public class GraphicsManager extends Observable implements Runnable
 
     public void stopView()
     {
+        System.out.println("GRAPHIC STOP");
         beautifulCLI.stopCLI();
     }
 

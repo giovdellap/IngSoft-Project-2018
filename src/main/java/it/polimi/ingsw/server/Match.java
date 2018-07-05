@@ -284,7 +284,6 @@ public class Match implements Observer
      */
     private void turn() throws GenericInvalidArgumentException, IOException, InvalidIntArgumentException, FullDataStructureException, InterruptedException
     {
-
         if(!players.get(turnManager.getActivePlayer()).isDisconnected())
         {
             sendTurnEvent();
@@ -296,7 +295,7 @@ public class Match implements Observer
             long longDate = System.currentTimeMillis();
             timeExpired=false;
 
-            while (!endTurn&&(System.currentTimeMillis()-longDate<(180*1000)))
+            while (!endTurn&&(System.currentTimeMillis()-longDate<(60*1000)))
             {
                 boolean sendToAll=false;
                 logger.log("turn loop started");
@@ -305,10 +304,10 @@ public class Match implements Observer
                 players.get(turnManager.getActivePlayer()).setState(RECEIVE);
                 executor.execute(players.get(turnManager.getActivePlayer()));
                 executor.shutdown();
-                boolean timeExpired=!executor.awaitTermination(longDate+180*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                boolean timeExpired=!executor.awaitTermination(longDate+60*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                players.get(turnManager.getActivePlayer()).stops();
                 logger.log("turn time expired: "+ Boolean.toString(timeExpired));
                 logger.log("receive phase ended");
-
 
                 Event actualEvent = currentEvent.get(turnManager.getActivePlayer());
                 actualEvent.resetValidation();
@@ -386,6 +385,7 @@ public class Match implements Observer
                         }
                         executor.shutdown();
                         executor.awaitTermination(8, TimeUnit.SECONDS);
+
                     }
                 }
             }

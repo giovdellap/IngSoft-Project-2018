@@ -34,6 +34,10 @@ public class ConnectionManager extends Observable implements Observer {
 
     }
 
+    public boolean isReady() throws IOException {
+        return socketServer.isReady();
+    }
+
     /**
      * gets player usernames from event
      * @param names array of username strings to check
