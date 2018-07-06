@@ -10,6 +10,8 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.server.ToolCards.ToolCardEleven;
+import org.omg.CORBA.INTERNAL;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -307,8 +309,9 @@ public class BeautifulCLI implements ViewInterface, Runnable
                             if(!stopCLI) {
                                 printOut(stringCreator.getString(StringCreator.State.FINALPOS2Y));
                                 readWithExceptions(1, 5);
-                                event.setX22(Integer.parseInt(msgIN)-1);
+                                event.setY22(Integer.parseInt(msgIN)-1);
                             }
+
                             if(!stopCLI)
                                 useTool = event;
 
@@ -346,6 +349,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
                                 readWithExceptions(1, 5);
                                 event.setY(Integer.parseInt(msgIN)-1);
                             }
+
                             if(!stopCLI)
                                 useTool = event;
                         } catch (IOException e) {
@@ -363,13 +367,217 @@ public class BeautifulCLI implements ViewInterface, Runnable
                             printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
                             readWithExceptions(1, threadUpdater.draft.getSize());
                             event.setIndex(Integer.parseInt(msgIN)-1);
+
+                            if(!stopCLI) {
+
+
+
+                                //
+
+
+
+                            }
+
+
+                            if(!stopCLI)
+                                useTool = event;
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-
+                    break;
                 }
+                case 7: {
+                    if(!stopCLI) {
+                            ToolCardSevenEvent event = new ToolCardSevenEvent(7);
+                            useTool = event;
+                    }
+                    break;
+                }
+                case 8: {
+                    if(!stopCLI) {
+                        try {
+                        ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(8);
+                        printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                        readWithExceptions(1,threadUpdater.draft.getSize());
+                        event.setIndex(Integer.parseInt(msgIN)-1);
 
+                        if(!stopCLI) {
+                            printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                            readWithExceptions(1,4);
+                            event.setX(Integer.parseInt(msgIN)-1);
+                        }
+
+                        if(!stopCLI) {
+                            printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                            readWithExceptions(1,5);
+                            event.setY(Integer.parseInt(msgIN)-1);
+                        }
+
+                        if(!stopCLI)
+                            useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 9: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(9);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1,threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1,4);
+                                event.setX(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1,5);
+                                event.setY(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI)
+                                useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 10: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(10);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1,threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1,4);
+                                event.setX(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1,5);
+                                event.setY(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI)
+                                useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 11: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardElevenEvent event = new ToolCardElevenEvent(11);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1, threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+                            if(!stopCLI) {
+
+
+
+                                //
+
+
+
+                            }
+
+                            if(!stopCLI)
+                                useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 12: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardTwelveEvent event = new ToolCardTwelveEvent(12);
+                            printOut(stringCreator.getString(StringCreator.State.ROUNDTOOL12));
+                            readWithExceptions(1,threadUpdater.track.returnActualTurn());
+                            event.setTurn(Integer.parseInt(msgIN)-1);
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.ROUNDDICETOOL12));
+                                readWithExceptions(1,threadUpdater.track.returnNTurnRoundDice(event.getTurn()).returnDim());
+                                event.setPos(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOS1X));
+                                readWithExceptions(1,4);
+                                event.setX01(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOS1Y));
+                                readWithExceptions(1,5);
+                                event.setY01(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS1X));
+                                readWithExceptions(1,4);
+                                event.setX11(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS1Y));
+                                readWithExceptions(1,5);
+                                event.setY11(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.ASKSECONDDIE));
+                                readWithExceptions(1, 2);
+                            }
+
+                            if (Integer.parseInt(msgIN) == 2)
+                                event.setOnlyOne(true);
+
+                            else {
+                                if (!stopCLI) {
+                                    printOut(stringCreator.getString(StringCreator.State.STARTPOS2X));
+                                    readWithExceptions(1, 4);
+                                    event.setX02(Integer.parseInt(msgIN) - 1);
+                                }
+                                if (!stopCLI) {
+                                    printOut(stringCreator.getString(StringCreator.State.STARTPOS2Y));
+                                    readWithExceptions(1, 5);
+                                    event.setY02(Integer.parseInt(msgIN) - 1);
+                                }
+                                if (!stopCLI) {
+                                    printOut(stringCreator.getString(StringCreator.State.FINALPOS2X));
+                                    readWithExceptions(1, 4);
+                                    event.setX22(Integer.parseInt(msgIN) - 1);
+                                }
+                                if (!stopCLI) {
+                                    printOut(stringCreator.getString(StringCreator.State.FINALPOS2Y));
+                                    readWithExceptions(1, 5);
+                                    event.setY22(Integer.parseInt(msgIN) - 1);
+                                }
+                            }
+                            if(!stopCLI)
+                                useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InvalidIntArgumentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
@@ -611,301 +819,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
 
     }
 
-    /**
-     * uses a tool, asking to the player what actions does he want to take
-     * @param draftDim
-     * @return
-     * @throws IOException
-     */
-
-
-    public void useTool(int draftDim, int roundTrackDim, int round) throws IOException, InterruptedException
-    {
-        printOut(cliToolsManager.simpleQuestionsMaker("Che tool vuoi usare?",40,true));
-        readWithExceptionsToolsEdition();
-
-        if((Integer.parseInt(msgIN)==5 || Integer.parseInt(msgIN)==12) && round==0) {
-            printOut(cliToolsManager.simpleQuestionsMaker("Non puoi usare questo tool al primo round essendo la round track vuota",40,false));
-            readWithExceptionsToolsEdition();
-        }
-
-        switch (Integer.parseInt(msgIN)) {
-
-            case 1: {
-
-                ToolCardOneEvent event = new ToolCardOneEvent(1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da spostare",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Premi + per aumentare il valore del dado, premi - per diminuire il valore del dado",40,true));
-                readIt();
-                event.setAction(msgIN.charAt(0));
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readWithExceptions(1,4);
-                event.setX(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readWithExceptions(1,5);
-                event.setY(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-            }
-
-            case 2: {
-
-                ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(2);
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del dado da spostare",40,true));
-                readWithExceptions(1,4);
-                event.setX0(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del dado da spostare",40,true));
-                readWithExceptions(1,5);
-                event.setY0(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readWithExceptions(1,4);
-                event.setX1(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readWithExceptions(1,5);
-                event.setY1(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 3: {
-
-                ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(3);
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del dado da spostare",40,true));
-                readWithExceptions(1,4);
-                event.setX0(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del dado da spostare",40,true));
-                readWithExceptions(1,5);
-                event.setY0(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readWithExceptions(1,4);
-                event.setX1(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readWithExceptions(1,5);
-                event.setY1(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 4: {
-
-                ToolCardFourEvent event = new ToolCardFourEvent(4);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il primo dado che vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del primo dado da spostare",40,true));
-                readWithExceptions(1,4);
-                event.setX01(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del primo dado da spostare",40,true));
-                readWithExceptions(1,5);
-                event.setY01(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il primo dado",40,true));
-                readWithExceptions(1,4);
-                event.setX11(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il primo dado",40,true));
-                readWithExceptions(1,5);
-                event.setY11(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il secondo dado che vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del secondo dado da spostare",40,true));
-                readWithExceptions(1,4);
-                event.setX02(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del secondo dado da spostare",40,true));
-                readWithExceptions(1,5);
-                event.setY02(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il secondo dado",40,true));
-                readWithExceptions(1,4);
-                event.setX22(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il secondo dado",40,true));
-                readWithExceptions(1,5);
-                event.setY22(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-
-
-            }
-
-            case 5: {
-
-                ToolCardFiveEvent event = new ToolCardFiveEvent(5);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi sostituire?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da sostituire",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Con quale dado lo vuoi sostituire?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round dove è presente il dado che ti serve",40,true));
-                readWithExceptions(1,roundTrackDim);
-                event.setTurn(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado che ti serve",40,true));
-                readWithExceptions(1,9);
-                event.setPos(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove piazzare il dado", 40, true));
-                readWithExceptions(1,4 );
-                event.setX(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove piazzare il dado", 40, true));
-                readWithExceptions(1,5 );
-                event.setY(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 6: {
-
-                ToolCardSixEvent event = new ToolCardSixEvent(6);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex((Integer.parseInt(msgIN))-1);
-                useTool = event;
-                break;
-
-
-            }
-
-            case 7: {
-
-                ToolCardSevenEvent event = new ToolCardSevenEvent(7);
-                useTool = event;
-                break;
-
-            }
-
-            case 8: {
-
-                ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(8);
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado che ti serve",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove piazzare il dado", 40, true));
-                readWithExceptions(1,4 );
-                event.setX(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove piazzare il dado", 40, true));
-                readWithExceptions(1,5 );
-                event.setY(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 9: {
-
-                ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(9);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readWithExceptions(1,4);
-                event.setX(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readWithExceptions(1,5);
-                event.setY(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-
-            }
-
-            case 10: {
-
-                ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(10);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da prendere",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-                readWithExceptions(1,4);
-                event.setX(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-                readWithExceptions(1,5);
-                event.setY(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 11: {
-
-                ToolCardElevenEvent event = new ToolCardElevenEvent(11);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Quale dado vuoi prendere?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione nella riserva del dado da rimettere nel sacchetto",40,true));
-                readWithExceptions(1,draftDim);
-                event.setIndex(Integer.parseInt(msgIN)-1);
-                useTool = event;
-                break;
-
-            }
-
-            case 12: {
-
-                ToolCardTwelveEvent event = new ToolCardTwelveEvent(12);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli il turno nel tracciato dei round del dado di cui vuoi prendere il colore",40,true));
-                readWithExceptions(1,roundTrackDim);
-                event.setTurn(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado di cui vuoi prendere il colore",40,true));
-                readWithExceptions(1,9);
-                event.setPos(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il primo dado che vuoi spostare?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del primo dado da spostare",40,true));
-                readWithExceptions(1,4);
-                event.setX01(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del primo dado da spostare",40,true));
-                readWithExceptions(1,5);
-                event.setY01(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?",40,true));
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il primo dado",40,true));
-                readWithExceptions(1,4);
-                event.setX11(Integer.parseInt(msgIN)-1);
-                printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il primo dado",40,true));
-                readWithExceptions(1,5);
-                event.setY11(Integer.parseInt(msgIN)-1);
-
-                printOut(cliToolsManager.simpleQuestionsMaker("Vuoi spostare un secondo dado?  1 = SI, 2 = NO", 40, true));
-                readWithExceptions(1, 2);
-                if(Integer.parseInt(msgIN)==2)
-                    event.setOnlyOne(true);
-                else {
-                    printOut(cliToolsManager.simpleQuestionsMaker("Qual'è il secondo dado che vuoi spostare?", 40, true));
-                    printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga del secondo dado da spostare", 40, true));
-                    readWithExceptions(1, 4);
-                    event.setX02(Integer.parseInt(msgIN) - 1);
-                    printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna del secondo dado da spostare", 40, true));
-                    readWithExceptions(1, 5);
-                    event.setY02(Integer.parseInt(msgIN) - 1);
-                    printOut(cliToolsManager.simpleQuestionsMaker("Dove vuoi spostare il dado?", 40, true));
-                    printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il secondo dado", 40, true));
-                    readWithExceptions(1, 4);
-                    event.setX22(Integer.parseInt(msgIN) - 1);
-                    printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il secondo dado", 40, true));
-                    readWithExceptions(1, 5);
-                    event.setY22(Integer.parseInt(msgIN) - 1);
-                }
-                useTool = event;
-                break;
-
-
-            }
-        }
-        useTool = null;
-    }
 
     /**
      * manages and uses the tool card six event part two, asking the player where does he want to place the die
@@ -983,7 +896,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
      * @param event
      * @param winner
      * @return
-     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
+     * @throws InvalidIntArgumentException
      * @throws IOException
      */
     public boolean showScores(ScoreEvent event, boolean winner) throws InvalidIntArgumentException, IOException, InterruptedException {

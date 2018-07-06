@@ -295,7 +295,7 @@ public class Match implements Observer
             long longDate = System.currentTimeMillis();
             timeExpired=false;
 
-            while (!endTurn&&(System.currentTimeMillis()-longDate<(60*1000)))
+            while (!endTurn&&(System.currentTimeMillis()-longDate<(180*1000)))
             {
                 boolean sendToAll=false;
                 logger.log("turn loop started");
@@ -304,7 +304,7 @@ public class Match implements Observer
                 players.get(turnManager.getActivePlayer()).setState(RECEIVE);
                 executor.execute(players.get(turnManager.getActivePlayer()));
                 executor.shutdown();
-                boolean timeExpired=!executor.awaitTermination(longDate+60*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                boolean timeExpired=!executor.awaitTermination(longDate+180*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
                 players.get(turnManager.getActivePlayer()).stops();
                 logger.log("turn time expired: "+ Boolean.toString(timeExpired));
                 logger.log("receive phase ended");
@@ -345,7 +345,7 @@ public class Match implements Observer
                         alreadyChecked = true;
                         int currEvent = ((ToolCardEvent) currentEvent.get(turnManager.getActivePlayer())).getId();
                         ((ToolCardEvent) actualEvent).setPlayer(turnManager.getActivePlayer());
-                        if ((moveUsed && (currEvent == 1 || currEvent == 5 || currEvent == 6 || currEvent == 7 || currEvent == 9 || currEvent == 10 || currEvent == 11 || currEvent == 8))) {
+                        if ((moveUsed && (currEvent == 1 || currEvent == 5 || currEvent == 6 || currEvent == 7 || currEvent == 9 || currEvent == 10 || currEvent == 11))) {
                             logger.log("After drafting toolcard unusable because player already moved");
                             actualEvent.resetValidation();
                             sendToAll = false;
@@ -464,7 +464,7 @@ public class Match implements Observer
             executor.execute(player);
         }
         executor.shutdown();
-        executor.awaitTermination(20, TimeUnit.SECONDS);
+        executor.awaitTermination(25, TimeUnit.SECONDS);
 
         logger.log("Turn events sent");
     }
@@ -581,11 +581,6 @@ public class Match implements Observer
 
     }
 
-    public void activePlayerDisconnected() throws IOException {
-        for(PlayerThread pl : players)
-            if(!pl.isDisconnected())
-                pl.sendEvent(new PassEvent());
-    }
 
     public ReconnectionEvent createReconnectionEvent(int playerId) throws InvalidIntArgumentException
     {
@@ -630,9 +625,13 @@ public class Match implements Observer
     public ArrayList<String> getDisconnected()
     {
         ArrayList<String> temp = new ArrayList<String>();
-        for(PlayerThread pl: players)
-            if(pl.isDisconnected())
+        for(PlayerThread pl: players) {
+            if (pl.isDisconnected()) {
                 temp.add(pl.getName());
+                logger.debugLog("Disconnected start turn: "+pl.getName());
+            }
+        }
+
         return temp;
     }
 
@@ -647,20 +646,15 @@ public class Match implements Observer
         currentEvent.set(((PlayerThread)o).getId(), (Event)arg);
         System.out.println(((Event)arg).getType()+" player "+((PlayerThread) o).getId());
 
-        try {
-            if(arg instanceof DisconnectionEvent&&!timeExpired&&(((PlayerThread)o).getId()!=turnManager.previousActive())) {
-                System.out.println("Disconnected: " + ((PlayerThread) o).getId());
-                if (!endInitialization) {
-                    disconnectedPlayersInitializationPhase.add(((PlayerThread) o).getId());
-                }
-                else
-                    players.get(((PlayerThread) o).getId()).setGeneralServer(generalServer);
-            }
-            if(((Event) arg).getType().equals("DisconnectionEvent")&&timeExpired&&(((PlayerThread)o).getId()!=turnManager.previousActive()))
-                ((PlayerThread)o).resetDisconnected();
-        } catch (GenericInvalidArgumentException e) {
-            e.printStackTrace();
+
+        if(((Event)arg).getType().equals("DisconnectionEvent")) {
+            System.out.println("Disconnected: " + ((PlayerThread) o).getId());
+            if (!endInitialization) {
+                disconnectedPlayersInitializationPhase.add(((PlayerThread) o).getId());
+            } else
+                players.get(((PlayerThread) o).getId()).setGeneralServer(generalServer);
         }
+
         if(((Event)arg).getType().equals("SchemeSelectionEvent")) {
             try {
                 setScheme((PlayerThread)o);

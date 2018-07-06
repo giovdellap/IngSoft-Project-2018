@@ -27,6 +27,7 @@ public class StringCreator
         ROUNDTOOL12,
         ROUNDDICETOOL12,
         ASKTOOLCARD,
+        ASKSECONDDIE
     }
 
     public ArrayList<String> getString(State state)
@@ -137,6 +138,11 @@ public class StringCreator
             case ASKTOOLCARD:
             {
                 temp.add(cliToolsManager.simpleQuestionsMaker("Quale toolcard vuoi usare?", 40, true));
+                return temp;
+            }
+            case ASKSECONDDIE:
+            {
+                temp.add(cliToolsManager.simpleQuestionsMaker("Vuoi spostare un secondo dado?  1 = SI, 2 = NO", 40, true));
                 return temp;
             }
         }

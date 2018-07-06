@@ -84,9 +84,10 @@ public class SocketClient extends Observable implements Runnable {
         msg = new ArrayList<String>();
         receiveEvent();
         currentEvent = eventDecoder.decodeEvent(msg);
-        if(currentEvent.getType().equals("TurnEvent"))
+        if(currentEvent.getType().equals("TurnEvent")) {
+            outSocket.println("PING");
             sendEvent(currentEvent);
-
+        }
         setChanged();
         notifyObservers(currentEvent);
         System.out.println("connection manager notified");
@@ -100,13 +101,13 @@ public class SocketClient extends Observable implements Runnable {
     private void simpleReceive() throws IOException {
         msgIN = inSocket.readLine();
 
-        if(msgIN==null) {
+        while (msgIN==null) {
             logger.debugLog("bound: " + Boolean.toString(socket.isBound()));
             logger.debugLog("closed: " + Boolean.toString(socket.isClosed()));
             logger.debugLog("connected: " + Boolean.toString(socket.isConnected()));
             logger.debugLog("input: " + Boolean.toString(socket.isInputShutdown()));
             logger.debugLog("output: " + Boolean.toString(socket.isOutputShutdown()));
-
+            msgIN=inSocket.readLine();
         }
         logger.debugLog("msgIN : "+msgIN);
 
@@ -121,6 +122,7 @@ public class SocketClient extends Observable implements Runnable {
         logger.debugLog("RECEIVE NEW EVENT");
 
         simpleReceive();
+
         transformer.simpleDecode(msgIN);
         while (!(transformer.getCmd().equals("end")&&transformer.getArg().equals("event")))
         {

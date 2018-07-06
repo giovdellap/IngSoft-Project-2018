@@ -69,13 +69,16 @@ public class SocketServer extends Observable
      * send an event
      * @param event event to send
      */
-    public void sendEvent(Event event) throws IOException {
+    public void sendEvent(Event event) throws IOException, InvalidIntArgumentException {
         try {
             sendArrayList(eventEncoder.encodeEvent(event));
         }catch (Exception e)
         {
             socket.close();
             logger.log("Player disconnected send");
+            for(int i=0;i<eventEncoder.encodeEvent(event).size();i++)
+                System.out.println("event disconnection: "+eventEncoder.encodeEvent(event).get(i));
+
             disconnectionManager();
         }
     }
@@ -93,6 +96,27 @@ public class SocketServer extends Observable
             System.out.println("player disconnected receive (getevent socketserver)");
             disconnectionManager();
         }
+    }
+
+    public boolean waitPing()
+    {
+        System.out.println("Ping SocketServer");
+        String msgIN="";
+        try {
+            msgIN = inSocket.readLine();
+        } catch (IOException e) {
+            System.out.println("PING DISCONNECTED");
+            setChanged();
+            notifyObservers(new DisconnectionEvent());
+        }
+
+        if(msgIN.equals("PING"))
+        {
+            System.out.println("PING RECEIVED");
+            return true;
+        }
+
+        return false;
     }
 
     /**

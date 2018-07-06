@@ -2,7 +2,6 @@ package it.polimi.ingsw.commons.Events.ToolsEvents;
 
 public class ToolCardTwelveEvent extends ToolCardEvent {
 
-    private int index;
     private int pos;
     private int turn;
     private int x01;
@@ -21,21 +20,12 @@ public class ToolCardTwelveEvent extends ToolCardEvent {
         super("ToolCardTwelveEvent", id);
     }
 
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public void setPos(int pos) {
         this.pos = pos;
     }
 
     public void setTurn(int turn) {
         this.turn = turn;
-    }
-
-    public int getIndex() {
-        return index;
     }
 
     public int getPos() {

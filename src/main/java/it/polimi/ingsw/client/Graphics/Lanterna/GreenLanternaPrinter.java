@@ -34,9 +34,10 @@ public class GreenLanternaPrinter
 
     public SchemeCard selectScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privateObjectiveMP, PublicObjectiveMP[] publicObjectiveMPS, int[] tools)
     {
-
+        
         return null;
     }
+
     public void askUsername() throws IOException {
         ArrayList<String> temp = new ArrayList<String>();
         printIt(cliToolsManager.sceneInitializer(40), TextColor.ANSI.MAGENTA, TextColor.ANSI.GREEN, SGR.BLINK);

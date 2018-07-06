@@ -23,14 +23,6 @@ public class FrontOrBackObj {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getDiff() {return diff;}
-
-    public void setDiff(int diff) {
-        this.diff = diff;
-    }
 
 }

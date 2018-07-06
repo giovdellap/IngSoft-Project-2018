@@ -110,7 +110,7 @@ public class ConnectionManager extends Observable implements Observer {
      * sends an event to socket server
      * @param event event to send to socket server
      */
-    public void sendEvent(Event event) throws IOException {
+    public void sendEvent(Event event) throws IOException, InvalidIntArgumentException {
 
         socketServer.sendEvent(event);
     }
@@ -131,6 +131,10 @@ public class ConnectionManager extends Observable implements Observer {
 
     public void changeSocket(Socket socket) throws IOException {
         socketServer.changeSocket(socket);
+    }
+
+    public boolean pingPingPing() throws IOException {
+        return socketServer.waitPing();
     }
 
 }

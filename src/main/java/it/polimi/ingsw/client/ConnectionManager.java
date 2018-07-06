@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Connection.SocketClient;
 import it.polimi.ingsw.commons.Events.Event;
@@ -91,31 +92,19 @@ public class ConnectionManager extends Observable implements Runnable, Observer
             }
 
             logger.debugLog("Data sent, start receiving");
-            stopSleeping=false;
-            while(!stopSleeping)
-            {
-                try
-                {
-                    if(socketClient.ready())
-                    {
-                        logger.debugLog("Socket client receiving...");
-                        Executor executor = Executors.newSingleThreadExecutor();
-                        executor.execute(socketClient);
-                        ((ExecutorService) executor).shutdown();
-                        System.out.println("ready: " + socketClient.ready());
-                        ((ExecutorService) executor).awaitTermination(5, TimeUnit.SECONDS);
-                        stopSleeping=true;
-                    }
-                    else {
-                        Thread.sleep(2000);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+            try {
+                socketClient.getEvent();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidIntArgumentException e) {
+                e.printStackTrace();
+            } catch (GenericInvalidArgumentException e) {
+                e.printStackTrace();
             }
             logger.debugLog("Receiving phase ended");
+
+
         }
         if(state==State.RECEIVEANDSEND)
         {
@@ -132,11 +121,9 @@ public class ConnectionManager extends Observable implements Runnable, Observer
                         Executor executor = Executors.newSingleThreadExecutor();
                         executor.execute(socketClient);
                         ((ExecutorService) executor).shutdown();
-                        ((ExecutorService) executor).awaitTermination(5, TimeUnit.SECONDS);
+                        ((ExecutorService) executor).awaitTermination(8, TimeUnit.SECONDS);
                         stopSleeping=true;
-                    }
-                    else {
-                        Thread.sleep(400);
+
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -191,8 +178,8 @@ public class ConnectionManager extends Observable implements Runnable, Observer
      */
     public void establishConnection() throws IOException
     {
-            socketClient = new SocketClient(ip);
-            socketClient.addObserver(this);
+        socketClient = new SocketClient(ip);
+        socketClient.addObserver(this);
     }
 
     public void setState(State state)

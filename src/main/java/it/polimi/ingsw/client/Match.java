@@ -183,11 +183,10 @@ public class Match extends Observable implements Observer {
     /**
      * manages my turn
      * @throws InvalidIntArgumentException
-     * @throws GenericInvalidArgumentException
-     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
+     * @throws InvalidIntArgumentException
      * @throws FullDataStructureException
      */
-    public void itsMyTurn() throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, FullDataStructureException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, InterruptedException
+    public void itsMyTurn() throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, GenericInvalidArgumentException, InterruptedException
     {
         while(!endTurn)
         {
@@ -316,8 +315,9 @@ public class Match extends Observable implements Observer {
             }
             case (2):
             {
-                matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme().shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1());
-                System.out.println(matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme().getDie(((ToolCardTwoThreeEvent) currentEvent).getX1(),((ToolCardTwoThreeEvent) currentEvent).getY1()).getValue());
+                SchemeCard tempScheme = matchManager.getPlayer(((ToolCardEvent) currentEvent).getPlayer()).getPlayerScheme();
+                tempScheme.shiftDie(((ToolCardTwoThreeEvent)currentEvent).getX0(),((ToolCardTwoThreeEvent) currentEvent).getY0() , ((ToolCardTwoThreeEvent) currentEvent).getX1(), ((ToolCardTwoThreeEvent) currentEvent).getY1());
+                matchManager.setPlayerScheme(((ToolCardTwoThreeEvent) currentEvent).getPlayer(),tempScheme);
                 break;
 
             }
@@ -553,11 +553,21 @@ public class Match extends Observable implements Observer {
             logger.log("TurnEvent update : "+executor.toString());
         }
 
-        if(myTurn&&o==graphicsManager&&(!((Event)arg).getType().equals("PassEvent")))
-            myTurnAction();
+        if(myTurn&&o==graphicsManager&&(!((Event)arg).getType().equals("PassEvent"))) {
+            try {
+                myTurnAction();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        if(myTurn&&o==graphicsManager&&((Event)arg).getType().equals("PassEvent"))
-            pass();
+        if(myTurn&&o==graphicsManager&&((Event)arg).getType().equals("PassEvent")) {
+            try {
+                pass();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardSixEvent"))
             tool6Part2();
@@ -591,9 +601,9 @@ public class Match extends Observable implements Observer {
 
     }
 
-    public void myTurnAction()
-    {
-        connectionManager.stopSleep();
+    public void myTurnAction() throws InterruptedException {
+
+        //connectionManager.stopSleep();
 
         logger.debugLog("myTurnAction");
 
@@ -601,19 +611,27 @@ public class Match extends Observable implements Observer {
         connectionManager.setState(ConnectionManager.State.SENDANDRECEIVE);
         connectionManager.setEvent(toCheck);
         executor.execute(connectionManager);
+
+        executor.shutdown();
+        executor.awaitTermination(15, SECONDS);
+
+        connectionManager.stopSleep();
     }
 
-    public void pass()
-    {
-        connectionManager.stopSleep();
+    public void pass() throws InterruptedException {
+        //connectionManager.stopSleep();
         logger.debugLog("PASS!!!!!!");
 
         executor=Executors.newFixedThreadPool(1);
         connectionManager.setEvent(toCheck);
         connectionManager.setState(SENDANDRECEIVE);
         executor.execute(connectionManager);
+
         executor.shutdown();
+        executor.awaitTermination(15, SECONDS);
         endTurn=true;
+
+        connectionManager.stopSleep();
     }
 
     public void tool6Part2()

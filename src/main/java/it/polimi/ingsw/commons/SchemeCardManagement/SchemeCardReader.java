@@ -18,6 +18,7 @@ public class SchemeCardReader {
 
         String file = getClass().getClassLoader().getResource("JsonPackage/SchemeCards/SchemeCard" + index + ".json").getFile();
         br = new BufferedReader(new FileReader(file));
+
         card = gson.fromJson(br, SchemeCardObj.class);
 
         SchemeCard tempScheme = new SchemeCard(index);

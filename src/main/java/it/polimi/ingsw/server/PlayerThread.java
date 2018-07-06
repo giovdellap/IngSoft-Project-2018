@@ -14,15 +14,18 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.server.PlayerThread.State.*;
 
 public class PlayerThread extends Observable implements Observer, Runnable
 {
     //DATA
-    private int id;// player id
-    private String name;// player username
-    private int tokens;//player tokens counter
+    private int id;                              // player id
+    private String name;                         // player username
+    private int tokens;                          // player tokens counter
     private boolean isDisconnected=false;
     private boolean iPlayedFirstMove = false;
 
@@ -69,6 +72,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
                     connectionManager.sendEvent(currentEventSend);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InvalidIntArgumentException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -91,28 +96,66 @@ public class PlayerThread extends Observable implements Observer, Runnable
 
             if (state == HANDLE) {
                 try {
+                    //Thread.sleep(2000);
                     logger.log("Player "+Integer.toString(id)+" sending event "+currentEventSend.getType());
                     if (currentEventSend.getType().equals("TurnEvent"))
                         logger.log("TurnEvent send active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));
+                    System.out.println("Just Before handling");
+                    if(currentEventSend==null)
+                        System.out.println("currentEventSend: "+currentEventSend.getType()+" == null");
                     connectionManager.sendEvent(currentEventSend);
+                    System.out.println("Event sent");
 
-                    try {
-                        while (!stop && !connectionManager.isReady())
-                            Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    boolean ack=false;
+
+                    ExecutorService exec= Executors.newSingleThreadExecutor();
+                    exec.execute(new Runnable() {
+                        public void run() {
+                            try {
+                                System.out.println("\nRUN PLAYERTHREAD\n");
+                                connectionManager.pingPingPing();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    exec.shutdown();
+                    ack = exec.awaitTermination(4,TimeUnit.SECONDS );
+
+                    System.out.println("ACK: "+ack);
+
+                    if(ack) {
+                        try {
+                            while (!stop && !connectionManager.isReady())
+                                Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (!stop)
+                            connectionManager.getEvent();
+                        logger.log("Player " + Integer.toString(id) + " receiving event " + currentEventReceive.getType());
+                        if (currentEventSend.getType().equals("TurnEvent"))
+                            logger.log("TurnEvent receive active: " + Integer.toString(((TurnEvent) currentEventSend).getActive()));
                     }
-                    if(!stop)
-                        connectionManager.getEvent();
-                    logger.log("Player "+Integer.toString(id)+" receiving event "+currentEventSend.getType());
-                    if (currentEventSend.getType().equals("TurnEvent"))
-                        logger.log("TurnEvent receive active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));
-
+                    else
+                    {
+                        System.out.println("\nSET DISCONNECTED"+id);
+                        isDisconnected=true;
+                        DisconnectionEvent event = new DisconnectionEvent();
+                        setChanged();
+                        notifyObservers(event);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
 
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (InvalidIntArgumentException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -135,6 +178,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InvalidIntArgumentException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -149,6 +194,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
         System.out.println("Fine run thread");
 
     }
+
+
 
     public void stops()
     {
@@ -215,7 +262,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
      *
      * @param event event to send to connectionManager
      */
-    public void sendEvent(Event event) throws IOException {
+    public void sendEvent(Event event) throws IOException, InvalidIntArgumentException {
         connectionManager.sendEvent(event);
 
     }
@@ -329,10 +376,6 @@ public class PlayerThread extends Observable implements Observer, Runnable
         isDisconnected=false;
     }
 
-    public void resetDisconnected()
-    {
-        isDisconnected=false;
-    }
 
 
     public enum State {

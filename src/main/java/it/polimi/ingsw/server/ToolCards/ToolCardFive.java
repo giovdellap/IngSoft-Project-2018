@@ -31,7 +31,7 @@ public class ToolCardFive extends ToolCard {
 
         boolean check = checkToolCardFive(modelInstance.getDraft(),event.getIndex(),modelInstance.getTrack(),event.getTurn(),event.getPos());
         if(check)
-            check=afterDraftingCheck(modelInstance.getDraft().returnDie(event.getIndex()), event.getX(),event.getY());
+            check=afterDraftingCheck(modelInstance.getTrack().returnNTurnRoundDice(event.getTurn()).getDie(event.getPos()), event.getX(),event.getY());
         if(check)
         {
             setRoundTrack(modelInstance.getTrack());

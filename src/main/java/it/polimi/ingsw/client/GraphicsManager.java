@@ -180,7 +180,6 @@ public class GraphicsManager extends Observable implements Runnable
         executor.execute(beautifulCLI);
         ((ExecutorService) executor).shutdown();
         ((ExecutorService) executor).awaitTermination(75, TimeUnit.SECONDS);
-        System.out.println("whatToDo: "+Integer.toString(whatToDo));
         whatToDo = beautifulCLI.getAskForWhat();
 
         if(!stop) {
