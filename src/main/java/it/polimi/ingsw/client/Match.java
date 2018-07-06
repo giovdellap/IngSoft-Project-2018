@@ -42,9 +42,11 @@ public class Match extends Observable implements Observer {
     private String myUsername;
     private boolean endTurn=false;
     private boolean myTurn;
+    private boolean partTwoDone;
     private Event currentEvent;
     private Event toCheck;
     private SimpleLogger logger;
+
 
     /**
      * Starts the CLI
@@ -132,12 +134,11 @@ public class Match extends Observable implements Observer {
     /**
      * manages the turn
      * @throws InvalidIntArgumentException
-     * @throws FullDataStructureException
      * @throws GenericInvalidArgumentException
-     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
+     * @throws InvalidIntArgumentException
      */
 
-    public void game() throws FullDataStructureException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, InterruptedException
+    public void game() throws InvalidIntArgumentException, GenericInvalidArgumentException, InterruptedException
     {
         logger.debugLog("game start");
         connectionManager.setState(RECEIVE);
@@ -148,6 +149,7 @@ public class Match extends Observable implements Observer {
 
         while (!currentEvent.getType().equals("ScoreEvent"))
         {
+            partTwoDone = false;
             logger.debugLog("turn start");
             updateGraphicsManager();
             endTurn=false;
@@ -285,8 +287,8 @@ public class Match extends Observable implements Observer {
 
     /**
      * applies the tool event in the model
+     * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
-     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
      */
     public void applyTool() throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
@@ -569,10 +571,28 @@ public class Match extends Observable implements Observer {
             }
         }
 
-        if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardSixEvent"))
-            tool6Part2();
-        if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardElevenEvent"))
-            tool11Part2();
+        if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardSixEvent")) {
+            System.out.println(partTwoDone);
+            if(!partTwoDone) {
+                try {
+                    tool6Part2();
+                    connectionManager.stopSleep();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardElevenEvent")) {
+            if(!partTwoDone) {
+                try {
+                    tool11Part2();
+                    connectionManager.stopSleep();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         if(!myTurn&&((Event)arg).getType().equals("MoveEvent"))
         {
             try {
@@ -634,27 +654,44 @@ public class Match extends Observable implements Observer {
         connectionManager.stopSleep();
     }
 
-    public void tool6Part2()
-    {
-        executor.shutdownNow();
+    public void tool6Part2() throws InterruptedException {
+        logger.debugLog("TOOL6!!!!");
+        connectionManager.stopSleep();
+        graphicsManager.stopView();
+        partTwoDone = true;
         graphicsManager.setState(GraphicsManager.State.ASKTOOL6);
         graphicsManager.setReceivedEvent(currentEvent);
         connectionManager.setState(ConnectionManager.State.SLEEP);
         executor=Executors.newFixedThreadPool(2);
         executor.execute(graphicsManager);
         executor.execute(connectionManager);
+        executor.shutdown();
+        executor.awaitTermination(60, SECONDS);
+        graphicsManager.setState(GraphicsManager.State.ASKMAIN);
+
+        connectionManager.stopSleep();
+        graphicsManager.stopView();
+
     }
 
-    public void tool11Part2()
-    {
-        executor.shutdownNow();
+    public void tool11Part2() throws InterruptedException {
+        logger.debugLog("TOOL11!!!");
+        connectionManager.stopSleep();
+        graphicsManager.stopView();
+        partTwoDone = true;
         graphicsManager.setState(GraphicsManager.State.ASKTOOL11);
         graphicsManager.setReceivedEvent(currentEvent);
         connectionManager.setState(ConnectionManager.State.SLEEP);
         executor=Executors.newFixedThreadPool(2);
         executor.execute(graphicsManager);
         executor.execute(connectionManager);
-    }
+        executor.shutdown();
+        executor.awaitTermination(60, SECONDS);
+        graphicsManager.setState(GraphicsManager.State.ASKMAIN);
+
+        connectionManager.stopSleep();
+        graphicsManager.stopView();
+        }
 
     public void showMove() throws InvalidIntArgumentException, GenericInvalidArgumentException, InterruptedException
     {

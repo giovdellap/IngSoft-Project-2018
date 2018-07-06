@@ -37,7 +37,7 @@ public class ToolCardUsageRecord
             }
         }
 
-        selectedId[0] = 10;
+        selectedId[0] = 6;
         selectedId[1] = 11;
         selectedId[2] = 12;
 

@@ -34,6 +34,8 @@ public class ToolCardEleven extends ToolCard {
         event.validate();
         player.sendEvent(event);
         player.getEvent();
+        event = (ToolCardElevenEvent)player.getLastEventReceive();
+
         tempDie.setValue( event.getNewValue());
         setDraft(tempDraft);
         setScheme(modelInstance.getSchemebyIndex(player.getId()));

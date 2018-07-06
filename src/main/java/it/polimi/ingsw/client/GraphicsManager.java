@@ -85,9 +85,7 @@ public class GraphicsManager extends Observable implements Runnable
         {
             try {
                 toolCard6Part2((ToolCardSixEvent)received);
-            } catch (InvalidIntArgumentException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -98,6 +96,8 @@ public class GraphicsManager extends Observable implements Runnable
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -278,12 +278,17 @@ public class GraphicsManager extends Observable implements Runnable
     /**
      * sets and notifies the tool card six second part event to the CLI
      * @param currentEvent ToolCardSixEvent
-     * @throws InvalidIntArgumentException
-     * @throws IOException
+     * @throws InterruptedException
      */
-    private void toolCard6Part2(ToolCardSixEvent currentEvent) throws InvalidIntArgumentException, IOException
-    {
-        ToolCardSixEvent event = beautifulCLI.toolCardSixEventPartTwo(players, draft, track, toolsUsage, activePlayer, me, round, currentEvent);
+    private void toolCard6Part2(ToolCardSixEvent currentEvent) throws InterruptedException {
+        ExecutorService exec = Executors.newSingleThreadExecutor();
+        beautifulCLI.setState(State.ASKTOOL6);
+        beautifulCLI.setUseTool(currentEvent);
+        exec.execute(beautifulCLI);
+        exec.shutdown();
+        exec.awaitTermination(75, TimeUnit.SECONDS);
+
+        ToolCardSixEvent event = (ToolCardSixEvent)beautifulCLI.getUseTool();
         setChanged();
         notifyObservers(event);
     }
@@ -294,8 +299,15 @@ public class GraphicsManager extends Observable implements Runnable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    private void toolCard11Part2(ToolCardElevenEvent currentEvent) throws InvalidIntArgumentException, IOException {
-        ToolCardElevenEvent event = beautifulCLI.toolCardElevenEventPartTwo(players, draft, track, toolsUsage, activePlayer, me, round, currentEvent);
+    private void toolCard11Part2(ToolCardElevenEvent currentEvent) throws InvalidIntArgumentException, IOException, InterruptedException {
+        ExecutorService exec = Executors.newSingleThreadExecutor();
+        beautifulCLI.setState(State.ASKTOOL11);
+        beautifulCLI.setUseTool(currentEvent);
+        exec.execute(beautifulCLI);
+        exec.shutdown();
+        exec.awaitTermination(75, TimeUnit.SECONDS);
+
+        ToolCardElevenEvent event = (ToolCardElevenEvent)beautifulCLI.getUseTool();
         setChanged();
         notifyObservers(event);
     }

@@ -42,7 +42,6 @@ public class Match implements Observer
     private ArrayList<PlayerThread> players;
     private ArrayList<Event> currentEvent;
     private boolean endInitialization=false;
-    private boolean timeExpired;
 
     private ArrayList<Integer> disconnectedPlayersInitializationPhase;
 
@@ -293,7 +292,6 @@ public class Match implements Observer
             boolean moveUsed = false;
             boolean endTurn = false;
             long longDate = System.currentTimeMillis();
-            timeExpired=false;
 
             while (!endTurn&&(System.currentTimeMillis()-longDate<(180*1000)))
             {

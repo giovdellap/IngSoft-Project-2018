@@ -29,6 +29,7 @@ public class ToolCardSix extends ToolCard {
         event.setApplyOne(true);
         player.sendEvent(event);
         player.getEvent();
+        event = (ToolCardSixEvent)player.getLastEventReceive();
 
         Boolean check = afterDraftingCheck(modelInstance.getDraft().returnDie(event.getIndex()), event.getX(), event.getY());
                 event.setApplyTwo(check);

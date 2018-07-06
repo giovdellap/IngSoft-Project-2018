@@ -15,8 +15,6 @@ public class TurnActionHandler
     private ToolCardUsageRecord toolRecord;
     private TurnManager turnManager;
 
-
-
     public void setTurnManager(TurnManager turnManager) {
         this.turnManager = turnManager;
     }
@@ -57,7 +55,7 @@ public class TurnActionHandler
         return toReturn;
     }
 
-        public void setModel(Model model)
+    public void setModel(Model model)
     {
         this.modelInstance=model;
     }

@@ -5,19 +5,21 @@ import java.util.List;
 
 public class SettingsObj {
 
-    private List<Integer> settings;
+    private List<String> settings;
 
-    public SettingsObj(int debug, int graphic, int reconnection) {
+    public SettingsObj(String debug, String graphic, String reconnection, String ip, String port ) {
 
-        settings = new ArrayList<Integer>();
+        settings = new ArrayList<String>();
 
         settings.add(debug);
         settings.add(graphic);
         settings.add(reconnection);
+        settings.add(ip);
+        settings.add(port);
 
     }
 
-    public List<Integer> getSettings() {
+    public List<String> getSettings() {
         return settings;
     }
 

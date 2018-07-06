@@ -26,7 +26,7 @@ public class JSONSettingsWriterReaderTest {
     @Test
     public void checkWrite() throws IOException {
 
-        settingsWriter.write(1,2,3);
+        settingsWriter.write("1","2","3","76587.6..5","trhstr");
 
     }
 
@@ -35,11 +35,13 @@ public class JSONSettingsWriterReaderTest {
 
         settingsReader.readSetting();
 
-        int temp=settingsReader.getDebug();
+        String temp=settingsReader.getDebug();
 
         System.out.println(temp);
         System.out.println(settingsReader.getGraphics());
         System.out.println(settingsReader.getReconnection());
+        System.out.println(settingsReader.getIP());
+        System.out.println(settingsReader.getPort());
 
     }
 

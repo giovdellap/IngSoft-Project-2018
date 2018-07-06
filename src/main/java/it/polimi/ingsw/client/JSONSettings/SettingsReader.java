@@ -21,16 +21,18 @@ public class SettingsReader {
 
     }
 
-    public int getDebug() {
+    public String getDebug() {
         return settingsObj.getSettings().get(0);
     }
 
-    public int getGraphics() {
-        return settingsObj.getSettings().get(1);
-    }
+    public String getGraphics() { return settingsObj.getSettings().get(1);}
 
-    public int getReconnection() {
+    public String getReconnection() {
         return settingsObj.getSettings().get(2);
     }
+
+    public String getIP(){return settingsObj.getSettings().get(3);}
+
+    public String getPort(){return settingsObj.getSettings().get(4);}
 
 }

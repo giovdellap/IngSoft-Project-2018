@@ -8,11 +8,12 @@ import java.io.IOException;
 
 public class SettingsWriter {
 
-    public void write(int debug, int graphic, int reconnection) throws IOException {
+    public void write(String debug, String graphic, String reconnection, String ip, String port) throws IOException
+    {
 
         Gson gson = new GsonBuilder().setLenient().create();
 
-        SettingsObj sett = new SettingsObj(debug,graphic,reconnection);
+        SettingsObj sett = new SettingsObj(debug,graphic,reconnection, ip, port);
 
         String json;
         FileWriter writer = null;
@@ -33,37 +34,4 @@ public class SettingsWriter {
 
     }
 
-    }
-
-    /*
-public class SchemeCardWriter {
-
-
-    public void write(SchemeCard scheme) throws IOException, InvalidIntArgumentException {
-
-        Gson gson = new GsonBuilder().setLenient().create();
-
-        String json = gson.toJson(scheme);
-
-        FileWriter writer = null;
-
-        try
-        {
-            writer = new FileWriter(".\\src\\main\\Resources\\JsonPackage\\SchemeCardPers\\"+scheme.getName(1)+".json");
-            writer.write(json);
-            writer.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally {
-            writer.close();
-        }
-
-
-    }
-
-
 }
-    */

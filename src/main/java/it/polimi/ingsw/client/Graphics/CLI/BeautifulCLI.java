@@ -138,6 +138,68 @@ public class BeautifulCLI implements ViewInterface, Runnable
             }
 
         }
+        if(state==GraphicsManager.State.ASKTOOL6)
+        {
+            try {
+                ToolCardSixEvent event = (ToolCardSixEvent) useTool;
+                printOut(cliToolsManager.sceneInitializer(40));
+                printOut(printerMaker.getGameScene(threadUpdater.players, threadUpdater.draft, threadUpdater.track, privateObjective, pubObjs, threadUpdater.tools, threadUpdater.activePlayer, threadUpdater.me));
+                printOut(cliToolsManager.printSpaces(40));
+                printOut(cliToolsManager.simpleQuestionsMaker("Il dado in posizione " + Integer.toString(event.getIndex() + 1) + " è stato tirato, nuovo valore " + event.getNewValue(), 40, false));
+                printOut(stringCreator.getString( StringCreator.State.FINALPOSX));
+                if(!stopCLI) {
+                    readWithExceptions(1, 4);
+                    event.setX(Integer.parseInt(msgIN) - 1);
+                }
+                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                if(!stopCLI) {
+                    readWithExceptions(1, 5);
+                    event.setY(Integer.parseInt(msgIN) - 1);
+                }
+                if(!stopCLI)
+                    useTool=event;
+            } catch (InvalidIntArgumentException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(state==GraphicsManager.State.ASKTOOL11)
+        {
+            if(!stopCLI)
+            {
+                try{
+                    ToolCardElevenEvent event = (ToolCardElevenEvent)useTool;
+                    printOut(cliToolsManager.sceneInitializer(40));
+                    printOut(printerMaker.getGameScene(threadUpdater.players, threadUpdater.draft, threadUpdater.track, privateObjective, pubObjs, threadUpdater.tools, threadUpdater.activePlayer, threadUpdater.me));
+                    printOut(cliToolsManager.printSpaces(40));
+                    printOut(cliToolsManager.simpleQuestionsMaker("Dado ripescato, nuovo colore: " + cliToolsManager.getColor(event.getNewColor()),40 ,false ));
+                    printOut(cliToolsManager.simpleQuestionsMaker("Scegli il nuovo valore del dado", 40, true));
+
+                    if(!stopCLI) {
+                        readWithExceptions(1, 6);
+                        event.setNewValue(Integer.parseInt(msgIN));
+                    }
+                    if(!stopCLI) {
+                        printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                        readWithExceptions(1, 4);
+                        event.setX(Integer.parseInt(msgIN) - 1);
+                    }
+                    if(!stopCLI) {
+                        printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado", 40, true));
+                        readWithExceptions(1, 5);
+                        event.setY(Integer.parseInt(msgIN) - 1);
+                    }
+                    if(!stopCLI)
+                    useTool = event;
+
+                } catch (InvalidIntArgumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         if(state==GraphicsManager.State.CLITOOL)
         {
@@ -367,20 +429,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
                             printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
                             readWithExceptions(1, threadUpdater.draft.getSize());
                             event.setIndex(Integer.parseInt(msgIN)-1);
-
-                            if(!stopCLI) {
-
-
-
-                                //
-
-
-
-                            }
-
-
-                            if(!stopCLI)
-                                useTool = event;
+                            useTool=event;
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -485,19 +534,8 @@ public class BeautifulCLI implements ViewInterface, Runnable
                             printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
                             readWithExceptions(1, threadUpdater.draft.getSize());
                             event.setIndex(Integer.parseInt(msgIN)-1);
-                            if(!stopCLI) {
-
-
-
-                                //
-
-
-
-                            }
-
                             if(!stopCLI)
                                 useTool = event;
-
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -820,67 +858,9 @@ public class BeautifulCLI implements ViewInterface, Runnable
     }
 
 
-    /**
-     * manages and uses the tool card six event part two, asking the player where does he want to place the die
-     * @param players
-     * @param draft
-     * @param track
-     * @param tools
-     * @param activePlayer
-     * @param me
-     * @param round
-     * @param previousEvent
-     * @return
-     * @throws InvalidIntArgumentException
-     * @throws IOException
-     */
-    public ToolCardSixEvent toolCardSixEventPartTwo(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ToolCardSixEvent previousEvent) throws InvalidIntArgumentException, IOException {
-
-        ToolCardSixEvent event = previousEvent;
-        printOut(cliToolsManager.sceneInitializer(40));
-        printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
-        printOut(cliToolsManager.printSpaces(40));
-        printOut(cliToolsManager.simpleQuestionsMaker("Il dado in posizione "+Integer.toString(previousEvent.getIndex()+1)+" è stato tirato, nuovo valore " + event.getNewValue(),40,false));
-        printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-        readWithExceptions(1,4);
-        event.setX(Integer.parseInt(msgIN)-1);
-        printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-        readWithExceptions(1,5);
-        event.setY(Integer.parseInt(msgIN)-1);
-        return event;
-    }
-
-    /**
-     * manages and uses the tool card eleven event part two, asking the player where does he want to place the die
-     * @param players
-     * @param draft
-     * @param track
-     * @param tools
-     * @param activePlayer
-     * @param me
-     * @param round
-     * @param previousEvent
-     * @return
-     * @throws InvalidIntArgumentException
-     * @throws IOException
-     */
-    public ToolCardElevenEvent toolCardElevenEventPartTwo(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ToolCardElevenEvent previousEvent) throws InvalidIntArgumentException, IOException {
-
-        ToolCardElevenEvent event = previousEvent;
-        printOut(cliToolsManager.sceneInitializer(40));
-        printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
-        printOut(cliToolsManager.printSpaces(40));
-        printOut(cliToolsManager.simpleQuestionsMaker("Dado ripescato, nuovo colore: " + cliToolsManager.getColor(event.getNewColor()),40 ,false ));
-        printOut(cliToolsManager.simpleQuestionsMaker("Scegli il nuovo valore del dado", 40, true));
-        readWithExceptions(1,6);
-        event.setNewValue(Integer.parseInt(msgIN));
-        printOut(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
-        readWithExceptions(1,4);
-        event.setX(Integer.parseInt(msgIN)-1);
-        printOut(cliToolsManager.simpleQuestionsMaker("Scegli la colonna dove posizionare il dado",40,true));
-        readWithExceptions(1,5);
-        event.setY(Integer.parseInt(msgIN)-1);
-        return event;
+    public void setUseTool(ToolCardEvent event)
+    {
+        useTool = event;
     }
 
     /**
