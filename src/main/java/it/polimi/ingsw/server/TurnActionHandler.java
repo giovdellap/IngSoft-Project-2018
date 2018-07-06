@@ -16,9 +16,6 @@ public class TurnActionHandler
     private TurnManager turnManager;
 
 
-    public TurnActionHandler() {
-
-    }
 
     public void setTurnManager(TurnManager turnManager) {
         this.turnManager = turnManager;
@@ -29,6 +26,12 @@ public class TurnActionHandler
     }
 
     public ToolCardEvent useTool(ToolCardEvent event) throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, IOException {
+
+        //tokens check
+        int tokens = toolRecord.checkUsage(player.getTokens(), event.getId());
+
+        if(tokens==0)
+            return event;
 
         ToolCard card = toolRecord.getCard(event.getId());
 
@@ -43,6 +46,13 @@ public class TurnActionHandler
         player = card.getPlayer();
         toolRecord = card.getToolCardUsageRecord();
         turnManager = card.getTurnManager();
+
+        if(toReturn.isValidated()) {
+            toolRecord.applyUsage(event.getId());
+            int previousTokens = player.getTokens();
+
+            player.setTokens(previousTokens-tokens);
+        }
 
         return toReturn;
     }

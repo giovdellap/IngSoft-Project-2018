@@ -26,6 +26,7 @@ public class StringCreator
         ROUNDICE,
         ROUNDTOOL12,
         ROUNDDICETOOL12,
+        ASKTOOLCARD,
     }
 
     public ArrayList<String> getString(State state)
@@ -42,7 +43,7 @@ public class StringCreator
             }
             case TOOL1: {
                 temp.add(cliToolsManager.simpleQuestionsMaker("Premi + per aumentare il valore del dado, premi - per diminuire il valore del dado",40,true));
-                return  temp;
+                return temp;
             }
             case FINALPOSX: {
                 temp.add(cliToolsManager.simpleQuestionsMaker("Scegli la riga dove posizionare il dado",40,true));
@@ -132,6 +133,11 @@ public class StringCreator
                 temp.add(cliToolsManager.simpleQuestionsMaker("Scegli la posizione del dado di cui vuoi prendere il colore",40,true));
                 return temp;
 
+            }
+            case ASKTOOLCARD:
+            {
+                temp.add(cliToolsManager.simpleQuestionsMaker("Quale toolcard vuoi usare?", 40, true));
+                return temp;
             }
         }
         return null;   //----------------------------

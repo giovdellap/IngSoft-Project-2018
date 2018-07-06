@@ -329,6 +329,7 @@ public class Match implements Observer
                     //MoveEvent
                     if (actualEvent.getType().equals("MoveEvent") && !alreadyChecked) {
                         alreadyChecked = true;
+                        ((MoveEvent) actualEvent).setId(turnManager.getActivePlayer());
                         moveUsed = move();
                         if (moveUsed) {
                             logger.log("Move Accepted: " + Boolean.toString(moveUsed));
@@ -343,7 +344,7 @@ public class Match implements Observer
                     if (actualEvent instanceof ToolCardEvent && !alreadyChecked) {
                         alreadyChecked = true;
                         int currEvent = ((ToolCardEvent) currentEvent.get(turnManager.getActivePlayer())).getId();
-
+                        ((ToolCardEvent) actualEvent).setPlayer(turnManager.getActivePlayer());
                         if ((moveUsed && (currEvent == 1 || currEvent == 5 || currEvent == 6 || currEvent == 7 || currEvent == 9 || currEvent == 10 || currEvent == 11 || currEvent == 8))) {
                             logger.log("After drafting toolcard unusable because player already moved");
                             actualEvent.resetValidation();
@@ -541,6 +542,7 @@ public class Match implements Observer
         turnActionHandler.setTurnManager(turnManager);
 
         ToolCardEvent tempEvent = turnActionHandler.useTool((ToolCardEvent)currentEvent.get(turnManager.getActivePlayer()));
+
         currentEvent.set(turnManager.getActivePlayer(), tempEvent);
         modelInstance = turnActionHandler.getModel();
         players.set(turnManager.getActivePlayer(),turnActionHandler.getPlayer());

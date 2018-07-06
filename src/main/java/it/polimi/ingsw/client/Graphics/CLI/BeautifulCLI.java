@@ -91,6 +91,8 @@ public class BeautifulCLI implements ViewInterface, Runnable
                         tempNames[i] = threadUpdater.players[threadUpdater.disconnected.get(i)].getName();
                     printOut(printerMaker.disconnectedPlayers(tempNames));
                 }
+
+                printOut(printerMaker.selectAction());
                 readWithExceptions(0,2 );
 
             } catch (InvalidIntArgumentException e) {
@@ -108,7 +110,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
                 System.out.println();
                 printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
                 readWithExceptions(1, threadUpdater.draft.getSize());
-                move[0]=Integer.parseInt(msgIN);
+                move[0]=Integer.parseInt(msgIN)-1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -117,7 +119,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
                 try{
                     printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
                     readWithExceptions(1, 4);
-                    move[1]=Integer.parseInt(msgIN);
+                    move[1]=Integer.parseInt(msgIN)-1;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -127,21 +129,247 @@ public class BeautifulCLI implements ViewInterface, Runnable
                 try{
                     printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
                     readWithExceptions(1, 5);
-                    move[2]=Integer.parseInt(msgIN);
+                    move[2]=Integer.parseInt(msgIN)-1;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
         }
+
         if(state==GraphicsManager.State.CLITOOL)
         {
             try {
-                useTool(threadUpdater.draft.getSize(), threadUpdater.track.returnActualTurn(), threadUpdater.round);
+                printOut(stringCreator.getString(StringCreator.State.ASKTOOLCARD));
+                readWithExceptionsToolsEdition();
+
+                while((Integer.parseInt(msgIN)==5 || Integer.parseInt(msgIN)==12) && threadUpdater.round==0) {
+                    printOut(cliToolsManager.simpleQuestionsMaker("Non puoi usare questo tool al primo round essendo la round track vuota",40,false));
+                    readWithExceptionsToolsEdition();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            }
+            switch (Integer.parseInt(msgIN))
+            {
+                case 1:
+                {
+                    if(!stopCLI)
+                    {
+                        try {
+                            ToolCardOneEvent event = new ToolCardOneEvent(1);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1, threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.TOOL1));
+                                readIt();
+                                event.setAction(msgIN.charAt(0));
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1, 4);
+                                event.setX(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                                useTool=event;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if(!stopCLI)
+                    {
+                        try {
+                            ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(2);
+                            printOut(stringCreator.getString(StringCreator.State.STARTPOSX));
+                            readWithExceptions(1, 4);
+                            event.setX0(Integer.parseInt(msgIN)-1);
+
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY0(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1, 4);
+                                event.setX1(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY1(Integer.parseInt(msgIN)-1);
+                            }
+                            useTool=event;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if(!stopCLI)
+                    {
+                        try {
+                            ToolCardTwoThreeEvent event = new ToolCardTwoThreeEvent(3);
+                            printOut(stringCreator.getString(StringCreator.State.STARTPOSX));
+                            readWithExceptions(1, 4);
+                            event.setX0(Integer.parseInt(msgIN)-1);
+
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY0(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1, 4);
+                                event.setX1(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                            {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY1(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                                useTool=event;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                }
+                case 4: {
+                    if(!stopCLI) {
+                        try {
+
+                            ToolCardFourEvent event = new ToolCardFourEvent(4);
+                            printOut(stringCreator.getString(StringCreator.State.STARTPOS1X));
+                            readWithExceptions(1, 4);
+                            event.setX01(Integer.parseInt(msgIN)-1);
+
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOS1Y));
+                                readWithExceptions(1, 5);
+                                event.setY01(Integer.parseInt(msgIN)-1);
+                            }
+
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOS2X));
+                                readWithExceptions(1, 4);
+                                event.setX02(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.STARTPOS2Y));
+                                readWithExceptions(1, 5);
+                                event.setY02(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS1X));
+                                readWithExceptions(1, 4);
+                                event.setX11(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS1Y));
+                                readWithExceptions(1, 5);
+                                event.setY11(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS2X));
+                                readWithExceptions(1, 4);
+                                event.setX22(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOS2Y));
+                                readWithExceptions(1, 5);
+                                event.setX22(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                                useTool = event;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                }
+                case 5: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardFiveEvent event = new ToolCardFiveEvent(5);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1,threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.ROUND));
+                                readWithExceptions(1, threadUpdater.round);
+                                event.setTurn(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.ROUNDICE));
+                                readWithExceptions(1, threadUpdater.track.returnNTurnRoundDice(event.getTurn()).returnDim());
+                                event.setPos(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1,4 );
+                                event.setX(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1, 5);
+                                event.setY(Integer.parseInt(msgIN)-1);
+                            }
+                            if(!stopCLI)
+                                useTool = event;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InvalidIntArgumentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                }
+                case 6: {
+                    if(!stopCLI) {
+                        try {
+                            ToolCardSixEvent event = new ToolCardSixEvent(6);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1, threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
             }
         }
     }
