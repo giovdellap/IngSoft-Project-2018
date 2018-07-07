@@ -3,16 +3,13 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
+import it.polimi.ingsw.commons.Events.Initialization.*;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.Event;
-import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
-import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
-import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
-import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
@@ -102,7 +99,7 @@ public class Match extends Observable implements Observer {
         executor=Executors.newSingleThreadExecutor();
         executor.execute(connectionManager);
         executor.shutdown();
-        executor.awaitTermination(1, TimeUnit.MINUTES);
+        executor.awaitTermination(3, TimeUnit.MINUTES);
 
         modelManagerMP.setMyPrivObj(((ModelInitializationEvent)currentEvent).getPrivateObjective());
         modelManagerMP.setPubObjs(((ModelInitializationEvent)currentEvent).getPublicObjectives());
@@ -127,8 +124,12 @@ public class Match extends Observable implements Observer {
             executor.awaitTermination(6, SECONDS);
 
             firstFlag = currentEvent.isValidated();
-            if(firstFlag)
-                modelManagerMP.setMyScheme(((SchemeSelectionEvent)currentEvent).getId(),((SchemeSelectionEvent)currentEvent).getFb());
+            if(firstFlag) {
+                if(currentEvent.getType().equals("SchemeSelectionEvent"))
+                    modelManagerMP.setMyScheme(((SchemeSelectionEvent) currentEvent).getId(), ((SchemeSelectionEvent) currentEvent).getFb());
+                else
+                    modelManagerMP.setMyScheme(((PersonalSchemeEvent)currentEvent).getScheme());
+            }
         }
         graphicsManager.waitForPlayers2();
 
@@ -136,9 +137,25 @@ public class Match extends Observable implements Observer {
         executor=Executors.newSingleThreadExecutor();
         executor.execute(connectionManager);
         executor.shutdown();
-        executor.awaitTermination(15, SECONDS);
+        executor.awaitTermination(20, SECONDS);
 
         matchManager = new MatchManager((Initialization2Event)currentEvent, myUsername);
+        int personalCounter=0;
+        for(int i=0;i<((Initialization2Event)currentEvent).getPlayerSize();i++)
+        {
+            if(((Initialization2Event)currentEvent).getEventPlayer(i).getSchemeId()==100)
+                personalCounter++;
+        }
+        for(int i=0;i<personalCounter;i++)
+        {
+            connectionManager.setState(RECEIVE);
+            executor=Executors.newSingleThreadExecutor();
+            executor.execute(connectionManager);
+            executor.shutdown();
+            executor.awaitTermination(20, SECONDS);
+
+            matchManager.setPlayerScheme(((PersonalSchemeEvent)currentEvent).getPlayer(), ((PersonalSchemeEvent)currentEvent).getScheme());
+        }
 
         game();
     }

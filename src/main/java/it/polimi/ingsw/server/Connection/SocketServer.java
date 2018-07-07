@@ -50,7 +50,7 @@ public class SocketServer extends Observable
         eventEncoder = new EventEncoder();
         eventDecoder = new EventDecoder();
 
-        logger = new SimpleLogger(1, false);
+        logger = new SimpleLogger(1, true);
     }
 
     /**
@@ -93,6 +93,7 @@ public class SocketServer extends Observable
             notifyObservers(currentEvent);
         }catch(Exception e)
         {
+            e.printStackTrace();
             System.out.println("player disconnected receive (getevent socketserver)");
             disconnectionManager();
         }

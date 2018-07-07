@@ -186,7 +186,10 @@ public class PlayerThread extends Observable implements Observer, Runnable
                     {
                         personalSchemeEnabled=true;
                         myPersonalSchemeEvent= (PersonalSchemeEvent) currentEventReceive;
+                        myPersonalSchemeEvent.validate();
+                        myPersonalSchemeEvent.setID(id);
                         currentEventSend=currentEventReceive;
+                        currentEventSend.validate();
                         connectionManager.sendEvent(currentEventSend);
                         if(!isDisconnected)
                             setChanged();
@@ -200,11 +203,14 @@ public class PlayerThread extends Observable implements Observer, Runnable
             }
         }
         else {
-            try {
-                logger.log("player "+Integer.toString(id)+" trying reconnection..");
-                tryReconnection();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(currentEventSend.getType().equals("TurnEvent")) {
+                try {
+                    logger.log("player " + Integer.toString(id) + " trying reconnection..");
+                    tryReconnection();
+                    logger.log("Disconnected timer ended");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         System.out.println("Fine run thread");
@@ -359,7 +365,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
 
         if(((Event)arg).getType().equals("SchemeSelectionEvent")||((Event)arg).getType().equals("PersonalSchemeEvent"))
         {
-            if(((Event)arg).getType().equals("SchemeSelectionevent"))
+            if(((Event)arg).getType().equals("SchemeSelectionEvent"))
                 selected=((SchemeSelectionEvent)arg).getId();
             else
                 myPersonalSchemeEvent=((PersonalSchemeEvent)arg);
@@ -395,7 +401,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
     }
 
     public void tryReconnection() throws IOException {
-        server.accept(4);
+        server.accept(3);
     }
 
     public void changeSocket(Socket socket) throws IOException

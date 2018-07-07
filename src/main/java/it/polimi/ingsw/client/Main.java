@@ -21,8 +21,8 @@ public class Main
         ArrayList<String> settings;
         SchemeCreator schemeCreator;
 
-
-        while (!quit) {
+        while (!quit)
+        {
             choice = launcher.launch();
             if(choice==0)
                 quit=true;

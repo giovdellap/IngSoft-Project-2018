@@ -11,8 +11,8 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import it.polimi.ingsw.client.Graphics.AbstractGraphic;
 import it.polimi.ingsw.client.Graphics.CLI.CLIToolsManager;
-import it.polimi.ingsw.client.Graphics.ViewInterface;
 import it.polimi.ingsw.client.ModelComponentsMP.DraftPoolMP;
 import it.polimi.ingsw.client.ModelComponentsMP.PrivateObjectiveMP;
 import it.polimi.ingsw.client.ModelComponentsMP.PublicObjectiveMP;
@@ -29,7 +29,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GreenLanterna implements ViewInterface, Runnable
+public class GreenLanterna extends AbstractGraphic implements Runnable
 {
     private Terminal terminal;
     private TextGraphics textGraphics;
@@ -112,6 +112,10 @@ public class GreenLanterna implements ViewInterface, Runnable
     }
 
     public void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException {
+
+    }
+
+    public void setUseTool(ToolCardEvent event) {
 
     }
 

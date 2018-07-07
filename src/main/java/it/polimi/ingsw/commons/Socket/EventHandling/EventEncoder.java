@@ -86,6 +86,8 @@ public class EventEncoder
 
         if(event.getType().equals("ReconnectionEvent"))
             temp.addAll(encodeReconnectionEvent((ReconnectionEvent)event));
+        if(event.getType().equals("PersonalSchemeEvent"))
+            temp.addAll(encodePersonalSchemeEvent(((PersonalSchemeEvent)event)));
 
 
         temp.add(transformer.simpleEncode("end", "event"));

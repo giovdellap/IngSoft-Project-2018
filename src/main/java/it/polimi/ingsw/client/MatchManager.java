@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
@@ -28,12 +29,19 @@ public class MatchManager
         for(int i=0;i<players.length;i++)
         {
             players[i] = new PlayerClient(event.getEventPlayer(i).getName(), me.equals(event.getEventPlayer(i).getName()));
-            SchemeCard scheme = deck.extractSchemebyID(event.getEventPlayer(i).getSchemeId());
-            scheme.setfb(event.getEventPlayer(i).getFb());
-            players[i].setPlayerScheme(scheme);
+            if(event.getEventPlayer(i).getSchemeId()!=100) {
+                SchemeCard scheme = deck.extractSchemebyID(event.getEventPlayer(i).getSchemeId());
+                scheme.setfb(event.getEventPlayer(i).getFb());
+                players[i].setPlayerScheme(scheme);
+            }
             players[i].setTokens(event.getEventPlayer(i).getTokens());
         }
         disconnectedPlayers = new ArrayList<Integer>();
+    }
+
+    public void addPersonalScheme(PersonalSchemeEvent event)
+    {
+        players[event.getPlayer()].setPlayerScheme(event.getScheme());
     }
 
     public MatchManager()

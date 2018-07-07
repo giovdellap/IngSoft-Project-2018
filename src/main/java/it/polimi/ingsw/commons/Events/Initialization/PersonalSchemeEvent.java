@@ -23,4 +23,9 @@ public class PersonalSchemeEvent extends Event {
     public SchemeCard getScheme() {
         return scheme;
     }
+
+    public void setID(int id)
+    {
+        this.playerId=id;
+    }
 }

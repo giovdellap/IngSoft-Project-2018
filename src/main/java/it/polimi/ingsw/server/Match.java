@@ -229,6 +229,7 @@ public class Match implements Observer
         {
             if(playerScheme.personalSchemeEnabled())
             {
+                executor=Executors.newFixedThreadPool(players.size());
                 for(PlayerThread player : players)
                 {
                     player.setState(SEND);
@@ -422,8 +423,7 @@ public class Match implements Observer
      * @throws InvalidIntArgumentException
      */
 
-    public void sendTurnEvent() throws InvalidIntArgumentException, InterruptedException
-    {
+    public void sendTurnEvent() throws InvalidIntArgumentException, InterruptedException, IOException {
         TurnEvent activeEvent = new TurnEvent();
         TurnEvent notActiveEvent = new TurnEvent();
         activeEvent.setRound(turnManager.getRound());
@@ -437,7 +437,7 @@ public class Match implements Observer
         else
         {
             activeEvent.setDisconnected(getDisconnected());
-            activeEvent.setDisconnected(getDisconnected());
+            notActiveEvent.setDisconnected(getDisconnected());
         }
         activeEvent.setActive(turnManager.getActivePlayer());
         notActiveEvent.setActive(turnManager.getActivePlayer());
@@ -471,24 +471,26 @@ public class Match implements Observer
 
         for(PlayerThread player : players)
         {
-            if(player.getId()==turnManager.getActivePlayer())
-            {
-                logger.log("Setting up active player");
-                player.setEvent(activeEvent);
-                player.setState(HANDLE);
-                logger.log("Player itsMyTurn: "+((TurnEvent)player.getLastEventSent()).itsMyTurn());
+            if(!player.isDisconnected()) {
+                if (player.getId() == turnManager.getActivePlayer()) {
+                    logger.log("Setting up active player");
+                    player.setEvent(activeEvent);
+                    player.setState(HANDLE);
+                    logger.log("Player itsMyTurn: " + ((TurnEvent) player.getLastEventSent()).itsMyTurn());
+                } else {
+                    logger.debugLog("Setting up unactive player id: " + Integer.toString(player.getId()));
+                    currentEvent.set(player.getId(), notActiveEvent);
+                    player.setEvent(notActiveEvent);
+                    player.setState(HANDLE);
+                }
+                executor.execute(player);
             }
-            else
-            {
-                logger.debugLog("Setting up unactive player id: "+Integer.toString(player.getId()));
-                currentEvent.set(player.getId(), notActiveEvent);
-                player.setEvent(notActiveEvent);
-                player.setState(HANDLE);
-            }
-            executor.execute(player);
         }
         executor.shutdown();
-        executor.awaitTermination(25, TimeUnit.SECONDS);
+        executor.awaitTermination(15, TimeUnit.SECONDS);
+        for(PlayerThread pl : players)
+            if(pl.isDisconnected())
+                pl.tryReconnection();
 
         logger.log("Turn events sent");
     }
@@ -688,7 +690,7 @@ public class Match implements Observer
         }
         if(((Event)arg).getType().equals("PersonalSchemeEvent"))
         {
-            modelInstance.setPlayerScheme(((PlayerThread)o).getId(), ((PersonalSchemeEvent)arg).getScheme());
+            modelInstance.setPlayerSchemeFirstTime(((PlayerThread)o).getPersonalScheme().getScheme(), ((PlayerThread)o).getId());
         }
     }
 

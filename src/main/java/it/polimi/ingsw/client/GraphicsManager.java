@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.Graphics.AbstractGraphic;
 import it.polimi.ingsw.client.Graphics.CLI.BeautifulCLI;
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 import it.polimi.ingsw.commons.Events.Event;
@@ -386,10 +387,12 @@ public class GraphicsManager extends Observable implements Runnable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public void getSelectedScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
-    {
+    public void getSelectedScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException, InterruptedException {
         SchemeCard temp = graphic.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
-        currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
+        if(temp.getID()!=100)
+            currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
+        else
+            currentEvent=new PersonalSchemeEvent(temp, 0);
         setChanged();
         notifyObservers(currentEvent);
     }

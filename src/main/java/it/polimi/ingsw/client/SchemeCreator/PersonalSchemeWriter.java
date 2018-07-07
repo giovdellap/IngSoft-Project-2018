@@ -20,7 +20,6 @@ public class PersonalSchemeWriter {
 
         try
         {
-            System.out.println(scheme.getName(1));
             writer = new FileWriter("./src/main/resources/JsonPackage/SchemeCardsPers/"+scheme.getName(1)+".json");
             writer.write(json);
             writer.close();

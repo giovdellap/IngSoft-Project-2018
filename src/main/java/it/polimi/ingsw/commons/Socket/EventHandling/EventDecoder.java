@@ -4,10 +4,7 @@ import it.polimi.ingsw.commons.Die;
 import it.polimi.ingsw.commons.Events.*;
 import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
-import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
-import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
-import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
-import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
+import it.polimi.ingsw.commons.Events.Initialization.*;
 
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SimpleLogger;
@@ -103,6 +100,8 @@ public class EventDecoder
 
         if(transformer.getArg().equals("ReconnectionEvent"))
             return decodeReconnectionEvent(toDecode);
+        if(transformer.getArg().equals("PersonalSchemeEvent"))
+            return decodePersonalSchemeEvent(toDecode);
 
         else
             return null;
@@ -973,6 +972,40 @@ public class EventDecoder
 
             event.addReconnectionRD(decoder.arrayListDecoder(tempRdStr));
         }
+        return event;
+    }
+
+    private PersonalSchemeEvent decodePersonalSchemeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException {
+
+        transformer.simpleDecode(toDecode.get(2));
+        int playerId = Integer.parseInt(transformer.getArg());
+
+        SchemeCard temp = new SchemeCard(100);
+        temp.setfb(1);
+        int j=3;
+        while(j<toDecode.size())
+        {
+            transformer.simpleDecode(toDecode.get(j));
+            int x = Integer.parseInt(transformer.getArg());
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            int y = Integer.parseInt(transformer.getArg());
+            j++;
+
+            transformer.simpleDecode(toDecode.get(j));
+            int cell = Integer.parseInt(transformer.getArg());
+            j++;
+
+            temp.setCell(1, x, y, cell);
+        }
+
+        PersonalSchemeEvent event = new PersonalSchemeEvent(temp, playerId);
+
+        transformer.simpleDecode(toDecode.get(1));
+        if(transformer.getArg().equals("true"))
+            event.validate();
+
         return event;
     }
 

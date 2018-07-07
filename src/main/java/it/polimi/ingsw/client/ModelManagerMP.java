@@ -54,6 +54,10 @@ public class ModelManagerMP
             myScheme=tempSchemes[1];
         myScheme.setfb(fb);
     }
+    public void setMyScheme(SchemeCard scheme)
+    {
+        myScheme=scheme;
+    }
 
 
     public void setTempSchemes(int id1, int id2) throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException

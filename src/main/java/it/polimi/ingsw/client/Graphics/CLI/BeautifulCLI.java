@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.Graphics.CLI;
 import it.polimi.ingsw.client.Graphics.AbstractGraphic;
 import it.polimi.ingsw.client.Graphics.StringCreator;
 import it.polimi.ingsw.client.GraphicsManager;
+import it.polimi.ingsw.client.SchemeCreator.PersonalSchemeWriter;
+import it.polimi.ingsw.client.SchemeCreator.SchemeReader;
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PlayerClient;
@@ -32,6 +35,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     private StringCreator stringCreator;
     private boolean initializationMode=true;
 
+    private SchemeReader reader;
 
 
     /**
@@ -44,6 +48,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
         printerMaker = new PrinterMaker(1);
         cliToolsManager = new CLIToolsManager();
         stringCreator=new StringCreator();
+        reader=new SchemeReader();
 
         msgIN = "";
 
@@ -609,11 +614,6 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
 
 
-
-
-
-
-
     /**
      * asks for Username
      * @return
@@ -653,17 +653,18 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public SchemeCard setInitializationScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privateObjectiveMP, PublicObjectiveMP[] publicObjectiveMPS, int[] tools) throws InvalidIntArgumentException, IOException
-    {
+    public SchemeCard setInitializationScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privateObjectiveMP, PublicObjectiveMP[] publicObjectiveMPS, int[] tools) throws InvalidIntArgumentException, IOException, InterruptedException {
         this.privateObjective = privateObjectiveMP;
         this.pubObjs = publicObjectiveMPS;
         this.toolsID = tools;
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getSelectionScene(scheme1, scheme2, username, privateObjectiveMP, pubObjs, tools));
+        printOut(cliToolsManager.simpleQuestionsMaker("Premere 1/2/3/4 per scegliere uno schema fra quelli estratti, 0 per uno schema personalizzato", 80, false));
 
-        readWithExceptions(1,4);
+        readWithExceptions(0,4);
 
-        SchemeCard temp = new SchemeCard(1);
+
+        SchemeCard temp=null;
         if(Integer.parseInt(msgIN)==1)
         {
             temp=scheme1;
@@ -683,6 +684,16 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
         {
             temp=scheme2;
             temp.setfb(2);
+        }
+        if(Integer.parseInt(msgIN)==0)
+        {
+            printOut(cliToolsManager.simpleQuestionsMaker("Scegli uno schema fra quelli che hai creato", 80, false));
+            readIt();
+            temp=reader.read(msgIN);
+            for (int x=0;x<4;x++)
+                for (int y=0;y<5;y++)
+                    System.out.println("x: "+Integer.toString(x)+" y: "+Integer.toString(y)+" "+Integer.toString(temp.getCell(1, x, y)));
+
         }
         printOut(cliToolsManager.sceneEnder(40));
 

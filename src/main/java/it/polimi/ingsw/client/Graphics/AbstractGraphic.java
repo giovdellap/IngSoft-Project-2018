@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.ModelComponentsMP.PrivateObjectiveMP;
 import it.polimi.ingsw.client.ModelComponentsMP.PublicObjectiveMP;
 import it.polimi.ingsw.client.ModelComponentsMP.RoundTrackMP;
 import it.polimi.ingsw.client.PlayerClient;
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
@@ -27,7 +28,7 @@ public abstract class AbstractGraphic implements Runnable{
     public int[] move;
     public ToolCardEvent useTool;
 
-
+    public PersonalSchemeEvent personalSchemeEvent;
 
     public void updateThatShit(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
     {
@@ -53,7 +54,7 @@ public abstract class AbstractGraphic implements Runnable{
     }
     public abstract String askUsername() throws IOException, InterruptedException;
     public abstract void setWaitScene();
-    public abstract SchemeCard setInitializationScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privateObjectiveMP, PublicObjectiveMP[] publicObjectiveMPS, int[] tools) throws InvalidIntArgumentException, IOException;
+    public abstract SchemeCard setInitializationScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privateObjectiveMP, PublicObjectiveMP[] publicObjectiveMPS, int[] tools) throws InvalidIntArgumentException, IOException, InterruptedException;
     public abstract void setWaitScene2();
     public abstract void moveAccepted();
     public abstract void moveRefused();
@@ -64,7 +65,6 @@ public abstract class AbstractGraphic implements Runnable{
     public abstract void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException;
     public abstract void setUseTool(ToolCardEvent event);
     public abstract boolean showScores(ScoreEvent event, boolean winner) throws InvalidIntArgumentException, IOException, InterruptedException;
-
 
 
 
