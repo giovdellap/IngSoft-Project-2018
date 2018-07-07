@@ -90,8 +90,9 @@ public class PlayerThread extends Observable implements Observer, Runnable
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(!stop)
+                if(!stop) {
                     connectionManager.getEvent();
+                }
                 logger.log("Player "+Integer.toString(id)+" receiving event "+currentEventSend.getType());
                 if (currentEventSend.getType().equals("TurnEvent"))
                     logger.log("TurnEvent receive active: "+Integer.toString(((TurnEvent)currentEventSend).getActive()));

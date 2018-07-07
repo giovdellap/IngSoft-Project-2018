@@ -57,6 +57,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
     public void run() {
         stopCLI=false;
+        System.out.println("BEAUTIFULCLI DISCONNECTED: "+Integer.toString(threadUpdater.disconnected.size()));
         if (state==GraphicsManager.State.ASKMAIN)
         {
             askForWhat=4;
@@ -75,15 +76,12 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
                 printOut(cliToolsManager.sceneInitializer(width));
                 printOut(printerMaker.getGameScene(threadUpdater.players, threadUpdater.draft, threadUpdater.track, privateObjective, pubObjs, threadUpdater.tools, threadUpdater.activePlayer, threadUpdater.me));
                 printOut(cliToolsManager.printSpaces(width));
-                printOut(printerMaker.round(threadUpdater.round, threadUpdater.players[threadUpdater.me].getName()));
+                printOut(printerMaker.round(threadUpdater.round, threadUpdater.players[threadUpdater.activePlayer].getName()));
 
                 if (threadUpdater.disconnected!=null)
                 {
                     //disconnected Players
-                    String[] tempNames = new String[threadUpdater.disconnected.size()];
-                    for(int i=0;i<threadUpdater.disconnected.size();i++)
-                        tempNames[i] = threadUpdater.players[threadUpdater.disconnected.get(i)].getName();
-                    printOut(printerMaker.disconnectedPlayers(tempNames));
+                    printOut(printerMaker.disconnectedPlayers(threadUpdater.disconnected));
                 }
 
                 printOut(printerMaker.selectAction());
@@ -712,20 +710,6 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
     //TURN SCENES
 
-    /**
-     * asks the player what action does he want to take
-     * @param players
-     * @param draft
-     * @param track
-     * @param tools
-     * @param activePlayer
-     * @param me
-     * @param round
-     * @return
-     * @throws InvalidIntArgumentException
-     * @throws IOException
-     */
-
 
     /**
      * prints out a move accepted message
@@ -756,7 +740,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
-    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException
+    public void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected) throws InvalidIntArgumentException, IOException
     {
         //asks user what to do
         //0 = pass, 1 = move, 2 = tool
@@ -766,13 +750,10 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
         printOut(cliToolsManager.printSpaces(width));
 
-        printOut(printerMaker.round(round, players[me].getName()));
+        printOut(printerMaker.round(round, players[activePlayer].getName()));
 
         //disconnected Players
-        String[] tempNames = new String[disconnected.size()];
-        for(int i=0;i<disconnected.size();i++)
-            tempNames[i] = players[disconnected.get(i)].getName();
-        printOut(printerMaker.disconnectedPlayers(tempNames));
+        printOut(printerMaker.disconnectedPlayers(disconnected));
 
         printOut(cliToolsManager.sceneEnder(width));
     }

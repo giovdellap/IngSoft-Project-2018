@@ -30,7 +30,7 @@ public abstract class AbstractGraphic implements Runnable{
 
     public PersonalSchemeEvent personalSchemeEvent;
 
-    public void updateThatShit(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
+    public void updateThatShit(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected)
     {
         threadUpdater=new ThreadUpdater(players, draft, track, tools, activePlayer, me, round, disconnected);
 
@@ -58,7 +58,7 @@ public abstract class AbstractGraphic implements Runnable{
     public abstract void setWaitScene2();
     public abstract void moveAccepted();
     public abstract void moveRefused();
-    public abstract void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) throws InvalidIntArgumentException, IOException;
+    public abstract void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected) throws InvalidIntArgumentException, IOException;
     public abstract void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException;
     public abstract void toolAccepted();
     public abstract void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException;
@@ -80,10 +80,10 @@ public abstract class AbstractGraphic implements Runnable{
         public int activePlayer;
         public int me;
         public int round;
-        public ArrayList<Integer> disconnected;
+        public ArrayList<String> disconnected;
 
 
-        public ThreadUpdater(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) {
+        public ThreadUpdater(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected) {
             this.players = players;
             this.draft = draft;
             this.track = track;

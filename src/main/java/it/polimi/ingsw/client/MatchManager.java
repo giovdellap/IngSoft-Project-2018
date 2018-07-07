@@ -13,7 +13,7 @@ public class MatchManager
 {
     private PlayerClient[] players;
     private int round;
-    private ArrayList<Integer> disconnectedPlayers;
+    private ArrayList<String> disconnectedPlayers;
     private int activePlayer;
 
     /**
@@ -36,7 +36,7 @@ public class MatchManager
             }
             players[i].setTokens(event.getEventPlayer(i).getTokens());
         }
-        disconnectedPlayers = new ArrayList<Integer>();
+        disconnectedPlayers = new ArrayList<String>();
     }
 
     public void addPersonalScheme(PersonalSchemeEvent event)
@@ -76,14 +76,10 @@ public class MatchManager
      */
     public void setDisconnectedPlayers(ArrayList<String> temp)
     {
-        disconnectedPlayers = new ArrayList<Integer>();
-        for(String str: temp)
-            for(int i=0;i<players.length;i++)
-                if(players[i].getName().equals(str))
-                    disconnectedPlayers.add(i);
+        disconnectedPlayers = temp;
 
     }
-    public ArrayList<Integer> getDisconnectedPlayers()
+    public ArrayList<String> getDisconnectedPlayers()
     {
         return disconnectedPlayers;
     }

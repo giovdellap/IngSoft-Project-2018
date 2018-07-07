@@ -195,24 +195,19 @@ public class PrinterMaker
      * @param username
      * @return
      */
-    public String[] disconnectedPlayers(String[] username)
+    public String[] disconnectedPlayers(ArrayList<String> username)
     {
         int i = 0;
-
-        String[] tempVect = new String[username.length+1];
-
-        tempVect[i]=new String("GIOCATORI DISCONNESSI: ");
-
+        String[] tempVect = new String[username.size()+1];
+        tempVect[i]="GIOCATORI DISCONNESSI: ";
         i++;
 
-        while (i<username.length)
+        for(String str : username)
         {
-            String temp = new String(username[i]);
-            tempVect[i]=temp;
+            tempVect[i]=str;
             i++;
         }
-
-            return tempVect;
+        return tempVect;
     }
 
     /**

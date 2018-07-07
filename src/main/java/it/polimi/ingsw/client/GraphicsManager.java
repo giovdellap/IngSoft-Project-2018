@@ -40,7 +40,7 @@ public class GraphicsManager extends Observable implements Runnable
     private int activePlayer;
     private int me;
     private int round;
-    private ArrayList<Integer> disconnected;
+    private ArrayList<String> disconnected;
 
     //GRAPHICS MANAGER SETTINGS
     private State state;
@@ -60,7 +60,7 @@ public class GraphicsManager extends Observable implements Runnable
         if(settings.get(1).equals("CLI"))
             graphic = new BeautifulCLI();
 
-        disconnected=new ArrayList<Integer>();
+        disconnected=new ArrayList<String>();
         logger = new SimpleLogger(2, true);
     }
 
@@ -161,7 +161,7 @@ public class GraphicsManager extends Observable implements Runnable
      * @param round
      * @param disconnected
      */
-    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
+    public void gmUpdate(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected)
     {
         this.players = players;
         this.draft = draft;
@@ -179,6 +179,7 @@ public class GraphicsManager extends Observable implements Runnable
     private void myTurn() throws InterruptedException {
         stop=false;
         int whatToDo=4;
+        System.out.println("DISCONNECTED MYTURN GRAPHMANAGER: "+Integer.toString(disconnected.size()));
 
         graphicsUpdate();
         Executor executor = Executors.newSingleThreadExecutor();
@@ -410,6 +411,7 @@ public class GraphicsManager extends Observable implements Runnable
 
     public void graphicsUpdate()
     {
+        System.out.println("GRAPHICSupdate disconnected: "+Integer.toString(disconnected.size()));
         graphic.updateThatShit(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
     }
 

@@ -320,7 +320,7 @@ public class Match implements Observer
             boolean endTurn = false;
             long longDate = System.currentTimeMillis();
 
-            while (!endTurn&&(System.currentTimeMillis()-longDate<(180*1000)))
+            while (!endTurn&&(System.currentTimeMillis()-longDate<(75*1000)))
             {
                 boolean sendToAll=false;
                 logger.log("turn loop started");
@@ -329,8 +329,9 @@ public class Match implements Observer
                 players.get(turnManager.getActivePlayer()).setState(RECEIVE);
                 executor.execute(players.get(turnManager.getActivePlayer()));
                 executor.shutdown();
-                boolean timeExpired=!executor.awaitTermination(longDate+180*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                boolean timeExpired=!executor.awaitTermination(longDate+75*1000-System.currentTimeMillis(), TimeUnit.MILLISECONDS);
                 players.get(turnManager.getActivePlayer()).stops();
+                Thread.sleep(200);
                 logger.log("turn time expired: "+ Boolean.toString(timeExpired));
                 logger.log("receive phase ended");
 
@@ -488,6 +489,8 @@ public class Match implements Observer
         }
         executor.shutdown();
         executor.awaitTermination(15, TimeUnit.SECONDS);
+
+        System.out.println("\nDIOCANE\n");
         for(PlayerThread pl : players)
             if(pl.isDisconnected())
                 pl.tryReconnection();

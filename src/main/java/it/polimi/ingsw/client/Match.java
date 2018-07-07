@@ -185,9 +185,10 @@ public class Match extends Observable implements Observer {
 
             updateGraphicsManager();
             matchManager.setRound(((TurnEvent) currentEvent).getRound());
-            if (!((TurnEvent) currentEvent).getNoDisconnected())
+            if (!((TurnEvent) currentEvent).getNoDisconnected()) {
                 matchManager.setDisconnectedPlayers(((TurnEvent) currentEvent).getDisconnected());
-
+                System.out.println("DISCONNECTED MATCH: "+Integer.toString(matchManager.getDisconnectedPlayers().size()));
+            }
             matchManager.setActivePlayer(((TurnEvent) currentEvent).getActive());
             modelManagerMP.setDraft(((TurnEvent) currentEvent).getDraft());
             if (((TurnEvent) currentEvent).isNextRound())
@@ -257,7 +258,7 @@ public class Match extends Observable implements Observer {
             executor.execute(graphicsManager);
 
             executor.shutdown();
-            executor.awaitTermination(180, SECONDS);
+            executor.awaitTermination(90, SECONDS);
 
             logger.debugLog("itsMyTurn while 2");
 
@@ -565,6 +566,12 @@ public class Match extends Observable implements Observer {
                 graphicsManager.stopView();
             executor.shutdown();
             endTurn=true;
+            System.out.println("BOOLEAN: "+Boolean.toString(((TurnEvent)currentEvent).getNoDisconnected()));
+            if(((TurnEvent)currentEvent).getDisconnected()!=null)
+            {
+                for(String str : ((TurnEvent)currentEvent).getDisconnected())
+                    System.out.println("STR: "+str);
+            }
 
             logger.log("TurnEvent update : "+executor.toString());
         }
