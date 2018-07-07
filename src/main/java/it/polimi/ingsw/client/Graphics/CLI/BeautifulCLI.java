@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.Graphics.CLI;
 
+import it.polimi.ingsw.client.Graphics.AbstractGraphic;
 import it.polimi.ingsw.client.Graphics.StringCreator;
-import it.polimi.ingsw.client.Graphics.ViewInterface;
 import it.polimi.ingsw.client.GraphicsManager;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
@@ -10,13 +10,11 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ScoreEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
-import it.polimi.ingsw.server.ToolCards.ToolCardEleven;
-import org.omg.CORBA.INTERNAL;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class BeautifulCLI implements ViewInterface, Runnable
+public class BeautifulCLI extends AbstractGraphic implements Runnable
 {
     private BufferedReader inKeyboard;
     private PrintWriter outVideo;
@@ -31,23 +29,15 @@ public class BeautifulCLI implements ViewInterface, Runnable
     private int[] toolsID;
     private int width;
 
-    private GraphicsManager.State state;
-    private GraphicsManager.SecondaryState secondaryState;
-
-    private ThreadUpdater threadUpdater;
     private StringCreator stringCreator;
     private boolean initializationMode=true;
 
-    private int askForWhat=0;
-    private int[] move;
-    private ToolCardEvent useTool;
-    private boolean stopCLI=false;
+
 
     /**
      * BeautifulCLI Constructor
-     * @param settings
      */
-    public BeautifulCLI(int settings)
+    public BeautifulCLI()
     {
         this.inKeyboard = new BufferedReader(new InputStreamReader(System.in));
         this.outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
@@ -57,10 +47,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
 
         msgIN = "";
 
-        if(settings==0)
-            width=40;
-        else
-            width=80;
+        width=80;
     }
 
     public void run() {
@@ -191,7 +178,7 @@ public class BeautifulCLI implements ViewInterface, Runnable
                         event.setY(Integer.parseInt(msgIN) - 1);
                     }
                     if(!stopCLI)
-                    useTool = event;
+                        useTool = event;
 
                 } catch (InvalidIntArgumentException e) {
                     e.printStackTrace();
@@ -439,33 +426,33 @@ public class BeautifulCLI implements ViewInterface, Runnable
                 }
                 case 7: {
                     if(!stopCLI) {
-                            ToolCardSevenEvent event = new ToolCardSevenEvent(7);
-                            useTool = event;
+                        ToolCardSevenEvent event = new ToolCardSevenEvent(7);
+                        useTool = event;
                     }
                     break;
                 }
                 case 8: {
                     if(!stopCLI) {
                         try {
-                        ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(8);
-                        printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
-                        readWithExceptions(1,threadUpdater.draft.getSize());
-                        event.setIndex(Integer.parseInt(msgIN)-1);
+                            ToolCardEightNineTenEvent event = new ToolCardEightNineTenEvent(8);
+                            printOut(stringCreator.getString(StringCreator.State.DRAFTPOS));
+                            readWithExceptions(1,threadUpdater.draft.getSize());
+                            event.setIndex(Integer.parseInt(msgIN)-1);
 
-                        if(!stopCLI) {
-                            printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
-                            readWithExceptions(1,4);
-                            event.setX(Integer.parseInt(msgIN)-1);
-                        }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSX));
+                                readWithExceptions(1,4);
+                                event.setX(Integer.parseInt(msgIN)-1);
+                            }
 
-                        if(!stopCLI) {
-                            printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
-                            readWithExceptions(1,5);
-                            event.setY(Integer.parseInt(msgIN)-1);
-                        }
+                            if(!stopCLI) {
+                                printOut(stringCreator.getString(StringCreator.State.FINALPOSY));
+                                readWithExceptions(1,5);
+                                event.setY(Integer.parseInt(msgIN)-1);
+                            }
 
-                        if(!stopCLI)
-                            useTool = event;
+                            if(!stopCLI)
+                                useTool = event;
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -620,31 +607,12 @@ public class BeautifulCLI implements ViewInterface, Runnable
         }
     }
 
-    public void updateThatShit(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected)
-    {
-        threadUpdater=new ThreadUpdater(players, draft, track, tools, activePlayer, me, round, disconnected);
 
-    }
 
-    public void setState(GraphicsManager.State state){this.state=state;}
 
-    public void setSecondaryState(GraphicsManager.SecondaryState secondaryState) {this.secondaryState = secondaryState;}
 
-    public void stopCLI()
-    {
-        stopCLI=true;
-    }
 
-    public int getAskForWhat()
-    {
-        return askForWhat;
-    }
-    public int[] getMove() {
-        return move;
-    }
-    public ToolCardEvent getUseTool() {
-        return useTool;
-    }
+
 
     /**
      * asks for Username
@@ -927,11 +895,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
         if(!initializationMode)
             while (!inKeyboard.ready())
             {
-                if(stopCLI)
-                {
-                    Thread.currentThread().stop();
-                    Thread.currentThread().interrupt();
-                }
                 Thread.sleep(50);
             }
         msgIN = inKeyboard.readLine();
@@ -989,29 +952,6 @@ public class BeautifulCLI implements ViewInterface, Runnable
             printOut(str);
     }
 
-    public class ThreadUpdater
-    {
-        public PlayerClient[] players;
-        protected DraftPoolMP draft;
-        protected RoundTrackMP track;
-        protected int[] tools;
-        protected int activePlayer;
-        protected int me;
-        protected int round;
-        protected ArrayList<Integer> disconnected;
 
-
-        public ThreadUpdater(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<Integer> disconnected) {
-            this.players = players;
-            this.draft = draft;
-            this.track = track;
-            this.tools = tools;
-            this.activePlayer = activePlayer;
-            this.me = me;
-            this.round = round;
-            this.disconnected = disconnected;
-        }
-
-    }
 
 }

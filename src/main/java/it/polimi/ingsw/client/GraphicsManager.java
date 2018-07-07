@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.Graphics.AbstractGraphic;
+import it.polimi.ingsw.client.Graphics.CLI.BeautifulCLI;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
-import it.polimi.ingsw.client.Graphics.CLI.BeautifulCLI;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GraphicsManager extends Observable implements Runnable
 {
-    private BeautifulCLI beautifulCLI;
+    private AbstractGraphic graphic;
 
     private Event currentEvent;
 
@@ -47,13 +48,17 @@ public class GraphicsManager extends Observable implements Runnable
 
     private SimpleLogger logger;
     private boolean stop=false;
+    private ArrayList<String> settings;
 
     /**
      * GraphicsManager Constructor
      */
 
-    public GraphicsManager() {
-        beautifulCLI = new BeautifulCLI(1);
+    public GraphicsManager(ArrayList<String> settings) {
+        this.settings=settings;
+        if(settings.get(1).equals("CLI"))
+            graphic = new BeautifulCLI();
+
         disconnected=new ArrayList<Integer>();
         logger = new SimpleLogger(2, true);
     }
@@ -176,11 +181,11 @@ public class GraphicsManager extends Observable implements Runnable
 
         graphicsUpdate();
         Executor executor = Executors.newSingleThreadExecutor();
-        beautifulCLI.setState(State.ASKMAIN);
-        executor.execute(beautifulCLI);
+        graphic.setState(State.ASKMAIN);
+        executor.execute(graphic);
         ((ExecutorService) executor).shutdown();
         ((ExecutorService) executor).awaitTermination(75, TimeUnit.SECONDS);
-        whatToDo = beautifulCLI.getAskForWhat();
+        whatToDo = graphic.getAskForWhat();
 
         if(!stop) {
 
@@ -192,24 +197,24 @@ public class GraphicsManager extends Observable implements Runnable
             if (whatToDo == 1) {
 
                 executor=Executors.newSingleThreadExecutor();
-                beautifulCLI.setState(State.CLIMOVE);
-                executor.execute(beautifulCLI);
+                graphic.setState(State.CLIMOVE);
+                executor.execute(graphic);
                 ((ExecutorService) executor).shutdown();
                 ((ExecutorService) executor).awaitTermination(75, TimeUnit.SECONDS);
 
-                int[] move = beautifulCLI.getMove();
+                int[] move = graphic.getMove();
                 currentEvent = new MoveEvent(move[0], move[1], move[2]);
                 setChanged();
                 notifyObservers(currentEvent);
             }
             if (whatToDo == 2) {
                 executor=Executors.newSingleThreadExecutor();
-                beautifulCLI.setState(State.CLITOOL);
-                executor.execute(beautifulCLI);
+                graphic.setState(State.CLITOOL);
+                executor.execute(graphic);
                 ((ExecutorService) executor).shutdown();
                 ((ExecutorService) executor).awaitTermination(75, TimeUnit.SECONDS);
 
-                currentEvent = beautifulCLI.getUseTool();
+                currentEvent = graphic.getUseTool();
                 setChanged();
                 notifyObservers(currentEvent);
 
@@ -225,9 +230,9 @@ public class GraphicsManager extends Observable implements Runnable
     private void notMyTurn() throws InvalidIntArgumentException, IOException
     {
         if (!disconnected.isEmpty())
-            beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
+            graphic.showTurn(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
         else
-            beautifulCLI.showTurn(players, draft, track, toolsUsage, activePlayer, me, round);
+            graphic.showTurn(players, draft, track, toolsUsage, activePlayer, me, round);
     }
 
     /**
@@ -235,7 +240,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void moveAccepted()
     {
-        beautifulCLI.moveAccepted();
+        graphic.moveAccepted();
     }
 
     /**
@@ -243,7 +248,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void moveRefused()
     {
-        beautifulCLI.moveRefused();
+        graphic.moveRefused();
     }
 
     /**
@@ -251,7 +256,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void toolAccepted()
     {
-        beautifulCLI.toolAccepted();
+        graphic.toolAccepted();
     }
 
     /**
@@ -262,7 +267,7 @@ public class GraphicsManager extends Observable implements Runnable
     private void showMove(MoveEvent event) throws InvalidIntArgumentException
     {
         logger.debugLog(" color: "+Integer.toString(players[event.getId()].getPlayerScheme().getDie(event.getX(), event.getY()).getColor()));
-        beautifulCLI.showMove(players, draft, track, toolsUsage, activePlayer, me, event);
+        graphic.showMove(players, draft, track, toolsUsage, activePlayer, me, event);
     }
 
     /**
@@ -272,7 +277,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void showTool(ToolCardEvent event) throws InvalidIntArgumentException
     {
-        beautifulCLI.showTool(players, draft, track, toolsUsage, activePlayer, me, event);
+        graphic.showTool(players, draft, track, toolsUsage, activePlayer, me, event);
     }
 
     /**
@@ -282,13 +287,13 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void toolCard6Part2(ToolCardSixEvent currentEvent) throws InterruptedException {
         ExecutorService exec = Executors.newSingleThreadExecutor();
-        beautifulCLI.setState(State.ASKTOOL6);
-        beautifulCLI.setUseTool(currentEvent);
-        exec.execute(beautifulCLI);
+        graphic.setState(State.ASKTOOL6);
+        graphic.setUseTool(currentEvent);
+        exec.execute(graphic);
         exec.shutdown();
         exec.awaitTermination(75, TimeUnit.SECONDS);
 
-        ToolCardSixEvent event = (ToolCardSixEvent)beautifulCLI.getUseTool();
+        ToolCardSixEvent event = (ToolCardSixEvent)graphic.getUseTool();
         setChanged();
         notifyObservers(event);
     }
@@ -301,19 +306,19 @@ public class GraphicsManager extends Observable implements Runnable
      */
     private void toolCard11Part2(ToolCardElevenEvent currentEvent) throws InvalidIntArgumentException, IOException, InterruptedException {
         ExecutorService exec = Executors.newSingleThreadExecutor();
-        beautifulCLI.setState(State.ASKTOOL11);
-        beautifulCLI.setUseTool(currentEvent);
-        exec.execute(beautifulCLI);
+        graphic.setState(State.ASKTOOL11);
+        graphic.setUseTool(currentEvent);
+        exec.execute(graphic);
         exec.shutdown();
         exec.awaitTermination(75, TimeUnit.SECONDS);
 
-        ToolCardElevenEvent event = (ToolCardElevenEvent)beautifulCLI.getUseTool();
+        ToolCardElevenEvent event = (ToolCardElevenEvent)graphic.getUseTool();
         setChanged();
         notifyObservers(event);
     }
 
     private void showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, IOException, InterruptedException {
-        beautifulCLI.showScores(event, winner);
+        graphic.showScores(event, winner);
     }
 
     public enum State
@@ -356,7 +361,7 @@ public class GraphicsManager extends Observable implements Runnable
      * @throws IOException
      */
     public void askUsername() throws IOException, InterruptedException {
-        String username = beautifulCLI.askUsername();
+        String username = graphic.askUsername();
         currentEvent = new UsernameEvent(username);
         setChanged();
         notifyObservers(currentEvent);
@@ -367,7 +372,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     public void waitForPlayers()
     {
-        beautifulCLI.setWaitScene();
+        graphic.setWaitScene();
     }
 
     /**
@@ -383,7 +388,7 @@ public class GraphicsManager extends Observable implements Runnable
      */
     public void getSelectedScheme(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, IOException
     {
-        SchemeCard temp = beautifulCLI.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
+        SchemeCard temp = graphic.setInitializationScene(scheme1, scheme2, username, privObj, pubObjs, tools);
         currentEvent = new SchemeSelectionEvent(temp.getID(), temp.getfb());
         setChanged();
         notifyObservers(currentEvent);
@@ -395,20 +400,20 @@ public class GraphicsManager extends Observable implements Runnable
      */
     public void waitForPlayers2()
     {
-        beautifulCLI.setWaitScene2();
+        graphic.setWaitScene2();
     }
 
     public String toString() {return "graphics";}
 
     public void graphicsUpdate()
     {
-        beautifulCLI.updateThatShit(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
+        graphic.updateThatShit(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
     }
 
     public void stopView()
     {
         System.out.println("GRAPHIC STOP");
-        beautifulCLI.stopCLI();
+        graphic.stopGraphics();
     }
 
 }

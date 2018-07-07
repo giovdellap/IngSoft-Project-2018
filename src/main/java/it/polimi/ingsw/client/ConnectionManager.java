@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Connection.SocketClient;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Executor;
@@ -24,19 +26,20 @@ public class ConnectionManager extends Observable implements Runnable, Observer
     private Event toReceive;
     private State state;
     private boolean stopSleeping;
-
     private SimpleLogger logger;
+
+    private ArrayList<String> settings;
 
     /**
      * ConnectionManager Constructor
-     * @param ip ip to set
      * @throws IOException
      */
-    public ConnectionManager(String ip) throws IOException
+    public ConnectionManager(ArrayList<String> settings) throws IOException
     {
-        this.ip=ip;
+        this.settings=settings;
+        this.ip=settings.get(3);
         establishConnection();
-        logger = new SimpleLogger(1, true);
+        logger = new SimpleLogger(1, Boolean.parseBoolean(settings.get(0)));
     }
 
     public void run() {
@@ -178,7 +181,7 @@ public class ConnectionManager extends Observable implements Runnable, Observer
      */
     public void establishConnection() throws IOException
     {
-        socketClient = new SocketClient(ip);
+        socketClient = new SocketClient(settings);
         socketClient.addObserver(this);
     }
 

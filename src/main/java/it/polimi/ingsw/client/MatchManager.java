@@ -36,6 +36,11 @@ public class MatchManager
         disconnectedPlayers = new ArrayList<Integer>();
     }
 
+    public MatchManager()
+    {
+
+    }
+
     public PlayerClient getPlayer(int index)
     {
         return players[index];
@@ -92,4 +97,6 @@ public class MatchManager
     public void setPlayerScheme(int id, SchemeCard scheme) {
         players[id].setPlayerScheme(scheme);
     }
+
+
 }

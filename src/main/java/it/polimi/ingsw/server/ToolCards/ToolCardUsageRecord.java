@@ -36,10 +36,11 @@ public class ToolCardUsageRecord
                 extracted++;
             }
         }
-
+        /*
         selectedId[0] = 6;
         selectedId[1] = 11;
         selectedId[2] = 12;
+        */
 
         cards = new ToolCard[3];
         toolCardConstructor();

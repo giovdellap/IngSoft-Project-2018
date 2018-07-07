@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.Connection;
 
 
+import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
@@ -19,7 +20,8 @@ import java.util.Observable;
 public class SocketClient extends Observable implements Runnable {
 
 
-    private final static int PORT = 7777;
+
+    private int port;
 
     private Socket socket;
     private BufferedReader inSocket;
@@ -36,21 +38,26 @@ public class SocketClient extends Observable implements Runnable {
 
     private String serverIP;
 
+    private ArrayList<String> settings;
 
     /**
      * SocketClient Constructor
-     * @param ip
+     * @param settings
      * @throws IOException
      */
-    public SocketClient(String ip) throws IOException {
+    public SocketClient(ArrayList<String> settings) throws IOException {
 
-        logger = new SimpleLogger(1, true);
-        serverIP = ip;
+        this.settings=settings;
+        logger = new SimpleLogger(1, Boolean.parseBoolean(settings.get(0)));
+
+        serverIP = settings.get(3);
+        port = Integer.parseInt(settings.get(4));
         transformer = new SocketProtocolTransformer();
         eventEncoder = new EventEncoder();
         eventDecoder = new EventDecoder();
         msg = new ArrayList<String>();
         connect();
+
     }
 
     /**
@@ -58,7 +65,7 @@ public class SocketClient extends Observable implements Runnable {
      * @throws IOException
      */
     private void connect() throws IOException {
-        socket = new Socket(serverIP, PORT);
+        socket = new Socket(serverIP, port);
         this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
         logger.debugLog("Connected on port 7777");

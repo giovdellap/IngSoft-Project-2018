@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.JSONSettings.SettingsReader;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
@@ -14,7 +17,11 @@ import it.polimi.ingsw.commons.Events.MoveEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
+import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import it.polimi.ingsw.commons.SimpleLogger;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
@@ -26,9 +33,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Match extends Observable implements Observer {
 
-    //connections
-    private String ip;
-
     //managers
     private GraphicsManager graphicsManager;
     private ConnectionManager connectionManager;
@@ -36,6 +40,8 @@ public class Match extends Observable implements Observer {
     private ToolRecord toolRecord;
     private MatchManager matchManager;
     private ExecutorService executor;
+
+    private ArrayList<String> settings;
 
     //general
     private boolean firstFlag;
@@ -48,6 +54,12 @@ public class Match extends Observable implements Observer {
     private SimpleLogger logger;
 
 
+    public Match(ArrayList<String> settings)
+    {
+        this.settings=settings;
+    }
+
+
     /**
      * Starts the CLI
      * @throws Exception
@@ -55,16 +67,16 @@ public class Match extends Observable implements Observer {
     public void start() throws Exception {
 
         //starting managers
-        graphicsManager = new GraphicsManager();
+        graphicsManager = new GraphicsManager(settings);
         graphicsManager.addObserver(this);
 
-        connectionManager = new ConnectionManager(ip);
+        connectionManager = new ConnectionManager(settings);
         connectionManager.addObserver(this);
 
         addObserver(connectionManager);
         firstFlag=false;
 
-        logger = new SimpleLogger(3, true);
+        logger = new SimpleLogger(3, Boolean.parseBoolean(settings.get(0)));
 
         while(!firstFlag)
         {
@@ -496,21 +508,6 @@ public class Match extends Observable implements Observer {
         }
     }
 
-
-
-    /**
-     * Match Constructor
-     * @param ip ip address to set
-     */
-
-    public Match(String ip)
-    {
-        //constructor
-        //receives ip and settings from launcher
-        this.ip=ip;
-
-    }
-
     /**
      * updates the GraphicsManager, passing by parameters all the updated elements of the current model
      */
@@ -691,7 +688,7 @@ public class Match extends Observable implements Observer {
 
         connectionManager.stopSleep();
         graphicsManager.stopView();
-        }
+    }
 
     public void showMove() throws InvalidIntArgumentException, GenericInvalidArgumentException, InterruptedException
     {
@@ -717,5 +714,77 @@ public class Match extends Observable implements Observer {
         executor.awaitTermination(5, SECONDS);
     }
 
+
+    //RECONNECTION
+    public void tryReconnection() throws IOException, InterruptedException, InvalidIntArgumentException, GenericInvalidArgumentException {
+        graphicsManager = new GraphicsManager(settings);
+        connectionManager = new ConnectionManager(settings);
+        modelManagerMP = new ModelManagerMP();
+        matchManager = new MatchManager();
+
+
+        graphicsManager.askUsername();
+        //MISSING: Reconnection graphics function
+        executor=Executors.newSingleThreadExecutor();
+        connectionManager.setEvent(toCheck);
+        connectionManager.setState(ConnectionManager.State.SENDANDRECEIVE);
+        executor.execute(connectionManager);
+        executor.shutdown();
+        executor.awaitTermination(70, SECONDS);
+
+        boolean canReconnect=currentEvent.isValidated();
+        if(canReconnect)
+        {
+            myUsername = ((UsernameEvent)currentEvent).getUserName();
+            executor=Executors.newSingleThreadExecutor();
+            connectionManager.setState(RECEIVE);
+            executor.execute(connectionManager);
+            executor.shutdown();
+            executor.awaitTermination(15, SECONDS);
+
+            //setting up players
+
+            SchemesDeck tempDeck = new SchemesDeck();
+            for(int p=0;p<((ReconnectionEvent)currentEvent).getPlayers().size();p++)
+            {
+                //PlayerClient/matchManager set
+                ReconnectionPlayer recPlayer = ((ReconnectionEvent)currentEvent).getPlayers().get(p);
+                boolean me = recPlayer.getName().equals(myUsername);
+                PlayerClient player = new PlayerClient(recPlayer.getName(), me);
+                player.setTokens(recPlayer.getTokens());
+
+                SchemeCard tempScheme = tempDeck.extractSchemebyID(recPlayer.getSchemeId());
+                tempScheme.setfb(recPlayer.getFb());
+
+                for(ReconnectionPlayer.ReconnectionSchemeDie die : recPlayer.getSchemeDice())
+                {
+                    Die tempDie = new Die(die.getColor());
+                    tempDie.setValue(die.getValue());
+                    tempScheme.setDie(tempDie, die.getX(), die.getY());
+                }
+
+                matchManager.setPlayer(p, player);
+            }
+
+            //setting up model
+            modelManagerMP.setMyPrivObj(((ReconnectionEvent)currentEvent).getPrivObj());
+            modelManagerMP.setPubObjs(((ReconnectionEvent)currentEvent).getPubObjs());
+            toolRecord = new ToolRecord(((ReconnectionEvent)currentEvent).getToolsIds());
+            toolRecord.setTokens(((ReconnectionEvent)currentEvent).getToolsTokens());
+
+            for(int round=0;round<((ReconnectionEvent)currentEvent).getReconnectionTrack().size();round++)
+            {
+                RoundDiceMP rd= new RoundDiceMP();
+                for(Die die : ((ReconnectionEvent)currentEvent).getReconnectionTrack().get(round).getRd())
+                    rd.addDie(die);
+
+                modelManagerMP.getTrack().setSpecificRoundDice(rd, round);
+            }
+
+            game();
+        }
+
+
+    }
 
 }
