@@ -44,50 +44,44 @@ public class ClientLauncher
             readWithExceptions(1,2 );
 
             String debug;
-            if (msgIN.equals("1")) {
+            if (msgIN.equals("1"))
                 settings.add("true");
-                settings.add("CLI");
+            else settings.add("false");
+
+            outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER GREEN LANTERNA, 2 PER BEAUTIFUL CLI",80,true));
+            outVideo.flush();
+
+            readWithExceptions(1,2 );
+
+            String graphics;
+            if (msgIN.equals("1"))
+                settings.add("LANTERNA");
+            else settings.add("CLI");
+
+            outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER UNA NUOVA PARTITA, 2 PER RICONETTERTI AD UNA IN CORSO",80 , true));
+            outVideo.flush();
+
+            readWithExceptions(1,2 );
+
+            String reconnection;
+            if (msgIN.equals("1"))
                 settings.add("false");
-                settings.add("localhost");
-                settings.add("7777");
-            }
-            else
-            {
-                settings.add("false");
-                outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER GREEN LANTERNA, 2 PER BEAUTIFUL CLI", 80, true));
-                outVideo.flush();
+            else settings.add("true");
 
-                readWithExceptions(1, 2);
+            outVideo.println(clito.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 80, true));
+            outVideo.flush();
+            outVideo.println("==>");
+            outVideo.flush();
 
-                String graphics;
-                if (msgIN.equals("1"))
-                    settings.add("LANTERNA");
-                else settings.add("CLI");
+            settings.add(inKeyboard.readLine());
 
-                outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER UNA NUOVA PARTITA, 2 PER RICONETTERTI AD UNA IN CORSO", 80, true));
-                outVideo.flush();
+            outVideo.println(clito.simpleQuestionsMaker("INSERISCI NUMERO DI PORTA",80 , true));
+            outVideo.flush();
 
-                readWithExceptions(1, 2);
+            readWithExceptions(1024, 65535);
 
-                String reconnection;
-                if (msgIN.equals("1"))
-                    settings.add("false");
-                else settings.add("true");
+            settings.add(msgIN);
 
-                outVideo.println(clito.simpleQuestionsMaker("INSERISCI INDIRIZZO IP", 80, true));
-                outVideo.flush();
-                outVideo.println("==>");
-                outVideo.flush();
-
-                settings.add(inKeyboard.readLine());
-
-                outVideo.println(clito.simpleQuestionsMaker("INSERISCI NUMERO DI PORTA", 80, true));
-                outVideo.flush();
-
-                readWithExceptions(1024, 65535);
-
-                settings.add(msgIN);
-            }
         }
         return choice;
     }
