@@ -195,6 +195,10 @@ public class Model
         tempSchemes[id].setfb(fb);
 
     }
+    public void setPlayerSchemeFirstTime(SchemeCard scheme, int id)
+    {
+        tempSchemes[id]=scheme;
+    }
 
     public void initializationEnd()
     {

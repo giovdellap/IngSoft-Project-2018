@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
 import it.polimi.ingsw.commons.Events.Event;
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
@@ -42,6 +43,9 @@ public class PlayerThread extends Observable implements Observer, Runnable
     private Event currentEventSend;
     private Event currentEventReceive;
     private Boolean stop;
+
+    private boolean personalSchemeEnabled=false;
+    private PersonalSchemeEvent myPersonalSchemeEvent;
 
     private SimpleLogger logger;
 
@@ -162,18 +166,30 @@ public class PlayerThread extends Observable implements Observer, Runnable
             if (state == SCHEMESELECTION) {
                 try {
                     connectionManager.getEvent();
-                    if (selected == tempSchemes[0] || selected == tempSchemes[1])
-                        schemeSelected = true;
-                    while (!schemeSelected) {
-                        connectionManager.getEvent();
+                    if(currentEventReceive.getType().equals("SchemeSelectionEvent")) {
                         if (selected == tempSchemes[0] || selected == tempSchemes[1])
                             schemeSelected = true;
+                        while (!schemeSelected) {
+                            connectionManager.getEvent();
+                            if (selected == tempSchemes[0] || selected == tempSchemes[1])
+                                schemeSelected = true;
+                        }
+                        currentEventSend = currentEventReceive;
+                        currentEventSend.validate();
+                        connectionManager.sendEvent(currentEventSend);
+                        if (!isDisconnected) {
+                            setChanged();
+                            notifyObservers(currentEventReceive);
+                        }
                     }
-                    currentEventSend = currentEventReceive;
-                    currentEventSend.validate();
-                    connectionManager.sendEvent(currentEventSend);
-                    if(!isDisconnected) {
-                        setChanged();
+                    else
+                    {
+                        personalSchemeEnabled=true;
+                        myPersonalSchemeEvent= (PersonalSchemeEvent) currentEventReceive;
+                        currentEventSend=currentEventReceive;
+                        connectionManager.sendEvent(currentEventSend);
+                        if(!isDisconnected)
+                            setChanged();
                         notifyObservers(currentEventReceive);
                     }
                 } catch (IOException e) {
@@ -195,7 +211,14 @@ public class PlayerThread extends Observable implements Observer, Runnable
 
     }
 
-
+    public boolean personalSchemeEnabled()
+    {
+        return personalSchemeEnabled;
+    }
+    public PersonalSchemeEvent getPersonalScheme()
+    {
+        return myPersonalSchemeEvent;
+    }
 
     public void stops()
     {
@@ -334,8 +357,13 @@ public class PlayerThread extends Observable implements Observer, Runnable
     {
         currentEventReceive = (Event) arg;
 
-        if(((Event)arg).getType().equals("SchemeSelectionEvent"))
-            selected=((SchemeSelectionEvent)arg).getId();
+        if(((Event)arg).getType().equals("SchemeSelectionEvent")||((Event)arg).getType().equals("PersonalSchemeEvent"))
+        {
+            if(((Event)arg).getType().equals("SchemeSelectionevent"))
+                selected=((SchemeSelectionEvent)arg).getId();
+            else
+                myPersonalSchemeEvent=((PersonalSchemeEvent)arg);
+        }
         else {
 
             if (((Event) arg).getType().equals("DisconnectionEvent")) {

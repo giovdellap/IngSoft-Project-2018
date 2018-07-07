@@ -7,6 +7,7 @@ import it.polimi.ingsw.commons.Events.Disconnection.ForfaitEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Initialization.Initialization2Event;
 import it.polimi.ingsw.commons.Events.Initialization.ModelInitializationEvent;
+import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
@@ -193,10 +194,20 @@ public class Match implements Observer
 
         for(int i=0;i<players.size();i++)
         {
-            logger.log("fb "+Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
-            players.get(i).setTokens(modelInstance.getSchemebyIndex(players.get(i).getId()).getDiff(modelInstance.getSchemebyIndex(players.get(i).getId()).getfb()));
-            initEvent.addEventPlayer(i, players.get(i).getName(), modelInstance.getSchemebyIndex(i).getID(), modelInstance.getSchemebyIndex(i).getfb(), players.get(i).getTokens());
-            logger.log("final model fb: "+modelInstance.getSchemebyIndex(i).getfb());
+            if(!players.get(i).personalSchemeEnabled()) {
+                logger.log("fb " + Integer.toString(modelInstance.getSchemebyIndex(i).getfb()));
+                players.get(i).setTokens(modelInstance.getSchemebyIndex(players.get(i).getId()).getDiff(modelInstance.getSchemebyIndex(players.get(i).getId()).getfb()));
+                initEvent.addEventPlayer(i, players.get(i).getName(), modelInstance.getSchemebyIndex(i).getID(), modelInstance.getSchemebyIndex(i).getfb(), players.get(i).getTokens());
+                logger.log("final model fb: " + modelInstance.getSchemebyIndex(i).getfb());
+            }
+            else
+            {
+                TokensCalculator calculator = new TokensCalculator();
+                int tokens =  calculator.calculateTokens(modelInstance.getSchemebyIndex(i));
+                logger.log("Player "+Integer.toString(i)+" tokens: "+Integer.toString(tokens));
+                players.get(i).setTokens(tokens);
+                initEvent.addEventPlayer(i, players.get(i).getName(), 100, 1, tokens);
+            }
         }
         executor=Executors.newFixedThreadPool(players.size());
 
@@ -213,6 +224,21 @@ public class Match implements Observer
         executor.shutdown();
         executor.awaitTermination(20, TimeUnit.SECONDS);
         logger.log("All events sent");
+
+        for(PlayerThread playerScheme : players)
+        {
+            if(playerScheme.personalSchemeEnabled())
+            {
+                for(PlayerThread player : players)
+                {
+                    player.setState(SEND);
+                    player.setEvent(playerScheme.getPersonalScheme());
+                    executor.execute(player);
+                }
+                executor.shutdown();
+                executor.awaitTermination(20, TimeUnit.SECONDS);
+            }
+        }
 
         startMatch();
     }
@@ -659,6 +685,10 @@ public class Match implements Observer
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();
             }
+        }
+        if(((Event)arg).getType().equals("PersonalSchemeEvent"))
+        {
+            modelInstance.setPlayerScheme(((PlayerThread)o).getId(), ((PersonalSchemeEvent)arg).getScheme());
         }
     }
 

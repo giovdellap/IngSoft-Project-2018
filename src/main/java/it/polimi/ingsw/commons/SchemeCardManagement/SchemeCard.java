@@ -29,7 +29,7 @@ public class SchemeCard
     public SchemeCard(int i) throws InvalidIntArgumentException
     {
 
-        if (i<0 || i>12)
+        if ((i<0 || i>12)&&i!=100)
             throw new InvalidIntArgumentException();
 
         fb=0;

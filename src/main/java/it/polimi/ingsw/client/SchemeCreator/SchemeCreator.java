@@ -1,4 +1,5 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.SchemeCreator;
+
 
 import it.polimi.ingsw.client.Graphics.CLI.CLIToolsManager;
 import it.polimi.ingsw.client.Graphics.CLI.ModelGenerator;
@@ -15,9 +16,12 @@ public class SchemeCreator
     private PrinterMaker printerMaker;
     private CLIToolsManager clito;
     private String msgIN;
+    private int cellCounter=0;
 
     private BufferedReader inKeyboard;
     private PrintWriter outVideo;
+    private PersonalSchemeWriter writer;
+
 
     public SchemeCreator() throws InvalidIntArgumentException {
         modelGenerator = new ModelGenerator();
@@ -27,6 +31,8 @@ public class SchemeCreator
         this.outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
         printerMaker = new PrinterMaker(1);
         clito = new CLIToolsManager();
+        writer=new PersonalSchemeWriter();
+
     }
 
     public void createScheme() throws IOException, InvalidIntArgumentException {
@@ -45,16 +51,19 @@ public class SchemeCreator
 
             printOut(clito.simpleQuestionsMaker("Seleziona la riga della cella da modificare", 80, true));
             readWithExceptions(1, 4);
-            int x = Integer.parseInt(msgIN);
+            int x = Integer.parseInt(msgIN)-1;
 
             printOut(clito.simpleQuestionsMaker("Seleziona la colonna della cella da modificare", 80, true));
             readWithExceptions(1, 5);
-            int y = Integer.parseInt(msgIN);
+            int y = Integer.parseInt(msgIN)-1;
 
             printOut(clito.simpleQuestionsMaker("Valore o colore?", 80, false));
             printOut(clito.simpleQuestionsMaker("Premere 1 per valore, 2 per colore", 80, true));
             readWithExceptions(1, 2);
-            if(msgIN=="1")
+
+            int valueOrColor=Integer.parseInt(msgIN);
+
+            if(valueOrColor==1)
             {
                 printOut(clito.simpleQuestionsMaker("Quale valore vuoi scegliere?", 80, true));
                 readWithExceptions(1, 6);
@@ -67,22 +76,35 @@ public class SchemeCreator
             }
             int toInsert = Integer.parseInt(msgIN);
 
-            if(newScheme.getCell(1, x, y)==0)
-                newScheme.setCell(1, x, y, toInsert);
+            if(newScheme.getCell(1, x, y)==0) {
+                if (valueOrColor == 1)
+                    newScheme.setCell(1, x, y, toInsert+5);
+                else
+                    newScheme.setCell(1, x, y, toInsert);
+            }
             else
             {
                 printOut(clito.simpleQuestionsMaker("Sei sicuro di voler cambiare la tua scelta precedente?", 80, false));
                 printOut(clito.simpleQuestionsMaker("1 = si, 2 = no", 80, false));
                 readWithExceptions(1, 2);
-                if(Integer.parseInt(msgIN)==1)
-                    newScheme.setCell(1, x, y, toInsert);
+                if(Integer.parseInt(msgIN)==1){
+                    if (valueOrColor == 1)
+                        newScheme.setCell(1, x, y, toInsert+5);
+                    else
+                        newScheme.setCell(1, x, y, toInsert);
+                }
             }
+            cellCounter++;
+            if(cellCounter>9) {
+                printOut(clito.simpleQuestionsMaker("Premere 1 per uscire e salvare, 2 per continuare", 80, false));
+                readWithExceptions(1, 2);
 
-            printOut(clito.simpleQuestionsMaker("Premere 1 per uscire e salvare, 2 per contnuare", 80, false));
-            readWithExceptions(1, 2);
-
-            if(msgIN=="1")
-                end = true;
+                if (Integer.parseInt(msgIN) == 1) {
+                    writeToJson();
+                    end = true;
+                    System.out.println("esco");
+                }
+            }
         }
 
     }
@@ -96,16 +118,18 @@ public class SchemeCreator
      * @throws IOException
      */
 
-    public void readWithExceptions(int leftBound, int rightBound) throws IOException
-    {
+    private void readWithExceptions(int leftBound, int rightBound) throws IOException {
+
         try {
+
             readIt();
-            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound)
-            {
+
+            if (Integer.parseInt(msgIN) < leftBound || Integer.parseInt(msgIN) > rightBound) {
                 printOut(printerMaker.wrongInsertion());
                 readWithExceptions(leftBound, rightBound);
             }
         }
+
         catch (NumberFormatException e) {
             printOut(printerMaker.wrongInsertion());
             readWithExceptions(leftBound, rightBound);
@@ -144,5 +168,11 @@ public class SchemeCreator
         outVideo.println("==>");
         outVideo.flush();
         msgIN = inKeyboard.readLine();
+
+    }
+
+    private void writeToJson() throws IOException, InvalidIntArgumentException {
+        System.out.println(newScheme.getName(1));
+        writer.write(newScheme);
     }
 }

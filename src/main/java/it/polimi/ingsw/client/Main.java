@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.JSONSettings.SettingsReader;
+
+import it.polimi.ingsw.client.SchemeCreator.SchemeCreator;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class Main
         Match match;
         int choice;
         ArrayList<String> settings;
+        SchemeCreator schemeCreator;
 
 
         while (!quit) {
@@ -38,6 +40,12 @@ public class Main
                     match.tryReconnection();
                 }
             }
+            if(choice==2)
+            {
+                schemeCreator = new SchemeCreator();
+                schemeCreator.createScheme();
+            }
+
 
 
         }
