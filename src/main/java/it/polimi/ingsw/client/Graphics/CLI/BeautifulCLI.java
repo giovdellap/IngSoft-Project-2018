@@ -619,7 +619,12 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
         printOut(cliToolsManager.sceneInitializer(40));
         printOut(printerMaker.getUsernameInsertion());
-        readIt();
+        boolean acceptable=false;
+        while (!acceptable) {
+            readIt();
+            if(msgIN.length()<20)
+                acceptable=true;
+        }
         printOut(cliToolsManager.sceneEnder(40));
 
         return msgIN;
@@ -791,8 +796,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
      * @param event
      * @throws InvalidIntArgumentException
      */
-    public void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException
-    {
+    public void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException, FileNotFoundException {
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
         printOut(printerMaker.notMyTurnMove(players[activePlayer].getName(), event.getIndex(), event.getX(), event.getY()));
@@ -809,7 +813,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
      * @param event
      * @throws InvalidIntArgumentException
      */
-    public void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException {
+    public void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException, FileNotFoundException {
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 

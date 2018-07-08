@@ -48,8 +48,7 @@ public class GetSelectionSceneTest
     }
 
     @Test
-    public void getSelectionSceneTest() throws InvalidIntArgumentException
-    {
+    public void getSelectionSceneTest() throws InvalidIntArgumentException, FileNotFoundException {
         for(int i=0;i<21;i++)
             System.out.println(printerMakerTest.getSelectionScene(testScheme,testScheme1,"pippo",testPrivObj,tempPubObj,tempTools)[i]);
 

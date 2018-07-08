@@ -1,10 +1,14 @@
 package it.polimi.ingsw.client.Graphics.CLI;
 
+import it.polimi.ingsw.client.Graphics.JSONReaders.ToolCardReader;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import org.fusesource.jansi.Ansi;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class ComponentFactory
 {
@@ -73,56 +77,12 @@ public class ComponentFactory
      */
     public String[] selectionC(PrivateObjectiveMP privobj, String user, int tokens)
     {
-
-        String[] cComponent = new String[10];
-
-        cComponent[0]=cliToolsManager.centerThatString("USERNAME: ",20);
-        cComponent[1]=cliToolsManager.centerThatString(user,20);
-        cComponent[2]=cliToolsManager.printSpaces(20);
-        cComponent[3]=cliToolsManager.centerThatString("TOKENS: "+tokens,20);
-
-        cComponent[4]=cliToolsManager.centerThatString("   OBIETTIVO",20);
-        cComponent[5]=cliToolsManager.centerThatString("  PRIVATO:",20);
-
-        if (privobj.getColor()==1) {
-
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.YELLOW) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.YELLOW) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.YELLOW) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-        }
-
-        if (privobj.getColor()==2) {
-
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.RED) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.RED) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.RED) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-        }
-
-        if (privobj.getColor()==3) {
-
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.GREEN) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.GREEN) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.GREEN) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-        }
-
-        if (privobj.getColor()==4) {
-
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.BLUE) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.BLUE) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.BLUE) +"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+ Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-        }
-
-        if (privobj.getColor()==5) {
-
-            cComponent[6] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[7] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-            cComponent[8] = cliToolsManager.printSpaces(8)+Ansi.ansi().reset().fg(Ansi.Color.MAGENTA)+"\u25fc"+"\u25fc"+"\u25fc"+"\u25fc"+Ansi.ansi().reset().fg(Ansi.Color.DEFAULT)+cliToolsManager.printSpaces(8);
-        }
-
-        cComponent[9]=cliToolsManager.printSpaces(20);
+        String[] cComponent = new String[3];
+        cComponent[0]=cliToolsManager.centerThatString("USERNAME: "+user,26);
+        cComponent[1]=cliToolsManager.centerThatString("TOKENS DISPONIBILI: "+tokens,26);
+        cComponent[2]=cliToolsManager.centerThatString("OBIETTIVO PRIVATO: "+privobj.getColor(),26);
 
         return cComponent;
-
     }
 
     /**
@@ -188,8 +148,6 @@ public class ComponentFactory
         nComponent[j]=cliToolsManager.printSpaces(2)+modelGenerator.getDraft(tempdraft)+cliToolsManager.printSpaces(3);
         j++;
 
-
-
         return nComponent;
 
     }
@@ -211,16 +169,17 @@ public class ComponentFactory
      * @return
      */
 
-    public String[] selectionT(int id, int token)
-    {
+    public String[] selectionT(int id, int token) throws FileNotFoundException {
+        ToolCardReader reader=new ToolCardReader();
 
-        String[] tComponent = new String[5];
+        ArrayList<String> testo=reader.readToolCard(id);
 
-        tComponent[0]=cliToolsManager.printSpaces(20);
-        tComponent[1]=cliToolsManager.centerThatString("TOOL: "+id,20);
-        tComponent[2]=cliToolsManager.printSpaces(20);
-        tComponent[3]=cliToolsManager.centerThatString("TOKENS: "+token,20);
-        tComponent[4]=cliToolsManager.printSpaces(20);
+        String[] tComponent = new String[3];
+
+        tComponent[0]=cliToolsManager.simpleQuestionsMaker("   N. "+id+"    ---"+testo.get(0)+"---",72,false)+"Tokens: "+token+"    ";
+
+        tComponent[1]=cliToolsManager.simpleQuestionsMaker(testo.get(1),80,false);
+        tComponent[2]=cliToolsManager.simpleQuestionsMaker(testo.get(2),80,false);
 
         return tComponent;
 

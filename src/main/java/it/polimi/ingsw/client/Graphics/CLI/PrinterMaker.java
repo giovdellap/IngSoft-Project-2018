@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.Graphics.CLI;
 
+import it.polimi.ingsw.client.Graphics.JSONReaders.PublicObjectiveReader;
+import it.polimi.ingsw.client.Graphics.JSONReaders.ToolCardReader;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PlayerClient;
@@ -8,6 +10,7 @@ import it.polimi.ingsw.commons.Events.ScorePlayer;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class PrinterMaker
@@ -59,53 +62,54 @@ public class PrinterMaker
      * @return
      * @throws InvalidIntArgumentException
      */
-    public String[] getSelectionScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException
+    public String[] getSelectionScene(SchemeCard scheme1, SchemeCard scheme2, String username, PrivateObjectiveMP privObj, PublicObjectiveMP[] pubObjs, int[] tools) throws InvalidIntArgumentException, FileNotFoundException
     {
-        //returns the final selection scene string widthx21
-        String[] temp = new String[21];
+        ArrayList<String> temp = new ArrayList<String>();
 
         toolsId=tools;
-
         int j;
 
         //Gs ROW
         for(int i=0;i<7;i++)
-            temp[i]=componentFactory.selectionG(scheme1, 1, 1)[i]+""+componentFactory.selectionG(scheme1, 2, 2)[i]+""+componentFactory.selectionG(scheme2,1,3)[i]+""+componentFactory.selectionG(scheme2,2,4)[i];
+            temp.add(componentFactory.selectionG(scheme1, 1, 1)[i]+""+componentFactory.selectionG(scheme1, 2, 2)[i]+""+componentFactory.selectionG(scheme2,1,3)[i]+""+componentFactory.selectionG(scheme2,2,4)[i]);
 
         //BLANK LINE
-        temp[7]=cliToolsManager.printSpaces(width);
+        temp.add(cliToolsManager.printSpaces(width));
 
+        //-----------------
 
-        //C-D
-        for(int i=8;i<13;i++)
-        {
-            j=0;
-            temp[i] = componentFactory.selectionC(privObj, username, 0)[i-8];
+        String pippo="";
 
-            for (j=0;j<3;j++)
-                temp[i]+=componentFactory.selectionD(pubObjs[j])[i-8];
+        for (int z=0;z<3;z++)
+            pippo+=componentFactory.selectionC(privObj,username,0)[z];
+
+        temp.add(pippo);
+
+        temp.add(cliToolsManager.printSpaces(80));
+        //++++++++++++
+
+        PublicObjectiveReader readerObj=new PublicObjectiveReader();
+
+        for (int i=0;i<3;i++)
+            temp.add(cliToolsManager.simpleQuestionsMaker("OBIETTIVO PUBBLICO: ",26,false)+cliToolsManager.centerThatString(readerObj.readPublicObjective(pubObjs[i].getId()).get(0),26)+"    ..>   BONUS: "+readerObj.readPublicObjective(pubObjs[i].getId()).get(1));
+
+        String[] temppp;
+        for (int i = 0; i<3; i++) {
+            temppp = componentFactory.selectionT(tools[i], 0);
+            for (String str:temppp)
+                temp.add(str);
         }
-
-
-        //C-T
-        j=0;
-
-        for (int i=13;i<18;i++)
-        {
-            j=0;
-            temp[i] = componentFactory.selectionC(privObj, username, 0)[i-8] + componentFactory.selectionT(toolsId[j],0)[i-13];
-
-            for (j=1;j<3;j++)
-                temp[i]+=componentFactory.selectionT(toolsId[j],0)[i-13];
-        }
-
 
         //I ROW
-        for(int i=18;i<21;i++)
-            temp[i]=componentFactory.selectionI()[i-18];
+        for(String str :componentFactory.selectionI())
+            temp.add(str);
 
+        //conversione in array
+        String[] tempArray= new String[temp.size()];
+        for (int i=0;i<temp.size();i++)
+            tempArray[i]=temp.get(i);
 
-        return temp;
+        return tempArray;
     }
 
     /**
@@ -122,12 +126,11 @@ public class PrinterMaker
      * @throws InvalidIntArgumentException
      */
 
-    public String[] getGameScene(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP round, PrivateObjectiveMP privObj, PublicObjectiveMP[]pubObjs, int[]toolsTokens, int activePlayers, int me) throws InvalidIntArgumentException
-    {
-        ArrayList<String> temp;
-        temp=new ArrayList<String>();
+    public String[] getGameScene(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP round, PrivateObjectiveMP privObj, PublicObjectiveMP[]pubObjs, int[]toolsTokens, int activePlayers, int me) throws InvalidIntArgumentException, FileNotFoundException {
+        ArrayList<String> temp = new ArrayList<String>();
 
-        for (int i=0;i<7;i++) {
+        for (int i=0;i<7;i++)
+        {
             String that;
             that = componentFactory.selectionA(players[0].getPlayerScheme(), players[0].getName(), players[0].getTokens())[i] + componentFactory.selectionA(players[1].getPlayerScheme(), players[1].getName(), players[1].getTokens())[i];
 
@@ -138,6 +141,7 @@ public class PrinterMaker
 
             temp.add(that);
         }
+
         for (int i =0;i<3;i++)
             temp.add(componentFactory.selectionN(draft)[i]);
 
@@ -146,31 +150,32 @@ public class PrinterMaker
 
         }
 
-        for (int i=0;i<5;i++)
-        {
-            String pippo;
-            pippo=componentFactory.selectionC(privObj,players[me].getName(),players[me].getTokens())[i];
+        //------------
 
-            for (int j=0;j<3;j++)
-                pippo+=componentFactory.selectionD(pubObjs[j])[i];
+        String pippo="";
 
-            temp.add(pippo);
+        for (int j=0;j<3;j++)
+            pippo+=componentFactory.selectionC(privObj,players[me].getName(),players[me].getTokens())[j];
 
+        temp.add(pippo);
+        //+++++++++++++++
+        temp.add(cliToolsManager.printSpaces(80));
+
+        PublicObjectiveReader readerObj=new PublicObjectiveReader();
+
+        for (int i=0;i<pubObjs.length;i++) {
+            temp.add(cliToolsManager.simpleQuestionsMaker("OBIETTIVO PUBBLICO: ",26,false)+cliToolsManager.centerThatString(readerObj.readPublicObjective(pubObjs[i].getId()).get(0),26)+"    ..>   BONUS: "+readerObj.readPublicObjective(pubObjs[i].getId()).get(1));
         }
 
-        for (int i=0;i<5;i++)
-        {
-            String pluto;
-            pluto=componentFactory.selectionC(privObj,players[me].getName(),players[me].getTokens())[i+5];
-
-            for (int j=0;j<3;j++)
-                pluto+=componentFactory.selectionT(toolsId[j],toolsTokens[j])[i];
-
-            temp.add(pluto);
+        String[] temppp;
+        for (int i = 0; i<toolsTokens.length; i++) {
+            temppp = componentFactory.selectionT(toolsId[i], toolsTokens[i]);
+            for (String str:temppp)
+                temp.add(str);
         }
 
+        //conversione in array
         String[] tempArray= new String[temp.size()];
-
         for (int i=0;i<temp.size();i++)
             tempArray[i]=temp.get(i);
 
@@ -360,9 +365,10 @@ public class PrinterMaker
     public String[] showScores(ScoreEvent event) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
         ArrayList<String> temp = new ArrayList<String>();
         int pos=1;
-        for(ScorePlayer player : event.getPlayers())
+        for(int i=0;i<event.getPlayers().size();i++)
         {
-            temp.add("POSIZIONE "+Integer.toString(pos));
+            ScorePlayer player = event.getPlayers().get(i);
+            temp.add("POSIZIONE "+Integer.toString(i+1));
             temp.add(cliToolsManager.printSpaces(2)+player.getName());
             temp.add(cliToolsManager.printSpaces(2)+"PUNTI OBIETTIVO PRIVATO: "+Integer.toString(player.getPrivObj()));
             temp.add(cliToolsManager.printSpaces(2)+"PUNTI OBIETTIVO PUBBLICO 1: "+ Integer.toString(player.getPubObj(0)));

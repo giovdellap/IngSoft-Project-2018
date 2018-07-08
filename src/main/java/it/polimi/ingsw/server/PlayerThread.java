@@ -45,6 +45,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
     private Event currentEventSend;
     private Event currentEventReceive;
     private Boolean stop;
+    private Boolean reconnecting=false;
 
     private boolean personalSchemeEnabled=false;
     private PersonalSchemeEvent myPersonalSchemeEvent;
@@ -115,9 +116,7 @@ public class PlayerThread extends Observable implements Observer, Runnable
 
                     boolean ack=false;
 
-                    ExecutorService exec= Executors.newSingleThreadExecutor();
-                    exec.execute(new Runnable() {
-                        public void run() {
+
                             try {
                                 System.out.println("\nRUN PLAYERTHREAD\n");
                                 connectionManager.pingPingPing();
@@ -125,42 +124,21 @@ public class PlayerThread extends Observable implements Observer, Runnable
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }
-                    });
-                    exec.shutdown();
-                    ack = exec.awaitTermination(4,TimeUnit.SECONDS );
 
-                    System.out.println("ACK: "+ack);
 
-                    if(ack) {
-                        try {
-                            while (!stop && !connectionManager.isReady())
-                                Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
+
 
                         if (!stop)
                             connectionManager.getEvent();
                         logger.log("Player " + Integer.toString(id) + " receiving event " + currentEventReceive.getType());
                         if (currentEventSend.getType().equals("TurnEvent"))
                             logger.log("TurnEvent receive active: " + Integer.toString(((TurnEvent) currentEventSend).getActive()));
-                    }
-                    else
-                    {
-                        System.out.println("\nSET DISCONNECTED"+id);
-                        isDisconnected=true;
-                        DisconnectionEvent event = new DisconnectionEvent();
-                        setChanged();
-                        notifyObservers(event);
-                    }
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 } catch (InvalidIntArgumentException e) {
                     e.printStackTrace();
                 }
@@ -412,7 +390,6 @@ public class PlayerThread extends Observable implements Observer, Runnable
             changeSocket(reconnectionSocket);
             connectionManager.getEvent();
             if(((UsernameEvent)currentEventReceive).getUserName().equals(name)) {
-                isDisconnected=false;
                 currentEventReceive.validate();
                 connectionManager.sendEvent(currentEventReceive);
                 setChanged();
@@ -425,6 +402,10 @@ public class PlayerThread extends Observable implements Observer, Runnable
     public void changeSocket(Socket socket) throws IOException
     {
         connectionManager.changeSocket(socket);
+    }
+    public void reconnected()
+    {
+        isDisconnected=false;
     }
 
 
@@ -441,4 +422,9 @@ public class PlayerThread extends Observable implements Observer, Runnable
         System.out.println();
         return state.toString();
     }
+    public void setReconnecting(boolean state)
+    {
+        reconnecting=state;
+    }
+
 }

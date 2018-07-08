@@ -13,13 +13,15 @@ public class GeneralServer
     private ServerSocket serverSocket;
     private Socket generalSocket;
     private String username="";
+    private int port;
 
     /**
      * GeneralServer Constructor
      * @throws IOException
      */
-    public GeneralServer() throws IOException {
-        serverSocket = new ServerSocket(7777);
+    public GeneralServer(int port) throws IOException {
+        this.port = port;
+        serverSocket = new ServerSocket(port);
     }
 
     /**

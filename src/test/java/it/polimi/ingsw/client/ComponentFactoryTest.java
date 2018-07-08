@@ -99,8 +99,7 @@ public class ComponentFactoryTest
         Assertions.assertEquals(true, true);
     }
 
-    @Test public void checkTComponent() throws InvalidIntArgumentException
-    {
+    @Test public void checkTComponent() throws InvalidIntArgumentException, FileNotFoundException {
         for(int i=0;i<5;i++)
             System.out.println(componentFactory.selectionT(4,5)[i]);
         Assertions.assertEquals(true, true);

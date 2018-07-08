@@ -57,12 +57,12 @@ public class Match implements Observer
      * @throws FullDataStructureException
      */
 
-    public Match() throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException
+    public Match(int port) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException
     {
         LobbyCreator lobbyCreator;
         disconnectedPlayersInitializationPhase = new ArrayList<Integer>();
 
-        generalServer = new GeneralServer();
+        generalServer = new GeneralServer(port);
         logger = new SimpleLogger(3, true);
 
         //lobby creation
@@ -345,7 +345,7 @@ public class Match implements Observer
                 logger.log("Event received: "+actualEvent.getType());
 
                 //PassEvent
-                if(actualEvent.getType().equals("PassEvent"))
+                if(actualEvent.getType().equals("PassEvent")||actualEvent.getType().equals("DisconnectionEvent"))
                     endTurn = true;
                 else {
                     boolean alreadyChecked = false;
@@ -495,7 +495,7 @@ public class Match implements Observer
             }
         }
         executor.shutdown();
-        executor.awaitTermination(15, TimeUnit.SECONDS);
+        executor.awaitTermination(23, TimeUnit.SECONDS);
 
         for(PlayerThread pl : players)
             if(pl.isDisconnected())
@@ -591,31 +591,6 @@ public class Match implements Observer
 
     //DISCONNECTION MANAGEMENT
 
-    /**
-     *
-     */
-
-    public void waitForReconnection() throws IOException, InvalidIntArgumentException
-    {
-        logger.log("Waiting for reconnection");
-        ArrayList<String> geppetto = new ArrayList<String>();
-        for(PlayerThread pl:players)
-            if(pl.isDisconnected())
-                geppetto.add(pl.getName());
-        Socket thisSocket = generalServer.reconnection(geppetto);
-        if(thisSocket!=null)
-        {
-            logger.log("Player "+generalServer.getUsername()+" reconnected");
-            for(PlayerThread pl:players)
-                if(pl.getName().equals(generalServer.getUsername()))
-                {
-                    pl.changeSocket(thisSocket);
-                    pl.sendEvent(createReconnectionEvent(pl.getId()));
-                }
-        }
-
-    }
-
 
     public ReconnectionEvent createReconnectionEvent(int playerId) throws InvalidIntArgumentException
     {
@@ -705,22 +680,26 @@ public class Match implements Observer
         if(((Event)arg).getType().equals("ServerReconnectionEvent"))
         {
             try {
+                System.out.println("dio bestia");
+                ((PlayerThread)o).reconnected();
                 ((PlayerThread)o).setEvent(createReconnectionEvent(((PlayerThread)o).getId()));
                 ((PlayerThread)o).setState(SEND);
                 executor=Executors.newSingleThreadExecutor();
                 executor.execute(((PlayerThread)o));
                 executor.shutdown();
-                executor.awaitTermination(10, TimeUnit.SECONDS);
+                executor.awaitTermination(20, TimeUnit.SECONDS);
+                System.out.println("DIO KEBAB SENZA PIGANTO");
 
-                if(((PlayerThread)o).getId()==turnManager.getActivePlayer())
-                    lastTurn.setMyTurn(true);
-
+                ((PlayerThread)o).setReconnecting(true);
                 ((PlayerThread)o).setEvent(lastTurn);
                 ((PlayerThread)o).setState(HANDLE);
                 executor=Executors.newSingleThreadExecutor();
                 executor.execute(((PlayerThread)o));
                 executor.shutdown();
-                executor.awaitTermination(12, TimeUnit.SECONDS);
+                boolean timeExpiredReconnection=false;
+                timeExpiredReconnection=!executor.awaitTermination(30, TimeUnit.SECONDS);
+                System.out.println("SCATTA IL TIMER MADONNA CON L'ALZHEIMER: "+Boolean.toString(timeExpiredReconnection));
+                ((PlayerThread)o).setReconnecting(false);
 
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();

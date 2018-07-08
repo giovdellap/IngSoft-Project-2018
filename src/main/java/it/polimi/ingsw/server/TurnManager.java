@@ -112,7 +112,7 @@ public class TurnManager
 
     public boolean theEnd()
     {
-        return round==5;
+        return round==2;
     }
 
 
@@ -174,7 +174,7 @@ public class TurnManager
 
     public void stopMatch()
     {
-        round=5;
+        round=2;
     }
 
 }

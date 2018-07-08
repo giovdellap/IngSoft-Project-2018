@@ -13,6 +13,7 @@ import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -61,8 +62,8 @@ public abstract class AbstractGraphic implements Runnable{
     public abstract void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected) throws InvalidIntArgumentException, IOException;
     public abstract void showTurn(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round) throws InvalidIntArgumentException, IOException;
     public abstract void toolAccepted();
-    public abstract void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException;
-    public abstract void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException;
+    public abstract void showMove(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, MoveEvent event) throws InvalidIntArgumentException, FileNotFoundException;
+    public abstract void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException, FileNotFoundException;
     public abstract void setUseTool(ToolCardEvent event);
     public abstract boolean showScores(ScoreEvent event, boolean winner) throws InvalidIntArgumentException, IOException, InterruptedException;
     public abstract void forfaitCli() throws IOException, InterruptedException;

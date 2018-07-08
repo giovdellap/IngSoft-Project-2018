@@ -105,8 +105,7 @@ public class GameSceneTest {
     }
 
     @Test
-    public void gameSceneTest() throws InvalidIntArgumentException
-    {
+    public void gameSceneTest() throws InvalidIntArgumentException, FileNotFoundException {
         int lenght = printerMaker.getGameScene(players, draft, tempRound, testPrivObj, tempPubObj, tempTools, 1, 1).length;
         for(int i=0;i<lenght;i++) {
             System.out.println(printerMaker.getGameScene(players, draft, tempRound, testPrivObj, tempPubObj, tempTools, 1, 1)[i]);

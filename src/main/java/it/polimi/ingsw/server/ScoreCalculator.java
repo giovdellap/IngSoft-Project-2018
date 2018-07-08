@@ -95,29 +95,30 @@ public class ScoreCalculator
         }
 
         ArrayList<ScorePlayer> tempPlayers = new ArrayList<ScorePlayer>();
-        for (int i = 0; i < scorePlayers.size(); i++) {
-            int max = -1000;
-            int index = 0;
-            for (int j = 0; j < scorePlayers.size(); j++) {
-                if (scorePlayers.get(j).getTot() > max) {
-                    {
-                        boolean check = false;
-                        for (int z = 0; z < event.getPlayers().size(); z++) {
-                            if (event.getPlayers().get(z).getName().equals(scorePlayers.get(j).getName())) {
-                                check = true;
+            for (int i = 0; i < scorePlayers.size(); i++) {
+                int max = -1000;
+                int index = 0;
+                for (int j = 0; j < scorePlayers.size(); j++) {
+                    if (scorePlayers.get(j).getTot() > max) {
+                        {
+                            boolean check = false;
+                            for (int z = 0; z < tempPlayers.size(); z++) {
+                                if (tempPlayers.get(z).getName().equals(scorePlayers.get(j).getName())) {
+                                    check = true;
+                                }
                             }
-                        }
-                        if (!check) {
-                            index = j;
-                            max = scorePlayers.get(j).getTot();
+                            if (!check) {
+                                index = j;
+                                max = scorePlayers.get(j).getTot();
+                            }
                         }
                     }
                 }
-            }
-            tempPlayers.add(scorePlayers.get(index));
-
+                tempPlayers.add(scorePlayers.get(index));
 
         }
+        for(int i=0;i<tempPlayers.size();i++)
+            System.out.println(Integer.toString(i)+" "+tempPlayers.get(i).getId());
         while (tempPlayers.size()!=1)
         {
             if(tempPlayers.get(0).getTot()>tempPlayers.get(1).getTot())

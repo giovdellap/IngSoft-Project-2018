@@ -18,6 +18,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -124,6 +125,8 @@ public class GraphicsManager extends Observable implements Runnable
                 showMove((MoveEvent)received);
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
         if(state==State.SHOWTOOL)
@@ -132,12 +135,14 @@ public class GraphicsManager extends Observable implements Runnable
                 showTool((ToolCardEvent)received);
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
         if(state==State.SHOWSCORE)
         {
             try {
-                showScores((ScoreEvent)received, true);
+                showScores((ScoreEvent)received, ((ScoreEvent)received).getPlayers().get(0).getId()==me);
             } catch (InvalidIntArgumentException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -267,8 +272,7 @@ public class GraphicsManager extends Observable implements Runnable
      * @param event Move event
      * @throws InvalidIntArgumentException
      */
-    private void showMove(MoveEvent event) throws InvalidIntArgumentException
-    {
+    private void showMove(MoveEvent event) throws InvalidIntArgumentException, FileNotFoundException {
         logger.debugLog(" color: "+Integer.toString(players[event.getId()].getPlayerScheme().getDie(event.getX(), event.getY()).getColor()));
         graphic.showMove(players, draft, track, toolsUsage, activePlayer, me, event);
     }
@@ -278,8 +282,7 @@ public class GraphicsManager extends Observable implements Runnable
      * @param event
      * @throws InvalidIntArgumentException
      */
-    private void showTool(ToolCardEvent event) throws InvalidIntArgumentException
-    {
+    private void showTool(ToolCardEvent event) throws InvalidIntArgumentException, FileNotFoundException {
         graphic.showTool(players, draft, track, toolsUsage, activePlayer, me, event);
     }
 

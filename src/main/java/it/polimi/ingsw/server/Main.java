@@ -3,9 +3,12 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
-import java.io.IOException;
+
+import java.io.*;
 
 public class Main {
+
+    private static Match thisMatch;
 
     /**
      * MAIN, starts a MATCH
@@ -17,7 +20,15 @@ public class Main {
      */
     public static void main(String[] args) throws IOException, InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, InterruptedException {
 
-        Match thisMatch = new Match();
+        BufferedReader inKeyboard = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
+
+        outVideo.println("SELEZIONA LA PORTA DA USARE");
+        outVideo.flush();
+        String port = inKeyboard.readLine();
+
+        thisMatch = new Match(Integer.parseInt(port));
+
 
 
     }

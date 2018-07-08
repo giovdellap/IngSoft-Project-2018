@@ -139,7 +139,7 @@ public class Match extends Observable implements Observer {
         executor=Executors.newSingleThreadExecutor();
         executor.execute(connectionManager);
         executor.shutdown();
-        executor.awaitTermination(20, SECONDS);
+        executor.awaitTermination(30, SECONDS);
 
         matchManager = new MatchManager((Initialization2Event)currentEvent, myUsername);
         int personalCounter=0;

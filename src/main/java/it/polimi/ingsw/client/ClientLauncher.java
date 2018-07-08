@@ -55,15 +55,7 @@ public class ClientLauncher
             else {
                 settings.add("false");
 
-                outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER GREEN LANTERNA, 2 PER BEAUTIFUL CLI", 80, true));
-                outVideo.flush();
-
-                readWithExceptions(1, 2);
-
-                String graphics;
-                if (msgIN.equals("1"))
-                    settings.add("LANTERNA");
-                else settings.add("CLI");
+                settings.add("CLI");
 
                 outVideo.println(clito.simpleQuestionsMaker("PREMI 1 PER UNA NUOVA PARTITA, 2 PER RICONETTERTI AD UNA IN CORSO", 80, true));
                 outVideo.flush();
