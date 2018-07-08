@@ -68,7 +68,7 @@ public class SocketClient extends Observable implements Runnable {
         socket = new Socket(serverIP, port);
         this.inSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.outSocket = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
-        logger.debugLog("Connected on port 7777");
+        logger.debugLog("Connected on port "+Integer.toString(port));
         logger.debugLog("inSocket/outSocket initialized");
     }
 

@@ -2,10 +2,7 @@ package it.polimi.ingsw.client.Graphics.JSONReaders;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ToolCardReader {
@@ -20,8 +17,8 @@ public class ToolCardReader {
         gson = new GsonBuilder().setLenient().create();
 
 
-        String file = getClass().getClassLoader().getResource("JsonPackage/ToolCards/ToolCard" + id + ".json").getFile();
-        br = new BufferedReader(new FileReader(file));
+        InputStream in = this.getClass().getResourceAsStream("/JsonPackage/ToolCards/ToolCard" + id + ".json");
+        br = new BufferedReader(new InputStreamReader(in));
 
         cardObj = gson.fromJson(br,ToolCardObj.class);
 

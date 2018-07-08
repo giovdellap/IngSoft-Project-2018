@@ -2,10 +2,8 @@ package it.polimi.ingsw.client.Graphics.JSONReaders;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class PublicObjectiveReader {
@@ -21,9 +19,9 @@ public class PublicObjectiveReader {
         gson = new GsonBuilder().setLenient().create();
 
 
-        String file = getClass().getClassLoader().getResource("JsonPackage/PublicObjectives/PublicObjective" + id + ".json").getFile();
+        InputStream in = this.getClass().getResourceAsStream("/JsonPackage/PublicObjectives/PublicObjective" + id + ".json");
 
-        br = new BufferedReader(new FileReader(file));
+        br = new BufferedReader(new InputStreamReader(in));
         pubObj = gson.fromJson(br, PublicObjectiveObj.class);
 
         temp.add(pubObj.getResult().get(0).getDescription());
