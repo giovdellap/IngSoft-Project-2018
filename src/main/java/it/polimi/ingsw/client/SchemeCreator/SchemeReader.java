@@ -4,9 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 
 public class SchemeReader {
     private Gson gson;
@@ -16,8 +15,8 @@ public class SchemeReader {
     public SchemeCard read(String name) throws FileNotFoundException, InvalidIntArgumentException {
         gson = new GsonBuilder().setLenient().create();
 
-        String file = getClass().getClassLoader().getResource("JsonPackage/SchemeCardsPers/" + name + ".json").getFile();
-        br = new BufferedReader(new FileReader(file));
+        InputStream in = this.getClass().getResourceAsStream("/JsonPackage/SchemeCardsPers/" +name+ ".json");
+        br = new BufferedReader(new InputStreamReader(in));
 
         card=gson.fromJson(br, SchemeCard.class);
 
