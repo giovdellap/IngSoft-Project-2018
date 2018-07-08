@@ -28,6 +28,12 @@ public class ScoreCalculator
         logger = new SimpleLogger(0, false);
     }
 
+    /**
+     * calculates scoreboard
+     * @return a scorevent
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     */
     public ScoreEvent calculateScore() throws InvalidIntArgumentException, GenericInvalidArgumentException {
         int[] tieVector = new int[players.size()];
 

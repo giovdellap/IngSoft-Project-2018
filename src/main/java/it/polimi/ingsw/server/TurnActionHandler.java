@@ -23,6 +23,15 @@ public class TurnActionHandler
         return turnManager;
     }
 
+    /**
+     * checks tool usage, eventually applies modifies
+     * @param event
+     * @return event to send to client
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws FullDataStructureException
+     * @throws IOException
+     */
     public ToolCardEvent useTool(ToolCardEvent event) throws InvalidIntArgumentException, GenericInvalidArgumentException, FullDataStructureException, IOException {
 
         //tokens check

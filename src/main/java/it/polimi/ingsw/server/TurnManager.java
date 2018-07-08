@@ -112,7 +112,7 @@ public class TurnManager
 
     public boolean theEnd()
     {
-        return round==2;
+        return round==10;
     }
 
 
@@ -159,22 +159,5 @@ public class TurnManager
         return turnIndex>players.size()-1;
     }
 
-    public int previousActive() throws GenericInvalidArgumentException {
-        if(turnIndex==players.size())
-            return (players.size()-1);
-        if(turnIndex==0)
-            return players.size()-1;
-        if(turnIndex<players.size())
-            return turnIndex-1;
-        if(turnIndex>players.size())
-            return activePlayer+1;
-        else
-            throw new GenericInvalidArgumentException();
-    }
-
-    public void stopMatch()
-    {
-        round=2;
-    }
 
 }

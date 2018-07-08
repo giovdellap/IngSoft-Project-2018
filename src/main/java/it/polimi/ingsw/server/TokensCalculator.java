@@ -5,6 +5,12 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 
 public class TokensCalculator
 {
+    /**
+     * sets up tokens for personalized scheme
+     * @param scheme
+     * @return
+     * @throws InvalidIntArgumentException
+     */
     public int calculateTokens(SchemeCard scheme) throws InvalidIntArgumentException {
         int tokens=0;
         int occupied=0;
