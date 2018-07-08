@@ -65,14 +65,12 @@ public abstract class AbstractGraphic implements Runnable{
     public abstract void showTool(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, ToolCardEvent event) throws InvalidIntArgumentException;
     public abstract void setUseTool(ToolCardEvent event);
     public abstract boolean showScores(ScoreEvent event, boolean winner) throws InvalidIntArgumentException, IOException, InterruptedException;
+    public abstract void forfaitCli() throws IOException, InterruptedException;
+    public abstract void setGraphics(PrivateObjectiveMP privateObjective, PublicObjectiveMP[] pubObjs, int[] toolsID);
 
 
-
-
-
-
-
-    public class ThreadUpdater {
+    public class ThreadUpdater
+    {
         public PlayerClient[] players;
         public DraftPoolMP draft;
         public RoundTrackMP track;
@@ -83,7 +81,8 @@ public abstract class AbstractGraphic implements Runnable{
         public ArrayList<String> disconnected;
 
 
-        public ThreadUpdater(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected) {
+        public ThreadUpdater(PlayerClient[] players, DraftPoolMP draft, RoundTrackMP track, int[] tools, int activePlayer, int me, int round, ArrayList<String> disconnected)
+        {
             this.players = players;
             this.draft = draft;
             this.track = track;
@@ -94,4 +93,5 @@ public abstract class AbstractGraphic implements Runnable{
             this.disconnected = disconnected;
         }
     }
+
 }

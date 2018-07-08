@@ -45,11 +45,7 @@ public class Main
                 schemeCreator = new SchemeCreator();
                 schemeCreator.createScheme();
             }
-
-
-
         }
-
     }
 
 }

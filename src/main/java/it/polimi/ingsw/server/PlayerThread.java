@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.commons.Events.Disconnection.DisconnectionEvent;
+import it.polimi.ingsw.commons.Events.Disconnection.ServerReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Events.Initialization.SchemeSelectionEvent;
+import it.polimi.ingsw.commons.Events.Initialization.UsernameEvent;
 import it.polimi.ingsw.commons.Events.TurnEvent;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
@@ -211,6 +213,8 @@ public class PlayerThread extends Observable implements Observer, Runnable
                     logger.log("Disconnected timer ended");
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InvalidIntArgumentException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -364,11 +368,11 @@ public class PlayerThread extends Observable implements Observer, Runnable
     {
         currentEventReceive = (Event) arg;
 
-        if(((Event)arg).getType().equals("SchemeSelectionEvent")||((Event)arg).getType().equals("PersonalSchemeEvent"))
+        if(((Event)arg).getType().equals("SchemeSelectionEvent")||((Event)arg).getType().equals("PersonalSchemeEvent")||((Event)arg).getType().equals("UsernameEvent"))
         {
             if(((Event)arg).getType().equals("SchemeSelectionEvent"))
                 selected=((SchemeSelectionEvent)arg).getId();
-            else
+            if(((Event)arg).getType().equals("PersonalSchemeEvent"))
                 myPersonalSchemeEvent=((PersonalSchemeEvent)arg);
         }
         else {
@@ -401,14 +405,26 @@ public class PlayerThread extends Observable implements Observer, Runnable
         this.server=server;
     }
 
-    public void tryReconnection() throws IOException {
-        server.accept(3);
+    public void tryReconnection() throws IOException, InvalidIntArgumentException {
+        Socket reconnectionSocket = server.accept(3);
+        if(reconnectionSocket!=null)
+        {
+            changeSocket(reconnectionSocket);
+            connectionManager.getEvent();
+            if(((UsernameEvent)currentEventReceive).getUserName().equals(name)) {
+                isDisconnected=false;
+                currentEventReceive.validate();
+                connectionManager.sendEvent(currentEventReceive);
+                setChanged();
+                notifyObservers(new ServerReconnectionEvent());
+            }
+        }
+
     }
 
     public void changeSocket(Socket socket) throws IOException
     {
         connectionManager.changeSocket(socket);
-        isDisconnected=false;
     }
 
 

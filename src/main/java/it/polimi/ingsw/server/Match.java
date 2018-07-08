@@ -43,6 +43,7 @@ public class Match implements Observer
     private ArrayList<PlayerThread> players;
     private ArrayList<Event> currentEvent;
     private boolean endInitialization=false;
+    private TurnEvent lastTurn;
 
     private ArrayList<Integer> disconnectedPlayersInitializationPhase;
 
@@ -284,10 +285,14 @@ public class Match implements Observer
             for(PlayerThread pl: players)
                 if(pl.isDisconnected())
                     disconnected++;
+            logger.debugLog("disconnected startmatch: "+Integer.toString(disconnected));
             if(players.size()-disconnected==1)
                 for(PlayerThread pl : players)
-                    if(!pl.isDisconnected())
+                    if(!pl.isDisconnected()) {
+                        logger.debugLog("FORFAITEVENT sent to player "+pl.getId());
                         pl.sendEvent(new ForfaitEvent());
+
+                    }
 
             if(turnManager.isNextRound())
                 modelInstance.roundEnd();
@@ -468,6 +473,8 @@ public class Match implements Observer
 
         activeEvent.setMyTurn(true);
 
+        lastTurn = notActiveEvent;
+
         executor=Executors.newFixedThreadPool(players.size());
 
         for(PlayerThread player : players)
@@ -490,7 +497,6 @@ public class Match implements Observer
         executor.shutdown();
         executor.awaitTermination(15, TimeUnit.SECONDS);
 
-        System.out.println("\nDIOCANE\n");
         for(PlayerThread pl : players)
             if(pl.isDisconnected())
                 pl.tryReconnection();
@@ -694,6 +700,33 @@ public class Match implements Observer
         if(((Event)arg).getType().equals("PersonalSchemeEvent"))
         {
             modelInstance.setPlayerSchemeFirstTime(((PlayerThread)o).getPersonalScheme().getScheme(), ((PlayerThread)o).getId());
+        }
+
+        if(((Event)arg).getType().equals("ServerReconnectionEvent"))
+        {
+            try {
+                ((PlayerThread)o).setEvent(createReconnectionEvent(((PlayerThread)o).getId()));
+                ((PlayerThread)o).setState(SEND);
+                executor=Executors.newSingleThreadExecutor();
+                executor.execute(((PlayerThread)o));
+                executor.shutdown();
+                executor.awaitTermination(10, TimeUnit.SECONDS);
+
+                if(((PlayerThread)o).getId()==turnManager.getActivePlayer())
+                    lastTurn.setMyTurn(true);
+
+                ((PlayerThread)o).setEvent(lastTurn);
+                ((PlayerThread)o).setState(HANDLE);
+                executor=Executors.newSingleThreadExecutor();
+                executor.execute(((PlayerThread)o));
+                executor.shutdown();
+                executor.awaitTermination(12, TimeUnit.SECONDS);
+
+            } catch (InvalidIntArgumentException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

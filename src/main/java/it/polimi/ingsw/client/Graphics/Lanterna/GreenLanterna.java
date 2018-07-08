@@ -139,6 +139,14 @@ public class GreenLanterna extends AbstractGraphic implements Runnable
         return false;
     }
 
+    public void forfaitCli() throws IOException, InterruptedException {
+
+    }
+
+    public void setGraphics(PrivateObjectiveMP privateObjective, PublicObjectiveMP[] pubObjs, int[] toolsID) {
+
+    }
+
 
     //READ/PRINT
     public void printIt(ArrayList<String> toPrint, TextColor foreGround, TextColor backGround, SGR sgr)

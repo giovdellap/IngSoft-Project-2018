@@ -16,6 +16,7 @@ import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardEvent;
 import it.polimi.ingsw.commons.Events.ToolsEvents.ToolCardSixEvent;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SimpleLogger;
+import it.polimi.ingsw.server.ModelComponent.PrivateObjective;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -411,7 +412,7 @@ public class GraphicsManager extends Observable implements Runnable
 
     public void graphicsUpdate()
     {
-        System.out.println("GRAPHICSupdate disconnected: "+Integer.toString(disconnected.size()));
+        System.out.println("GRAPHICS update disconnected: "+Integer.toString(disconnected.size()));
         graphic.updateThatShit(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
     }
 
@@ -421,4 +422,12 @@ public class GraphicsManager extends Observable implements Runnable
         graphic.stopGraphics();
     }
 
+    public void forfait() throws IOException, InterruptedException {
+        graphic.forfaitCli();
+    }
+
+    public void reconnectionSet(PrivateObjectiveMP prObj, PublicObjectiveMP[] pubObjs, int[] toolsID)
+    {
+        graphic.setGraphics(prObj, pubObjs, toolsID);
+    }
 }

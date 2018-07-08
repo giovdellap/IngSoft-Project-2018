@@ -3,9 +3,7 @@ package it.polimi.ingsw.client.Graphics.CLI;
 import it.polimi.ingsw.client.Graphics.AbstractGraphic;
 import it.polimi.ingsw.client.Graphics.StringCreator;
 import it.polimi.ingsw.client.GraphicsManager;
-import it.polimi.ingsw.client.SchemeCreator.PersonalSchemeWriter;
 import it.polimi.ingsw.client.SchemeCreator.SchemeReader;
-import it.polimi.ingsw.commons.Events.Initialization.PersonalSchemeEvent;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 import it.polimi.ingsw.client.PlayerClient;
@@ -815,6 +813,127 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
         printOut(cliToolsManager.sceneInitializer(width));
         printOut(printerMaker.getGameScene(players, draft, track, privateObjective, pubObjs, tools, activePlayer, me));
 
+        switch (event.getId()) {
+
+            case 1: {
+                ToolCardOneEvent currentEvent = (ToolCardOneEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getIndex()+1) + " della draft\n",40,false));
+
+                if(currentEvent.getAction() == '+')
+                    printOut(cliToolsManager.simpleQuestionsMaker("L'ha aumentato di valore e piazzato in posizione " + (currentEvent.getX()+1) + "," + (currentEvent.getY()+1) + " dello schema\n\n",40,false));
+                else
+                    printOut(cliToolsManager.simpleQuestionsMaker("L'ha diminuito di valore e piazzato in posizione " + (currentEvent.getX()+1) + "," + (currentEvent.getY()+1) + " dello schema\n\n",40,false));
+
+                break;
+            }
+
+            case 2: {
+                ToolCardTwoThreeEvent currentEvent = (ToolCardTwoThreeEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getX0()+1) + " , " + (currentEvent.getY0()+1) + " dello schema\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha spostato in posizione " + (currentEvent.getX1()+1) + "," + (currentEvent.getY1()+1) + "\n\n",40,true));
+                break;
+            }
+
+            case 3: {
+                ToolCardTwoThreeEvent currentEvent = (ToolCardTwoThreeEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getX0()+1) + "," + (currentEvent.getY0()+1) + " dello schema\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha spostato in posizione " + (currentEvent.getX1()+1) + "," + (currentEvent.getY1()+1) + "\n\n",40,true));
+                break;
+            }
+
+            case 4: {
+                ToolCardFourEvent currentEvent = (ToolCardFourEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso i dadi in posizione " + (currentEvent.getX01()+1) + "," + (currentEvent.getY01()+1) + " e " + (currentEvent.getX02()+1) + "," + (currentEvent.getY02()+1) + "\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e li ha spostati in posizione " + (currentEvent.getX11()+1) + "," + (currentEvent.getY11()+1) + " e " + (currentEvent.getX22()+1) + "," + (currentEvent.getY22()+1) + "\n\n",40,true));
+                break;
+            }
+
+            case 5: {
+                ToolCardFiveEvent currentEvent = (ToolCardFiveEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getIndex()+1) + " della draft\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha scambiato con il dado nel turno " + (currentEvent.getTurn()+1) + " della roundtrack, in posizione " + (currentEvent.getPos()+1),40,false));
+                break;
+            }
+
+            case 6: {
+                ToolCardSixEvent currentEvent = (ToolCardSixEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha scelto il dado in posizione " + (currentEvent.getIndex()+1) + " della draft e l'ha ritirato, nuovo valore " + currentEvent.getNewValue() + "\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha piazzato in posizione " + (currentEvent.getX()+1) + "," + (currentEvent.getY()+1) + " dello schema",40,true));
+                break;
+            }
+
+            case 7: {
+                ToolCardSevenEvent currentEvent = (ToolCardSevenEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha ritirato tutti i dadi della draft\n\n",40,false));
+                break;
+
+            }
+
+            case 8: {
+                ToolCardEightNineTenEvent currentEvent = (ToolCardEightNineTenEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso un altro dado dalla draft, in posizione " + (currentEvent.getIndex()+1) + "\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha piazzato in posizione " + (currentEvent.getX()+1) + " , " + (currentEvent.getY()+1) + " dello schema",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " salterà il suo secondo turno in questo round\n\n",40,false));
+                break;
+            }
+
+            case 9: {
+                ToolCardEightNineTenEvent currentEvent = (ToolCardEightNineTenEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getIndex()+1) + " della draft\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha piazzato in posizione " + (currentEvent.getX()+1) + " , " + (currentEvent.getY()+1) + " dello schema",40,false));
+                break;
+            }
+
+            case 10: {
+                ToolCardEightNineTenEvent currentEvent = (ToolCardEightNineTenEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getIndex()+1) + " della draft , l'ha girato sulla faccia opposta\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha piazzato in posizione " + (currentEvent.getX()+1) + " , " + (currentEvent.getY()+1) + " dello schema\n\n",40,false));
+                break;
+            }
+
+            case 11: {
+                ToolCardElevenEvent currentEvent = (ToolCardElevenEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha preso il dado in posizione " + (currentEvent.getIndex()+1) + " della draft e l'ha rimesso nel sacchetto\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("ha pescato un nuovo dado di colore " + cliToolsManager.getColor(currentEvent.getNewColor()) + " , ha scelto il valore " + currentEvent.getNewValue() + "\n",40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker("e l'ha piazzato in posizione " + (currentEvent.getX()+1) + " , " + (currentEvent.getY()+1) + " dello schema" + "\n\n",40,false));
+                break;
+            }
+
+            case 12: {
+                ToolCardTwelveEvent currentEvent = (ToolCardTwelveEvent)event;
+                printOut(cliToolsManager.simpleQuestionsMaker("Il giocatore " + players[activePlayer].getName() + " ha usato la carta strumento " + currentEvent.getId(),40,false));
+                printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha scelto il colore del dado nel turno " + (currentEvent.getTurn()+1) + " roundtrack, in posizione " + (currentEvent.getPos()+1) + "\n",40,false));
+
+                if(currentEvent.isOnlyOne()) {
+                    printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha deciso di spostare un solo dado\n",40,false));
+                    printOut(cliToolsManager.simpleQuestionsMaker("ha preso il dado in posizione " + (currentEvent.getX01()+1) + "," + (currentEvent.getY01()+1) + " dello schema\n",40,false));
+                    printOut(cliToolsManager.simpleQuestionsMaker("e l'ha spostato in posizione " + (currentEvent.getX11()+1) + "," + (currentEvent.getY11()+1) + "\n\n",40,true));
+                }
+
+                else {
+                    printOut(cliToolsManager.simpleQuestionsMaker(players[activePlayer].getName() + " ha deciso di spostare un due dadi\n",40,false));
+                    printOut(cliToolsManager.simpleQuestionsMaker("ha preso i dadi in posizione " + (currentEvent.getX01()+1) + "," + (currentEvent.getY01()+1) + " e " + (currentEvent.getX02()+1) + "," + (currentEvent.getY02()+1) + "\n", 40, false));
+                    printOut(cliToolsManager.simpleQuestionsMaker("e li ha spostati in posizione " + (currentEvent.getX11()+1) + "," + (currentEvent.getY11()+1) + " e " + (currentEvent.getX22()+1) + "," + (currentEvent.getY22()+1) + "\n\n", 40, true));
+                }
+                break;
+            }
+
+
+
+        }
+
+
     }
 
 
@@ -944,6 +1063,30 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
             printOut(str);
     }
 
+    public void forfaitCli() throws IOException, InterruptedException {
+        printOut(cliToolsManager.sceneInitializer(80));
+
+        for(int i=0;i<15;i++)
+            printOut("");
+
+        printOut(cliToolsManager.centerThatString("TUTTI GLI ALTRI GIOCATORI SI SONO DISCONNESSI", 80));
+        printOut(cliToolsManager.centerThatString("HAI VINTO", 80));
+
+        printOut("");
+        printOut("");
+
+        printOut(cliToolsManager.simpleQuestionsMaker("Premi qualsiasi tasto per uscire", 80, true));
+        readIt();
+    }
+
+    public void setGraphics(PrivateObjectiveMP privateObjective, PublicObjectiveMP[] pubObjs, int[] toolsID)
+    {
+        this.privateObjective=privateObjective;
+        this.pubObjs=pubObjs;
+        this.toolsID=toolsID;
+        printerMaker.setTools(toolsID);
+        width=80;
+    }
 
 
 }

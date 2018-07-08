@@ -20,119 +20,16 @@ public class PublicObjectiveReader {
         ArrayList<String> temp = new ArrayList<String>();
         gson = new GsonBuilder().setLenient().create();
 
-        if(id ==1) {
 
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective1.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
+        String file = getClass().getClassLoader().getResource("JsonPackage/PublicObjectives/PublicObjective" + id + ".json").getFile();
 
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
+        br = new BufferedReader(new FileReader(file));
+        pubObj = gson.fromJson(br, PublicObjectiveObj.class);
 
-            return temp;
-        }
+        temp.add(pubObj.getResult().get(0).getDescription());
+        temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
 
-        if(id ==2) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective2.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==3) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective3.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==4) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective4.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==5) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective5.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==6) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective6.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==7) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective7.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==8) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective8.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==9) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective9.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-        if(id ==10) {
-
-            br = new BufferedReader(new FileReader(new File(".\\src\\main\\resources\\JsonPackage\\PublicObjectives\\PublicObjective10.json")));
-            pubObj = gson.fromJson(br,PublicObjectiveObj.class);
-
-            temp.add(pubObj.getResult().get(0).getDescription());
-            temp.add(Integer.toString(pubObj.getResult().get(0).getBonus()));
-
-            return temp;
-        }
-
-
-        return null;
-
+        return temp;
     }
 
 }

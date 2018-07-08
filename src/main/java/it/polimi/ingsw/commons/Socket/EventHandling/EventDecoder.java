@@ -889,7 +889,7 @@ public class EventDecoder
             tempScheme.setfb(fb);
 
             transformer.simpleDecode(toDecode.get(j));
-            while(!transformer.getCmd().equals("x"))
+            while(transformer.getCmd().equals("x"))
             {
                 int x = Integer.parseInt(transformer.getArg());
                 j++;
@@ -904,6 +904,9 @@ public class EventDecoder
 
                 transformer.simpleDecode(toDecode.get(j));
                 tempDie.setValue(Integer.parseInt(transformer.getArg()));
+
+                if (x < 0 || x > 3 || y < 0 || y > 4)
+                    System.out.println("X: "+Integer.toString(x)+" Y: "+Integer.toString(y));
 
                 tempScheme.setDie(tempDie,x ,y );
                 j++;
@@ -931,6 +934,7 @@ public class EventDecoder
         j++;
 
         event.addPubObjs(pubObjs);
+        System.out.println("Decoder: "+Integer.toString(event.getPrivObj()));
 
         int[] toolsIds= new int[3];
         transformer.simpleDecode(toDecode.get(j));

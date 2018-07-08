@@ -53,6 +53,10 @@ public class MatchManager
     {
         return players[index];
     }
+    public void reconnectionInitialization(int dim)
+    {
+        players = new PlayerClient[dim];
+    }
     public void setPlayer(int index, PlayerClient player)
     {
         players[index]=player;

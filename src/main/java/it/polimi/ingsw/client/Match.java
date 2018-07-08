@@ -44,7 +44,7 @@ public class Match extends Observable implements Observer {
     private boolean firstFlag;
     private String myUsername;
     private boolean endTurn=false;
-    private boolean myTurn;
+    private boolean myTurn=false;
     private boolean partTwoDone;
     private Event currentEvent;
     private Event toCheck;
@@ -105,6 +105,8 @@ public class Match extends Observable implements Observer {
         modelManagerMP.setPubObjs(((ModelInitializationEvent)currentEvent).getPublicObjectives());
         modelManagerMP.setTempSchemes(((ModelInitializationEvent)currentEvent).getSchemes()[0], ((ModelInitializationEvent)currentEvent).getSchemes()[1]);
         toolRecord = new ToolRecord(((ModelInitializationEvent)currentEvent).getToolIds());
+
+
 
 
         //SCHEME SELECTION
@@ -176,7 +178,7 @@ public class Match extends Observable implements Observer {
         executor.shutdown();
         executor.awaitTermination(20, SECONDS);
 
-        while (!currentEvent.getType().equals("ScoreEvent"))
+        while (!(currentEvent.getType().equals("ScoreEvent")||currentEvent.getType().equals("ForfaitEvent")))
         {
             partTwoDone = false;
             logger.debugLog("turn start");
@@ -209,7 +211,8 @@ public class Match extends Observable implements Observer {
                 notMyTurn();
             }
         }
-        gameEnded();
+        if(currentEvent.getType().equals("ScoreEvent"))
+            gameEnded();
     }
 
     /**
@@ -559,6 +562,18 @@ public class Match extends Observable implements Observer {
             logger.debugLog("Update from connectionManager");
         }
 
+        if (((Event)arg).getType().equals("ForfaitEvent"))
+        {
+            try {
+                endTurn=true;
+                graphicsManager.forfait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         if(((Event)arg).getType().equals("TurnEvent")) {
 
             connectionManager.stopSleep();
@@ -741,13 +756,19 @@ public class Match extends Observable implements Observer {
 
     //RECONNECTION
     public void tryReconnection() throws IOException, InterruptedException, InvalidIntArgumentException, GenericInvalidArgumentException {
+        logger = new SimpleLogger(3, Boolean.parseBoolean(settings.get(0)));
+
         graphicsManager = new GraphicsManager(settings);
         connectionManager = new ConnectionManager(settings);
+        connectionManager.addObserver(this);
+        graphicsManager.addObserver(this);
         modelManagerMP = new ModelManagerMP();
         matchManager = new MatchManager();
+        myTurn=false;
 
 
         graphicsManager.askUsername();
+        logger.debugLog(toCheck.getType());
         //MISSING: Reconnection graphics function
         executor=Executors.newSingleThreadExecutor();
         connectionManager.setEvent(toCheck);
@@ -766,9 +787,12 @@ public class Match extends Observable implements Observer {
             executor.shutdown();
             executor.awaitTermination(15, SECONDS);
 
+            System.out.println("checkbbbbbb");
+
             //setting up players
 
             SchemesDeck tempDeck = new SchemesDeck();
+            matchManager.reconnectionInitialization(((ReconnectionEvent)currentEvent).getPlayers().size());
             for(int p=0;p<((ReconnectionEvent)currentEvent).getPlayers().size();p++)
             {
                 //PlayerClient/matchManager set
@@ -780,21 +804,32 @@ public class Match extends Observable implements Observer {
                 SchemeCard tempScheme = tempDeck.extractSchemebyID(recPlayer.getSchemeId());
                 tempScheme.setfb(recPlayer.getFb());
 
+                System.out.println("checkccccc");
+
                 for(ReconnectionPlayer.ReconnectionSchemeDie die : recPlayer.getSchemeDice())
                 {
                     Die tempDie = new Die(die.getColor());
                     tempDie.setValue(die.getValue());
                     tempScheme.setDie(tempDie, die.getX(), die.getY());
                 }
+                player.setPlayerScheme(tempScheme);
 
                 matchManager.setPlayer(p, player);
             }
-
+            System.out.println("checkaaaaaa");
             //setting up model
             modelManagerMP.setMyPrivObj(((ReconnectionEvent)currentEvent).getPrivObj());
+            logger.debugLog("privobj: "+modelManagerMP.getMyPrObj().getColor());
             modelManagerMP.setPubObjs(((ReconnectionEvent)currentEvent).getPubObjs());
             toolRecord = new ToolRecord(((ReconnectionEvent)currentEvent).getToolsIds());
             toolRecord.setTokens(((ReconnectionEvent)currentEvent).getToolsTokens());
+
+            PublicObjectiveMP[] tempPubObjs = new PublicObjectiveMP[3];
+            for(int i=0;i<3;i++)
+                tempPubObjs[i]=modelManagerMP.getPubObjs(i);
+            graphicsManager.reconnectionSet(modelManagerMP.getMyPrObj(), tempPubObjs, toolRecord.getID());
+
+            System.out.println("checkeeeeee");
 
             for(int round=0;round<((ReconnectionEvent)currentEvent).getReconnectionTrack().size();round++)
             {

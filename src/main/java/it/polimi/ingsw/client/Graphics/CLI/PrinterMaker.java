@@ -393,4 +393,9 @@ public class PrinterMaker
 
         return temp;
     }
+
+    public void setTools(int[] tools)
+    {
+        this.toolsId=tools;
+    }
 }

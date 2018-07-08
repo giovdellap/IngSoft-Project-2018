@@ -172,4 +172,9 @@ public class TurnManager
             throw new GenericInvalidArgumentException();
     }
 
+    public void stopMatch()
+    {
+        round=5;
+    }
+
 }
