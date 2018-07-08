@@ -376,7 +376,6 @@ public class EventEncoder
         ArrayList<String> temp = new ArrayList<String>();
         int j;
 
-        System.out.println("My turn encoder: "+event.itsMyTurn());
 
         temp.add(transformer.simpleEncode("round",Integer.toString(event.getRound())));
 

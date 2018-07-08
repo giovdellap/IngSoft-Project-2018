@@ -188,7 +188,6 @@ public class Match extends Observable implements Observer {
             matchManager.setRound(((TurnEvent) currentEvent).getRound());
             if (!((TurnEvent) currentEvent).getNoDisconnected()) {
                 matchManager.setDisconnectedPlayers(((TurnEvent) currentEvent).getDisconnected());
-                System.out.println("DISCONNECTED MATCH: "+Integer.toString(matchManager.getDisconnectedPlayers().size()));
             }
             matchManager.setActivePlayer(((TurnEvent) currentEvent).getActive());
             modelManagerMP.setDraft(((TurnEvent) currentEvent).getDraft());
@@ -581,14 +580,8 @@ public class Match extends Observable implements Observer {
                 graphicsManager.stopView();
             executor.shutdown();
             endTurn=true;
-            System.out.println("BOOLEAN: "+Boolean.toString(((TurnEvent)currentEvent).getNoDisconnected()));
-            if(((TurnEvent)currentEvent).getDisconnected()!=null)
-            {
-                for(String str : ((TurnEvent)currentEvent).getDisconnected())
-                    System.out.println("STR: "+str);
-            }
 
-            logger.log("TurnEvent update : "+executor.toString());
+
         }
 
         if(myTurn&&o==graphicsManager&&(!((Event)arg).getType().equals("PassEvent"))) {
@@ -608,7 +601,6 @@ public class Match extends Observable implements Observer {
         }
 
         if(myTurn&&o==connectionManager&&((Event)arg).getType().equals("ToolCardSixEvent")) {
-            System.out.println(partTwoDone);
             if(!partTwoDone) {
                 try {
                     tool6Part2();

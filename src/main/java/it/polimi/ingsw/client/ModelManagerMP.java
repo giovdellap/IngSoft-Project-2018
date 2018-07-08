@@ -100,9 +100,7 @@ public class ModelManagerMP
         RoundDiceMP tempRD = new RoundDiceMP();
         for(int i=0;i<arg.size();i++)
         {
-            logger.log("COLOR: "+Integer.toString(arg.get(i).getColor()));
             tempRD.addDie(arg.get(i));
-            System.out.println("Value: "+Integer.toString(arg.get(i).getValue())+" color: "+Integer.toString(arg.get(i).getColor()));
         }
         track.setSpecificRoundDice(tempRD, round);
     }

@@ -63,7 +63,7 @@ public class GraphicsManager extends Observable implements Runnable
             graphic = new BeautifulCLI();
 
         disconnected=new ArrayList<String>();
-        logger = new SimpleLogger(2, true);
+        logger = new SimpleLogger(2, Boolean.parseBoolean(settings.get(0)));
     }
 
     /**
@@ -84,7 +84,7 @@ public class GraphicsManager extends Observable implements Runnable
                 if(secondaryState==SecondaryState.TOOLACCEPTED)
                     toolAccepted();
                 if(secondaryState==SecondaryState.TOOLREFUSED)
-                    System.out.println("MISSING");
+                    toolRefused();
             }
             try {
                 myTurn();
@@ -154,7 +154,12 @@ public class GraphicsManager extends Observable implements Runnable
                 e.printStackTrace();
             }
         }
-        logger.log("graphics manager ended: "+state);
+        logger.debugLog("graphics manager ended: "+state);
+    }
+
+    public void toolRefused()
+    {
+        graphic.toolRefused();
     }
 
 
@@ -188,7 +193,6 @@ public class GraphicsManager extends Observable implements Runnable
     private void myTurn() throws InterruptedException {
         stop=false;
         int whatToDo=4;
-        System.out.println("DISCONNECTED MYTURN GRAPHMANAGER: "+Integer.toString(disconnected.size()));
 
         graphicsUpdate();
         Executor executor = Executors.newSingleThreadExecutor();
@@ -426,13 +430,11 @@ public class GraphicsManager extends Observable implements Runnable
 
     public void graphicsUpdate()
     {
-        System.out.println("GRAPHICS update disconnected: "+Integer.toString(disconnected.size()));
         graphic.updateThatShit(players, draft, track, toolsUsage, activePlayer, me, round, disconnected);
     }
 
     public void stopView()
     {
-        System.out.println("GRAPHIC STOP");
         graphic.stopGraphics();
     }
 

@@ -68,6 +68,7 @@ public abstract class AbstractGraphic implements Runnable{
     public abstract boolean showScores(ScoreEvent event, boolean winner) throws InvalidIntArgumentException, IOException, InterruptedException;
     public abstract void forfaitCli() throws IOException, InterruptedException;
     public abstract void setGraphics(PrivateObjectiveMP privateObjective, PublicObjectiveMP[] pubObjs, int[] toolsID);
+    public abstract void toolRefused();
 
 
     public class ThreadUpdater

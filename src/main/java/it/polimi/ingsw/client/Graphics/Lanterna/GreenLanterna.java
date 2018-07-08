@@ -147,6 +147,10 @@ public class GreenLanterna extends AbstractGraphic implements Runnable
 
     }
 
+    public void toolRefused() {
+
+    }
+
 
     //READ/PRINT
     public void printIt(ArrayList<String> toPrint, TextColor foreGround, TextColor backGround, SGR sgr)

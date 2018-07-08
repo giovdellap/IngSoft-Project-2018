@@ -781,7 +781,6 @@ public class EventDecoder
         event = new MoveEvent(index,x,y);
         if (validate) {
             event.validate();
-            logger.log("validate true: "+Boolean.toString(event.isValidated()));
         }
         else {
             event.resetValidation();

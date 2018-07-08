@@ -5,7 +5,6 @@ import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.ModelComponentsMP.*;
 
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
-import org.fusesource.jansi.Ansi;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

@@ -173,7 +173,6 @@ public class ConnectionManager extends Observable implements Runnable, Observer
             }
             logger.debugLog("SLEEP ended");
         }
-        logger.log("connection manager ended: "+state);
 
     }
 

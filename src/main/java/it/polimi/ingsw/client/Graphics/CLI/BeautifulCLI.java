@@ -60,7 +60,6 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
     public void run() {
         stopCLI=false;
-        System.out.println("BEAUTIFULCLI DISCONNECTED: "+Integer.toString(threadUpdater.disconnected.size()));
         if (state==GraphicsManager.State.ASKMAIN)
         {
             askForWhat=4;
@@ -73,7 +72,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
             if (secondaryState==GraphicsManager.SecondaryState.TOOLACCEPTED)
                 toolAccepted();
             if (secondaryState==GraphicsManager.SecondaryState.TOOLREFUSED)
-                System.out.println("MISSING");
+                toolRefused();
 
             try {
                 printOut(cliToolsManager.sceneInitializer(width));
@@ -614,6 +613,10 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     }
 
 
+    public void toolRefused()
+    {
+        printOut(cliToolsManager.centerThatString("STRUMENTO RIFIUTATO", 80));
+    }
 
     /**
      * asks for Username

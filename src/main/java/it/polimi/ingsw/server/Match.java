@@ -404,7 +404,7 @@ public class Match implements Observer
                             {
                                 player.setState(SEND);
                                 player.setEvent(actualEvent);
-                                System.out.println("Sending event " + actualEvent.getType() + " to player " + Integer.toString(player.getId()));
+                                logger.debugLog("Sending event " + actualEvent.getType() + " to player " + Integer.toString(player.getId()));
                                 executor.execute(player);
                             }
                         }
@@ -654,11 +654,10 @@ public class Match implements Observer
     public void update(Observable o, Object arg) {
 
         currentEvent.set(((PlayerThread)o).getId(), (Event)arg);
-        System.out.println(((Event)arg).getType()+" player "+((PlayerThread) o).getId());
 
 
         if(((Event)arg).getType().equals("DisconnectionEvent")) {
-            System.out.println("Disconnected: " + ((PlayerThread) o).getId());
+            logger.debugLog("Disconnected: " + Integer.toString(((PlayerThread) o).getId()));
             if (!endInitialization) {
                 disconnectedPlayersInitializationPhase.add(((PlayerThread) o).getId());
             } else
@@ -680,7 +679,6 @@ public class Match implements Observer
         if(((Event)arg).getType().equals("ServerReconnectionEvent"))
         {
             try {
-                System.out.println("dio bestia");
                 ((PlayerThread)o).reconnected();
                 ((PlayerThread)o).setEvent(createReconnectionEvent(((PlayerThread)o).getId()));
                 ((PlayerThread)o).setState(SEND);
@@ -688,7 +686,6 @@ public class Match implements Observer
                 executor.execute(((PlayerThread)o));
                 executor.shutdown();
                 executor.awaitTermination(20, TimeUnit.SECONDS);
-                System.out.println("DIO KEBAB SENZA PIGANTO");
 
                 ((PlayerThread)o).setReconnecting(true);
                 ((PlayerThread)o).setEvent(lastTurn);
@@ -698,7 +695,6 @@ public class Match implements Observer
                 executor.shutdown();
                 boolean timeExpiredReconnection=false;
                 timeExpiredReconnection=!executor.awaitTermination(30, TimeUnit.SECONDS);
-                System.out.println("SCATTA IL TIMER MADONNA CON L'ALZHEIMER: "+Boolean.toString(timeExpiredReconnection));
                 ((PlayerThread)o).setReconnecting(false);
 
             } catch (InvalidIntArgumentException e) {

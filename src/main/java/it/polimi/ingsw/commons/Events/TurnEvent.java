@@ -58,7 +58,6 @@ public class TurnEvent extends Event
     public void setMyTurn(boolean bool)
     {
         myTurn=bool;
-        logger.log("Turn event turn set to "+bool);
     }
     public void setLastRound(ArrayList<Die> lastRound) {
         this.lastRound = lastRound;

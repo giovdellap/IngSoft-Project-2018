@@ -95,7 +95,6 @@ public class SocketClient extends Observable implements Runnable {
         }
         setChanged();
         notifyObservers(currentEvent);
-        System.out.println("connection manager notified");
 
     }
 
