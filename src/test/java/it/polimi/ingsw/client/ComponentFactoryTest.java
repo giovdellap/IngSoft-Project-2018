@@ -79,13 +79,6 @@ public class ComponentFactoryTest
         Assertions.assertEquals(true, true);
     }
 
-    @Test public void checkCComponent() throws InvalidIntArgumentException
-    {
-        for(int i=0;i<9;i++)
-            System.out.println(componentFactory.selectionC(new PrivateObjectiveMP(3),username,0)[i]);
-        Assertions.assertEquals(true, true);
-    }
-
     @Test public void checkIComponent()
     {
         for(int i=0;i<3;i++)
@@ -100,11 +93,6 @@ public class ComponentFactoryTest
         Assertions.assertEquals(true, true);
     }
 
-    @Test public void checkTComponent() throws InvalidIntArgumentException, FileNotFoundException {
-        for(int i=0;i<5;i++)
-            System.out.println(componentFactory.selectionT(4,5)[i]);
-        Assertions.assertEquals(true, true);
-    }
 
     @Test public void checkNComponent() throws InvalidIntArgumentException
     {
