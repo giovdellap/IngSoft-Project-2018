@@ -46,6 +46,12 @@ public class GeneralServer
         return generalSocket;
     }
 
+    /**
+     * manages reconnection
+     * @param usernames
+     * @return
+     * @throws IOException
+     */
     public Socket reconnection(ArrayList<String> usernames) throws IOException {
         try {
             generalSocket=new Socket();

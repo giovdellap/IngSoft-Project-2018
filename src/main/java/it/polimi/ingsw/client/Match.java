@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionEvent;
 import it.polimi.ingsw.commons.Events.Disconnection.ReconnectionPlayer;
 import it.polimi.ingsw.commons.Events.Initialization.*;
@@ -163,7 +162,7 @@ public class Match extends Observable implements Observer {
     }
 
     /**
-     * manages the turn
+     * manages the turns
      * @throws InvalidIntArgumentException
      * @throws GenericInvalidArgumentException
      * @throws InvalidIntArgumentException
@@ -291,6 +290,10 @@ public class Match extends Observable implements Observer {
         }
     }
 
+    /**
+     * manages game end with scores
+     * @throws InterruptedException
+     */
     public void gameEnded() throws InterruptedException
     {
         graphicsManager.setReceivedEvent(currentEvent);
@@ -306,7 +309,6 @@ public class Match extends Observable implements Observer {
      * @throws InvalidIntArgumentException
      * @throws GenericInvalidArgumentException
      */
-
     public void applyMove() throws InvalidIntArgumentException, GenericInvalidArgumentException
     {
         DraftPoolMP tempDraft = modelManagerMP.getDraft();
@@ -532,7 +534,6 @@ public class Match extends Observable implements Observer {
     /**
      * updates the GraphicsManager, passing by parameters all the updated elements of the current model
      */
-
     private void updateGraphicsManager()
     {
         int me=0;
@@ -547,7 +548,6 @@ public class Match extends Observable implements Observer {
      * @param o observable
      * @param arg object
      */
-
     public void update(Observable o, Object arg)
     {
         logger.debugLog("update - myTurn: "+Boolean.toString(myTurn));
@@ -657,6 +657,10 @@ public class Match extends Observable implements Observer {
 
     }
 
+    /**
+     * what to do if receiving an event from grapghicsmanager
+     * @throws InterruptedException
+     */
     public void myTurnAction() throws InterruptedException {
 
         //connectionManager.stopSleep();
@@ -674,6 +678,10 @@ public class Match extends Observable implements Observer {
         connectionManager.stopSleep();
     }
 
+    /**
+     * what to do if receiving a passEvent from graphics manager
+     * @throws InterruptedException
+     */
     public void pass() throws InterruptedException {
         //connectionManager.stopSleep();
         logger.debugLog("PASS!!!!!!");
@@ -690,6 +698,10 @@ public class Match extends Observable implements Observer {
         connectionManager.stopSleep();
     }
 
+    /**
+     * manages tool 6 second part after receiving first part event from server
+     * @throws InterruptedException
+     */
     public void tool6Part2() throws InterruptedException {
         logger.debugLog("TOOL6!!!!");
         connectionManager.stopSleep();
@@ -710,6 +722,11 @@ public class Match extends Observable implements Observer {
 
     }
 
+    /**
+     * manages tool 6 second part after receiving first part event from server
+     * @throws InterruptedException
+     */
+
     public void tool11Part2() throws InterruptedException {
         logger.debugLog("TOOL11!!!");
         connectionManager.stopSleep();
@@ -729,6 +746,13 @@ public class Match extends Observable implements Observer {
         graphicsManager.stopView();
     }
 
+    /**
+     * manages other player move
+     * called when receiving a moveEvent when is not your turn
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     * @throws InterruptedException
+     */
     public void showMove() throws InvalidIntArgumentException, GenericInvalidArgumentException, InterruptedException
     {
         graphicsManager.setState(GraphicsManager.State.SHOWMOVE);
@@ -741,6 +765,13 @@ public class Match extends Observable implements Observer {
         executor.awaitTermination(10, SECONDS);
     }
 
+    /**
+     * manages other player move
+     * called when receiving a moveEvent when is not your turn
+     * @throws GenericInvalidArgumentException
+     * @throws InvalidIntArgumentException
+     * @throws InterruptedException
+     */
     public void showTool() throws GenericInvalidArgumentException, InvalidIntArgumentException, InterruptedException
     {
         graphicsManager.setState(GraphicsManager.State.SHOWTOOL);
@@ -755,6 +786,14 @@ public class Match extends Observable implements Observer {
 
 
     //RECONNECTION
+
+    /**
+     * reconnection management
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws InvalidIntArgumentException
+     * @throws GenericInvalidArgumentException
+     */
     public void tryReconnection() throws IOException, InterruptedException, InvalidIntArgumentException, GenericInvalidArgumentException {
         logger = new SimpleLogger(3, Boolean.parseBoolean(settings.get(0)));
 
@@ -787,7 +826,6 @@ public class Match extends Observable implements Observer {
             executor.shutdown();
             executor.awaitTermination(15, SECONDS);
 
-            System.out.println("checkbbbbbb");
 
             //setting up players
 
@@ -804,7 +842,6 @@ public class Match extends Observable implements Observer {
                 SchemeCard tempScheme = tempDeck.extractSchemebyID(recPlayer.getSchemeId());
                 tempScheme.setfb(recPlayer.getFb());
 
-                System.out.println("checkccccc");
 
                 for(ReconnectionPlayer.ReconnectionSchemeDie die : recPlayer.getSchemeDice())
                 {
@@ -816,7 +853,6 @@ public class Match extends Observable implements Observer {
 
                 matchManager.setPlayer(p, player);
             }
-            System.out.println("checkaaaaaa");
             //setting up model
             modelManagerMP.setMyPrivObj(((ReconnectionEvent)currentEvent).getPrivObj());
             logger.debugLog("privobj: "+modelManagerMP.getMyPrObj().getColor());
@@ -829,7 +865,6 @@ public class Match extends Observable implements Observer {
                 tempPubObjs[i]=modelManagerMP.getPubObjs(i);
             graphicsManager.reconnectionSet(modelManagerMP.getMyPrObj(), tempPubObjs, toolRecord.getID());
 
-            System.out.println("checkeeeeee");
 
             for(int round=0;round<((ReconnectionEvent)currentEvent).getReconnectionTrack().size();round++)
             {

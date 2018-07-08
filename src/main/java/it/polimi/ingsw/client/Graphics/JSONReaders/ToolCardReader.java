@@ -11,6 +11,12 @@ public class ToolCardReader {
     private BufferedReader br;
     private ToolCardObj cardObj;
 
+    /**
+     * returns a string arraylist containing toolcards description
+     * @param id
+     * @return
+     * @throws FileNotFoundException
+     */
     public ArrayList<String> readToolCard(int id) throws FileNotFoundException {
 
         ArrayList<String> temp = new ArrayList<String>();

@@ -30,6 +30,11 @@ public class StringCreator
         ASKSECONDDIE
     }
 
+    /**
+     * returns strings for cli questions
+     * @param state
+     * @return
+     */
     public ArrayList<String> getString(State state)
     {
         CLIToolsManager cliToolsManager = new CLIToolsManager();

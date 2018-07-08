@@ -107,7 +107,6 @@ public class ComponentFactory
      * @return
      * @throws InvalidIntArgumentException
      */
-
     public String[] selectionA(SchemeCard scheme, String username, int tokens) throws InvalidIntArgumentException
     {
 
@@ -168,7 +167,6 @@ public class ComponentFactory
      * @param token
      * @return
      */
-
     public String[] selectionT(int id, int token) throws FileNotFoundException {
         ToolCardReader reader=new ToolCardReader();
 

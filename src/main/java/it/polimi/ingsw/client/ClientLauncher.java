@@ -12,6 +12,7 @@ public class ClientLauncher
     private String msgIN;
     private ArrayList<String> settings;
 
+
     public ClientLauncher()
     {
         clito = new CLIToolsManager();
@@ -19,6 +20,12 @@ public class ClientLauncher
         this.outVideo = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
     }
 
+    /**
+     * asks user on what wants to do, if he wants to start a new match asks for settings
+     * SETTINGS: reconnection/debug mode/IP/port
+     * @return an integer corrisponding to the main choice
+     * @throws IOException
+     */
     public int launch() throws IOException//1==PLAY, 2==SCHEMECREATOR
     {
         outVideo.println("");
@@ -108,6 +115,10 @@ public class ClientLauncher
         }
     }
 
+    /**return settings
+     *
+     * @return an arraylist representing settings
+     */
     public ArrayList<String> getSettings()
     {
         return settings;

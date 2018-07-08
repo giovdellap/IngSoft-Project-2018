@@ -34,6 +34,10 @@ public class ConnectionManager extends Observable implements Observer {
 
     }
 
+    /**
+     * @return socketServer.isReady()
+     * @throws IOException
+     */
     public boolean isReady() throws IOException {
         return socketServer.isReady();
     }
@@ -129,10 +133,20 @@ public class ConnectionManager extends Observable implements Observer {
         }
     }
 
+    /**
+     * changes socket when reconnected
+     * @param socket
+     * @throws IOException
+     */
     public void changeSocket(Socket socket) throws IOException {
         socketServer.changeSocket(socket);
     }
 
+    /**
+     * receives ping from client
+     * @return
+     * @throws IOException
+     */
     public boolean pingPingPing() throws IOException {
         return socketServer.waitPing();
     }

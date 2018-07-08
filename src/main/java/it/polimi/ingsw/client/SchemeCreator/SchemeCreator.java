@@ -22,7 +22,10 @@ public class SchemeCreator
     private PrintWriter outVideo;
     private PersonalSchemeWriter writer;
 
-
+    /**
+     * schemecreator constructor
+     * @throws InvalidIntArgumentException
+     */
     public SchemeCreator() throws InvalidIntArgumentException {
         modelGenerator = new ModelGenerator();
         newScheme = new SchemeCard(100);
@@ -35,6 +38,11 @@ public class SchemeCreator
 
     }
 
+    /**
+     * asks user for the scheme to create and writes it on a json file
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
     public void createScheme() throws IOException, InvalidIntArgumentException {
         printOut(clito.simpleQuestionsMaker("BENVENUTO NELLA CREAZIONE SCHEMA", 80, false));
         boolean end=false;
@@ -137,6 +145,10 @@ public class SchemeCreator
 
     }
 
+    /**
+     * our print out method
+     * @param s
+     */
     private void printOut(String[] printerMakerResult)
     {
         //shows user the printerMaker result
@@ -171,6 +183,11 @@ public class SchemeCreator
 
     }
 
+    /**
+     * writes created schemecard on json
+     * @throws IOException
+     * @throws InvalidIntArgumentException
+     */
     private void writeToJson() throws IOException, InvalidIntArgumentException {
         System.out.println(newScheme.getName(1));
         writer.write(newScheme);

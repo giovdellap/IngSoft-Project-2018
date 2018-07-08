@@ -4,6 +4,11 @@ public class StringIntegerListObj {
     String description;
     int bonus;
 
+    /**
+     * contains infos about the public objective json file
+     * @param description
+     * @param bonus
+     */
     public StringIntegerListObj(String description, int bonus) {
         super();
         this.description=description;

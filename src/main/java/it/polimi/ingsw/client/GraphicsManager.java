@@ -66,6 +66,9 @@ public class GraphicsManager extends Observable implements Runnable
         logger = new SimpleLogger(2, true);
     }
 
+    /**
+     * run() method
+     */
     public void run()
     {
         logger.debugLog("graphics manager started: "+state);
@@ -323,6 +326,14 @@ public class GraphicsManager extends Observable implements Runnable
         notifyObservers(event);
     }
 
+    /**
+     * calls showScores method on CLI with correct parameters
+     * @param event
+     * @param winner
+     * @throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void showScores(ScoreEvent event, boolean winner) throws it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, IOException, InterruptedException {
         graphic.showScores(event, winner);
     }

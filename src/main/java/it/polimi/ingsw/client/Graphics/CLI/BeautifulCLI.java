@@ -53,6 +53,11 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
         width=80;
     }
 
+    /**
+     * run() method
+     * starts graphics' methods and terminates if stopCLI is true
+     */
+
     public void run() {
         stopCLI=false;
         System.out.println("BEAUTIFULCLI DISCONNECTED: "+Integer.toString(threadUpdater.disconnected.size()));
@@ -731,7 +736,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     }
 
     /**
-     * shows the other players turns and actions
+     * shows situation if is not your turn
      * @param players
      * @param draft
      * @param track
@@ -762,7 +767,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     }
 
     /**
-     * override
+     * shows situation if is not your turn
      * @param players
      * @param draft
      * @param track
@@ -786,7 +791,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     }
 
     /**
-     * shows the move
+     * shows the move made by active player
      * @param players
      * @param draft
      * @param track
@@ -803,7 +808,7 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
     }
 
     /**
-     * shows the tool
+     * shows the tool used by active player
      * @param players
      * @param draft
      * @param track
@@ -940,7 +945,10 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
 
     }
 
-
+    /**
+     * sets new useTool event for 2-phases toolcards
+     * @param event
+     */
     public void setUseTool(ToolCardEvent event)
     {
         useTool = event;
@@ -1067,6 +1075,11 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
             printOut(str);
     }
 
+    /**
+     * shows "you won" scene if everyone else is disconnected
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void forfaitCli() throws IOException, InterruptedException {
         printOut(cliToolsManager.sceneInitializer(80));
 
@@ -1083,6 +1096,12 @@ public class BeautifulCLI extends AbstractGraphic implements Runnable
         readIt();
     }
 
+    /**
+     * initializes CLI if player is reconnecting
+     * @param privateObjective
+     * @param pubObjs
+     * @param toolsID
+     */
     public void setGraphics(PrivateObjectiveMP privateObjective, PublicObjectiveMP[] pubObjs, int[] toolsID)
     {
         this.privateObjective=privateObjective;

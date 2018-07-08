@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.client.Connection.SocketClient;
@@ -42,6 +41,10 @@ public class ConnectionManager extends Observable implements Runnable, Observer
         logger = new SimpleLogger(1, Boolean.parseBoolean(settings.get(0)));
     }
 
+    /**
+     * run() method for sending, receiving and handling events
+     * needs a state and eventually the event to send
+     */
     public void run() {
         logger.debugLog("connection manager started: "+state);
         if(state==State.SEND)
@@ -185,11 +188,19 @@ public class ConnectionManager extends Observable implements Runnable, Observer
         socketClient.addObserver(this);
     }
 
+    /**
+     * sets connectionmanager state
+     * @param state
+     */
     public void setState(State state)
     {
         this.state=state;
     }
 
+    /**
+     * sets event to send
+     * @param toSend
+     */
     public void setEvent(Event toSend)
     {
         this.toSend=toSend;

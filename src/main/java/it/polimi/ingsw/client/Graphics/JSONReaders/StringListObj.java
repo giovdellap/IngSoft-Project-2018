@@ -5,6 +5,12 @@ public class StringListObj {
     private String descriptionOne;
     private String descriptionTwo;
 
+    /**
+     * contains infos about toolcards objs
+     * @param name
+     * @param descriptionOne
+     * @param descriptionTwo
+     */
     public StringListObj(String name, String descriptionOne, String descriptionTwo) {
         super();
         this.name=name;

@@ -1,14 +1,11 @@
 package it.polimi.ingsw.client.Connection;
 
 
-import it.polimi.ingsw.client.JSONSettings.SettingsReader;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import it.polimi.ingsw.commons.Events.Event;
 import it.polimi.ingsw.commons.SimpleLogger;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventDecoder;
 import it.polimi.ingsw.commons.Socket.EventHandling.EventEncoder;
-import it.polimi.ingsw.commons.Socket.SocketTools.SocketDecoder;
-import it.polimi.ingsw.commons.Socket.SocketTools.SocketEncoder;
 import it.polimi.ingsw.commons.Socket.SocketTools.SocketProtocolTransformer;
 import it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException;
 
@@ -61,7 +58,7 @@ public class SocketClient extends Observable implements Runnable {
     }
 
     /**
-     * connects to socket
+     * connects to server and intializes buffers
      * @throws IOException
      */
     private void connect() throws IOException {
@@ -83,7 +80,8 @@ public class SocketClient extends Observable implements Runnable {
     }
 
     /**
-     * gets an event
+     * receives an event
+     * if receives a TurnEvent sends a PING and resends that TurnEvent
      * @throws InvalidIntArgumentException
      * @throws IOException
      */
@@ -162,7 +160,9 @@ public class SocketClient extends Observable implements Runnable {
         }
     }
 
-
+    /**
+     * run() method for connection manager sleep state
+     */
     public void run() {
         try {
             getEvent();

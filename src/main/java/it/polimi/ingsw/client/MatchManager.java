@@ -39,24 +39,39 @@ public class MatchManager
         disconnectedPlayers = new ArrayList<String>();
     }
 
-    public void addPersonalScheme(PersonalSchemeEvent event)
-    {
-        players[event.getPlayer()].setPlayerScheme(event.getScheme());
-    }
 
+    /**
+     * empty constructor for reconnection
+     */
     public MatchManager()
     {
 
     }
 
+    /**
+     * returns a player
+     * @param index
+     * @return
+     */
     public PlayerClient getPlayer(int index)
     {
         return players[index];
     }
+
+    /**
+     * initialization for reconnection
+     * @param dim
+     */
     public void reconnectionInitialization(int dim)
     {
         players = new PlayerClient[dim];
     }
+
+    /**
+     * sets up a new player
+     * @param index
+     * @param player
+     */
     public void setPlayer(int index, PlayerClient player)
     {
         players[index]=player;
@@ -64,9 +79,18 @@ public class MatchManager
 
     //ROUND
 
+    /**
+     * sets up round
+     * @param round
+     */
     public void setRound(int round) {
         this.round = round;
     }
+
+    /**
+     *
+     * @return round
+     */
     public int getRound()
     {
         return round;

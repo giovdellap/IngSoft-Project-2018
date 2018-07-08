@@ -13,6 +13,12 @@ public class PublicObjectiveReader {
     private BufferedReader br;
     private PublicObjectiveObj pubObj;
 
+    /**
+     * reads public objective object for CLI usage
+     * @param id
+     * @return
+     * @throws FileNotFoundException
+     */
     public ArrayList<String> readPublicObjective(int id) throws FileNotFoundException {
 
         ArrayList<String> temp = new ArrayList<String>();
