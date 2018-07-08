@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class ToolCardElevenTest {
 
@@ -23,7 +24,7 @@ public class ToolCardElevenTest {
     ToolCardEleven toolCardElevenTest;
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException, GenericInvalidArgumentException, FileNotFoundException {
+    public void setUp() throws InvalidIntArgumentException, GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         deck = new SchemesDeck();
         scheme = deck.extractSchemebyID(6);

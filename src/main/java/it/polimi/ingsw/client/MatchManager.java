@@ -7,6 +7,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemeCard;
 import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class MatchManager
@@ -22,8 +23,7 @@ public class MatchManager
      * @param me
      * @throws InvalidIntArgumentException
      */
-    public MatchManager(Initialization2Event event, String me) throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
-    {
+    public MatchManager(Initialization2Event event, String me) throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, UnsupportedEncodingException {
         SchemesDeck deck = new SchemesDeck();
         players = new PlayerClient[event.getPlayerSize()];
         for(int i=0;i<players.length;i++)

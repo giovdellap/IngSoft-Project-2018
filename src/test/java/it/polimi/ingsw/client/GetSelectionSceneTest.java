@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class GetSelectionSceneTest
 {
@@ -25,7 +26,7 @@ public class GetSelectionSceneTest
 
     @BeforeEach
 
-    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, UnsupportedEncodingException {
         printerMakerTest=new PrinterMaker(1);
 
         schemesDeckMP = new SchemesDeck();

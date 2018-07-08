@@ -15,6 +15,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class EventDecoder
@@ -41,7 +42,7 @@ public class EventDecoder
      * @return event decoded
      * @throws InvalidIntArgumentException
      */
-    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException,  it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public Event decodeEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         transformer.simpleDecode(toDecode.get(0));
 
         if(transformer.getArg().equals("UsernameEvent"))
@@ -852,7 +853,7 @@ public class EventDecoder
         return event;
     }
 
-    private ReconnectionEvent decodeReconnectionEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    private ReconnectionEvent decodeReconnectionEvent(ArrayList<String> toDecode) throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ReconnectionEvent event = new ReconnectionEvent();
 
         int j =2;

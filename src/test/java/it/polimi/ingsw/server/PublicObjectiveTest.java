@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 
 public class PublicObjectiveTest {
@@ -24,7 +25,7 @@ public class PublicObjectiveTest {
 
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException, FileNotFoundException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         publicObjectiveTest = new PublicObjective(idTest);
         bonusTest = publicObjectiveTest.getBonus();

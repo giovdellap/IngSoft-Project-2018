@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class TokensCalculatorTest
 {
@@ -21,7 +22,7 @@ public class TokensCalculatorTest
     }
 
     @Test
-    public void checkCalculator() throws InvalidIntArgumentException, FileNotFoundException {
+    public void checkCalculator() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
         SchemeCard scheme;
 
         int ok=0;

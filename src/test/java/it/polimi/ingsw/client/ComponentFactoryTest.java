@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class ComponentFactoryTest
@@ -23,7 +24,7 @@ public class ComponentFactoryTest
     DraftPoolMP tempDraft;
     RoundTrackMP tempRound;
 
-    @BeforeEach public void setUp() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, FullDataStructureException, FileNotFoundException {
+    @BeforeEach public void setUp() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, FullDataStructureException, FileNotFoundException, UnsupportedEncodingException {
         componentFactory = new ComponentFactory();
         SchemesDeck schemesDeckMP = new SchemesDeck();
         schemeCardMP = schemesDeckMP.extractSchemebyID(6);

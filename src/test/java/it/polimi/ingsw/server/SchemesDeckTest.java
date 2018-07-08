@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class SchemesDeckTest {
 
@@ -28,7 +29,7 @@ public class SchemesDeckTest {
 
 
     @Test
-    public void checkForDifferentID() throws InvalidIntArgumentException, FileNotFoundException {
+    public void checkForDifferentID() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
             boolean flag=true;
             testTempDeck = testDeck.extractSchemes(6);
@@ -61,6 +62,8 @@ public class SchemesDeckTest {
                 flag = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         Assertions.assertEquals(true,flag);
@@ -68,7 +71,7 @@ public class SchemesDeckTest {
 
 
     @Test
-    public void checkExtractSchemesID() throws InvalidIntArgumentException, FileNotFoundException {
+    public void checkExtractSchemesID() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
             boolean flag = true;
             testTempDeck = testDeck.extractSchemes(6);
@@ -99,6 +102,8 @@ public class SchemesDeckTest {
                     flag = true;
 
             } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 

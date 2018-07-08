@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class GameSceneTest {
@@ -28,7 +29,7 @@ public class GameSceneTest {
 
     @BeforeEach
 
-    public void setUp() throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+    public void setUp() throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, UnsupportedEncodingException {
         DraftPoolMP tempDraft;
         printerMaker=new PrinterMaker(1);
         players= new PlayerClient[2];

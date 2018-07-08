@@ -7,6 +7,7 @@ import it.polimi.ingsw.commons.Exceptions.FullDataStructureException;
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class Model
@@ -49,7 +50,7 @@ public class Model
      * initializes and extracts schemes from deck
      * @throws InvalidIntArgumentException
      */
-    public void setSchemesDeck() throws InvalidIntArgumentException, FileNotFoundException {
+    public void setSchemesDeck() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
         scDeck = new SchemesDeck();
         tempSchemes = scDeck.extractSchemes(numPlayers*2);
         playerSchemes = new ArrayList<SchemeCard>();

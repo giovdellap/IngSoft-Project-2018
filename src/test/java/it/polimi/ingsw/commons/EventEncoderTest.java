@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.commons.Events.ToolsEvents.*;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class EventEncoderTest
@@ -71,7 +72,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkUsernameEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkUsernameEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(event);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -81,7 +82,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkSchemeSelectionEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(event1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -91,7 +92,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkModelInitializationEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkModelInitializationEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         int [] pubObjs = {2, 3, 4, 5};
         int [] toolsIds = {2, 3, 4, 5};
 
@@ -107,7 +108,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkTurnEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkTurnEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         // create tempDisc
         ArrayList<String> tempDisc= new ArrayList<String>();
 
@@ -154,7 +155,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardOneEvents() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardOneEvents() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT1);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -165,7 +166,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardTwoThreeEvent() throws InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT23);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -176,7 +177,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFourEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardFourEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT4);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -187,7 +188,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardFiveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardFiveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT5);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -198,7 +199,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSixEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardSixEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT6);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -209,7 +210,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardSevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardSevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         //create tempdraft
 
         ArrayList<Die> tempDraft=new ArrayList<Die>();
@@ -235,7 +236,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardEightNineTenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT8910);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -246,7 +247,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardElevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardElevenEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT11);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -257,7 +258,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkToolCardTwelveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventT12);
         Event tempEvent = decoder.decodeEvent(tempArray);
 
@@ -268,7 +269,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkMoveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkMoveEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventM);
         logger.log(tempArray.get(1));
         Event tempEvent = decoder.decodeEvent(tempArray);
@@ -281,7 +282,7 @@ public class EventEncoderTest
     }
 
     @Test
-    public void checkPassEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException {
+    public void checkPassEvent() throws InvalidIntArgumentException, GenericInvalidArgumentException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, it.polimi.ingsw.commons.Exceptions.GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
         ArrayList<String> tempArray = encoder.encodeEvent(eventP);
         Event tempEvent = decoder.decodeEvent(tempArray);
 

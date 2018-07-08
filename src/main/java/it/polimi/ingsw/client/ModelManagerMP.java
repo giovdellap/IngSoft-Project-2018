@@ -8,6 +8,7 @@ import it.polimi.ingsw.commons.SchemeCardManagement.SchemesDeck;
 import it.polimi.ingsw.commons.SimpleLogger;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class ModelManagerMP
@@ -60,8 +61,7 @@ public class ModelManagerMP
     }
 
 
-    public void setTempSchemes(int id1, int id2) throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException
-    {
+    public void setTempSchemes(int id1, int id2) throws FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, UnsupportedEncodingException {
         tempSchemes = new SchemeCard[2];
         tempSchemes[0] = scDeck.extractSchemebyID(id1);
         tempSchemes[1] = scDeck.extractSchemebyID(id2);

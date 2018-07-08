@@ -12,12 +12,11 @@ public class SchemeCardReader {
     private BufferedReader br;
     private SchemeCardObj card;
 
-    public SchemeCard readCard(int index) throws FileNotFoundException, InvalidIntArgumentException
-    {
+    public SchemeCard readCard(int index) throws FileNotFoundException, InvalidIntArgumentException, UnsupportedEncodingException {
         gson = new GsonBuilder().setLenient().create();
 
-        String file = getClass().getClassLoader().getResource("JsonPackage/SchemeCards/SchemeCard" + index + ".json").getFile();
-        br = new BufferedReader(new FileReader(file));
+        InputStream in = this.getClass().getResourceAsStream("/JsonPackage/SchemeCards/SchemeCard" + index + ".json");
+        br = new BufferedReader(new InputStreamReader(in));
 
         card = gson.fromJson(br, SchemeCardObj.class);
 

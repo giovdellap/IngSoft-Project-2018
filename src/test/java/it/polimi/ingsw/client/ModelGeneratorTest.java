@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class ModelGeneratorTest
 {
@@ -18,7 +19,7 @@ public class ModelGeneratorTest
     private ModelGenerator modelGenerator;
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException, UnsupportedEncodingException {
         schemesDeckMP = new SchemesDeck();
         emptyScheme = schemesDeckMP.extractSchemebyID(5);
         emptyScheme.setfb(1);

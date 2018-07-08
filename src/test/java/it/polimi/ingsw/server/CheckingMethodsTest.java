@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class CheckingMethodsTest {
 
@@ -23,7 +24,7 @@ public class CheckingMethodsTest {
     //NUMERI 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException, FileNotFoundException {
+    public void setUp() throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         checkingMethodsTest = new CheckingMethods();
         schemesDeckTest = new SchemesDeck();

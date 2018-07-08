@@ -2,6 +2,7 @@ package it.polimi.ingsw.commons.SchemeCardManagement;
 
 import it.polimi.ingsw.commons.Exceptions.InvalidIntArgumentException;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class SchemesDeck
@@ -27,7 +28,7 @@ public class SchemesDeck
      * @return scheme card vector containing extracted schemes
      * @throws InvalidIntArgumentException
      */
-    public SchemeCard[] extractSchemes(int n) throws InvalidIntArgumentException, FileNotFoundException {
+    public SchemeCard[] extractSchemes(int n) throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         if (n<0 || n>8 || n%2!=0)
             throw new InvalidIntArgumentException();
@@ -73,7 +74,7 @@ public class SchemesDeck
      * @throws InvalidIntArgumentException
      */
 
-    public SchemeCard extractSchemebyID (int id) throws InvalidIntArgumentException, FileNotFoundException {
+    public SchemeCard extractSchemebyID (int id) throws InvalidIntArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         if(id==0)
             return new SchemeCard((0));

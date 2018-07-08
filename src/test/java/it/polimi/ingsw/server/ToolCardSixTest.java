@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 public class ToolCardSixTest {
 
@@ -31,7 +32,7 @@ public class ToolCardSixTest {
     //NUMBERS 6 ONE/7 TWO/8 THREE/9 FOUR/10 FIVE/11 SIX
 
     @BeforeEach
-    public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException, FileNotFoundException {
+    public void setUp() throws InvalidIntArgumentException, FullDataStructureException, GenericInvalidArgumentException, FileNotFoundException, UnsupportedEncodingException {
 
         testDie = new Die(1);
         testDie.setValue(1);
